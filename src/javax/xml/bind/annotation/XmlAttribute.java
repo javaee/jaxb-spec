@@ -41,8 +41,8 @@ import static java.lang.annotation.RetentionPolicy.*;
  *     //Example: Code fragment
  *     public class USPrice { 
  *         &#64;XmlAttribute
- *         public java.math.BigDecimal getPrice();
- *         public void setPrice(java.math.BigDecimal );
+ *         public java.math.BigDecimal getPrice() {...} ;
+ *         public void setPrice(java.math.BigDecimal ) {...};
  *     }
  *
  *     &lt;!-- Example: XML Schema fragment -->
@@ -75,7 +75,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *
  * </pre>
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  * @see XmlType
  * @since JAXB2.0
  */
