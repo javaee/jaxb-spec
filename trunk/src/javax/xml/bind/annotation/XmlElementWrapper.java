@@ -67,17 +67,10 @@ public @interface XmlElementWrapper {
 
     /**
      * XML target namespace of the XML wrapper element.
-     * namespace() must be a valid namespace URI.
+     * namespace() must be a valid namespace URI. The default XML
+     * namespace is the XML namespace of the enclosing class of the
+     * Javabean property.
      *
-     * <p>
-     * The default value is determined as follows:
-     * <ul>
-     *   <li> If a top level class declared in a named package is
-     *        annotated then the default target namespace is the
-     *        namespace to which package name is mapped. </li>
-     *   <li> TBD after Early Access version 0.40: Specify behavior if
-     *        a top level class is declared in an unnamed package. </li>
-     * </ul>
      */
     String namespace() default "##default" ;
 
