@@ -39,6 +39,11 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <ul> 
  *   <li> The only other mapping annotations allowed with 
  *        <tt>&#64;XmlElement</tt> are: <tt>&#64;XmlID</tt> and <tt>&#64;XMLIDREF</tt> .</li>
+ *   <li> if the type of JavaBean property is a collection type of
+ *        array, an indexed property, or a parameterized list, and
+ *        this annotation is used with {@link XmlElements} then,
+ *        <tt>@XmlElement.type()</tt> must be DEFAULT.class since the
+ *        component type is already known. </li>
  * </ul>
  *
  * <p>
@@ -97,7 +102,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <p> 
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 @Retention(RUNTIME) @Target({FIELD, METHOD})
