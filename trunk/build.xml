@@ -18,7 +18,7 @@
     <!-- properties -->
     <property name="release.spec.title"    value="Early Draft 2"/>
     <property name="release.spec.version"  value="2.0"/>
-    <property name="release.spec.date"     value="March 7, 2005"/>
+    <property name="release.spec.date"     value="March 15, 2005"/>
     <property name="release.spec.feedback" value="spec-comments@jsr222.dev.java.net"/>
 
     <!-- libraries that are referenced when compiling Java source files -->
@@ -103,23 +103,23 @@
 <![CDATA[<br>
 JAXB ${release.spec.version} Runtime Library</h2>
 ${release.spec.title} specification, ${release.spec.date}<br>
-Comments to: <i><a href="mailto:${release.spec.feedback}">${release.spec.feedback}</a></i><br> 
-More information at: <i><a target="_top" 
-href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a></i><br> 
-&nbsp;<br>&nbsp;<br><hr width="65%"><h1>${release.spec.title}</h1><hr width="75%">
+Comments to: <i><a href='mailto:${release.spec.feedback}'>${release.spec.feedback}</a></i><br>
+More information at: <i><a target='_top'
+href='http://java.sun.com/xml/jaxb'>http://java.sun.com/xml/jaxb</a></i><br>
+&nbsp;<br>&nbsp;<br><hr width='65%'><h1>${release.spec.title}</h1><hr width='75%'>
 <br>&nbsp;<br>]]>
             </doctitle>
             <header>
 <![CDATA[JAXB<br>v${release.spec.version}]]>
             </header>
             <footer>
-<![CDATA[<a href="https://jaxb.dev.java.net/nonav/jaxb20-ed/JAXBv2.0.pSpec.20050301.web.txt">JAXB 2.0 ED Specification License</a>]]>
+<![CDATA[<a href='https://jaxb.dev.java.net/nonav/jaxb20-ed/JAXBv2.0.pSpec.20050301.web.txt'>JAXB 2.0 ED Specification License</a>]]>
             </footer>
             <bottom>
 <![CDATA[<font size=-1>
-<br>Comments to: <a href="mailto:${release.spec.feedback}"><i>${release.spec.feedback}</i></a>
-<br>More information at: <a target="_top" 
-href="http://java.sun.com/xml/jaxb"><i>http://java.sun.com/xml/jaxb</i></a> 
+<br>Comments to: <a href='mailto:${release.spec.feedback}'><i>${release.spec.feedback}</i></a>
+<br>More information at: <a target='_top'
+href='http://java.sun.com/xml/jaxb'><i>http://java.sun.com/xml/jaxb</i></a> 
 <p>Copyright &copy; 2004 by Sun Microsystems, Inc., 901 San Antonio Road, 
 <br>Palo Alto, California, 94303, U.S.A.  All Rights Reserved.  </font>]]>
             </bottom>
