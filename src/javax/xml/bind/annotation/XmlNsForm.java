@@ -43,6 +43,9 @@ import static java.lang.annotation.ElementType.*;
  *   </tbody>
  * </table>
  * 
+ * @author Sekhar Vajjhala, Sun Microsystems, Inc.
+ * @since JAXB2.0
+ * @version $Revision: 1.2 $
  */
 public enum XmlNsForm {UNQUALIFIED, QUALIFIED, UNSET}
 

@@ -20,7 +20,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * The <tt>@XmlCollection</tt> annotation can be used with the
  * following program elements: 
  * <ul> 
- *   <li> a Javabean property </li>
+ *   <li> a JavaBean property </li>
  *   <li> a public non final, non static field </li>
  * </ul>
  * 
@@ -35,24 +35,24 @@ import static java.lang.annotation.RetentionPolicy.*;
  *
  *    // XML Serialization Form 1 (Unwrapped collection)
  *    // Element name is derived from property or field name
- *    <Names> ... </Names>
- *    <Names> ... </Names>
+ *    &lt;Names> ... &lt;/Names>
+ *    &lt;Names> ... &lt;/Names>
  * 
  *    // XML Serialization Form 2 ( Wrapped collection )
- *    // Element name of wrapper is derived from Javabean property
+ *    // Element name of wrapper is derived from JavaBean property
  *    // Element name of collection item is derived from its type name
- *    <Names>
- *       <int> value-of-item </int>
- *       <int> value-of-item </int>
+ *    &lt;Names>
+ *       &lt;int> value-of-item &lt;/int>
+ *       &lt;int> value-of-item &lt;/int>
  *       ....
- *    </Names>
+ *    &lt;/Names>
  *
  * </pre>
  *
  * <p> The two serialized XML forms allow a null collection to be
  * represented either by absence or presence of an element with a
  * nillable attribute. The <tt>@XmlElement</tt> annotation on the
- * Javabean is used to customize the schema corresponding to the above
+ * JavaBean property is used to customize the schema corresponding to the above
  * XML serialization forms. 
  * 
  * The examples that follow illustrate ways to select wrapped and
@@ -60,7 +60,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *
  * <p>The usage is subject to the following constraints:
  * <ul>
- *   <li> type of the Javabean property must be one of: indexed
+ *   <li> type of the JavaBean property must be one of: indexed
  *        property, array, List, java.util.Set.
  *        <br> java.util.Map does not map naturally to XML Schema
  *        construct. Hence <tt>@XmlJavaTypeAdapter</tt> should be used
@@ -69,10 +69,10 @@ import static java.lang.annotation.RetentionPolicy.*;
  *   <li> if <tt>@XmlElement.isNillable()</tt> is false, then for every
  *        <tt>@XmlCollectionItem</tt> in <tt>@XmlCollection.values()</tt>,
  *        <tt>@XmlCollectionItem.name()</tt> must be "". The element
- *        for the collection item is derived from the Javabean
+ *        for the collection item is derived from the JavaBean
  *        property name. </li>
  *
- *   <li> if the type of Javabean property is a collection type of
+ *   <li> if the type of JavaBean property is a collection type of
  *        array, an indexed property, or a parameterized list, then
  *        <tt>@XmlCollectionItem.type()</tt> must be null. The type is
  *        already known.</li>
@@ -112,7 +112,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *       
  *     &#64;XmlElement(name="ItemsList", isNillable=true)
  *     &#64;XmlCollection(
- *             { &#64;XmlCollectionItem(type=Integer.class, value=&#64;&#64;XmlElement(name="A")),
+ *             { &#64;XmlCollectionItem(type=Integer.class, value=&#64;XmlElement(name="A")),
  *               &#64;XmlCollectionItem(type=Float.class)
  *             }
  *     public List items;
@@ -143,7 +143,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *     public List items;
  *   
  *     &lt;!-- XML Schema fragment -->
- *       &lt;xs:element name="Bar" minOccurs="0" maxOccurs="1">
+ *       &lt;xs:element name="ItemsList" minOccurs="0" maxOccurs="1">
  *         &lt;xs:complexType>
  *           &lt;xs:choice minOccurs="0" maxOccurs="unbounded">
  *             &lt;xs:element name="A" type="xs:int"/>
@@ -158,25 +158,28 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <p><b>Example 4:</b>Map to an unwrapped collection</p>
  *
  * <pre>       
+ *
+ *   public class PurchaseOrder {
  *     &#64;XmlElement(name="ItemsList", isNillable=false)
  *     &#64;XmlCollection(
- *             { &#64;XmlCollectionItem(type=Integer.class, value=&#64;XmlElement(name="A")),
- *             }
+ *             { &#64;XmlCollectionItem(type=Integer.class)}
  *     public List items;
+ *   }
  *   
- *     &lt;!-- XML Schema fragment -->
- *       &lt;xs:element name="Bar" minOccurs="0" maxOccurs="unbounded">
- *         &lt;xs:complexType>
- *           &lt;xs:choice>
- *             &lt;xs:element name="A" type="xs:int"/>
- *         &lt;/xs:choice>
- *       &lt;/xs:complexType>
- *     &lt;/xs:element> 
+ *   &lt;!-- XML Schema fragment shown ->
+ *
+ *   &lt;xs:complexType name="PurchaseOrder">
+ *     &lt;xs:choice minOccurs="0" maxOccurs="unbounded">
+ *       &lt;xs:element name="ItemsList" type="xs:int"/>
+ *     &lt;/xs:choice>
+ *   &lt;/xs:complexType>
+ * 
  * </pre>
  *
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @see XmlCollectionItem
  * @see XmlJavaTypeAdapter
+ * @version $Revision: 1.2 $
  * @since JAXB2.0
  */
 

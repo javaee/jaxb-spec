@@ -58,7 +58,7 @@ import javax.xml.namespace.NamespaceContext;
  * </p>
  * 
  * @author <ul><li>Sekhar Vajjhala, Sun Microsystems, Inc.</li><li>Joe Fialli, Sun Microsystems Inc.</li><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Ryan Shoemaker,Sun Microsystems Inc.</li></ul>
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @see DatatypeConverterInterface
  * @see ParseConversionEvent
  * @see PrintConversionEvent

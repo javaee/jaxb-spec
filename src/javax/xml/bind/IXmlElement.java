@@ -26,7 +26,7 @@ import javax.xml.namespace.QName;
  * to represent an Xml element, javax.xml.bind.Element. 
  * </p>
  * 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @since JAXB2.0
  */
 
@@ -75,7 +75,6 @@ public interface IXmlElement<T> extends Element, java.io.Serializable {
      *
      *     // properties from this interface, IXmlElement<T>.
      *     QName getXmlElementName();
-     *     void setXmlElementName();
      *     ...
      * } 
      */
@@ -85,19 +84,6 @@ public interface IXmlElement<T> extends Element, java.io.Serializable {
      */
     public QName   getXmlElementName();
 
-
-    /**
-     * <p>Set the fully qualified name for element.</p>
-     *
-     * <p>
-     * This is a set-once property, see thrown exception 
-     * <code>IllegalStateException</code>.
-     * </p>
-     *
-     * @exception IllegalStateException thrown if property already set to a 
-     *                                  non-null value.    
-     */
-    public void    setXmlElementName(QName tag);
 
     /**
      * Set the element value of this element.
@@ -127,5 +113,5 @@ public interface IXmlElement<T> extends Element, java.io.Serializable {
      * Set whether the content model of element value has 
      * <code>xsi:nil="true"</code> or <code>xsi:nil="false"</code>.
      */
-    public void    setXmlELementNil(boolean value);
+    public void    setXmlElementNil(boolean value);
 }

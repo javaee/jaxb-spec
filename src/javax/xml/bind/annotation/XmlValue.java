@@ -22,7 +22,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * The <tt>@XmlValue</tt> annotation can be used with the following program
  * elements: 
  * <ul> 
- *   <li> a Javabean property.</li>
+ *   <li> a JavaBean property.</li>
  *   <li> a public non final, non static field.</li>
  * </ul>
  * 
@@ -35,28 +35,28 @@ import static java.lang.annotation.RetentionPolicy.*;
  *       <tt>@XmlValue</tt> annotation. </li> 
  *
  *   <li><tt>@XmlValue</tt> must be the only mapping annotation on the
- *       Javabean property.</li> 
+ *       JavaBean property.</li> 
  *
- *   <li>The type of the Javabean property must be mapped to
+ *   <li>The type of the JavaBean property must be mapped to
  *       a XML Schema simple type.</li> 
  *
  *   <li>If the containing class extends another class, then the
  *       superclass and the containing class must both be mapped to
  *       XML Schema types in the same XML Schema type hierarchy. </li>
  *
- *   <li>If the Javabean property is a read/write property, then
+ *   <li>If the JavaBean property is a read/write property, then
  *       <tt>@XmlValue</tt> can be used to annotate either the getter 
  *       or setter method but not both.</li> 
  *
  * </ul>
  * </p>
  * <p>
- * If the annotated Javabean property is the sole class member being
+ * If the annotated JavaBean property is the sole class member being
  * mapped to XML Schema construct, then the class is mapped to a
  * simple type. 
  *
- * If there are additional Javabean properties (other than the
- * Javabean property annotated with <tt>@XmlValue</tt> annotation)
+ * If there are additional JavaBean properties (other than the
+ * JavaBean property annotated with <tt>@XmlValue</tt> annotation)
  * that are mapped to XML attributes, then the class is mapped to a
  * complex type with simpleContent.
  * </p>
@@ -107,6 +107,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @see XmlType
  * @since JAXB2.0
+ * @version $Revision: 1.2 $
  */
 
 @Retention(RUNTIME) @Target({FIELD, METHOD})

@@ -12,21 +12,21 @@ import static java.lang.annotation.RetentionPolicy.*;
 
 /**
  * <p>
- * Maps a Javabean property to XML Schema type <tt>xs:ID</tt>.
+ * Maps a JavaBean property to XML Schema type <tt>xs:ID</tt>.
  *
  * <p>
  * To preserve referential integrity of an object graph across XML
  * serialization followed by a XML deserialization, requires an object
  * reference to be marshalled by reference or containment
  * appropriately. Annotations <tt>&#64;XmlID</tt> and <tt>&#64;XmlIDREF</tt>
- * together allow a customized mapping of a Javabean property's
+ * together allow a customized mapping of a JavaBean property's
  * type by containment or reference. 
  *
  * <p><b>Usage</b> </p>
  * The <tt>&#64;XmlID</tt> annotation can be used with the following
  * program elements: 
  * <ul> 
- *   <li> a Javabean property </li>
+ *   <li> a JavaBean property </li>
  *   <li> a public non final, non static field </li>
  * </ul>
  * 
@@ -37,16 +37,16 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <ul> 
  *   <li> At most one field or property in a class can be annotated
  *        with <tt>&#64;XmlID</tt>.  </li>
- *   <li> The Javabean property's type must be <tt>java.lang.String</tt>.</li>
+ *   <li> The JavaBean property's type must be <tt>java.lang.String</tt>.</li>
  *   <li> The only other mapping annotations that can be used
  *        with <tt>&#64;XmlID</tt>
  *        are:<tt>&#64;XmlElement</tt> and <tt>&#64;XmlAttribute</tt>.</li>  
- *   <li>If the Javabean property is a read/write property, then the
+ *   <li>If the JavaBean property is a read/write property, then the
  *       <tt>@XmlID</tt> can be used to annotate either the getter
  *       or setter method but not both.</li> 
  * </ul>
  * 
- * <p><b>Example</b>: Map a Javabean property's type to <tt>xs:ID</tt></p>
+ * <p><b>Example</b>: Map a JavaBean property's type to <tt>xs:ID</tt></p>
  * <pre>
  *    // Example: code fragment
  *    public class Customer {
@@ -71,6 +71,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @see XmlIDREF
  * @since JAXB2.0
+ * @version $Revision: 1.2 $
  */
 
 @Retention(RUNTIME) @Target({FIELD, METHOD})

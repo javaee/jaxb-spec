@@ -68,8 +68,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *    &lt;schema
  *        xmlns:xs="http://www.w3.org/2001/XMLSchema"
  *        xmlns:po="http://www.example.com/PO1"
- *        targetNamespace="http://www.example.com/PO1"
- *        >
+ *        targetNamespace="http://www.example.com/PO1">
  * 
  * </pre>
  *
@@ -90,6 +89,7 @@ import static java.lang.annotation.RetentionPolicy.*;
 
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
+ * @version $Revision: 1.2 $
  */
 
 @Retention(RUNTIME) @Target({PACKAGE})

@@ -16,15 +16,15 @@ import static java.lang.annotation.RetentionPolicy.*;
  * a XML Schema representation.
  * <p>
  * Some Java types do not map naturally to XML Schema representation, for
- * example HashMap. For such types, a default mapping is defined. But
- * the default mapping can be overridden using XmlJavaTypeAdapter. The
- * XmlJavaTypeAdapter annotation allows the type of a Javabean property to be adapted
+ * example <tt>HashMap</tt>. For such types, a default mapping is defined. But
+ * the default mapping can be overridden using <tt>&#64;XmlJavaTypeAdapter</tt>. The
+ * <tt>&#64;XmlJavaTypeAdapter</tt> annotation allows the type of a JavaBean property to be adapted
  * using a custom value type. An custom value type models the schema to which
- * the type of a Javabean property is to be mapped. Thus, it is the
- * custom value type rather than the static type of the Javabean property
+ * the type of a JavaBean property is to be mapped. Thus, it is the
+ * custom value type rather than the static type of the JavaBean property
  * that is used in marshalling and unmarshalling.
  * <ul>
- *   <li> During marshalling, an instance of a type of a Javabean property
+ *   <li> During marshalling, an instance of a type of a JavaBean property
  *        is converted to an instance of custom value type. To convert, JAXB
  *        binding framework invokes the method specified in
  *        printMethod annotation member. After conversion, the
@@ -32,7 +32,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *
  *   <li> During unmarshalling, a value is first unmarshalled into an
  *        instance of the custom value type. The custom value type is converted
- *        into an instance of the type of the Javabean property. To
+ *        into an instance of the type of the JavaBean property. To
  *        convert, JAXB binding framework invokes the method specified
  *        in the parseMethod.</li> 
  * </ul>
@@ -42,18 +42,18 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <ul>
  *   <li> Writing an custom value type. The custom value type is mapped using
  *        the Java to XML Schema mapping rules. </li>
- *   <li> Write the type conversion methods parseMethod and printMethod.
- *   <li> Specify the custom value type in XmlJavaTypeAdapter.javaType</li>
- *   <li> Specify the parseMethod in XmlJavaTypeAdapter.parseMethod</li>
- *   <li> Specify the printMethod in XmlJavaTypeAdapter.printMethod</li>
+ *   <li> Write the type conversion methods <tt>parseMethod</tt> and <tt>printMethod</tt>.
+ *   <li> Specify the custom value type in <tt>&#64;XmlJavaTypeAdapter.javaType()</tt></li>
+ *   <li> Specify the parseMethod in <tt>&#64;XmlJavaTypeAdapter.parseMethod()</tt></li>
+ *   <li> Specify the printMethod in <tt>&#64;XmlJavaTypeAdapter.printMethod()</tt></li>
  * </ul>
  *
  * 
- * <p><b>Example:</b> Customized mapping of HashMap</p>
+ * <p><b>Example:</b> Customized mapping of </tt>HashMap</tt></p>
  * <p>
- * The following example illustrates the use of XmlJavaTypeAdapter
+ * The following example illustrates the use of <tt>&#64;XmlJavaTypeAdapter</tt>
  * annotation by using an custom value type to customize the mapping of a
- * HashMap.
+ * <tt>HashMap</tt>.
  * </p>
  * 
  * <pre>
@@ -105,7 +105,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *       &lt;xs:attribute name="key" type="xs:int"/>
  *     &lt;/xs:complexType>
  *
- *     &lt;<xs:element name="hashmap" type="myHashMapType"/>
+ *     &lt;xs:element name="hashmap" type="myHashMapType"/>
  *
  * </pre>
  * Thus, with the custom value type installed, the XML serialized form for
@@ -122,6 +122,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
+ * @version $Revision: 1.2 $
  */
 
 @Retention(RUNTIME) @Target({FIELD,METHOD,TYPE,PACKAGE})
@@ -132,7 +133,7 @@ public @interface XmlJavaTypeAdapter {
     java.lang.Class javaType();
 
     /** 
-     * Name of a static method that converts a Javabean property type
+     * Name of a static method that converts a JavaBean property type
      * to a custom value type.
      * 
      */
@@ -140,7 +141,7 @@ public @interface XmlJavaTypeAdapter {
 
     /** 
      * Name of a static method that converts a custom value type to
-     * Javabean property type.
+     * JavaBean property type.
      *
     */
     String parseMethod();

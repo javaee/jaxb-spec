@@ -12,14 +12,14 @@ import static java.lang.annotation.RetentionPolicy.*;
 
 /**
  * <p>
- * Maps a Javabean property to a XML Schema attribute. 
+ * Maps a JavaBean property to a XML Schema attribute. 
  *
  * <p> <b>Usage</b> </p>
  * <p>
  * The <tt>@XmlAttribute</tt> annotation can be used with the
  * following program elements: 
  * <ul> 
- *   <li> Javabean property </li>
+ *   <li> JavaBean property </li>
  *   <li> public non final, non static field </li>
  * </ul>
  *
@@ -28,14 +28,14 @@ import static java.lang.annotation.RetentionPolicy.*;
  *
  * The usage is subject to the following constraints:
  * <ul>
- *   <li> The type of the Javabean property must be mapped to a
+ *   <li> The type of the JavaBean property must be mapped to a
  *        XML Schema simple type.</li>
  *   <li> The only other mapping annotations allowed with
  *        <tt>@XmlAttribute</tt> are: <tt>@XmlID</tt></li>
  * </ul>
  * </p>
  *
- * <p> <b>Example: </b>Map a Javabean property to an XML attribute.</p>
+ * <p> <b>Example: </b>Map a JavaBean property to an XML attribute.</p>
  * <pre>
  *     //Example: Code fragment
  *     public class USPrice { 
@@ -45,14 +45,15 @@ import static java.lang.annotation.RetentionPolicy.*;
  *     }
  *
  *     &lt;!-- Example: XML Schema fragment -->
- *     &lt;xs:complexType name="USPrice"/>
- *       &lt;xs:sequence/>
- *       &lt;/xs:sequence/>
+ *     &lt;xs:complexType name="USPrice">
+ *       &lt;xs:sequence>
+ *       &lt;/xs:sequence>
  *       &lt;xs:attribute name="price"/>
- *     &lt;xs:simpleType/>
+ *     &lt;xs:complexType>
  * </pre>
  *
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
+ * @version $Revision: 1.2 $
  * @see XmlType
  * @since JAXB2.0
  */
@@ -61,14 +62,14 @@ import static java.lang.annotation.RetentionPolicy.*;
 public @interface XmlAttribute {
     /**
      * Name of the XML Schema attribute. By default, the XML Schema
-     * attribute name is derived from the Javabean property name.
+     * attribute name is derived from the JavaBean property name.
      *
      */
     String name() default "";
  
     /**
      * Specifies if the XML Schema attribute is optional or
-     * required. If true, then the Javabean property is mapped to a
+     * required. If true, then the JavaBean property is mapped to a
      * XML Schema attribute that is required. Otherwise it is mapped
      * to a XML Schema attribute that is optional.
      *
@@ -77,7 +78,7 @@ public @interface XmlAttribute {
 
     /**
      * Specifies the XML target namespace of the XML Schema
-     * attribute.<b>TBD:</b>
+     * attribute.
      * 
      */
     String targetNamespace() default "##default" ;

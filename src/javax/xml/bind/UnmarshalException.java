@@ -17,7 +17,7 @@ package javax.xml.bind;
  * ValidationEventHandler.handleEvent(ValidationEvent)}.
  * 
  * @author <ul><li>Ryan Shoemaker, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @see JAXBException
  * @see Unmarshaller
  * @see ValidationEventHandler

@@ -11,7 +11,7 @@ import java.io.PrintWriter;
  * This is the root exception class for all JAXB exceptions.
  *
  * @author <ul><li>Ryan Shoemaker, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.1 $ $Date: 2004-06-11 20:42:29 $
+ * @version $Revision: 1.2 $ $Date: 2004-06-14 21:23:03 $
  * @see JAXBContext
  * @see Marshaller
  * @see Unmarshaller
