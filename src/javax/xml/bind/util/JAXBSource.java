@@ -4,12 +4,6 @@
  */
 package javax.xml.bind.util;
 
-import java.io.IOException;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.transform.sax.SAXSource;
-
 import org.xml.sax.ContentHandler;
 import org.xml.sax.DTDHandler;
 import org.xml.sax.EntityResolver;
@@ -21,6 +15,12 @@ import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.ext.LexicalHandler;
 import org.xml.sax.helpers.XMLFilterImpl;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.transform.sax.SAXSource;
+import java.io.IOException;
 
 /**
  * JAXP {@link javax.xml.transform.Source} implementation
@@ -138,10 +138,18 @@ public class JAXBSource extends SAXSource {
     // it just parse the contentObject.
     private final XMLReader pseudoParser = new XMLReader() {
         public boolean getFeature(String name) throws SAXNotRecognizedException {
+            if(name.equals("http://xml.org/sax/features/namespaces"))
+                return true;
+            if(name.equals("http://xml.org/sax/features/namespace-prefixes"))
+                return false;
             throw new SAXNotRecognizedException(name);
         }
 
         public void setFeature(String name, boolean value) throws SAXNotRecognizedException {
+            if(name.equals("http://xml.org/sax/features/namespaces") && value)
+                return;
+            if(name.equals("http://xml.org/sax/features/namespace-prefixes") && !value)
+                return;
             throw new SAXNotRecognizedException(name);
         }
 
@@ -159,7 +167,7 @@ public class JAXBSource extends SAXSource {
             }
             throw new SAXNotRecognizedException(name);
         }
-        
+
         private LexicalHandler lexicalHandler;
 
         // we will store this value but never use it by ourselves.
@@ -183,7 +191,7 @@ public class JAXBSource extends SAXSource {
         // but JAXB doesn't. So this repeater will sit between those
         // two components.
         private XMLFilterImpl repeater = new XMLFilterImpl();
-        
+
         public void setContentHandler(ContentHandler handler) {
             repeater.setContentHandler(handler);
         }
@@ -206,7 +214,7 @@ public class JAXBSource extends SAXSource {
         public void parse(String systemId) throws IOException, SAXException {
             parse();
         }
-        
+
         public void parse() throws SAXException {
             // parses a content object by using the given marshaller
             // SAX events will be sent to the repeater, and the repeater
@@ -215,22 +223,22 @@ public class JAXBSource extends SAXSource {
                 marshaller.marshal( contentObject, repeater );
             } catch( JAXBException e ) {
                 // wrap it to a SAXException
-                SAXParseException se = 
+                SAXParseException se =
                     new SAXParseException( e.getMessage(),
                         null, null, -1, -1, e );
-                        
+
                 // if the consumer sets an error handler, it is our responsibility
                 // to notify it.
                 if(errorHandler!=null)
                     errorHandler.fatalError(se);
-                
+
                 // this is a fatal error. Even if the error handler
                 // returns, we will abort anyway.
                 throw se;
             }
         }
     };
-    
+
     /**
      * Hook to throw exception from the middle of a contructor chained call
      * to this
