@@ -36,8 +36,8 @@ import static java.lang.annotation.RetentionPolicy.*;
  *        annotated with <tt>&#64;XmlID</tt>.</li>
  *  
  *   <li> The only additional mapping annotations that can be used
- *        with <tt>@xs:IDREF</tt> are: <tt>@XmlElement</tt> and
- *        <tt>@XmlAttribute</tt>.</li>
+ *        with <tt>@xs:IDREF</tt> are: <tt>@XmlElement</tt>,
+ *        <tt>@XmlAttribute</tt> and <tt>@XmlElements</tt>.</li>  
  *
  * <p>See "Package Specification" in javax.xml.bind.package javadoc for
  * additional common information.</p>
@@ -191,33 +191,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *     &lt;/xs:complexType> 
  * </pre>
  *
- * <p><b>Example 4: </b> Mapping a parameterized List to repeating
- * element of type IDREF.
- *
- * <p> The difference between this example and Example 3 is that the
- *   type of the field is a parameterized list List&lt;Customer>. So the 
- *   java->schema mapping remains the same but runtime behavior is
- *   different. TBD: Update with runtime semantics. </p>
- *
- * <pre>
- *     // Code fragment
- *     public class Shipping {
- *         &#64;XmlIDREF
- *         &#64;XmlElement(name="Alice")
- *             public List<Customer> customers;
- *     }
- *
- *     &lt;!-- XML schema fragment -->
- *     &lt;xs:complexType name="Shipping">
- *       &lt;xs:sequence>
- *         &lt;xs:choice minOccurs="0" maxOccurs="unbounded">
- *           &lt;xs:element name="Alice" type="xs:IDREF"/>
- *         &lt;/xs:choice>
- *       &lt;/xs:sequence>
- *     &lt;/xs:complexType> 
- * </pre>
- *
- * <p><b>Example 5: </b> Mapping a List to a list of elements of type IDREF.
+ * <p><b>Example 4: </b> Mapping a List to a list of elements of type IDREF.
  * <pre>
  *     //Code fragment
  *     public class Shipping {
@@ -241,7 +215,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * @author Sekhar Vajjhala, Sun Microsystems, Inc. 
  * @see XmlID
  * @since JAXB2.0
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 @Retention(RUNTIME) @Target({FIELD, METHOD})
