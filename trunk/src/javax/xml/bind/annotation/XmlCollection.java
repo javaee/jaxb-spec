@@ -28,7 +28,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * following program elements: 
  * <ul> 
  *   <li> a JavaBean property </li>
- *   <li> a public non final, non static field </li>
+ *   <li> field </li>
  * </ul>
  * 
  * <p>See "Package Specification" in javax.xml.bind.package javadoc for
@@ -186,7 +186,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @see XmlCollectionItem
  * @see XmlJavaTypeAdapter
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  * @since JAXB2.0
  */
 
