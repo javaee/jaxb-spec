@@ -5,15 +5,22 @@
 
 package javax.xml.bind;
 
-import javax.xml.transform.Source;
-import java.io.InputStream;
-import java.io.IOException;
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Properties;
-import java.util.StringTokenizer;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.URL;
+import java.util.Map;
+import java.util.Properties;
+import java.util.StringTokenizer;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static javax.xml.bind.JAXBContext.JAXB_CONTEXT_FACTORY;
 
 //import java.lang.reflect.InvocationTargetException;
 
@@ -24,90 +31,30 @@ import java.lang.reflect.Method;
  * This code is designed to implement the JAXB 1.0 spec pluggability feature
  *
  * @author <ul><li>Ryan Shoemaker, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  * @see JAXBContext
  */
 class ContextFinder {
-    /** Temp debug code - this will be removed after we test everything
-     */
-    private static boolean debug = false;
+    private static final Logger logger;
     static {
-        // Use try/catch block to support applets
+        logger = Logger.getLogger("javax.xml.bind");
         try {
-            debug = System.getProperty("jaxb.debug") != null;
-        } catch (Exception x) {
-        }
-    }
-
-    private static void debugPrintln(String msg) {
-        if (debug) {
-            System.err.println("JAXB: " + msg);
-        }
-    }
-
-    /**
-     * Create an instance of a class using the specified ClassLoader
-     */
-    static Object newInstance( String contextPath, 
-                               String className, 
-                               ClassLoader classLoader )
-        throws JAXBException
-    {
-        try {
-            Class spiClass;
-            if (classLoader == null) {
-                spiClass = Class.forName(className);
+            if (System.getProperty("jaxb.debug", null) != null) {
+                // disconnect the logger from a bigger framework (if any)
+                // and take the matters into our own hands
+                logger.setUseParentHandlers(false);
+                logger.setLevel(Level.ALL);
+                ConsoleHandler handler = new ConsoleHandler();
+                handler.setLevel(Level.ALL);
+                logger.addHandler(handler);
             } else {
-                spiClass = classLoader.loadClass(className);
+                // don't change the setting of this logger
+                // to honor what other frameworks
+                // have done on configurations.
             }
-            
-            /*
-             * javax.xml.bind.context.factory points to a class which has a 
-             * static method called 'createContext' that takes a single string 
-             * argument and returns a javax.xml.JAXBContext.
-             *
-             * add exception handling
-             *
-             */
-            Class paramTypes[] = {
-                java.lang.String.class,
-                ClassLoader.class
-            };            
-            Method m = spiClass.getMethod( "createContext", paramTypes );
-            
-            Object invocationParams[] = {
-                contextPath,
-                classLoader
-            };
-            
-            // In the RI, this is equivalent to:
-            // com.sun.xml.bind.ContextFactory.createContext( contextPath )
-            return m.invoke( null, invocationParams );
-        } catch (ClassNotFoundException x) {
-            throw new JAXBException(
-                Messages.format( Messages.PROVIDER_NOT_FOUND, className ),
-                x);
-        } catch (InvocationTargetException x) {
-            handleInvocationTargetException(x);
-            // for other exceptions, wrap the internal target exception
-            // with a JAXBException
-            Throwable e = x;
-            if(x.getTargetException()!=null)
-                e = x.getTargetException();
-
-            return new JAXBException( Messages.format( Messages.COULD_NOT_INSTANTIATE, className, e ), e );
-        } catch (RuntimeException x) {
-            // avoid wrapping RuntimeException to JAXBException,
-            // because it indicates a bug in this code.
-            throw x;
-        } catch (Exception x) {
-            // can't catch JAXBException because the method is hidden behind
-            // reflection.  Root element collisions detected in the call to
-            // createContext() are reported as JAXBExceptions - just re-throw it
-            // some other type of exception - just wrap it
-            throw new JAXBException(
-                Messages.format( Messages.COULD_NOT_INSTANTIATE, className, x ),
-                x);
+        } catch(Throwable t) {
+            // just to be extra safe. in particular System.getProperty may throw
+            // SecurityException.
         }
     }
 
@@ -131,67 +78,148 @@ class ContextFinder {
 
 
     /**
-     * Finds the implementation Class object. Main entry point.
-     * 
-     * @return Class object of factory, never null
+     * Determine if two types (JAXBContext in this case) will generate a ClassCastException.
      *
-     * @param factoryId Name of the factory to find, same as a property name
-     * @param classLoader
-     *      Used to locate class files and resource files.
-     * 
-     * @exception JAXBException
+     * For example, (targetType)originalType
+     *
+     * @param originalType
+     *          The Class object of the type being cast
+     * @param targetType
+     *          The Class object of the type that is being cast to
+     * @throws JAXBException
+     *          If the cast would fail
      */
-    static Object find(String factoryId, String contextPath, ClassLoader classLoader ) throws JAXBException
-    {
-        Object instance = null;
-        
-        instance = searchcontextPath( contextPath, factoryId, classLoader );
-        if( instance == null ) {
-            throw new JAXBException( 
-                Messages.format( Messages.PROVIDER_NOT_FOUND, factoryId ) );
-        }
-        
-        return instance;
+    private static void handleClassCastException(Class originalType, Class targetType) throws JAXBException {
+        final URL targetTypeURL = which(targetType);
+
+        throw new JAXBException(Messages.format(Messages.ILLEGAL_CAST,
+                // we don't care where the impl class is, we want to know where JAXBContext lives in the impl
+                // class' ClassLoader
+                originalType.getClass().getClassLoader().getResource("javax/xml/bind/JAXBContext.class").toString(),
+                targetTypeURL.toString()));
     }
 
-    static JAXBContext find( Source[] extBindings, Class[] classes ) throws JAXBException {
-        // TODO: decide the look up order and implement it
-        // this is just a mock up
-        BufferedReader r = new BufferedReader(new InputStreamReader(
-                classes[0].getClassLoader().getResourceAsStream("META-INF/services/jaxb")));
-        String className;
+    /**
+     * Create an instance of a class using the specified ClassLoader
+     */
+    static JAXBContext newInstance( String contextPath,
+                               String className, 
+                               ClassLoader classLoader,
+                               Map properties )
+        throws JAXBException
+    {
         try {
-            className = r.readLine().trim();
-        } catch (IOException e) {
-            throw new JAXBException(e);
-        }
+            Class spiClass;
+            if (classLoader == null) {
+                spiClass = Class.forName(className);
+            } else {
+                spiClass = classLoader.loadClass(className);
+            }
 
+            /*
+             * javax.xml.bind.context.factory points to a class which has a
+             * static method called 'createContext' that
+             * returns a javax.xml.JAXBContext.
+             */
+
+            Object context = null;
+
+            // first check the method that takes Map as the third parameter.
+            // this is added in 2.0.
+            try {
+                Method m = spiClass.getMethod("createContext",String.class,ClassLoader.class,Map.class);
+                // any failure in invoking this method would be considered fatal
+                context = m.invoke(null,contextPath,classLoader,properties);
+            } catch (NoSuchMethodException e) {
+                ; // it's not an error for the provider not to have this method.
+            }
+
+            if(context==null) {
+                // try the old method that doesn't take properties. compatible with 1.0.
+                // it is an error for an implementation not to have both forms of the createContext method.
+                Method m = spiClass.getMethod("createContext",String.class,ClassLoader.class);
+                // any failure in invoking this method would be considered fatal
+                context = m.invoke(null,contextPath,classLoader);
+            }
+
+            if(!(context instanceof JAXBContext)) {
+                // the cast would fail, so generate an exception with a nice message
+                handleClassCastException(context.getClass(), JAXBContext.class);
+            }
+            return (JAXBContext)context;
+        } catch (ClassNotFoundException x) {
+            throw new JAXBException(
+                Messages.format( Messages.PROVIDER_NOT_FOUND, className ),
+                x);
+        } catch (InvocationTargetException x) {
+            handleInvocationTargetException(x);
+            // for other exceptions, wrap the internal target exception
+            // with a JAXBException
+            Throwable e = x;
+            if(x.getTargetException()!=null)
+                e = x.getTargetException();
+
+            throw new JAXBException( Messages.format( Messages.COULD_NOT_INSTANTIATE, className, e ), e );
+        } catch (RuntimeException x) {
+            // avoid wrapping RuntimeException to JAXBException,
+            // because it indicates a bug in this code.
+            throw x;
+        } catch (Exception x) {
+            // can't catch JAXBException because the method is hidden behind
+            // reflection.  Root element collisions detected in the call to
+            // createContext() are reported as JAXBExceptions - just re-throw it
+            // some other type of exception - just wrap it
+            throw new JAXBException(
+                Messages.format( Messages.COULD_NOT_INSTANTIATE, className, x ),
+                x);
+        }
+    }
+
+
+    /**
+     * Create an instance of a class using the specified ClassLoader
+     */
+    static JAXBContext newInstance(
+                              Class[] classes,
+                              Map properties,
+                              String className) throws JAXBException {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         Class spi;
         try {
-            if(cl!=null)
+            logger.fine("Trying to load "+className);
+            if (cl != null)
                 spi = cl.loadClass(className);
             else
                 spi = Class.forName(className);
-        } catch( ClassNotFoundException e ) {
+        } catch (ClassNotFoundException e) {
             throw new JAXBException(e);
         }
 
-        Method m = null;
+        if(logger.isLoggable(Level.FINE)) {
+            // extra check to avoid costly which operation if not logged
+            logger.fine("loaded "+className+" from "+which(spi));
+        }
+
+        Method m;
         try {
-            m = spi.getMethod( "createContext", Source[].class, Class[].class );
+            m = spi.getMethod("createContext", Class[].class, Map.class);
         } catch (NoSuchMethodException e) {
             throw new JAXBException(e);
         }
         try {
-            return (JAXBContext)m.invoke(null,extBindings,classes);
+            Object context = m.invoke(null, classes, properties);
+            if(!(context instanceof JAXBContext)) {
+                // the cast would fail, so generate an exception with a nice message
+                handleClassCastException(context.getClass(), JAXBContext.class);
+            }
+            return (JAXBContext)context;
         } catch (IllegalAccessException e) {
             throw new JAXBException(e);
         } catch (InvocationTargetException e) {
             handleInvocationTargetException(e);
 
             Throwable x = e;
-            if(e.getTargetException()!=null)
+            if (e.getTargetException() != null)
                 x = e.getTargetException();
 
             throw new JAXBException(x);
@@ -199,79 +227,148 @@ class ContextFinder {
     }
 
 
-    /**
-     * Walk the context path searching for jaxb.properties files containing
-     * the javax.xml.bind.context.factory property.
-     * 
-     * @return Object 
-     *      return an instace of the class or null if the property wasn't found.
-     * @throws JAXBException 
-     *      if there are any missing jaxb.property files on the context path
-     *      or there are any differences in the values of the factory class
-     *      names.
-     */
-    private static Object searchcontextPath( String contextPath,
-                                             String factoryId,                                            
-                                             ClassLoader classLoader )
-        throws JAXBException {
-            
+    static JAXBContext find(String factoryId, String contextPath, ClassLoader classLoader, Map properties ) throws JAXBException {
 
+        // TODO: do we want/need another layer of searching in $java.home/lib/jaxb.properties like JAXP?
 
-        // String pathSep = File.pathSeparator;
-        // since contextPath contains package names and not file paths, it
-        // doesn't matter which pathSeparator the client uses.
-        String pathSep = ":";  
-        
-        // don't use File.separatorChar because there is an issue with looking
-        // up resources that are contained in jar files on win32.  If you try
-        // to lookup "a\b\foo.properties" in a jar on the classpath, it will
-        // fail, but if you lookup "a/b/foo.properties", it will succeed.
-        //char fileSep = File.separatorChar;
-        char fileSep = '/';
+        final String jaxbContextFQCN = JAXBContext.class.getName();
 
-        String propFileName = null;
-        String packageName = null;
-        StringTokenizer tokens = new StringTokenizer( contextPath, pathSep );
-        String factoryClassName = null;
+        // search context path for jaxb.properties first
+        StringBuilder propFileName;
+        StringTokenizer packages = new StringTokenizer( contextPath, ":" );
+        String factoryClassName;
 
-        while( tokens.hasMoreTokens() ) {
-            // com.acme.foo
-            packageName = tokens.nextToken();
-            
-            // com/acme/foo/jaxb.properties
-            propFileName = packageName.replace( '.', fileSep ).
-                concat( fileSep + "jaxb.properties" );
-            debugPrintln( "looking for " + propFileName );
+        logger.fine("Searching jaxb.properties");
 
-            Properties props = loadJAXBProperties( classLoader, propFileName );
-            if( props == null ) {
-                throw new JAXBException( 
-                    Messages.format( Messages.CANT_FIND_PROPERTIES_FILE, 
-                                     packageName ) );
+        while( packages.hasMoreTokens() ) {
+            String packageName = packages.nextToken(":").replace('.','/');
+            // com.acme.foo - > com/acme/foo/jaxb.properties
+             propFileName = new StringBuilder().append(packageName).append("/jaxb.properties");
+
+            Properties props = loadJAXBProperties( classLoader, propFileName.toString() );
+            if (props == null) {
+                continue;
             } else {
-                debugPrintln( "found it, looking for prop" );
-                if( props.containsKey( factoryId ) ) {
-                    debugPrintln( "found it, comparing" );
-                    if( factoryClassName == null ) {
-                        debugPrintln( "first occurrence" );
-                        factoryClassName = props.getProperty( factoryId );
-                    } else if( !factoryClassName.equals( props.getProperty( factoryId ) ) ) {
-                        throw new JAXBException( 
-                            Messages.format( Messages.CANT_MIX_PROVIDERS ) );
-                    }
+                if (props.containsKey(factoryId)) {
+                    factoryClassName = props.getProperty(factoryId);
+                    return newInstance( contextPath, factoryClassName, classLoader, properties );
                 } else {
-                    throw new JAXBException( 
-                        Messages.format( Messages.MISSING_PROPERTY,
-                                         packageName,
-                                         factoryId ) );
+                    throw new JAXBException(Messages.format(Messages.MISSING_PROPERTY, packageName, factoryId));
                 }
             }
         }
 
-        debugPrintln( "success, instantiating: " + factoryClassName );
-        return newInstance( contextPath, factoryClassName, classLoader );
+        logger.fine("Searching the system property");
+
+        // search for a system property second (javax.xml.bind.JAXBContext)
+        factoryClassName = System.getProperty(jaxbContextFQCN, null);
+        if(  factoryClassName != null ) {
+            return newInstance( contextPath, factoryClassName, classLoader, properties );
+        }
+
+        logger.fine("Searching META-INF/services");
+
+        // search META-INF services next
+        BufferedReader r;
+        try {
+            final StringBuilder resource = new StringBuilder().append("META-INF/services/").append(jaxbContextFQCN);
+            final InputStream resourceStream =
+                    classLoader.getResourceAsStream(resource.toString());
+            
+            if (resourceStream != null) {
+                r = new BufferedReader(new InputStreamReader(resourceStream, "UTF-8"));
+                factoryClassName = r.readLine().trim();
+                return newInstance(contextPath, factoryClassName, classLoader, properties);
+            } else {
+                logger.fine("Unable to load:" + resource.toString());
+            }
+        } catch (UnsupportedEncodingException e) {
+            // should never happen
+            throw new JAXBException(e);
+        } catch (IOException e) {
+            throw new JAXBException(e);
+        }
+
+        // else no provider found
+        throw new JAXBException(Messages.format(Messages.PROVIDER_NOT_FOUND_NO_ARGS));
     }
-    
+
+    // TODO: log each step in the look up process
+    static JAXBContext find( Class[] classes, Map properties ) throws JAXBException {
+
+        // TODO: do we want/need another layer of searching in $java.home/lib/jaxb.properties like JAXP?
+
+        final String jaxbContextFQCN = JAXBContext.class.getName();
+        String factoryClassName;
+
+        // search for jaxb.properties in the class loader of each class first
+        for (Class c : classes) {
+            ClassLoader classLoader = c.getClassLoader();
+            Package pkg = c.getPackage();
+            if(pkg==null)
+                continue;       // this is possible for primitives and arrays
+            String packageName = pkg.getName().replace('.', '/');
+
+            // TODO: do we want to optimize away searching the same package?  org.Foo, org.Bar, com.Baz
+            //       classes from the same package might come from different class loades, so it might be a bad idea
+
+            // TODO: it's easier to look things up from the class
+            // c.getResourceAsStream("jaxb.properties");
+
+            // build the resource name and use the property loader code
+            StringBuilder propFileName = new StringBuilder().append(packageName).append("/jaxb.properties");
+
+            Properties props = loadJAXBProperties(classLoader, propFileName.toString());
+            if (props == null) {
+                continue;
+            } else {
+                if (props.containsKey(JAXB_CONTEXT_FACTORY)) {
+                    // trim() seems redundant, but adding to satisfy customer complaint
+                    factoryClassName = props.getProperty(JAXB_CONTEXT_FACTORY).trim();
+                    return newInstance(classes, properties, factoryClassName);
+                } else {
+                    throw new JAXBException(Messages.format(Messages.MISSING_PROPERTY, packageName, JAXB_CONTEXT_FACTORY));
+                }
+            }
+        }
+
+        // search for a system property second (javax.xml.bind.JAXBContext)
+        factoryClassName = System.getProperty(jaxbContextFQCN, null);
+        if(  factoryClassName != null ) {
+            return newInstance( classes, properties, factoryClassName );
+        }
+
+        // search META-INF services next
+        BufferedReader r;
+        try {
+            final String resource = new StringBuilder("META-INF/services/").append(jaxbContextFQCN).toString();
+            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+            URL resourceURL;
+            if(classLoader==null)
+                resourceURL = ClassLoader.getSystemResource(resource);
+            else
+                resourceURL = classLoader.getResource(resource);
+
+            if (resource != null) {
+                logger.fine("Reading "+resourceURL);
+                r = new BufferedReader(new InputStreamReader(resourceURL.openStream(), "UTF-8"));
+                factoryClassName = r.readLine().trim();
+                return newInstance(classes, properties, factoryClassName);
+            } else {
+                logger.fine("Unable to find: " + resource);
+            }
+        } catch (UnsupportedEncodingException e) {
+            // should never happen
+            throw new JAXBException(e);
+        } catch (IOException e) {
+            throw new JAXBException(e);
+        }
+
+        // else no provider found
+        throw new JAXBException(Messages.format(Messages.PROVIDER_NOT_FOUND_NO_ARGS));
+    }
+
+
     private static Properties loadJAXBProperties( ClassLoader classLoader,
                                                   String propFileName ) 
         throws JAXBException {
@@ -279,24 +376,64 @@ class ContextFinder {
         Properties props = null;
                                                     
         try {
-            InputStream is = 
-                classLoader.getResourceAsStream( propFileName );
+            URL url;
+            if(classLoader==null)
+                url = ClassLoader.getSystemResource(propFileName);
+            else
+                url = classLoader.getResource( propFileName );
 
-            if( is != null ) {
-                if (debug) {
-                    // extra debug flag check to avoid redundant getResource invocation
-                    debugPrintln("loading props from "+classLoader.getResource(propFileName).toExternalForm() );
-                }
+            if( url != null ) {
+                logger.fine("loading props from "+url);
                 props = new Properties();
+                InputStream is = url.openStream();
                 props.load( is );
                 is.close();
             } 
         } catch( IOException ioe ) {
-            if( debug ) ioe.printStackTrace();
+            logger.log(Level.FINE,"Unable to load "+propFileName,ioe);
             throw new JAXBException( ioe.toString(), ioe );
         }
         
         return props;
     }
-    
+
+
+    /**
+     * Search the given ClassLoader for an instance of the specified class and
+     * return a string representation of the URL that points to the resource.
+     *
+     * @param clazz
+     *          The class to search for
+     * @param loader
+     *          The ClassLoader to search.  If this parameter is null, then the
+     *          system class loader will be searched
+     * @return
+     *          the URL for the class or null if it wasn't found
+     */
+    static URL which(Class clazz, ClassLoader loader) {
+
+        String classnameAsResource = clazz.getName().replace('.', '/') + ".class";
+
+        if(loader == null) {
+            loader = ClassLoader.getSystemClassLoader();
+        }
+
+        return loader.getResource(classnameAsResource);
+    }
+
+    /**
+     * Get the URL for the Class from it's ClassLoader.
+     *
+     * Convenience method for {@link #which(Class, ClassLoader)}.
+     *
+     * Equivalent to calling: which(clazz, clazz.getClassLoader())
+     *
+     * @param clazz
+     *          The class to search for
+     * @return
+     *          the URL for the class or null if it wasn't found
+     */
+    static URL which(Class clazz) {
+        return which(clazz, clazz.getClassLoader());
+    }
 }
