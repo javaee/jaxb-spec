@@ -14,19 +14,19 @@ import static java.lang.annotation.ElementType.METHOD;
 
 /** 
  * <p>
- * Maps a Javabean property to a reference to an XML element.
+ * Maps a JavaBean property to a XML element derived from property's type.
  * <p>
  * <b>Usage</b>
  * <p>
  * <tt>&#64;XmlElementRef</tt> annotation can be used with a 
- * Javabean property or from within {@link XmlElementRefs}
+ * JavaBean property or from within {@link XmlElementRefs}
  * <p>
- * This annotation dynamically associates an XML element name with the Javabean
- * property. When a Javabean property is annotated with {@link
+ * This annotation dynamically associates an XML element name with the JavaBbean
+ * property. When a JavaBean property is annotated with {@link
  * XmlElement}, the XML element name is statically derived from the
- * Javabean property name. However, when this annotation is used, the
+ * JavaBean property name. However, when this annotation is used, the
  * XML element name is derived from the instance of the type of the
- * Javabean property at runtime.
+ * JavaBean property at runtime.
  *
  * <h3> XML Schema substitution group support </h3>
  * XML Schema allows a XML document author to use XML element names
@@ -45,7 +45,7 @@ import static java.lang.annotation.ElementType.METHOD;
  * element name. The presence of &#64;XmlElementRef annotation on an
  * element property indicates that the element name from <tt>JAXBElement</tt>
  * instance be used instead of deriving an XML element name from the
- * Javabean property name.
+ * JavaBean property name.
  * 
  * <p>
  * The usage is subject to the following constraints:
@@ -187,13 +187,13 @@ public @interface XmlElementRef {
      * The Java type being referenced.
      * <p>
      * If the value is DEFAULT.class, the type is inferred from the
-     * the type of the Javabean property.
+     * the type of the JavaBean property.
      */
     Class type() default DEFAULT.class;
 
     /**
      * This parameter and {@link #name()} are used to determine the
-     * XML element for the Javabean property.
+     * XML element for the JavaBean property.
      *
      * <p> If <tt>type()</tt> is <tt>JAXBElement.class</tt> , then 
      * <tt>namespace()</tt> and <tt>name()</tt>
