@@ -12,6 +12,10 @@ import static java.lang.annotation.RetentionPolicy.*;
 
 /**
  * <p>
+  * <b> !!!! Note to Reviewers!!!! : </b>
+ * This annotation is being redesigned. The description below is from
+ * JAXB 2.0 ED, 0.40 and hence is outdated.
+ *
  * Adapts the mapping of a Java type with no natural mapping to
  * a XML Schema representation.
  * <p>
@@ -122,7 +126,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 @Retention(RUNTIME) @Target({FIELD,METHOD,TYPE,PACKAGE})
