@@ -4,25 +4,24 @@
  */
 package javax.xml.bind.helpers;
 
-import java.io.File;
-import java.net.URL;
-import java.net.MalformedURLException;
-import javax.xml.parsers.SAXParserFactory;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+
+import javax.xml.bind.*;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParserFactory;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.transform.Source;
+import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.stream.StreamSource;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.PropertyException;
-import javax.xml.bind.UnmarshalException;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.bind.ValidationEventHandler;
-import org.xml.sax.XMLReader;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
+import javax.xml.validation.Schema;
+import java.io.File;
+import java.io.Reader;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * Partial default <tt>Unmarshaller</tt> implementation.
@@ -39,7 +38,7 @@ import org.xml.sax.SAXException;
  * @author <ul>
  *         <li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li>
  *         </ul>
- * @version $Revision: 1.2 $ $Date: 2004-06-14 21:23:10 $
+ * @version $Revision: 1.3 $ $Date: 2005-02-17 21:20:28 $
  * @see javax.xml.bind.Unmarshaller
  * @since JAXB1.0
  */
@@ -50,13 +49,13 @@ public abstract class AbstractUnmarshallerImpl implements Unmarshaller
         new DefaultValidationEventHandler();
     
     /** whether or not the unmarshaller will validate */
-    private boolean validating = false;
+    protected boolean validating = false;
 
     /**
      * XMLReader that will be used to parse a document.
      */
     private XMLReader reader = null;
-    
+
     /**
      * Obtains a configured XMLReader.
      * 
@@ -176,7 +175,18 @@ public abstract class AbstractUnmarshallerImpl implements Unmarshaller
         InputSource isrc = new InputSource( is );
         return unmarshal( isrc );
     }
-    
+
+    public final Object unmarshal( Reader reader ) throws JAXBException {
+        if( reader == null ) {
+            throw new IllegalArgumentException(
+                Messages.format( Messages.MUST_NOT_BE_NULL, "reader" ) );
+        }
+
+        InputSource isrc = new InputSource( reader );
+        return unmarshal( isrc );
+    }
+
+
     private static InputSource streamSourceToInputSource( StreamSource ss ) {
         InputSource is = new InputSource();
         is.setSystemId( ss.getSystemId() );
@@ -347,4 +357,17 @@ public abstract class AbstractUnmarshallerImpl implements Unmarshaller
         throw new UnsupportedOperationException();
     }
 
+    /* (non-Javadoc)
+     * @see javax.xml.bind.Unmarshaller#setSchema(javax.xml.validation.Schema)
+     */
+    public void setSchema(Schema schema) {
+        throw new UnsupportedOperationException();
+    }
+
+    /* (non-Javadoc)
+     * @see javax.xml.bind.Unmarshaller#getSchema()
+     */
+    public Schema getSchema() {
+        throw new UnsupportedOperationException();
+    }
 }
