@@ -210,37 +210,17 @@ import static java.lang.annotation.RetentionPolicy.*;
  *
  *   &lt;!-- XML Schema mapping for USAddress -->
  *   &lt;xs:complexType name="USAddress">
- *     &lt;xs:all>
- *       &lt;xs:element name="name" type="xs:string"/>
+ *     &lt;xs:sequence>
  *       &lt;xs:element name="street" type="xs:string"/>
  *       &lt;xs:element name="city" type="xs:string"/>
  *       &lt;xs:element name="state" type="xs:string"/>
  *       &lt;xs:element name="zip" type="xs:decimal"/>
+ *       &lt;xs:element name="name" type="xs:string"/>
  *     &lt;/xs:all>
  *   &lt;/xs:complexType> 
  * </pre>
  *
- * <p> <b> Example 4: </b> Map a class to a complex type with
- *   xs:sequence with a customized ordering of JavaBean properties. 
- * </p>
- *
- * <pre>
- *   &#64;XmlType(propOrder={"street", "city" , "state", "zip", "name" })
- *   public class USAddress { ...}
- *
- *   &lt;!-- XML Schema mapping for USAddress -->
- *   &lt;xs:complexType name="USAddress">
- *     &lt;xs:all>
- *       &lt;xs:element name="name" type="xs:string"/>
- *       &lt;xs:element name="street" type="xs:string"/>
- *       &lt;xs:element name="city" type="xs:string"/>
- *       &lt;xs:element name="state" type="xs:string"/>
- *       &lt;xs:element name="zip" type="xs:decimal"/>
- *     &lt;/xs:all>
- *   &lt;/xs:complexType>
- * </pre>
- *
- * <p> <b> Example 5: </b> Map a class to a global element with an
+ * <p> <b> Example 4: </b> Map a class to a global element with an
  * anonymous type. 
  * </p>
  * <pre>
@@ -262,7 +242,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *   &lt;/xs:element>
  * </pre>
  *
- * <p> <b> Example 6: </b> Map a property to a local element with
+ * <p> <b> Example 5: </b> Map a property to a local element with
  * anonmyous type. 
  * <pre>
  *   //Example: Code fragment
@@ -291,7 +271,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *   &lt;/xs:complexType> 
  * </pre>
  *
- * <p> <b> Example 7: </b> Map a property to an attribute with
+ * <p> <b> Example 6: </b> Map a property to an attribute with
  * anonmyous type.
  * 
  * <pre>
@@ -329,7 +309,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * @see XmlValue
  * @see XmlSchema
  * @since JAXB2.0
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 @Retention(RUNTIME) @Target({TYPE})
