@@ -8,7 +8,8 @@ import  javax.xml.namespace.QName;
 
 /**
  * Provide access to JAXB xml binding data for a JAXB object.
- * 
+ *
+ * <p>
  * WORK IN PROGRESS:
  * Intially, the intent of this class is to just conceptualize how 
  * a JAXB application developer can access xml binding information, 
@@ -18,11 +19,11 @@ import  javax.xml.namespace.QName;
  * binding information.
  *
  * The factory method to get a <code>JAXBIntrospector</code> instance is 
- * {@link javax.xml.bind.JAXBContext.getJAXBIntrospector()}.
+ * {@link JAXBContext#createJAXBIntrospector()}.
  *
- * @see JAXBContext.getJAXBIntrospector()
+ * @see JAXBContext#createJAXBIntrospector()
  */
-public interface JAXBIntrospector {
+public abstract class JAXBIntrospector {
 
     /** 
      * <p>Return true iff <code>object</code> represents a JAXB xml element.</p>
@@ -36,7 +37,7 @@ public interface JAXBIntrospector {
      *
      * @see #getElementName(Object)
      */
-    boolean isElement(Object object);
+    public abstract boolean isElement(Object object);
 
     /**
      * <p>Get xml element qname for <code>jaxbElement</code>.</p>
@@ -46,5 +47,5 @@ public interface JAXBIntrospector {
      * @return xml element qname associated with jaxbElement;
      *         null if <code>jaxbElement</code> is not a JAXB Element.
      */
-    QName getElementName(Object jaxbElement);
+    public abstract QName getElementName(Object jaxbElement);
 }
