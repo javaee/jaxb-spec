@@ -5,6 +5,8 @@
 
 package javax.xml.bind;
 
+import java.io.Reader;
+
 /**
  * The <tt>Unmarshaller</tt> class governs the process of deserializing XML 
  * data into newly created Java content trees, optionally validating the XML 
@@ -184,10 +186,10 @@ package javax.xml.bind;
  * <b>Validation and Well-Formedness</b><br>
  * <blockquote>
  * <p>
- * A client application can enable or disable the provider's default validation
- * mechanism via the <tt>setValidating</tt> API.  Sophisticated clients can 
- * specify their own validating SAX 2.0 compliant parser and bypass the 
- * provider's default validation mechanism using the 
+ * A client application can enable or disable JAXP 1.3 validation
+ * mechanism via the <tt>setSchema(javax.xml.validation.Schema)</tt> API.  
+ * Sophisticated clients can specify their own validating SAX 2.0 compliant 
+ * parser and bypass the JAXP 1.3 validation mechanism using the 
  * {@link #unmarshal(javax.xml.transform.Source) unmarshal(Source)}  API.
  * 
  * <p>
@@ -207,7 +209,7 @@ package javax.xml.bind;
  * 
  * 
  * @author <ul><li>Ryan Shoemaker, Sun Microsystems, Inc.</li><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Joe Fialli, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.6 $ $Date: 2004-08-13 17:27:30 $
+ * @version $Revision: 1.7 $ $Date: 2005-02-17 21:13:35 $
  * @see JAXBContext
  * @see Marshaller
  * @see Validator
@@ -253,6 +255,28 @@ public interface Unmarshaller {
      *      If the InputStream parameter is null
      */
     public Object unmarshal( java.io.InputStream is ) throws JAXBException;
+
+    /**
+     * Unmarshal XML data from the specified Reader and return the
+     * resulting content tree.  Validation event location information may
+     * be incomplete when using this form of the unmarshal API,
+     * because a Reader does not provide the system ID.
+     *
+     * @param reader the Reader to unmarshal XML data from
+     * @return the newly created root object of the java content tree
+     *
+     * @throws JAXBException
+     *     If any unexpected errors occur while unmarshalling
+     * @throws UnmarshalException
+     *     If the {@link ValidationEventHandler ValidationEventHandler}
+     *     returns false from its <tt>handleEvent</tt> method or the
+     *     <tt>Unmarshaller</tt> is unable to perform the XML to Java
+     *     binding.  See <a href="#unmarshalEx">Unmarshalling XML Data</a>
+     * @throws IllegalArgumentException
+     *      If the InputStream parameter is null
+     * @since 2.0
+     */
+    public Object unmarshal( Reader reader ) throws JAXBException;
 
     /**
      * Unmarshal XML data from the specified URL and return the resulting
@@ -463,11 +487,15 @@ public interface Unmarshaller {
      * own unmarshal-time validation mechanism may wish to turn off the JAXB
      * Provider's default validation mechanism via this API to avoid "double
      * validation".
-     * 
+     * <p>
+     * This method is deprecated as of JAXB 2.0 - please use the new
+     * {@link #setSchema(javax.xml.validation.Schema)} API.
+     *
      * @param validating true if the Unmarshaller should validate during 
      *        unmarshal, false otherwise
      * @throws JAXBException if an error occurred while enabling or disabling
-               validation at unmarshal time
+     *         validation at unmarshal time
+     * @deprecated since 2.0, please see {@link #setSchema(javax.xml.validation.Schema)}
      */
     public void setValidating( boolean validating ) 
         throws JAXBException;
@@ -475,15 +503,18 @@ public interface Unmarshaller {
     /**
      * Indicates whether or not the <tt>Unmarshaller</tt> is configured to 
      * validate during unmarshal operations.
-     *
      * <p>
      * This API returns the state of the JAXB Provider's default unmarshal-time
      * validation mechanism. 
+     * <p>
+     * This method is deprecated as of JAXB 2.0 - please use the new
+     * {@link #getSchema()} API.
      *
      * @return true if the Unmarshaller is configured to validate during 
      *         unmarshal operations, false otherwise
      * @throws JAXBException if an error occurs while retrieving the validating
      *         flag
+     * @deprecated since 2.0, please see {@link #getSchema()}
      */
     public boolean isValidating() 
         throws JAXBException;
@@ -560,6 +591,39 @@ public interface Unmarshaller {
      *      If the name parameter is null
      */
     public Object getProperty( String name ) throws PropertyException;
-    
-        
+
+    /**
+     * Specify the JAXP 1.3 {@link javax.xml.validation.Schema Schema}
+     * object that should be used to validate subsequent unmarshal operations
+     * against.  Passing null into this method will disable validation.
+     * <p>
+     * This method replaces the deprecated {@link #setValidating(boolean) setValidating(boolean)}
+     * API.
+     *
+     * @param schema Schema object to validate unmarshal operations against or null to disable validation
+     * @since 2.0
+     */
+    public void setSchema( javax.xml.validation.Schema schema );
+
+    /**
+     * Get the JAXP 1.3 {@link javax.xml.validation.Schema Schema} object
+     * being used to perform unmarshal-time validation.  If there is no
+     * Schema set on the unmarshaller, then this method will return null
+     * indicating that unmarshal-time validation will not be performed.
+     * <p>
+     * This method provides replacement functionality for the deprecated
+     * {@link #isValidating()} API as well as access to the Schema object.
+     * To determine if the Unmarshaller has validation enabled, simply
+     * test the return type for null:
+     * <p>
+     * <code>
+     *   boolean isValidating = u.getSchema()!=null;
+     * </code>
+     * 
+     * @return the Schema object being used to perform unmarshal-time
+     *      validation or null if not present
+     * @since 2.0
+     */
+    public javax.xml.validation.Schema getSchema();
+
 }
