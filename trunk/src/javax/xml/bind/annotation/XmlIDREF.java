@@ -12,33 +12,33 @@ import static java.lang.annotation.RetentionPolicy.*;
 
 /**
  * <p>
- * Maps a Javabean property to XML Schema type <tt>xs:IDREF</tt>.
+ * Maps a JavaBean property to XML Schema type <tt>xs:IDREF</tt>.
  * 
  * <p>
  * To preserve referential integrity of an object graph across XML
  * serialization followed by a XML deserialization, requires an object
  * reference to be marshalled by reference or containment
  * appropriately. Annotations <tt>&#64;XmlID</tt> and <tt>&#64;XmlIDREF</tt>
- * together allow a customized mapping of a Javabean property's
+ * together allow a customized mapping of a JavaBean property's
  * type by containment or reference. 
  *
  * <p><b>Usage</b> </p>
  * The <tt>&#64;XmlIDREF</tt> annotation can be used with the following
  * program elements: 
  * <ul> 
- *   <li> a Javabean property </li>
+ *   <li> a JavaBean property </li>
  *   <li> a public non final, non static field </li>
  * </ul>
  * 
  * <p> The usage is subject to the following constraints:
  * <ul>
- *   <li> Javabean property's type must contain a Javabean property
+ *   <li> JavaBean property's type must contain a JavaBean property
  *        annotated with <tt>&#64;XmlID</tt>.</li>
  *  
  *   <li> The only additional mapping annotations that can be used
  *        with <tt>@xs:IDREF</tt> are: <tt>@XmlElement</tt> and
  *        <tt>@XmlAttribute</tt>.</li>
- *   <li>If the Javabean property is a read/write property, then the
+ *   <li>If the JavaBean property is a read/write property, then the
  *       <tt>@XmlIDREF</tt> can be used to annotate either the getter
  *       or setter method but not both.</li> 
  *
@@ -46,7 +46,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * additional common information.</p>
  *
  * </ul>
- * <p><b>Example:</b> Map a Javabean property to <tt>xs:IDREF</tt>
+ * <p><b>Example:</b> Map a JavaBean property to <tt>xs:IDREF</tt>
  *   (i.e. by reference rather than by containment)</p>
  * <pre>
  *
@@ -77,7 +77,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *    // By default, Customer maps to complex type <tt>xs:Customer</tt>
  *    public class Customer {
  *        
- *        // map Javabean property type to <tt>@xs:ID</tt>
+ *        // map JavaBean property type to <tt>xs:ID</tt>
  *        &#64;XmlID public String getCustomerID();
  *        public void setCustomerID(String id);
  *
@@ -178,6 +178,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * @author Sekhar Vajjhala, Sun Microsystems, Inc. 
  * @see XmlID
  * @since JAXB2.0
+ * @version $Revision: 1.2 $
  */
 
 @Retention(RUNTIME) @Target({FIELD, METHOD})

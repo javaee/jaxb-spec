@@ -39,7 +39,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *
  * A class maps to either a XML Schema complex type or a XML Schema simple
  * type. The XML Schema type is derived based on the
- * mapping of Javabean properties and fields contained within the class. 
+ * mapping of JavaBean properties and fields contained within the class. 
  * <p>
  * <b> Mapping to XML Schema Complex Type </b>
  * <ul>
@@ -71,7 +71,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <ul>
  *   <li> ->    : represents a mapping </li>
  *   <li> [x]+  : one or more occurances of x </li>
- *   <li> [ <tt>@XmlValue</tt> property ]: Javabean property annotated with
+ *   <li> [ <tt>@XmlValue</tt> property ]: JavaBean property annotated with
  *         <tt>@XmlValue</tt></li>
  *   <li> X     : don't care
  * </ul>
@@ -185,7 +185,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * &lt;/xs:complexType>
  *</pre>
  * <p> <b> Example 3: </b> Map a class to a complex type with
- *   xs:sequence with a customized ordering of Javabean properties. 
+ *   xs:sequence with a customized ordering of JavaBean properties. 
  * </p>
  *
  * <pre>
@@ -205,14 +205,14 @@ import static java.lang.annotation.RetentionPolicy.*;
  * </pre>
  *
  * <p> <b> Example 4: </b> Map a class to a complex type with
- *   xs:sequence with a customized ordering of Javabean properties. 
+ *   xs:sequence with a customized ordering of JavaBean properties. 
  * </p>
  *
  * <pre>
  *   &#64;XmlType(propOrder={"street", "city" , "state", "zip", "name" })
  *   public class USAddress { ...}
  *
- *   &lt;!-- XML Schema mapping for USAddress --> *
+ *   &lt;!-- XML Schema mapping for USAddress -->
  *   &lt;xs:complexType name="USAddress">
  *     &lt;xs:all>
  *       &lt;xs:element name="name" type="xs:string"/>
@@ -230,6 +230,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * @see XmlValue
  * @see XmlSchema
  * @since JAXB2.0
+ * @version $Revision: 1.2 $
  */
 
 @Retention(RUNTIME) @Target({TYPE})
@@ -246,16 +247,16 @@ public @interface XmlType {
      * <p> Refer to the table for how the propOrder affects the
      * mapping of class </p>
      * 
-     * <p> The propOrder is a list of names of Javabean properties in
+     * <p> The propOrder is a list of names of JavaBean properties in
      *     the class. Each name in the list is the name of a Java
-     *     identifier of the Javabean property. The order in which
-     *     Javabean properties are listed is the order of XML Schema
-     *     elements to which the Javabean properties are mapped. </p>
-     * <p> All of the Javabean properties being mapped must be
-     *     listed (i.e. if a Javabean property mapping is prevented
+     *     identifier of the JavaBean property. The order in which
+     *     JavaBean properties are listed is the order of XML Schema
+     *     elements to which the JavaBean properties are mapped. </p>
+     * <p> All of the JavaBean properties being mapped must be
+     *     listed (i.e. if a JavaBean property mapping is prevented
      *     by <tt>@XmlTransient</tt>, then it does not have to be
      *     listed). Otherwise, it is an error.
-     * <p> By default, the Javabean properties are ordered using a
+     * <p> By default, the JavaBean properties are ordered using a
      *     default order specified in the JAXB 2.0 specification.
      */
     String[] propOrder() default {""};

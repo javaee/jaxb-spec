@@ -12,7 +12,7 @@ import static java.lang.annotation.RetentionPolicy.*;
 
 /**
  * <p>
- * Maps a Javabean property to a XML Schema element.
+ * Maps a JavaBean property to a XML Schema element.
  *
  * <p> <b>Usage</b> </p>
  * <p>
@@ -20,16 +20,14 @@ import static java.lang.annotation.RetentionPolicy.*;
  * elements: 
  * <ul> 
  *   <li> a top level value class </li>
- *   <li> a Javabean property </li>
+ *   <li> a JavaBean property </li>
  *   <li> a public non final, non static field </li>
  * </ul>
  * 
  * The usage is subject to the following constraints:
  * <ul> 
  *   <li> The only other mapping annotations allowed with 
- *        &#64;XmlElement are: &#64;XmlID and &#64;XMLIDREF .</li>
- *   <li> The annotation member targetNamespace() can be used only
- *        when &#64;XmlElement annotates a top level value class.
+ *        <tt>&#64;XmlElement</tt> are: <tt>&#64;XmlID</tt> and <tt>&#64;XMLIDREF</tt> .</li>
  * </ul>
  *
  * <p><b> TBD after Early Access Version 0.40 </b>
@@ -43,7 +41,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * a global element is associated with the XML Schema type to which
  * the class is mapped.
  * <p>
- * A Javabean property, when annotated with &#64XmlElement annotation
+ * A JavaBean property, when annotated with &#64XmlElement annotation
  * is mapped to a local element in the XML Schema complex type to
  * which the containing class is mapped.
  * 
@@ -78,7 +76,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *     }
  *
  *     &lt;!-- Example: Generated XML schema fragment -->
- *     &lt;xs:element name="PriceElement" type="xs:USPrice"/>
+ *     &lt;xs:element name="PriceElement" type="USPrice">
  *     &lt;xs:complexType name="USPrice">
  *       &lt;xs:sequence>
  *         &lt;xs:element name="price" type="xs:decimal"/>
@@ -106,42 +104,37 @@ import static java.lang.annotation.RetentionPolicy.*;
  * 
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
+ * @version $Revision: 1.2 $
  */
 
 @Retention(RUNTIME) @Target({FIELD, METHOD, TYPE})
 public @interface XmlElement {
     /**
      * Name of the XML Schema element. By default, the XML Schema
-     * element name is derived from the Javabean property name.
+     * element name is derived from the JavaBean property name.
      *
      */
     String name() default "";
  
     /**
      * Customize the element declaration to be nillable. 
-     * <p>If isNillable() is true, then the Javabean property is
+     * <p>If isNillable() is true, then the JavaBean property is
      * mapped to a XML Schema nillable element declaration. 
-     * <p>If isNillable() is false and the Javabean property type is a
-     * collection type, then the Javabean property is mapped to
+     * <p>If isNillable() is false and the JavaBean property type is a
+     * collection type, then the JavaBean property is mapped to
      * repeating occurance. 
-     * <p> Otherwise, the Javabean property is mapped to an an 
+     * <p> Otherwise, the JavaBean property is mapped to an an 
      * XML Schema element declaration with occurance range of 0..1.
      */
     boolean isNillable() default false;
 
     /**
-     * Customize the XML target namespace of the XML Schema
+     * Specifies the XML target namespace of the XML Schema
      * element. The targetNamespace() must be a valid namespace URI.
-     * <p>
-     * This annotation member cannot be used when the
-     * XmlElement is used to annotate a Javabean property since in
-     * this case, the Javabean property is mapped to a XML Schema
-     * local element. <b>TBD: Note to Reviewers:</b> This case was not
-     * discussed in EG.
      *
      * <p>
      * The default value depends upon the program element
-     * annotated by XmlElement and is determined as follows:
+     * annotated by <tt>&#64;XmlElement</tt> and is determined as follows:
      * <ul> 
      *   <li> If a top level class declared in a named package is
      *        annotated then the default target namespace is the

@@ -39,7 +39,7 @@ import org.xml.sax.SAXException;
  * @author <ul>
  *         <li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li>
  *         </ul>
- * @version $Revision: 1.1 $ $Date: 2004-06-11 20:42:44 $
+ * @version $Revision: 1.2 $ $Date: 2004-06-14 21:23:10 $
  * @see javax.xml.bind.Unmarshaller
  * @since JAXB1.0
  */

@@ -207,7 +207,7 @@ package javax.xml.bind;
  * 
  * 
  * @author <ul><li>Ryan Shoemaker, Sun Microsystems, Inc.</li><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Joe Fialli, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.1 $ $Date: 2004-06-11 20:42:34 $
+ * @version $Revision: 1.2 $ $Date: 2004-06-14 21:23:05 $
  * @see JAXBContext
  * @see Marshaller
  * @see Validator

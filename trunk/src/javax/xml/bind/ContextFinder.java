@@ -21,7 +21,7 @@ import java.lang.reflect.Method;
  * This code is designed to implement the JAXB 1.0 spec pluggability feature
  *
  * @author <ul><li>Ryan Shoemaker, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @see JAXBContext
  */
 class ContextFinder {

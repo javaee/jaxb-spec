@@ -12,20 +12,20 @@ import static java.lang.annotation.RetentionPolicy.*;
 
 /**
  * <p>
- * Prevents the mapping of a Javabean property to a XML Schema construct.
+ * Prevents the mapping of a JavaBean property to a XML Schema construct.
  * <p>
  * The <tt>@XmlTransient</tt> annotation is useful for resolving name
- * collisions between a Javabean property name and a field name. A
- * name collision can occur when the uncapitalized Javabean property name
- * and a field name are the same. If the Javabean property refers to the
+ * collisions between a JavaBean property name and a field name. A
+ * name collision can occur when the uncapitalized JavaBean property name
+ * and a field name are the same. If the JavaBean property refers to the
  * field, then the name collision can be resolved by mapping
- * preventing the mapping of either the field or the Javabean
+ * preventing the mapping of either the field or the JavaBean
  * property using the <tt>@XmlTransient</tt> annotation.
  * <p><b>Usage</b></p>
  * <p> The <tt>@XmlTransient</tt> annotation can be used with the following
  *     program elements: 
  * <ul> 
- *   <li> a Javabean property </li>
+ *   <li> a JavaBean property </li>
  *   <li> a public non final, non static field </li>
  * </ul>
  * 
@@ -36,13 +36,13 @@ import static java.lang.annotation.RetentionPolicy.*;
  * The usage is subject to the following usage constraints:
  * <ul>
  *   <li><tt>@XmlTransient</tt> must be the only mapping annotation on the
- *       Javabean property</li> 
- *   <li>If the Javabean property is a read/write property, then
+ *       JavaBean property</li> 
+ *   <li>If the JavaBean property is a read/write property, then
  *       <tt>@XmlTransient</tt> can be used to annotate either the getter 
  *       or setter method but not both.</li> 
  *   </ul>
  * </p>
- * <p><b>Example:</b> Resolve name collision between Javabean property and
+ * <p><b>Example:</b> Resolve name collision between JavaBean property and
  *     field name </p>
  * 
  * <pre>
@@ -68,6 +68,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
+ * @version $Revision: 1.2 $
  */
 
 @Retention(RUNTIME) @Target({FIELD, METHOD})
