@@ -207,7 +207,7 @@ package javax.xml.bind;
  * 
  * 
  * @author <ul><li>Ryan Shoemaker, Sun Microsystems, Inc.</li><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Joe Fialli, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.4 $ $Date: 2004-08-03 19:46:29 $
+ * @version $Revision: 1.5 $ $Date: 2004-08-04 14:46:58 $
  * @see JAXBContext
  * @see Marshaller
  * @see Validator
@@ -371,11 +371,11 @@ public interface Unmarshaller {
      * resulting content tree.
      *
      * <p>
-     * This method assumes that the parser is at a start element event,
-     * and the unmarshalling will be done from this start element to the
-     * corresponding end element.
-     * If this method returns successfully, the <tt>reader</tt> will be
-     * pointing at the token right after the end element. 
+     * This method assumes that the parser is on a START_DOCUMENT or
+     * START_ELEMENT event.  Unmarshalling will be done from this 
+     * start event to the corresponding end event.  If this method 
+     * returns successfully, the <tt>reader</tt> will be pointing at 
+     * the token right after the end element. 
      * 
      * @param reader
      *      The parser to be read.
@@ -405,11 +405,11 @@ public interface Unmarshaller {
      *
      *
      * <p>
-     * This method assumes that the parser is at a start element event,
-     * and the unmarshalling will be done from this start element to the
-     * corresponding end element.
-     * If this method returns successfully, the <tt>reader</tt> will be
-     * pointing at the token right after the end element. 
+     * This method assumes that the parser is on a START_DOCUMENT or
+     * START_ELEMENT event.  Unmarshalling will be done from this 
+     * start event to the corresponding end event.  If this method 
+     * returns successfully, the <tt>reader</tt> will be pointing at 
+     * the token right after the end element. 
      * 
      * @param reader
      *      The parser to be read.
