@@ -26,12 +26,12 @@ import  javax.xml.namespace.QName;
 public abstract class JAXBIntrospector {
 
     /** 
-     * <p>Return true iff <code>object</code> represents a JAXB xml element.</p>
+     * <p>Return true iff <code>object</code> represents a JAXB element.</p>
      * <p>Parameter <code>object</code> is a JAXB element for following cases:
      * <ol>
      *   <li>It is an instance of <code>javax.xml.bind.JAXBElement</code>.</li>
      *   <li>The class of <code>object</code> is annotated with 
-     *       <code>@XmlRootElement</code>.
+     *       <code>&#64XmlRootElement</code>.
      *   </li>
      * </ol>
      *
@@ -48,4 +48,25 @@ public abstract class JAXBIntrospector {
      *         null if <code>jaxbElement</code> is not a JAXB Element.
      */
     public abstract QName getElementName(Object jaxbElement);
+
+    /**
+     * <p>Get the element value of a JAXB element.</p>
+     *
+     * <p>Convenience method to abstract whether working with either 
+     *    a javax.xml.bind.JAXBElement instance or an instance of 
+     *    <tt>&#64XmlRootElement</tt> annotated Java class.</p>
+     *
+     * @param jaxbElement  object that #isElement(Object) returns true.
+     *
+     * @return The element value of the <code>jaxbElement</code>.
+     */
+    public static Object getValue(Object jaxbElement) {
+	if (jaxbElement instanceof JAXBElement) {
+	    return ((JAXBElement)jaxbElement).getValue();
+	} else {
+	    // assume that class of this instance is 
+	    // annotated with @XmlRootElement.
+	    return jaxbElement;
+	}
+    }
 }
