@@ -15,6 +15,9 @@ import static java.lang.annotation.ElementType.TYPE;
  * <p>
  * Maps an enum type {@link Enum} to XML representation.
  *
+ * <p>This annotation, together with {@link XmlEnumValue} provides a
+ * mapping of enum type to XML representation.
+ *
  * <p> <b>Usage</b> </p>
  * <p>
  * The <tt>@XmlEnum</tt> annotation can be used with the
@@ -23,11 +26,13 @@ import static java.lang.annotation.ElementType.TYPE;
  *   <li>enum type</li>
  * </ul>
  *
+ * <p> The usage is subject to the following constraints:
+ * <ul> 
+ *   <li> The only other mapping annotations allowed with
+ *        <tt>@XmlEnum</tt> are: </tt>@XmlType</tt></li>
+ * </ul>
  * <p>See "Package Specification" in javax.xml.bind.package javadoc for
  * additional common information </p>
- *
- * <p>This annotation, together with {@link XmlEnumValue} provides a
- * mapping of enum type to XML representation.
  *
  * <p>An enum type is mapped to a schema simple type with enumeration
  * facets. The schema type is derived from the Java type to which 
