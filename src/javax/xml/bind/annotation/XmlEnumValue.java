@@ -57,8 +57,12 @@ import static java.lang.annotation.ElementType.FIELD;
  *     //Example: code fragment
  *     &#64;XmlType
  *     &#64;XmlEnum(Integer.class)
- *     public enum Coin { PENNY(1), NICKEL(5), DIME(10), QUARTER(25) }
- *     
+ *     public enum Coin { 
+ *         &#64;XmlEnumValue("1"), PENNY(1),
+ *         &#64;XmlEnumValue("5"), NICKEL(5),
+ *         &#64;XmlEnumValue("10"), DIME(10),
+ *         &#64;XmlEnumValue("25"), QUARTER(25) }
+ *
  *     &lt;!-- Example: XML Schema fragment -->
  *     &lt;xs:simpleType name="Coin">
  *       &lt;xs:restriction base="xs:int">
@@ -72,7 +76,7 @@ import static java.lang.annotation.ElementType.FIELD;
  *
  * <p><b>Example 3: </b>Map enum constant name -> enumeration facet </p>
  * 
- *  <pre>
+ * <pre>
  *     //Code fragment
  *     &#64;XmlType
  *     &#64;XmlEnum(Integer.class)
