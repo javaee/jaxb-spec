@@ -76,7 +76,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *     }
  *
  *     &lt;!-- Example: Generated XML schema fragment -->
- *     &lt;xs:element name="PriceElement" type="USPrice">
+ *     &lt;xs:element name="PriceElement" type="USPrice"/>
  *     &lt;xs:complexType name="USPrice">
  *       &lt;xs:sequence>
  *         &lt;xs:element name="price" type="xs:decimal"/>
@@ -104,7 +104,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * 
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 @Retention(RUNTIME) @Target({FIELD, METHOD, TYPE})
