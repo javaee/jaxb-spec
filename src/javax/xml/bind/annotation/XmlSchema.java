@@ -5,8 +5,9 @@
 
 package javax.xml.bind.annotation;
 
-import java.lang.annotation.Target;
 import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
 import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.*;
 
@@ -36,7 +37,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *
  * <pre>
  *    &#64;XmlSchema (
- *      targetNamespace = ""http://www.example.com/MYPO1"
+ *      namespace = ""http://www.example.com/MYPO1"
  *    )
  *    
  *    &lt;!-- XML Schema fragment -->
@@ -89,7 +90,7 @@ import static java.lang.annotation.RetentionPolicy.*;
 
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 @Retention(RUNTIME) @Target({PACKAGE})
@@ -111,7 +112,7 @@ public @interface XmlSchema {
      *    package.
      * </p> 
      */
-    String targetNamespace();
+    String namespace();
 
     /**
      * Namespace qualification for elements. By default, element 
