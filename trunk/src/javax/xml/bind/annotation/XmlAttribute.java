@@ -13,7 +13,7 @@ import static java.lang.annotation.RetentionPolicy.*;
 
 /**
  * <p>
- * Maps a JavaBean property to a XML Schema attribute. 
+ * Maps a JavaBean property to a XML attribute. 
  *
  * <p> <b>Usage</b> </p>
  * <p>
@@ -21,7 +21,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * following program elements: 
  * <ul> 
  *   <li> JavaBean property </li>
- *   <li> public non final, non static field </li>
+ *   <li> field </li>
  * </ul>
  *
  * <p>See "Package Specification" in javax.xml.bind.package javadoc for
@@ -49,7 +49,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *     &lt;xs:complexType name="USPrice">
  *       &lt;xs:sequence>
  *       &lt;/xs:sequence>
- *       &lt;xs:attribute name="price"/>
+ *       &lt;xs:attribute name="price" type="xs:decimal"/>
  *     &lt;/xs:complexType>
  * </pre>
  *
@@ -75,7 +75,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *
  * </pre>
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  * @see XmlType
  * @since JAXB2.0
  */
