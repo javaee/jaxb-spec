@@ -89,7 +89,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * 
  *     //Example: Code fragment
  *     public class USPrice {
- *         &#64;XmlElement(isNillable=true)
+ *         &#64;XmlElement(nillable=true)
  *         public java.math.BigDecimal price;
  *     }
  *
@@ -104,29 +104,32 @@ import static java.lang.annotation.RetentionPolicy.*;
  * 
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 @Retention(RUNTIME) @Target({FIELD, METHOD, TYPE})
 public @interface XmlElement {
     /**
+     *
      * Name of the XML Schema element. By default, the XML Schema
-     * element name is derived from the JavaBean property name.
+     * element name is derived from the JavaBean property name if
+     * this annotation is specified on a JavaBean property or from
+     * the class name if the annotation is specified on a class.
      *
      */
     String name() default "";
  
     /**
      * Customize the element declaration to be nillable. 
-     * <p>If isNillable() is true, then the JavaBean property is
+     * <p>If nillable() is true, then the JavaBean property is
      * mapped to a XML Schema nillable element declaration. 
-     * <p>If isNillable() is false and the JavaBean property type is a
+     * <p>If nillable() is false and the JavaBean property type is a
      * collection type, then the JavaBean property is mapped to
      * repeating occurance. 
      * <p> Otherwise, the JavaBean property is mapped to an an 
      * XML Schema element declaration with occurance range of 0..1.
      */
-    boolean isNillable() default false;
+    boolean nillable() default false;
 
     /**
      * Specifies the XML target namespace of the XML Schema
