@@ -72,7 +72,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *     }
  *  
  *     &lt;!-- Example 1: XML Schema fragment -->
- *     &lt;xs:simpleType name="USPrice"/>
+ *     &lt;xs:simpleType name="USPrice">
  *       &lt;xs:restriction base="xs:decimal"/>
  *     &lt;/xs:simpleType>
  *
@@ -107,7 +107,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @see XmlType
  * @since JAXB2.0
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 @Retention(RUNTIME) @Target({FIELD, METHOD})
