@@ -37,15 +37,36 @@ import static java.lang.annotation.RetentionPolicy.*;
  * schema type is a data container for values represented by schema
  * components within a schema type's content model (e.g. model groups,
  * attributes etc).
- *
- * A class maps to either a XML Schema complex type or a XML Schema simple
- * type. The XML Schema type is derived based on the
- * mapping of JavaBean properties and fields contained within the class. 
  * <p>
+ * A class maps to either a XML Schema complex type or a XML Schema simple
+ * type. The XML Schema type is derived based on the 
+ * mapping of JavaBean properties and fields contained within the
+ * class. The schema type to which the class is mapped can either be
+ * named or anonymous. A class can be mapped to an anonymous schema
+ * type by annotating the class with <tt>&#64XmlType(name="")</tt>. 
+ * <p>
+ * Either a global element, local element or a local attribute can be
+ * associated with an anoymous type as follows:
+ * <ul>
+ *   <li><b>global element: </b> A global element of an anonmyous
+ *      type can be derived by annotating the class with @{@link
+ *      XmlRootElement}. See Example 5 below. </li> 
+ *
+ *   <li><b>local element: </b> A Javabean property that references
+ *      the class annotated with @XmlType(name="") and mapped to an
+ *      element is associated with an anonymous type. See Example 6
+ *      below.</li> 
+ *
+ *   <li><b>attribute: </b> A Javabean property that references
+ *      the class annotated with @and is mapped to a attribute is
+ *      associated with ean anonymous type. See Example 7 below. </li>
+ * </ul>
  * <b> Mapping to XML Schema Complex Type </b>
  * <ul>
- *   <li>Class name maps to a complex type name. The <tt>XmlName()</tt>
- *   annotation member can be used to customize the name.</li> 
+ *   <li>If class is annotated with <tt>@XmlType(name="") </tt>, then
+ *   class is mapped to an anonymous type. Otherwise class name maps
+ *   to a complex type name. The <tt>XmlName()</tt> annotation member
+ *   can be used to customize the name.</li>  
  *
  *   <li> Properties and fields that are mapped to elements map to a
  *   content model within the complex type. The annotation member
@@ -225,13 +246,96 @@ import static java.lang.annotation.RetentionPolicy.*;
  *   &lt;/xs:complexType>
  * </pre>
  *
+ * <p> <b> Example 5: </b> Map a class to a global element with an
+ * anonymous type. 
+ * </p>
+ * <pre>
+ *   &#64;XmlRootElement
+ *   &#64;XmlType(name="")
+ *   public class USAddress { ...}
+ *
+ *   &lt;!-- XML Schema mapping for USAddress -->
+ *   &lt;xs:element name="USAddress">
+ *     &lt;xs:complexType>
+ *       &lt;xs:sequence>
+ *         &lt;xs:element name="name" type="xs:string"/>
+ *         &lt;xs:element name="street" type="xs:string"/>
+ *         &lt;xs:element name="city" type="xs:string"/>
+ *         &lt;xs:element name="state" type="xs:string"/>
+ *         &lt;xs:element name="zip" type="xs:decimal"/>
+ *       &lt;/xs:sequence>
+ *     &lt;/xs:complexType>
+ *   &lt;/xs:element>
+ * </pre>
+ *
+ * <p> <b> Example 6: </b> Map a property to a local element with
+ * anonmyous type. 
+ * <pre>
+ *   //Example: Code fragment
+ *   public class Invoice {
+ *       USAddress addr;
+ *           ...
+ *       }
+ *
+ *   &#64;XmlType(name="")
+ *   public class USAddress { ... }
+ *   } 
+ *
+ *   &lt;!-- XML Schema mapping for USAddress -->
+ *   &lt;xs:complexType name="Invoice">
+ *     &lt;xs:sequence>
+ *       &lt;xs:element name="addr">
+ *         &lt;xs:complexType>
+ *           &lt;xs:element name="name", type="xs:string"/>
+ *           &lt;xs:element name="city", type="xs:string"/>
+ *           &lt;xs:element name="city" type="xs:string"/>
+ *           &lt;xs:element name="state" type="xs:string"/>
+ *           &lt;xs:element name="zip" type="xs:decimal"/>
+ *         &lt;/xs:complexType>
+ *       ...
+ *     &lt;/xs:sequence>
+ *   &lt;/xs:complexType> 
+ * </pre>
+ *
+ * <p> <b> Example 7: </b> Map a property to an attribute with
+ * anonmyous type.
+ * 
+ * <pre>
+ *
+ *     //Example: Code fragment
+ *     public class Item {
+ *         public String name;
+ *         &#64;XmlAttribute 
+ *         public USPrice price;
+ *     }
+ *    
+ *     // map class to anonymous simple type. 
+ *     &#64;XmlType(name="")
+ *     public class USPrice { 
+ *         &#64;XmlValue
+ *         public java.math.BigDecimal price;
+ *     }
+ *
+ *     &lt;!-- Example: XML Schema fragment -->
+ *     &lt;xs:complexType name="Item">
+ *       &lt;xs:sequence>
+ *         &lt;xs:element name="name" type="xs:string"/>
+ *         &lt;xs:attribute name="price">
+ *           &lt;xs:simpleType>
+ *             &lt;xs:restriction base="xs:decimal"/>
+ *           &lt;/xs:simpleType>
+ *         &lt;/xs:attribute>
+ *       &lt;/xs:sequence>
+ *     &lt;/xs:complexType>
+ * </pre>
+ *
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @see XmlElement
  * @see XmlAttribute
  * @see XmlValue
  * @see XmlSchema
  * @since JAXB2.0
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 @Retention(RUNTIME) @Target({TYPE})
@@ -239,7 +343,7 @@ public @interface XmlType {
     /**
      * Name of the XML Schema type which the class is mapped.
      */
-    String name();
+    String name() default "##default" ;
  
     /**
      * Specifies the order for XML Schema elements when class is
