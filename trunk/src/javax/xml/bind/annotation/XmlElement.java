@@ -5,8 +5,9 @@
 
 package javax.xml.bind.annotation;
 
-import java.lang.annotation.Target;
 import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
 import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.*;
 
@@ -93,7 +94,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * 
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 @Retention(RUNTIME) @Target({FIELD, METHOD})
@@ -120,16 +121,28 @@ public @interface XmlElement {
 
     /**
      * Specifies the XML target namespace of the XML Schema
-     * element. The targetNamespace() must be a valid namespace URI.
+     * element. The namespace must be a valid namespace URI.
      * <p>
      * It the value is "##default", then the namespace is the
      * namespace of the containing class.
      * <p>
      * <b>Note to Reviewers: </b> TBD. address in later version
-     * if targetNamespace() is different from that of the containing
+     * if namespace is different from that of the containing
      * class. 
      */
-    String targetNamespace() default "##default" ;
+    String namespace() default "##default" ;
+
+    /**
+     * The Java class being referenced.
+     */
+    Class type() default DEFAULT.class;
+
+    /**
+     * Used in {@link XmlElement#type()} to
+     * signal that the type be inferred from the signature
+     * of the property.
+     */
+    static final class DEFAULT {}
 }
 
 
