@@ -42,7 +42,6 @@ import java.lang.annotation.Target;
  *        <br> java.util.Map does not map naturally to XML Schema
  *        construct. Hence <tt>@XmlJavaTypeAdapter</tt> should be used
  *        to customize <tt>java.util.Map</tt>.</li>
- *        TBD: non collection property
  *
  *   <li> This annotation can only be used with the following
  *        annotations: &#64;XmlIDREF. </li>
