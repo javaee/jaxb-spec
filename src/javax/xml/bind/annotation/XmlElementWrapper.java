@@ -15,18 +15,18 @@ import java.lang.annotation.Target;
  *
  * <pre>
  *    //Example: code fragment
- *      int[] Names;
+ *      int[] names;
  *
  *    // XML Serialization Form 1 (Unwrapped collection)
- *    &lt;Names> ... &lt;/Names>
- *    &lt;Names> ... &lt;/Names>
+ *    &lt;names> ... &lt;/names>
+ *    &lt;names> ... &lt;/names>
  * 
  *    // XML Serialization Form 2 ( Wrapped collection )
- *    &lt;Names>
- *       &lt;int> value-of-item &lt;/int>
- *       &lt;int> value-of-item &lt;/int>
+ *    &lt;wrapperElement>
+ *       &lt;names> value-of-item &lt;/names>
+ *       &lt;names> value-of-item &lt;/names>
  *       ....
- *    &lt;/Names>
+ *    &lt;/wrapperElement>
  * </pre>
  *
  * <p> The two serialized XML forms allow a null collection to be
@@ -39,7 +39,7 @@ import java.lang.annotation.Target;
  * following program elements: 
  * <ul> 
  *   <li> JavaBean property </li>
- *   <li> public non final, non static field </li>
+ *   <li> field </li>
  * </ul>
  *
  * It can be placed on a collection property along with 
