@@ -5,11 +5,11 @@
 
 package javax.xml.bind.annotation;
 
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.ElementType.TYPE;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
+
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import static java.lang.annotation.ElementType.METHOD;
 
 /**
  * Maps a factory method to an XML element declaration.
@@ -132,7 +132,7 @@ public @interface XmlElementDecl {
      *
      * @see #name()
      */
-    String targetNamespace() default "##default";
+    String namespace() default "##default";
 
     /**
      * local name of the XML element.
@@ -141,7 +141,7 @@ public @interface XmlElementDecl {
      * <b> Note to reviewers: </b> There is no default name; since
      * the annotation is on a factory method, it is not clear that the
      * method name can be derived from the factory method name.
-     * @see #targetNamespace()
+     * @see #tnamespace()
      */
     String name();
 
