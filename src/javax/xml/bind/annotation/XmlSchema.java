@@ -19,7 +19,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * The XmlSchema annotation can be used with the following program
  * elements:
  * <ul> 
- *   <li> package</li>
+ *   <li>package</li>
  * </ul>
  * 
  * This is a package level annotation and follows the recommendations
@@ -32,7 +32,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * </ul>
  * <p>
  *
- * <p><b>Example 1:</b> Customize name of target namespace to which 
+ * <p><b>Example 1:</b> Customize name of XML namespace to which 
  * package is mapped.</p>
  *
  * <pre>
@@ -90,7 +90,7 @@ import static java.lang.annotation.RetentionPolicy.*;
 
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 @Retention(RUNTIME) @Target({PACKAGE})
@@ -104,15 +104,10 @@ public @interface XmlSchema {
     XmlNs[]  xmlns() default {};
 
     /**
-     * Name of the XML target namespace. The name must be a valid
-     * namespace URI.By default, for named packages, the target namespace is
-     * derived from the package name. 
-     * <p>
-     * <b>TBD after Early Access version 0.40: </b>Handling of unnamed
-     *    package.
-     * </p> 
+     * Name of the XML namespace. The name must be a valid
+     * namespace URI.
      */
-    String namespace();
+    String namespace() default "";
 
     /**
      * Namespace qualification for elements. By default, element 
