@@ -12,7 +12,14 @@ import static java.lang.annotation.RetentionPolicy.*;
 
 
 /**
- * <p> 
+ * <p>
+ * <b> !!!! Note to Reviewers !!!! : </b>
+ * {@link XmlCollection} and {@link XmlCollectionItem} are now
+ * obsolete. See {@link XmlElements} {@link XmlElementRefs} and 
+ * {@link XmlElementWrapper}.This annotation is retained for review
+ * purposes  and will be removed at a later time.
+ * <p>
+ * 
  * Maps a collection type to a XML Schema complex type.
  *
  * <p><b>Usage</b></p>
@@ -179,7 +186,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @see XmlCollectionItem
  * @see XmlJavaTypeAdapter
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  * @since JAXB2.0
  */
 

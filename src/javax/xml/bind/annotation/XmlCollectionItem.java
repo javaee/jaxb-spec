@@ -11,6 +11,13 @@ import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.*;
 
 /**
+ * <p>
+ * <b> !!!! Note to Reviewers!!!! : </b>
+ * This annotation and {@link XmlCollectionItem} are now obsolete. See
+ * {@link XmlElements} {@link XmlElementRefs} and 
+ * {@link XmlElementWrapper}.This annotation is retained for review
+ * purposes and will be removed at a later time.
+ *
  * <p> Maps a collection item type to a XML Schema ELement</p>
  *
  * <p> <b>Usage</b> </p>
@@ -32,7 +39,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @see XmlCollection
  * @since JAXB2.0
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 @Retention(RUNTIME) @Target({})
