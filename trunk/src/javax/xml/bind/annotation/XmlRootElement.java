@@ -125,7 +125,7 @@ import java.lang.annotation.Target;
  *     }
  *
  *     &lt;!-- Example: XML schema definition -->
- *     &lt;xs:element name="PriceElement" type="xs:USPrice"/>
+ *     &lt;xs:element name="PriceElement" type="USPrice"/>
  *     &lt;xs:complexType name="USPrice">
  *       &lt;xs:sequence>
  *         &lt;xs:element name="price" type="xs:decimal"/>
