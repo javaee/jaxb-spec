@@ -25,12 +25,6 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <p>See "Package Specification" in javax.xml.bind.package javadoc for
  * additional common information.</p>
  * 
- * <p><b> TBD after Early Access Version </b>
- *   The <tt>@Target</tt> meta annotation permits the usage of
- *   <tt>@XmlType</tt> annotation on a interface and enum construct as
- *   well. The mapping of interface and enum construct will be
- *   addressed after the Early Access Release and this Javadoc will be
- *   updated accordingly. 
  * <p>
  * A class maps naturally to XML Schema type. A value class is a data
  * container for values represented by properties and fields. A  
@@ -52,12 +46,12 @@ import static java.lang.annotation.RetentionPolicy.*;
  *      type can be derived by annotating the class with @{@link
  *      XmlRootElement}. See Example 5 below. </li> 
  *
- *   <li><b>local element: </b> A Javabean property that references
+ *   <li><b>local element: </b> A JavaBean property that references
  *      the class annotated with @XmlType(name="") and mapped to an
  *      element is associated with an anonymous type. See Example 6
  *      below.</li> 
  *
- *   <li><b>attribute: </b> A Javabean property that references
+ *   <li><b>attribute: </b> A JavaBean property that references
  *      the class annotated with @and is mapped to a attribute is
  *      associated with ean anonymous type. See Example 7 below. </li>
  * </ul>
@@ -335,7 +329,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * @see XmlValue
  * @see XmlSchema
  * @since JAXB2.0
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 @Retention(RUNTIME) @Target({TYPE})
