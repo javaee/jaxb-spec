@@ -12,7 +12,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import static java.lang.annotation.ElementType.METHOD;
 
 /**
- * Maps a factory method to an XML element declaration.
+ * Maps a factory method to a XML element.
  *
  * <p> <b>Usage</b> </p>
  *
