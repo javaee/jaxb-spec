@@ -6,37 +6,64 @@
 package javax.xml.bind;
 
 import javax.xml.namespace.QName;
+import java.io.Serializable;
 
 /**
- * JAXB representation of an Xml Element instance.
+ * <p>JAXB representation of an Xml Element.</p>
  *
+ * <p>This class represents information about an Xml Element from both the element 
+ * declaration within a schema and the element instance value within an xml document
+ * with the following properties
+ * <ul>
+ *   <li>element's xml tag <b><tt>name</tt></b></li>
+ *   <li><b><tt>value</tt></b> represents the element instance's atttribute(s) and content model</li>
+ *   <li>element declaration's <b><tt>declaredType</tt></b> (<tt>xs:element @type</tt> attribute)</li>
+ *   <li><b><tt>scope</tt></b> of element declaration</li>
+ *   <li>boolean <b><tt>nil</tt></b> property. (element instance's <tt><b>xsi:nil</b></tt> attribute)</li>
+ * </ul>
+ * 
+ * <p>The <tt>declaredType</tt> and <tt>scope</tt> property are the
+ * JAXB class binding for the xml type definition.
+ * </p>
+ * 
+ * <p><b><tt>Scope</tt></b> is either {@link GlobalScope} or the Java class representing the 
+ * complex type definition containing the schema element declaration.
+ * </p>
+ * 
+ * <p>There is a property constraint that if <b><tt>value</tt></b> is <tt>null</tt>, 
+ * then <tt>nil</tt> must be <tt>true</tt>. The converse is not true to enable 
+ * representing a nil element with attribute(s). If <tt>nil</tt> is true, it is possible 
+ * that <tt>value</tt> is non-null so it can hold the value of the attributes 
+ * associated with a nil element.
+ * </p>
+ * 
  * @author Kohsuke Kawaguchi, Joe Fialli
  * @since JAXB 2.0
  */
 
-public class JAXBElement<T> {
+public class JAXBElement<T> implements Serializable {
 
     /** xml element tag name */
-    final private QName name;
+    final protected QName name;
 
     /** Java datatype binding for xml element declaration's type. */
-    final private Class<T> declaredType;
+    final protected Class<T> declaredType;
 
     /** Scope of xml element declaration representing this xml element instance.
      *  Can be one of the following values:
-     *  - {@link #GlobalScope} for global xml element declaration.
+     *  - {@link GlobalScope} for global xml element declaration.
      *  - local element declaration has a scope set to the Java class 
      *     representation of complex type defintion containing
      *     xml element declaration. 
      */
-    final private Class scope;
+    final protected Class scope;
 
     /** xml element value. 
         Represents content model and attributes of an xml element instance. */
-    private T value;
+    protected T value;
 
     /** true iff the xml element instance has xsi:nil="true". */
-    private boolean nil = false;
+    protected boolean nil = false;
 
     /**
      * Designates global scope for an xml element.
@@ -48,23 +75,37 @@ public class JAXBElement<T> {
      * 
      * @param name          Java binding of xml element tag name
      * @param declaredType  Java binding of xml element declaration's type
-     * @param scope         Java binding of scope of xml element declaration
-     * @param value         Java instance representing xml element's 
-     *                      content model and/or attribute(s).
+     * @param scope
+     *      Java binding of scope of xml element declaration.
+     *      Passing null is the same as passing <tt>GlobalScope.class</tt>
+     * @param value
+     *      Java instance representing xml element's value.
      * @see #getScope()
      * @see #isTypeSubstituted()
      */
     public JAXBElement(QName name, 
 		       Class<T> declaredType, 
-		       Class<T> scope, 
+		       Class scope,
 		       T value) {
-        this.value = value;
+        if(declaredType==null || name==null)
+            throw new IllegalArgumentException();
         this.declaredType = declaredType;
-	this.scope = scope;
+        if(scope==null)     scope = GlobalScope.class;
+        this.scope = scope;
         this.name = name;
+        setValue(value);
     }
 
-    /** 
+    /**
+     * Construct an xml element instance.
+     *
+     * This is just a convenience method for <tt>new JAXBElement(name,declaredType,GlobalScope.class,value)</tt>
+     */
+    public JAXBElement(QName name, Class<T> declaredType, T value ) {
+        this(name,declaredType,GlobalScope.class,value);
+    }
+
+    /**
      * Returns the Java binding of the xml element declaration's type attribute.
      */
     public Class<T> getDeclaredType() {
@@ -81,9 +122,8 @@ public class JAXBElement<T> {
     /**
      * <p>Set the content model and attributes of this xml element.</p>
      *
-     * Note that this value can be non-null even when 
-     * {@link #isNil()} is <code>true<\code> since a nil element
-     * can have attributes.
+     * <p>When this property is set to <tt>null</tt>, <tt>isNil()</tt> must by <tt>true</tt>.
+     *    Details of constraint are described at {@link #isNil()}.</pp>
      *
      * @see #isTypeSubstituted()
      */
@@ -92,11 +132,10 @@ public class JAXBElement<T> {
     }
 
     /**
-     * Return the content model and attribute values for this element.
-     *
-     * Note that this value can be non-null even when 
-     * {@link #isNil()} is <code>true<\code> since a nil element
-     * can have attributes.
+     * <p>Return the content model and attribute values for this element.</p>
+     * 
+     * <p>See {@link #isNil()} for a description of a property constraint when
+     * this value is <tt>null</tt></p>
      */
     public T getValue() {
         return value;
@@ -106,22 +145,29 @@ public class JAXBElement<T> {
      * Returns scope of xml element declaration.
      *
      * @see #isGlobalScope()
+     * @return <tt>GlobalScope.class</tt> if this element is of global scope.
      */
     public Class getScope() {
         return scope;
     }
     
     /**
-     * <p>Returns <code>true</code> iff this element instance content model 
+     * <p>Returns <tt>true</tt> iff this element instance content model 
      * is nil.</p>
+     *
+     * <p>This property always returns <tt>true</tt> when {@link #getValue()} is null.
+     * Note that the converse is not true, when this property is <tt>true</tt>, 
+     * {@link #getValue()} can contain a non-null value for attribute(s). It is
+     * valid for a nil xml element to have attribute(s).</p>
      */
     public boolean isNil() {
-        return nil;
+        return (value == null) || nil;
     }
 
     /**
      * <p>Set whether this element has nil content.</p>
-     * <p>Default value for this property is false.</p>
+     * 
+     * @see #isNil()
      */
     public void setNil(boolean value) {
         this.nil = value;
@@ -136,7 +182,7 @@ public class JAXBElement<T> {
      * Returns true iff this xml element declaration is global.
      */
     public boolean isGlobalScope() {
-	return this.scope == GlobalScope.class;
+        return this.scope == GlobalScope.class;
     }
 
     /**
@@ -144,6 +190,8 @@ public class JAXBElement<T> {
      * type than xml element declaration's declared type.
      */
     public boolean isTypeSubstituted() {
-	return this.value.getClass() != this.declaredType;
+        return this.value.getClass() != this.declaredType;
     }
+
+    private static final long serialVersionUID = 1L;
 }
