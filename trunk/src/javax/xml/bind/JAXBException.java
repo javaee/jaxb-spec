@@ -11,7 +11,7 @@ import java.io.PrintWriter;
  * This is the root exception class for all JAXB exceptions.
  *
  * @author <ul><li>Ryan Shoemaker, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.2 $ $Date: 2004-06-14 21:23:03 $
+ * @version $Revision: 1.3 $ $Date: 2004-10-22 15:46:02 $
  * @see JAXBContext
  * @see Marshaller
  * @see Unmarshaller
@@ -31,6 +31,7 @@ public class JAXBException extends Exception {
      */
     private Throwable linkedException;
 
+    static final long serialVersionUID = -5621384651494307979L;
 
     /** 
      * Construct a JAXBException with the specified detail message.  The 
@@ -127,7 +128,7 @@ public class JAXBException extends Exception {
             super.toString() + "\n - with linked exception:\n[" +
                                 linkedException.toString()+ "]";
     }
- 
+
     /**
      * Prints this JAXBException and its stack trace (including the stack trace
      * of the linkedException if it is non-null) to the PrintStream.
@@ -135,21 +136,16 @@ public class JAXBException extends Exception {
      * @param s PrintStream to use for output
      */
     public void printStackTrace( java.io.PrintStream s ) {
-        if( linkedException != null ) {
-          linkedException.printStackTrace(s);
-          s.println("--------------- linked to ------------------");
-        }
-
         super.printStackTrace(s);
     }
- 
+
     /**
      * Prints this JAXBException and its stack trace (including the stack trace
      * of the linkedException if it is non-null) to <tt>System.err</tt>.
      *
      */
     public void printStackTrace() {
-        printStackTrace(System.err);
+        super.printStackTrace();
     }
 
     /**
@@ -159,12 +155,11 @@ public class JAXBException extends Exception {
      * @param s PrintWriter to use for output
      */
     public void printStackTrace(PrintWriter s) {
-        if( linkedException != null ) {
-          linkedException.printStackTrace(s);
-          s.println("--------------- linked to ------------------");
-        }
-
         super.printStackTrace(s);
     }
 
+    @Override
+    public Throwable getCause() {
+        return linkedException;
+    }
 }
