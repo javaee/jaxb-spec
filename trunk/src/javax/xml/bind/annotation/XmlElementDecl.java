@@ -42,7 +42,7 @@ import static java.lang.annotation.ElementType.METHOD;
  *     &#64;XmlRegistry
  *     class ObjectFactory {
  *         &#64;XmlElementDecl(name="foo")
- *         JAXBElement<String> createFoo(String s) { ... }
+ *         JAXBElement&lt;String> createFoo(String s) { ... }
  *     }
  * </pre>
  * <pre><xmp> 
