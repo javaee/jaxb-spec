@@ -88,7 +88,7 @@ import static java.lang.annotation.ElementType.METHOD;
  *     &lt;xs:element name="target" type="Target">
  *     &lt;xs:complexType name="Target">
  *       &lt;xs:sequence>
- *         &lt;xs:choice>
+ *         &lt;xs:choice maxOccurs="unbounded">
  *           &lt;xs:element ref="jar">
  *           &lt;xs:element ref="javac">
  *         &lt;/xs:choice>
