@@ -49,11 +49,11 @@ import static java.lang.annotation.RetentionPolicy.*;
  *       &lt;xs:sequence>
  *       &lt;/xs:sequence>
  *       &lt;xs:attribute name="price"/>
- *     &lt;xs:complexType>
+ *     &lt;/xs:complexType>
  * </pre>
  *
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  * @see XmlType
  * @since JAXB2.0
  */
