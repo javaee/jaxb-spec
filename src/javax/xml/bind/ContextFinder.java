@@ -5,8 +5,11 @@
 
 package javax.xml.bind;
 
+import javax.xml.transform.Source;
 import java.io.InputStream;
 import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.Properties;
 import java.util.StringTokenizer;
 import java.lang.reflect.InvocationTargetException;
@@ -21,7 +24,7 @@ import java.lang.reflect.Method;
  * This code is designed to implement the JAXB 1.0 spec pluggability feature
  *
  * @author <ul><li>Ryan Shoemaker, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  * @see JAXBContext
  */
 class ContextFinder {
@@ -84,38 +87,48 @@ class ContextFinder {
             throw new JAXBException(
                 Messages.format( Messages.PROVIDER_NOT_FOUND, className ),
                 x);
+        } catch (InvocationTargetException x) {
+            handleInvocationTargetException(x);
+            // for other exceptions, wrap the internal target exception
+            // with a JAXBException
+            Throwable e = x;
+            if(x.getTargetException()!=null)
+                e = x.getTargetException();
+
+            return new JAXBException( Messages.format( Messages.COULD_NOT_INSTANTIATE, className, e ), e );
+        } catch (RuntimeException x) {
+            // avoid wrapping RuntimeException to JAXBException,
+            // because it indicates a bug in this code.
+            throw x;
         } catch (Exception x) {
             // can't catch JAXBException because the method is hidden behind
             // reflection.  Root element collisions detected in the call to
             // createContext() are reported as JAXBExceptions - just re-throw it
-            if( x instanceof InvocationTargetException ) {
-                Throwable t = ((InvocationTargetException)x).getTargetException();
-                if( t != null ) {
-                    if( t instanceof JAXBException ) {
-                        // one of our exceptions, just re-throw
-                        throw (JAXBException)t;
-                    } else {
-                        // some other exception, wrap the internal target exception
-                        // with a JAXBException
-                        throw new JAXBException(
-                            Messages.format( Messages.COULD_NOT_INSTANTIATE, className, t ),
-                            t);
-                    }
-                } else {
-                    // target exception was null, so just wrap the entire exception
-                    // with a JAXBException
-                    throw new JAXBException(
-                        Messages.format( Messages.COULD_NOT_INSTANTIATE, className, x ),
-                        x);
-                }
-            } else {
-                // some other type of exception - just wrap it
-                throw new JAXBException(
-                    Messages.format( Messages.COULD_NOT_INSTANTIATE, className, x ),
-                    x);
-            }
+            // some other type of exception - just wrap it
+            throw new JAXBException(
+                Messages.format( Messages.COULD_NOT_INSTANTIATE, className, x ),
+                x);
         }
     }
+
+    /**
+     * If the {@link InvocationTargetException} wraps an exception that shouldn't be wrapped,
+     * throw the wrapped exception.
+     */
+    private static void handleInvocationTargetException(InvocationTargetException x) throws JAXBException {
+        Throwable t = x.getTargetException();
+        if( t != null ) {
+            if( t instanceof JAXBException )
+                // one of our exceptions, just re-throw
+                throw (JAXBException)t;
+            if( t instanceof RuntimeException )
+                // avoid wrapping exceptions unnecessarily
+                throw (RuntimeException)t;
+            if( t instanceof Error )
+                throw (Error)t;
+        }
+    }
+
 
     /**
      * Finds the implementation Class object. Main entry point.
@@ -126,7 +139,7 @@ class ContextFinder {
      * @param classLoader
      *      Used to locate class files and resource files.
      * 
-     * @exception ContextFinder.ConfigurationError
+     * @exception JAXBException
      */
     static Object find(String factoryId, String contextPath, ClassLoader classLoader ) throws JAXBException
     {
@@ -141,7 +154,51 @@ class ContextFinder {
         return instance;
     }
 
-        
+    static JAXBContext find( Source[] extBindings, Class[] classes ) throws JAXBException {
+        // TODO: decide the look up order and implement it
+        // this is just a mock up
+        BufferedReader r = new BufferedReader(new InputStreamReader(
+                classes[0].getClassLoader().getResourceAsStream("META-INF/services/jaxb")));
+        String className;
+        try {
+            className = r.readLine().trim();
+        } catch (IOException e) {
+            throw new JAXBException(e);
+        }
+
+        ClassLoader cl = Thread.currentThread().getContextClassLoader();
+        Class spi;
+        try {
+            if(cl!=null)
+                spi = cl.loadClass(className);
+            else
+                spi = Class.forName(className);
+        } catch( ClassNotFoundException e ) {
+            throw new JAXBException(e);
+        }
+
+        Method m = null;
+        try {
+            m = spi.getMethod( "createContext", Source[].class, Class[].class );
+        } catch (NoSuchMethodException e) {
+            throw new JAXBException(e);
+        }
+        try {
+            return (JAXBContext)m.invoke(null,extBindings,classes);
+        } catch (IllegalAccessException e) {
+            throw new JAXBException(e);
+        } catch (InvocationTargetException e) {
+            handleInvocationTargetException(e);
+
+            Throwable x = e;
+            if(e.getTargetException()!=null)
+                x = e.getTargetException();
+
+            throw new JAXBException(x);
+        }
+    }
+
+
     /**
      * Walk the context path searching for jaxb.properties files containing
      * the javax.xml.bind.context.factory property.
