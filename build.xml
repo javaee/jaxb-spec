@@ -48,6 +48,7 @@
                debug="on" optimize="off"
                deprecation="off" >
             <classpath refid="javac.classpath" />
+            <!--compilerarg line="-Xlint:unchecked"/--> 
         </javac>
         <!-- copy i18n props into build dir -->
         <copy toDir="build/classes">

@@ -28,12 +28,12 @@ import java.io.UnsupportedEncodingException;
  * 
  * <p>
  * The only methods that a JAXB Provider has to implement are
- * {@link Marshaller#marshal(Object, Result) marshal(Object, javax.xml.transform.Result)},
- * {@link Marshaller#marshal(Object, Result) marshal(Object, javax.xml.stream.XMLStreamWriter)}, and
- * {@link Marshaller#marshal(Object, Result) marshal(Object, javax.xml.stream.XMLEventWriter)}.
+ * {@link Marshaller#marshal(Object, javax.xml.transform.Result) marshal(Object, javax.xml.transform.Result)},
+ * {@link Marshaller#marshal(Object, javax.xml.transform.Result) marshal(Object, javax.xml.stream.XMLStreamWriter)}, and
+ * {@link Marshaller#marshal(Object, javax.xml.transform.Result) marshal(Object, javax.xml.stream.XMLEventWriter)}.
  *
  * @author <ul><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.2 $ $Date: 2004-06-14 21:23:10 $
+ * @version $Revision: 1.3 $ $Date: 2004-07-28 20:26:01 $
  * @see javax.xml.bind.Marshaller
  * @since JAXB1.0
  */
@@ -57,8 +57,11 @@ public abstract class AbstractMarshallerImpl implements Marshaller
     
     /** store the value of the formattedOutput property. */
     private boolean formattedOutput = false;
-           
-    public final void marshal( Object obj, java.io.OutputStream os ) 
+
+    /** store the value of the fragment property. */
+    private boolean fragment = false;
+
+    public final void marshal( Object obj, java.io.OutputStream os )
         throws JAXBException {
             
         checkNotNull( obj, "obj", os, "os" );
@@ -176,6 +179,26 @@ public abstract class AbstractMarshallerImpl implements Marshaller
     }
     
     
+    /**
+     * Convenience method for getting the fragment flag.
+     *
+     * @return the current value of the fragment flag or false if
+     * it hasn't been set.
+     */
+    protected boolean isFragment() {
+        return fragment;
+    }
+
+    /**
+     * Convenience method for setting the fragment flag.
+     *
+     * @param v value of the fragment flag.
+     */
+    protected void setFragment( boolean v ) {
+        fragment = v;
+    }
+
+
     static String[] aliases = {
         "UTF-8", "UTF8",
         "UTF-16", "Unicode",
@@ -285,10 +308,15 @@ public abstract class AbstractMarshallerImpl implements Marshaller
             setSchemaLocation( (String)value );
             return;
         }
-        
+        if( JAXB_FRAGMENT.equals(name) )  {
+            checkBoolean(name, value);
+            setFragment( ((Boolean)value).booleanValue() );
+            return;
+        }
+
         throw new PropertyException(name, value);
     }
-    
+
     /**
      * Default implementation of the getProperty method handles
      * the four defined properties in Marshaller.  If a provider 
@@ -312,7 +340,9 @@ public abstract class AbstractMarshallerImpl implements Marshaller
             return getNoNSSchemaLocation();
         if( JAXB_SCHEMA_LOCATION.equals(name) )
             return getSchemaLocation();
-                   
+        if( JAXB_FRAGMENT.equals(name) )
+            return isFragment()?Boolean.TRUE:Boolean.FALSE;
+
         throw new PropertyException(name);
     }
     /**
