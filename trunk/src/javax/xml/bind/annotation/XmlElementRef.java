@@ -7,6 +7,7 @@ package javax.xml.bind.annotation;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
+
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
@@ -195,7 +196,7 @@ public @interface XmlElementRef {
      * XML element for the Javabean property.
      *
      * <p> If <tt>type()</tt> is <tt>JAXBElement.class</tt> , then 
-     * <tt>targetNamespace()</tt> and <tt>name()</tt>
+     * <tt>namespace()</tt> and <tt>name()</tt>
      * point to a factory method with {@link XmlElementDecl}. The XML
      * element name is the element name from the factory method's
      * {@link XmlElementDecl} annotation or if an element from its
@@ -213,10 +214,10 @@ public @interface XmlElementRef {
      * this value must be "". 
      *
      */
-    String targetNamespace() default "";
+    String namespace() default "";
     /**
      *
-     * @see #targetNamespace()
+     * @see #namespace()
      */
     String name() default "##default";
 
