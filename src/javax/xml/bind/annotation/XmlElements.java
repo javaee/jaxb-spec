@@ -26,10 +26,11 @@ import java.lang.annotation.Target;
  * <p>The <tt>@XmlElements</tt> annnotation can be used with the
  * following program elements: </p>
  * <ul>
- *   <li> a Javabean property </li>
+ *   <li> a JavaBean property </li>
+ *   <li> field </li>
  * </ul>
  *
- * This annotation is intended for annotation a Javabean collection
+ * This annotation is intended for annotation a JavaBean collection
  * property (e.g. List). 
  *
  * <p> <b> TBD: </b>  </p>
@@ -45,8 +46,8 @@ import java.lang.annotation.Target;
  * <ul>
  *   <li> This annotation can only be used with the following
  *        annotations: &#64;XmlIDREF. </li>
- *   <li> If @XmlIDREF is also specified on the Javabean property,
- *        then each &#64;XmlElement.type() must contain a Javabean
+ *   <li> If @XmlIDREF is also specified on the JavaBean property,
+ *        then each &#64;XmlElement.type() must contain a JavaBean
  *        property annotated with <tt>&#64;XmlID</tt>.</li>
  * </ul>
  *
