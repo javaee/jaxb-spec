@@ -5,8 +5,9 @@
 
 package javax.xml.bind.annotation;
 
-import java.lang.annotation.Target;
 import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
 import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.*;
 
@@ -56,7 +57,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *        complex type.  </li>
  *
  *   <li> The targetnamespace of the XML Schema type can be customized
- *        using the annotation member <tt>targetNamespace()</tt>. </li>
+ *        using the annotation member <tt>namespace()</tt>. </li>
  * </ul>
  *
  * <p>
@@ -230,7 +231,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * @see XmlValue
  * @see XmlSchema
  * @since JAXB2.0
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 @Retention(RUNTIME) @Target({TYPE})
@@ -266,7 +267,7 @@ public @interface XmlType {
      * default, this is the target namespace to which the package
      * containing the class is mapped.
      */
-    String targetNamespace() default "##default" ;
+    String namespace() default "##default" ;
 }
 
 
