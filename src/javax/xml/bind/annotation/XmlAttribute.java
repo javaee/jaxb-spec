@@ -53,7 +53,10 @@ import static java.lang.annotation.RetentionPolicy.*;
  *     &lt;/xs:complexType>
  * </pre>
  *
- * <p> <b>Example 2: </b>Map a JavaBean collection property to an XML attribute.</p>
+ * <p> <b>Example 2: </b>Map a JavaBean property to an XML attribute with anonymous type.</p>
+ * See Example 7 in @{@link XmlType}.
+ *
+ * <p> <b>Example 3: </b>Map a JavaBean collection property to an XML attribute.</p>
  * <pre>
  *     // Example: Code fragment
  *     class Foo {
@@ -72,7 +75,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *
  * </pre>
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  * @see XmlType
  * @since JAXB2.0
  */
@@ -84,7 +87,7 @@ public @interface XmlAttribute {
      * attribute name is derived from the JavaBean property name.
      *
      */
-    String name() default "";
+    String name() default "##default";
  
     /**
      * Specifies if the XML Schema attribute is optional or
