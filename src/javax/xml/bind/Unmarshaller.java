@@ -207,7 +207,7 @@ package javax.xml.bind;
  * 
  * 
  * @author <ul><li>Ryan Shoemaker, Sun Microsystems, Inc.</li><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Joe Fialli, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.5 $ $Date: 2004-08-04 14:46:58 $
+ * @version $Revision: 1.6 $ $Date: 2004-08-13 17:27:30 $
  * @see JAXBContext
  * @see Marshaller
  * @see Validator
@@ -375,7 +375,7 @@ public interface Unmarshaller {
      * START_ELEMENT event.  Unmarshalling will be done from this 
      * start event to the corresponding end event.  If this method 
      * returns successfully, the <tt>reader</tt> will be pointing at 
-     * the token right after the end element. 
+     * the token right after the end event.
      * 
      * @param reader
      *      The parser to be read.
@@ -409,7 +409,7 @@ public interface Unmarshaller {
      * START_ELEMENT event.  Unmarshalling will be done from this 
      * start event to the corresponding end event.  If this method 
      * returns successfully, the <tt>reader</tt> will be pointing at 
-     * the token right after the end element. 
+     * the token right after the end event. 
      * 
      * @param reader
      *      The parser to be read.
