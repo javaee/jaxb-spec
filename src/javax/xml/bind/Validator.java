@@ -6,6 +6,8 @@
 package javax.xml.bind;
 
 /**
+ * As of JAXB 2.0, this class is deprecated and optional.
+ * <p>
  * The <tt>Validator</tt> class is responsible for controlling the validation
  * of content trees during runtime.
  *
@@ -127,13 +129,14 @@ package javax.xml.bind;
  * 
  * 
  * @author <ul><li>Ryan Shoemaker, Sun Microsystems, Inc.</li><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Joe Fialli, Sun Microsystems, Inc.</li></ul> 
- * @version $Revision: 1.2 $ $Date: 2004-06-14 21:23:06 $
+ * @version $Revision: 1.3 $ $Date: 2005-02-17 21:05:10 $
  * @see JAXBContext
  * @see Unmarshaller
  * @see ValidationEventHandler
  * @see ValidationEvent
  * @see javax.xml.bind.util.ValidationEventCollector
  * @since JAXB1.0
+ * @deprecated since JAXB 2.0
  */
 public interface Validator {
 
@@ -154,6 +157,7 @@ public interface Validator {
      * @param handler the validation event handler
      * @throws JAXBException if an error was encountered while setting the
      *         event handler
+     * @deprecated since 2.0
      */
     public void setEventHandler( ValidationEventHandler handler )
         throws JAXBException;
@@ -166,6 +170,7 @@ public interface Validator {
      *         if it hasn't been set
      * @throws JAXBException if an error was encountered while getting the 
      *         current event handler
+     * @deprecated since 2.0
      */
     public ValidationEventHandler getEventHandler()
         throws JAXBException;
@@ -189,6 +194,7 @@ public interface Validator {
      *      If the subrootObj parameter is null
      * @return true if the subtree rooted at <tt>subrootObj</tt> is valid, false
      *         otherwise
+     * @deprecated since 2.0
      */
     public boolean validate( Object subrootObj ) throws JAXBException;
     
@@ -211,6 +217,7 @@ public interface Validator {
      *      If the rootObj parameter is null
      * @return true if the tree rooted at <tt>rootObj</tt> is valid, false
      *         otherwise
+     * @deprecated since 2.0
      */
     public boolean validateRoot( Object rootObj ) throws JAXBException;
 
@@ -231,6 +238,7 @@ public interface Validator {
      *                            property or value
      * @throws IllegalArgumentException
      *      If the name parameter is null
+     * @deprecated since 2.0
      */
     public void setProperty( String name, Object value ) 
         throws PropertyException;
@@ -251,6 +259,7 @@ public interface Validator {
      *      property name
      * @throws IllegalArgumentException
      *      If the name parameter is null
+     * @deprecated since 2.0
      */
     public Object getProperty( String name ) throws PropertyException;
     
