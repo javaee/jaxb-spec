@@ -16,9 +16,9 @@
     </description>
 
     <!-- properties -->
-    <property name="release.spec.title"    value="Early :Draft v0.44-0.1"/>
+    <property name="release.spec.title"    value="Early Draft v0.45"/>
     <property name="release.spec.version"  value="2.0"/>
-    <property name="release.spec.date"     value="November 23,2004"/>
+    <property name="release.spec.date"     value="Jan 7, 2005"/>
     <property name="release.spec.feedback" value="spec-comments@jsr222.dev.java.net"/>
 
     <!-- libraries that are referenced when compiling Java source files -->
@@ -86,13 +86,13 @@
     <target name="javadoc" 
             depends="compile"
             description="create javadoc into build/docs/api">
-        <javadoc packagenames="javax.xml.*" 
+        <javadoc locale="en_US"
+                 packagenames="javax.xml.*" 
                  destdir="build/docs/api"
                  nodeprecated="false"
                  use="false"
                  author="true"
                  version="true"
-                 locale="en_US"
                  windowtitle="JAXB ${release.spec.version}">
             <sourcepath>
                 <pathelement path="src"/>
