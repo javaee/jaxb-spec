@@ -12,12 +12,12 @@ import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.*;
 
 /**
- * Maps a JavaBean property to a XML element.
+ * Maps a JavaBean property to a XML element derived from property name.
  *
  * <hr>
  * <b> Note To reviewers: </b> JAXB 2.0 ED 0.40 allowed the use of
- * this annotation on both Javabean property and class. However, now
- * it can only be used with a Javabean property. &#64;XmlRootElement
+ * this annotation on both JavaBean property and class. However, now
+ * it can only be used with a JavaBean property. &#64;XmlRootElement
  * is to be used for annotating the class. So examples and description
  * that applied to class have been moved into the &#64;XmlRootElement
  * annotation.
@@ -29,7 +29,10 @@ import static java.lang.annotation.RetentionPolicy.*;
  * elements: 
  * <ul> 
  *   <li> a JavaBean property </li>
- *   <li> a public non final, non static field </li>
+ *   <li> field </li>
+ *   <li> within {@link XmlElements}
+ * <p>
+ *
  * </ul>
  * 
  * The usage is subject to the following constraints:
@@ -38,12 +41,6 @@ import static java.lang.annotation.RetentionPolicy.*;
  *        <tt>&#64;XmlElement</tt> are: <tt>&#64;XmlID</tt> and <tt>&#64;XMLIDREF</tt> .</li>
  * </ul>
  *
- * <p><b> TBD after Early Access Version 0.40 </b>
- *  The &#64;Target meta annotation permits the usage of  &#64;XmlType
- *  annotation on an interface and enum construct. The mapping
- *  of interface and enum construct will be addressed after the Early
- *  Access Version 0.40 and this Javadoc will be updated accordingly. 
- * </p>
  * <p>
  * A JavaBean property, when annotated with &#64XmlElement annotation
  * is mapped to a local element in the XML Schema complex type to
@@ -100,7 +97,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <p> 
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 @Retention(RUNTIME) @Target({FIELD, METHOD})
@@ -109,7 +106,7 @@ public @interface XmlElement {
      *
      * Name of the XML Schema element. 
      * <p> If the value is "##default", then element name is derived from the
-     * Javabean property name. 
+     * JavaBean property name. 
      */
     String name() default "##default";
  
