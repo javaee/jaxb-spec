@@ -5,11 +5,11 @@
 
 package javax.xml.bind.annotation;
 
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.ElementType.TYPE;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
+
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import static java.lang.annotation.ElementType.TYPE;
 
 /**
  * Maps a class to an XML element.
@@ -148,7 +148,7 @@ public @interface XmlRootElement {
      * TBD: after Early Access version 0.40: Specify behavior if
      * a top level class is declared in an unnamed package.
      */
-    String targetNamespace() default "##default";
+    String namespace() default "##default";
 
     /**
      * local name of the XML element.
