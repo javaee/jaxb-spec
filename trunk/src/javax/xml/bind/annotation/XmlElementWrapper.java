@@ -43,8 +43,8 @@ import java.lang.annotation.Target;
  * </ul>
  *
  * It can be placed on a collection property along with 
- * along with either @XmlElement, @XmlElements, @XmlElementRef, or
- * @XmlElementRefs.
+ * along with either {@link XmlElement}, {@link XmlElements},
+ * {@link XmlElementRef}, or   {@link XmlElementRefs}.
  *
  * <p>See "Package Specification" in javax.xml.bind.package javadoc for
  * additional common information.</p>
