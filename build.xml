@@ -112,6 +112,9 @@ href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a></i><br>
             <header>
 <![CDATA[JAXB<br>v${release.spec.version}]]>
             </header>
+            <footer>
+<![CDATA[<a href="https://jaxb.dev.java.net/nonav/jaxb20-ed/JAXBv2.0.pSpec.20050301.web.txt">JAXB 2.0 EA Specification License</a>]]>
+            </footer>
             <bottom>
 <![CDATA[<font size=-1>
 <br>Comments to: <a href="mailto:${release.spec.feedback}"><i>${release.spec.feedback}</i></a>
