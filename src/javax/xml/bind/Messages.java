@@ -44,7 +44,10 @@ class Messages
 //
     static final String PROVIDER_NOT_FOUND = // 1 arg
         "ContextFinder.ProviderNotFound";
-        
+
+    static final String PROVIDER_NOT_FOUND_NO_ARGS = // 0 args
+        "ContextFinder.ProviderNotFoundNoArgs";
+    
     static final String COULD_NOT_INSTANTIATE = // 2 args
         "ContextFinder.CouldNotInstantiate";
         
@@ -62,4 +65,7 @@ class Messages
         
     static final String CONVERTER_MUST_NOT_BE_NULL = // 0 args
         "DatatypeConverter.ConverterMustNotBeNull";
+
+    static final String ILLEGAL_CAST = // 2 args
+        "JAXBContext.IllegalCast";
 }
