@@ -142,21 +142,20 @@ public @interface XmlRootElement {
     /**
      * namespace name of the XML element.
      * <p>
-     * If the value is "##default", then the namespace name is derived
-     * from the package of the class ( {@link XmlSchema} ).
-     * <p>
-     * TBD: after Early Access version 0.40: Specify behavior if
-     * a top level class is declared in an unnamed package.
+     * If the value is "##default", then the XML namespace name is derived
+     * from the package of the class ( {@link XmlSchema} ). If the
+     * package is unnamed, then the XML namespace is the default empty
+     * namespace.
      */
     String namespace() default "##default";
 
     /**
      * local name of the XML element.
      * <p>
-     * If the value is "", then the name is derived from the class
-     * name. 
+     * If the value is "##default", then the name is derived from the
+     * class name. 
      *
      */
-    String name() default "";
+    String name() default "##default";
 
 }
