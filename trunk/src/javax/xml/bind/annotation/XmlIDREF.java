@@ -12,7 +12,7 @@ import static java.lang.annotation.RetentionPolicy.*;
 
 /**
  * <p>
- * Maps a JavaBean property to XML Schema type <tt>xs:IDREF</tt>.
+ * Maps a JavaBean property to XML IDREF.
  * 
  * <p>
  * To preserve referential integrity of an object graph across XML
@@ -27,7 +27,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * program elements: 
  * <ul> 
  *   <li> a JavaBean property </li>
- *   <li> a public non final, non static field </li>
+ *   <li> field </li>
  * </ul>
  * 
  * <p> The usage is subject to the following constraints:
@@ -38,9 +38,6 @@ import static java.lang.annotation.RetentionPolicy.*;
  *   <li> The only additional mapping annotations that can be used
  *        with <tt>@xs:IDREF</tt> are: <tt>@XmlElement</tt> and
  *        <tt>@XmlAttribute</tt>.</li>
- *   <li>If the JavaBean property is a read/write property, then the
- *       <tt>@XmlIDREF</tt> can be used to annotate either the getter
- *       or setter method but not both.</li> 
  *
  * <p>See "Package Specification" in javax.xml.bind.package javadoc for
  * additional common information.</p>
@@ -244,7 +241,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * @author Sekhar Vajjhala, Sun Microsystems, Inc. 
  * @see XmlID
  * @since JAXB2.0
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 @Retention(RUNTIME) @Target({FIELD, METHOD})
