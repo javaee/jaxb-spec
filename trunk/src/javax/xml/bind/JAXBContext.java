@@ -15,21 +15,23 @@ import java.util.Map;
  * information necessary to implement the JAXB binding framework operations: 
  * unmarshal, marshal and validate.
  *
- * <p>A client application normally obtains new instances of this class via the
- * newInstance methods, although there are other specialized forms of the method
- * available:
+ * <p>A client application normally obtains new instances of this class using
+ * one of these two styles for newInstance methods, although there are other 
+ * specialized forms of the method available:
  *
  * <ul>
- *   <li>{@link #newInstance(String) JAXBContext.newInstance( "com.acme.foo:com.acme.bar" )} </li>
- *   <li>{@link #newInstance(Class[]) JAXBContext.newInstance( com.acme.foo.Foo.class )} </li>
+ *   <li>{@link #newInstance(String,ClassLoader) JAXBContext.newInstance( "com.acme.foo:com.acme.bar" )} <br/>
+ *   The JAXBContext instance is initialized from a list of colon 
+ *   separated Java package names. Each java package contains
+ *   JAXB mapped classes, schema-derived classes and/or user annotated 
+ *   classes.
+ *   </li>
+ *   <li>{@link #newInstance(Class[]) JAXBContext.newInstance( com.acme.foo.Foo.class )} <br/>
+ *    The JAXBContext instance is intialized with class(es) 
+ *    passed as parameter(s) and classes that are statically reachable from 
+ *    these class(es). See {@link #newInstance(Class[])} for details.
+ *   </li>
  * </ul>
- *
- * <p>
- * The <tt>contextPath</tt> contains a list of Java package names that contain
- * JAXB mapped classes. Alternatively, you may initialize the <tt>JAXBContext</tt> by
- * passing Class objects.  In either case, the values of these parameters initialize
- * the <tt>JAXBContext</tt> object so that it is capable of managing the JAXB mapped
- * classes.
  *
  * <p>
  * <blockquote>
@@ -42,10 +44,6 @@ import java.util.Map;
  * </pre>
  *
  * <p><i>
- * Each package in the contextPath is expected to contain either a
- * ObjectFactory class and/or a jaxb.index file that designates the
- * classes in the package that are registered with the JAXBContext.
- * 
  * The following JAXB 1.0 requirement is only required for schema to 
  * java interface/implementation binding. It does not apply to JAXB annotated
  * classes. JAXB Providers must generate a <tt>jaxb.properties</tt> file in 
@@ -65,16 +63,6 @@ import java.util.Map;
  * DatatypeConverter.setDatatypeConverter} api prior to any client 
  * invocations of the marshal and unmarshal methods.  This is necessary to 
  * configure the datatype converter that will be used during these operations.</i>
- * </blockquote>
- *
- * <p>
- * <b>Format for jaxb.index</b>
- * <p>
- * <blockquote>
- * The file should contain a newline-separated list of class names. Space and 
- * tab characters, as well as blank lines, are ignored. The comment character 
- * is '#' (0x23); on each line all characters following the first comment 
- * character are ignored. The file must be encoded in UTF-8. 
  * </blockquote>
  *
  * <p>
@@ -103,11 +91,15 @@ import java.util.Map;
  *
  * <p>
  * The client application may also generate Java content trees explicitly rather
- * than unmarshalling existing XML data.  To do so, the application needs to 
- * have access and knowledge about each of the schema derived <tt>
- * ObjectFactory</tt> classes that exist in each of java packages contained 
- * in the <tt>contextPath</tt>.  For each schema derived java class, there will 
- * be a static factory method that produces objects of that type.  For example, 
+ * than unmarshalling existing XML data.  For all JAXB-annotated value classes,
+ * an application can create content using constructors. 
+ * For schema-derived interface/implementation classes and for the
+ * creation of elements that are not bound to a JAXB-annotated
+ * class, an application needs to have access and knowledge about each of 
+ * the schema derived <tt> ObjectFactory</tt> classes that exist in each of 
+ * java packages contained in the <tt>contextPath</tt>.  For each schema 
+ * derived java class, there is a static factory method that produces objects 
+ * of that type.  For example, 
  * assume that after compiling a schema, you have a package <tt>com.acme.foo</tt> 
  * that contains a schema derived interface named <tt>PurchaseOrder</tt>.  In 
  * order to create objects of that type, the client application would use the 
@@ -145,11 +137,9 @@ import java.util.Map;
  * to a <tt>java.io.OutputStream</tt> or a <tt>java.io.Writer</tt>.  The 
  * marshalling process can alternatively produce SAX2 event streams to a 
  * registered <tt>ContentHandler</tt> or produce a DOM Node object.  
- * <!-- don't expose fragment support yet 
- * Client applications 
- * have control over the output encoding as well as whether or not to marshal 
- * the XML data as a complete document or as a fragment.
- * -->
+ * Client applications have control over the output encoding as well as 
+ * whether or not to marshal the XML data as a complete document or 
+ * as a fragment.
  *
  * <p>
  * Here is a simple example that unmarshals an XML document and then marshals
@@ -198,7 +188,7 @@ import java.util.Map;
  * </blockquote>
  *
  * @author <ul><li>Ryan Shoemaker, Sun Microsystems, Inc.</li><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Joe Fialli, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.3 $ $Date: 2005-02-17 21:06:39 $
+ * @version $Revision: 1.4 $ $Date: 2005-03-15 19:03:30 $
  * @see Marshaller
  * @see Unmarshaller
  * @since JAXB1.0
@@ -242,8 +232,28 @@ public abstract class JAXBContext {
      *
      * <p>
      * The client application must supply a context path which is a list of 
-     * colon (':', \u005Cu003A) separated java package names that contain schema 
-     * derived classes.
+     * colon (':', \u005Cu003A) separated java package names that contain 
+     * schema-derived classes and/or JAXB-annotated classes. Schema-derived 
+     * code is registered with the JAXBContext by the 
+     * ObjectFactory.class generated per package. Programmer annotated 
+     * JAXB mapped classes are listed in a 
+     * <tt>jaxb.index</tt> resource file, format described below. 
+     * Note that a java package can contain both schema-derived classes and 
+     * user annotated JAXB classes.
+     * </p>
+     * 
+     * <p>
+     * <b>Format for jaxb.index</b>
+     * <p>
+     * <blockquote>
+     * The file should contain a newline-separated list of class names. Space and 
+     * tab characters, as well as blank lines, are ignored. The comment character 
+     * is '#' (0x23); on each line all characters following the first comment 
+     * character are ignored. The file must be encoded in UTF-8. Classes that 
+     * are reachable, as defined in {@link #newInstance(Class[])}, from the 
+     * listed classes are also registered with JAXBContext. 
+     * 
+     * </blockquote>
      *
      * <p>
      * In the case of schema to java interface/implementation binding,
@@ -264,7 +274,8 @@ public abstract class JAXBContext {
      * being thrown.
      *  
      * @param contextPath list of java package names that contain schema 
-     *                     derived classes
+     *                    derived class and/or java to schema (JAXB-annotated)
+     *                    mapped classes
      * @param classLoader
      *      This class loader will be used to locate the implementation
      *      classes.
@@ -410,17 +421,21 @@ public abstract class JAXBContext {
      *
      * Not only the new context will recognize all the classes specified,
      * but it will also recognize any classes that are directly/indirectly
-     * referenced statically from the specified classes.
+     * referenced statically from the specified classes. Subclasses of 
+     * referenced classes nor <tt>&#64XmlTransient</tt> referenced classes 
+     * are not registered with JAXBContext.
      *
      * For example, in the following Java code, if you do
      * <tt>newInstance(Foo.class)</tt>, the newly created {@link JAXBContext}
-     * will recognize both <tt>Foo</tt> and <tt>Bar</tt>, but not <tt>Zot</tt>:
+     * will recognize both <tt>Foo</tt> and <tt>Bar</tt>, but not <tt>Zot</tt> or <tt>FooBar</tt>:
      * <pre><xmp>
      * class Foo {
+     *      &#64XmlTransient FooBar c;
      *      Bar b;
      * }
      * class Bar { int x; }
      * class Zot extends Bar { int y; }
+     * class FooBar { }
      * </xmp></pre>
      *
      * Therefore, a typical client application only needs to specify the
