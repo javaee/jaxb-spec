@@ -12,7 +12,7 @@ import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.*;
 
 /**
- * <p> Maps a package name to a XML target namespace. </p>
+ * <p> Maps a package name to a XML namespace. </p>
  *
  * <p><b>Usage</b> </p>
  * <p>
@@ -90,7 +90,7 @@ import static java.lang.annotation.RetentionPolicy.*;
 
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 @Retention(RUNTIME) @Target({PACKAGE})
