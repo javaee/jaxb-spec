@@ -11,15 +11,22 @@ import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.*;
 
 /**
- * <p>
- * Maps a JavaBean property to a XML Schema element.
+ * Maps a JavaBean property to a XML element.
+ *
+ * <hr>
+ * <b> Note To reviewers: </b> JAXB 2.0 ED 0.40 allowed the use of
+ * this annotation on both Javabean property and class. However, now
+ * it can only be used with a Javabean property. &#64;XmlRootElement
+ * is to be used for annotating the class. So examples and description
+ * that applied to class have been moved into the &#64;XmlRootElement
+ * annotation.
+ * <hr>
  *
  * <p> <b>Usage</b> </p>
  * <p>
  * The &#64;XmlElement annotation can be used with the following program
  * elements: 
  * <ul> 
- *   <li> a top level value class </li>
  *   <li> a JavaBean property </li>
  *   <li> a public non final, non static field </li>
  * </ul>
@@ -36,10 +43,6 @@ import static java.lang.annotation.RetentionPolicy.*;
  *  of interface and enum construct will be addressed after the Early
  *  Access Version 0.40 and this Javadoc will be updated accordingly. 
  * </p>
- * <p>
- * When a top level class is annotated with the &#64XmlElement annotation,
- * a global element is associated with the XML Schema type to which
- * the class is mapped.
  * <p>
  * A JavaBean property, when annotated with &#64XmlElement annotation
  * is mapped to a local element in the XML Schema complex type to
@@ -67,23 +70,9 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <p>
  * <b>Example 2: </b> Associate a global element with XML Schema type
  * to which the class is mapped.
- * <pre>
- *     //Example: Code fragment
- *     &#64;XmlElement(name="PriceElement")
- *     public class USPrice {
- *         &#64;XmlElement
- *         public java.math.BigDecimal price;
- *     }
- *
- *     &lt;!-- Example: Generated XML schema fragment -->
- *     &lt;xs:element name="PriceElement" type="USPrice"/>
- *     &lt;xs:complexType name="USPrice">
- *       &lt;xs:sequence>
- *         &lt;xs:element name="price" type="xs:decimal"/>
- *       &lt;/sequence>
- *     &lt;/xs:complexType>
- *   </pre>
- *
+ * <p>
+ * <b> Note to Reviewers: </b> Moved to {@link XmlRootElement}
+ * <p>
  * <b> Example 3: </b> Map a field to a nillable element.
  *   <pre>
  * 
@@ -104,18 +93,16 @@ import static java.lang.annotation.RetentionPolicy.*;
  * 
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 @Retention(RUNTIME) @Target({FIELD, METHOD, TYPE})
 public @interface XmlElement {
     /**
      *
-     * Name of the XML Schema element. By default, the XML Schema
-     * element name is derived from the JavaBean property name if
-     * this annotation is specified on a JavaBean property or from
-     * the class name if the annotation is specified on a class.
-     *
+     * Name of the XML Schema element. 
+     * <p> If the value is "", then element name is derived from the
+     * Javabean property name. 
      */
     String name() default "";
  
@@ -134,17 +121,13 @@ public @interface XmlElement {
     /**
      * Specifies the XML target namespace of the XML Schema
      * element. The targetNamespace() must be a valid namespace URI.
-     *
      * <p>
-     * The default value depends upon the program element
-     * annotated by <tt>&#64;XmlElement</tt> and is determined as follows:
-     * <ul> 
-     *   <li> If a top level class declared in a named package is
-     *        annotated then the default target namespace is the
-     *        namespace to which package name is mapped. </li>
-     *   <li> TBD after Early Access version 0.40: Specify behavior if
-     *        a top level class is declared in an unnamed package. </li>
-     * </ul>
+     * It the value is "##default", then the namespace is the
+     * namespace of the containing class.
+     * <p>
+     * <b>Note to Reviewers: </b> TBD. address in later version
+     * if targetNamespace() is different from that of the containing
+     * class. 
      */
     String targetNamespace() default "##default" ;
 }
