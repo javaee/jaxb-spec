@@ -12,7 +12,7 @@ import static java.lang.annotation.RetentionPolicy.*;
 
 /**
  * <p>
- * Associates a namespace prefix with a namespace URI.
+ * Associates a namespace prefix with a XML namespace URI.
  *
  * <p><b>Usage</b></p>
  * <p><tt>@XmlNs</tt> annotation is intended for use from other 
@@ -24,7 +24,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <p><b>Example:</b>See <tt>XmlSchema</tt> annotation type for an example.
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 @Retention(RUNTIME) @Target({})
