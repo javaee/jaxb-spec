@@ -5,8 +5,9 @@
 
 package javax.xml.bind.annotation;
 
-import java.lang.annotation.Target;
 import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
 import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.*;
 
@@ -35,7 +36,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * </ul>
  * </p>
  *
- * <p> <b>Example: </b>Map a JavaBean property to an XML attribute.</p>
+ * <p> <b>Example 1: </b>Map a JavaBean property to an XML attribute.</p>
  * <pre>
  *     //Example: Code fragment
  *     public class USPrice { 
@@ -52,8 +53,26 @@ import static java.lang.annotation.RetentionPolicy.*;
  *     &lt;/xs:complexType>
  * </pre>
  *
+ * <p> <b>Example 2: </b>Map a JavaBean collection property to an XML attribute.</p>
+ * <pre>
+ *     // Example: Code fragment
+ *     class Foo {
+ *         ...
+ *         &#64;XmlAttribute List&lt;int> items;
+ *     } 
+ *
+ *     &lt;!-- Example: XML Schema fragment -->
+ *     &lt;xs:complexType name="Foo">
+ *     	 ...
+ *       &lt;xs:attribute name="items">
+ *         &lt;xs:simpleType>
+ *           &lt;xs:list itemType="xs:int"/>
+ *         &lt;/xs:simpleType>
+ *     &lt;/xs:complexType>
+ *
+ * </pre>
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  * @see XmlType
  * @since JAXB2.0
  */
@@ -81,5 +100,5 @@ public @interface XmlAttribute {
      * attribute.
      * 
      */
-    String targetNamespace() default "##default" ;
+    String namespace() default "##default" ;
 }
