@@ -12,7 +12,7 @@ import static java.lang.annotation.RetentionPolicy.*;
 
 /**
  * <p>
- * Maps a JavaBean property to XML Schema type <tt>xs:ID</tt>.
+ * Maps a JavaBean property to XML ID.
  *
  * <p>
  * To preserve referential integrity of an object graph across XML
@@ -27,7 +27,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * program elements: 
  * <ul> 
  *   <li> a JavaBean property </li>
- *   <li> a public non final, non static field </li>
+ *   <li> field </li>
  * </ul>
  * 
  * <p>See "Package Specification" in javax.xml.bind.package javadoc for
@@ -71,7 +71,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @see XmlIDREF
  * @since JAXB2.0
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 @Retention(RUNTIME) @Target({FIELD, METHOD})
