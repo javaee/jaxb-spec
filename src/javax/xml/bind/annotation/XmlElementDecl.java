@@ -141,7 +141,7 @@ public @interface XmlElementDecl {
      * <b> Note to reviewers: </b> There is no default name; since
      * the annotation is on a factory method, it is not clear that the
      * method name can be derived from the factory method name.
-     * @see #tnamespace()
+     * @see #namespace()
      */
     String name();
 
