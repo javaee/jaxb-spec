@@ -74,7 +74,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *     &lt;!-- Example 1: XML Schema fragment -->
  *     &lt;xs:simpleType name="USPrice"/>
  *       &lt;xs:restriction base="xs:decimal"/>
- *     &lt;xs:simpleType/>
+ *     &lt;/xs:simpleType>
  *
  *   </pre>
  * 
@@ -97,9 +97,9 @@ import static java.lang.annotation.RetentionPolicy.*;
  *     &lt;xs:simpleContent>
  *       &lt;xs:extension base="xs:decimal">
  *         &lt;xs:attribute name="currency" type="xs:string"/>
- *       &lt;/xsd:extension>
- *     &lt;/xsd:simpleContent>
- *   &lt;/xsd:complexType> 
+ *       &lt;/xs:extension>
+ *     &lt;/xs:simpleContent>
+ *   &lt;/xs:complexType> 
  *
  *   </pre>
  * </p>
@@ -107,7 +107,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @see XmlType
  * @since JAXB2.0
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 @Retention(RUNTIME) @Target({FIELD, METHOD})

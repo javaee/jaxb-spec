@@ -11,7 +11,9 @@ import java.util.Collection;
 /**
  * Maps attribute names to their values.
  * 
- * @since 2.0
+ * @author <ul><li>Ryan Shoemaker, Sun Microsystems, Inc.</li><li>Joe Fialli, Sun Microsystems, Inc.</li></ul> 
+ * @version $Revision: 1.2 $
+ * @since JAXB2.0
  */
 public abstract class AttributeMap {
 

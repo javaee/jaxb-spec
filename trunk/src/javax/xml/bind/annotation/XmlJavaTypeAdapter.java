@@ -100,7 +100,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *     &lt;!-- XML Schema mapping for myHashMapType -->
  *     &lt;xs:complexType name="myHashMapEntryType">
  *       &lt;xs:simpleContent>
- *         &lt;xs:extension base="xs:string">
+ *         &lt;xs:extension base="xs:string"/>
  *       &lt;/xs:simpleContent>
  *       &lt;xs:attribute name="key" type="xs:int"/>
  *     &lt;/xs:complexType>
@@ -122,7 +122,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 @Retention(RUNTIME) @Target({FIELD,METHOD,TYPE,PACKAGE})

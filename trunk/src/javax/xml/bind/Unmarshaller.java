@@ -207,7 +207,7 @@ package javax.xml.bind;
  * 
  * 
  * @author <ul><li>Ryan Shoemaker, Sun Microsystems, Inc.</li><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Joe Fialli, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.2 $ $Date: 2004-06-14 21:23:05 $
+ * @version $Revision: 1.3 $ $Date: 2004-06-15 21:11:39 $
  * @see JAXBContext
  * @see Marshaller
  * @see Validator
@@ -393,6 +393,7 @@ public interface Unmarshaller {
      *      If the <tt>reader</tt> parameter is null
      * @throws IllegalStateException
      *      If <tt>reader</tt> is not pointing to a start element event.
+     * @since JAXB 2.0
      */
     public Object unmarshal( javax.xml.stream.XMLStreamReader reader )
         throws JAXBException;
@@ -425,6 +426,7 @@ public interface Unmarshaller {
      *      If the <tt>reader</tt> parameter is null
      * @throws IllegalStateException
      *      If <tt>reader</tt> is not pointing to a start element event.
+     * @since JAXB 2.0
      */
     public Object unmarshal( javax.xml.stream.XMLEventReader reader )
         throws JAXBException;

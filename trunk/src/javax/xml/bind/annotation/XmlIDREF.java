@@ -171,14 +171,14 @@ import static java.lang.annotation.RetentionPolicy.*;
  *       &lt;invoice customer="Alice">
  *           ....
  *       &lt;/invoice>
- *   &lt;customerData>
+ *   &lt;/customerData>
  *
  * </pre>
  *
  * @author Sekhar Vajjhala, Sun Microsystems, Inc. 
  * @see XmlID
  * @since JAXB2.0
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 @Retention(RUNTIME) @Target({FIELD, METHOD})
