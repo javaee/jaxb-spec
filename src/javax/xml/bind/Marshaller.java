@@ -216,7 +216,7 @@ package javax.xml.bind;
  * </blockquote>
  * 
  * @author <ul><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Ryan Shoemaker, Sun Microsystems, Inc.</li><li>Joe Fialli, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.2 $ $Date: 2004-06-14 21:23:03 $
+ * @version $Revision: 1.3 $ $Date: 2004-06-15 21:11:39 $
  * @see JAXBContext
  * @see Validator
  * @see Unmarshaller
@@ -394,6 +394,7 @@ public interface Marshaller {
      *      Marshalling objects</a>.
      * @throws IllegalArgumentException
      *      If any of the method parameters are null
+     * @since JAXB 2.0
      */
     public void marshal( Object obj, javax.xml.stream.XMLStreamWriter writer )
         throws JAXBException;
@@ -417,6 +418,7 @@ public interface Marshaller {
      *      Marshalling objects</a>.
      * @throws IllegalArgumentException
      *      If any of the method parameters are null
+     * @since JAXB 2.0
      */
     public void marshal( Object obj, javax.xml.stream.XMLEventWriter writer )
         throws JAXBException;
