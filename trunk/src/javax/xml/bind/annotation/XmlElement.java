@@ -92,9 +92,15 @@ import static java.lang.annotation.RetentionPolicy.*;
  *   </pre>
  * <p>
  * 
+ * <p> <b>Example 4: </b>Map a JavaBean property to an XML element
+ * with anonymous type.</p> 
+ * <p>
+ * See Example 6 in @{@link XmlType}.
+ * 
+ * <p> 
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 @Retention(RUNTIME) @Target({FIELD, METHOD})
@@ -102,10 +108,10 @@ public @interface XmlElement {
     /**
      *
      * Name of the XML Schema element. 
-     * <p> If the value is "", then element name is derived from the
+     * <p> If the value is "##default", then element name is derived from the
      * Javabean property name. 
      */
-    String name() default "";
+    String name() default "##default";
  
     /**
      * Customize the element declaration to be nillable. 
