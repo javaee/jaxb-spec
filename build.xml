@@ -100,7 +100,7 @@
             <classpath refid="doc.classpath" />
             <group title="JAXB Packages" packages="javax.xml*"/> 
             <doctitle>
-<![CDATA[&nbsp;<br>
+<![CDATA[<br>
 JAXB ${release.spec.version} Runtime Library</h2>
 ${release.spec.title} specification, ${release.spec.date}<br>
 Comments to: <i><a href="mailto:${release.spec.feedback}">${release.spec.feedback}</a></i><br> 
