@@ -12,7 +12,7 @@ import static java.lang.annotation.RetentionPolicy.*;
 
 /**
  * <p>
- * Prevents the mapping of a JavaBean property to a XML Schema construct.
+ * Prevents the mapping of a JavaBean property to XML representation.
  * <p>
  * The <tt>@XmlTransient</tt> annotation is useful for resolving name
  * collisions between a JavaBean property name and a field name. A
@@ -26,7 +26,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *     program elements: 
  * <ul> 
  *   <li> a JavaBean property </li>
- *   <li> a public non final, non static field </li>
+ *   <li> field </li>
  * </ul>
  * 
  * <p>See "Package Specification" in javax.xml.bind.package javadoc for
@@ -68,7 +68,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 @Retention(RUNTIME) @Target({FIELD, METHOD})
