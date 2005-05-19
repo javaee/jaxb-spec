@@ -16,7 +16,7 @@ import javax.xml.bind.ValidationEventLocator;
  * convenience.
  *
  * @author <ul><li>Ryan Shoemaker, Sun Microsystems, Inc.</li></ul> 
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  * @see javax.xml.bind.NotIdentifiableEvent
  * @see javax.xml.bind.Validator
  * @see javax.xml.bind.ValidationEventHandler

@@ -44,7 +44,7 @@ import static java.lang.annotation.ElementType.FIELD;
  *
  *     &lt;!-- Example: XML Schema fragment -->
  *     &lt;xs:simpleType name="Card">
- *       &lt;xs:restriction base="xs:NCName"/>
+ *       &lt;xs:restriction base="xs:string"/>
  *         &lt;xs:enumeration value="CLUBS"/>
  *         &lt;xs:enumeration value="DIAMONDS"/>
  *         &lt;xs:enumeration value="HEARTS"/>
@@ -58,10 +58,10 @@ import static java.lang.annotation.ElementType.FIELD;
  *     &#64;XmlType
  *     &#64;XmlEnum(Integer.class)
  *     public enum Coin { 
- *         &#64;XmlEnumValue("1"), PENNY(1),
- *         &#64;XmlEnumValue("5"), NICKEL(5),
- *         &#64;XmlEnumValue("10"), DIME(10),
- *         &#64;XmlEnumValue("25"), QUARTER(25) }
+ *         &#64;XmlEnumValue("1") PENNY(1),
+ *         &#64;XmlEnumValue("5") NICKEL(5),
+ *         &#64;XmlEnumValue("10") DIME(10),
+ *         &#64;XmlEnumValue("25") QUARTER(25) }
  *
  *     &lt;!-- Example: XML Schema fragment -->
  *     &lt;xs:simpleType name="Coin">

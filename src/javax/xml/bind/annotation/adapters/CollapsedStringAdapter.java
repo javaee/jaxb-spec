@@ -5,6 +5,8 @@
 
 package javax.xml.bind.annotation.adapters;
 
+
+
 /**
  * Built-in {@link XmlAdapter} to handle <tt>xs:token</tt> and its derived types.
  *

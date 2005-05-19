@@ -24,7 +24,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  *
  * @author <ul><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Sekhar Vajjhala, Sun Microsystems, Inc.</li></ul>
  *
- * @see XmlCollection
+ * @see XmlElementWrapper
  * @see XmlElementRef
  */
 @Retention(RUNTIME)

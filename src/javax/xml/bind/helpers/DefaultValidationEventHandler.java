@@ -4,12 +4,12 @@
  */
 package javax.xml.bind.helpers;
 
-import java.net.URL;
-import javax.xml.bind.ValidationEventHandler;
-import javax.xml.bind.ValidationEvent;
-import javax.xml.bind.ValidationEventLocator;
-
 import org.w3c.dom.Node;
+
+import javax.xml.bind.ValidationEvent;
+import javax.xml.bind.ValidationEventHandler;
+import javax.xml.bind.ValidationEventLocator;
+import java.net.URL;
 
 /**
  * <p>
@@ -22,7 +22,7 @@ import org.w3c.dom.Node;
  * error or fatal error.
  *
  * @author <ul><li>Ryan Shoemaker, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  * @see javax.xml.bind.Unmarshaller
  * @see javax.xml.bind.Validator
  * @see javax.xml.bind.ValidationEventHandler
@@ -53,9 +53,9 @@ public class DefaultValidationEventHandler implements ValidationEventHandler {
                 retVal = false; // terminate after fatal errors
                 break;
             default:
-                _assert( false, 
+                assert false :
                     Messages.format( Messages.UNRECOGNIZED_SEVERITY,
-                                     new Integer( event.getSeverity() ) ) );
+                            event.getSeverity() );
         }
         
         // calculate the location message
@@ -101,13 +101,6 @@ public class DefaultValidationEventHandler implements ValidationEventHandler {
         } 
         
         return msg.toString();
-    }
-
-    
-    private static void _assert( boolean b, String msg ) {
-        if( !b ) {
-            throw new InternalError( msg );
-        }
     }
 }
 

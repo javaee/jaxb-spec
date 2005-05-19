@@ -8,7 +8,13 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
-import javax.xml.bind.*;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.PropertyException;
+import javax.xml.bind.UnmarshalException;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.ValidationEventHandler;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
+import javax.xml.bind.attachment.AttachmentUnmarshaller;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
 import javax.xml.stream.XMLEventReader;
@@ -38,7 +44,7 @@ import java.net.URL;
  * @author <ul>
  *         <li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li>
  *         </ul>
- * @version $Revision: 1.3 $ $Date: 2005-02-17 21:20:28 $
+ * @version $Revision: 1.4 $ $Date: 2005-05-19 17:51:29 $
  * @see javax.xml.bind.Unmarshaller
  * @since JAXB1.0
  */
@@ -357,17 +363,33 @@ public abstract class AbstractUnmarshallerImpl implements Unmarshaller
         throw new UnsupportedOperationException();
     }
 
-    /* (non-Javadoc)
-     * @see javax.xml.bind.Unmarshaller#setSchema(javax.xml.validation.Schema)
-     */
     public void setSchema(Schema schema) {
         throw new UnsupportedOperationException();
     }
 
-    /* (non-Javadoc)
-     * @see javax.xml.bind.Unmarshaller#getSchema()
-     */
     public Schema getSchema() {
+        throw new UnsupportedOperationException();
+    }
+
+    public void setAdapter(XmlAdapter adapter) {
+        if(adapter==null)
+            throw new IllegalArgumentException();
+        setAdapter((Class)adapter.getClass(),adapter);
+    }
+
+    public <A extends XmlAdapter> void setAdapter(Class<A> type, A adapter) {
+        throw new UnsupportedOperationException();
+    }
+
+    public <A extends XmlAdapter> A getAdapter(Class<A> type) {
+        throw new UnsupportedOperationException();
+    }
+
+    public void setAttachmentUnmarshaller(AttachmentUnmarshaller au) {
+        throw new UnsupportedOperationException();
+    }
+
+    public AttachmentUnmarshaller getAttachmentUnmarshaller() {
         throw new UnsupportedOperationException();
     }
 }

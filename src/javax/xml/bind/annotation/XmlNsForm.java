@@ -45,7 +45,7 @@ import static java.lang.annotation.ElementType.*;
  * 
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public enum XmlNsForm {UNQUALIFIED, QUALIFIED, UNSET}
 
