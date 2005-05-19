@@ -31,7 +31,7 @@ import static javax.xml.bind.JAXBContext.JAXB_CONTEXT_FACTORY;
  * This code is designed to implement the JAXB 1.0 spec pluggability feature
  *
  * @author <ul><li>Ryan Shoemaker, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  * @see JAXBContext
  */
 class ContextFinder {
@@ -237,6 +237,11 @@ class ContextFinder {
         StringBuilder propFileName;
         StringTokenizer packages = new StringTokenizer( contextPath, ":" );
         String factoryClassName;
+
+        if(!packages.hasMoreTokens())
+            // no context is specified
+            throw new JAXBException(Messages.format(Messages.NO_PACKAGE_IN_CONTEXTPATH));
+
 
         logger.fine("Searching jaxb.properties");
 

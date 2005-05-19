@@ -5,6 +5,10 @@
 
 package javax.xml.bind;
 
+import javax.xml.bind.annotation.adapters.XmlAdapter;
+import javax.xml.bind.attachment.AttachmentMarshaller;
+import javax.xml.validation.Schema;
+
 /**
  * <p>
  * The <tt>Marshaller</tt> class is responsible for governing the process
@@ -240,7 +244,7 @@ package javax.xml.bind;
  * </blockquote>
  * 
  * @author <ul><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Ryan Shoemaker, Sun Microsystems, Inc.</li><li>Joe Fialli, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.4 $ $Date: 2004-07-28 20:26:01 $
+ * @version $Revision: 1.5 $ $Date: 2005-05-19 17:51:24 $
  * @see JAXBContext
  * @see Validator
  * @see Unmarshaller
@@ -553,6 +557,108 @@ public interface Marshaller {
         throws JAXBException;
         
     
+
+    /**
+     * Associates a configured instance of {@link XmlAdapter} with this marshaller.
+     *
+     * <p>
+     * This is a convenience method that invokes <code>setAdapter(adapter.getClass(),adapter);</code>.
+     *
+     * @see #setAdapter(Class,XmlAdapter)
+     * @throws IllegalArgumentException
+     *      if the adapter parameter is null.
+     * @throws UnsupportedOperationException
+     *      if invoked agains a JAXB 1.0 implementation.
+     * @since JAXB 2.0
+     */
+    public void setAdapter( XmlAdapter adapter );
+
+    /**
+     * Associates a configured instance of {@link XmlAdapter} with this marshaller.
+     *
+     * <p>
+     * Every marshaller internally maintains a
+     * {@link java.util.Map}&lt;{@link Class},{@link XmlAdapter}>,
+     * which it uses for marshalling classes whose fields/methods are annotated
+     * with {@link javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter}.
+     *
+     * <p>
+     * This method allows applications to use a configured instance of {@link XmlAdapter}.
+     * When an instance of an adapter is not given, a marshaller will create
+     * one by invoking its default constructor.
+     *
+     * @param type
+     *      The type of the adapter. The specified instance will be used when
+     *      {@link javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter#value()}
+     *      refers to this type.
+     * @param adapter
+     *      The instance of the adapter to be used. If null, it will un-register
+     *      the current adapter set for this type.
+     * @throws IllegalArgumentException
+     *      if the type parameter is null.
+     * @throws UnsupportedOperationException
+     *      if invoked agains a JAXB 1.0 implementation.
+     * @since JAXB 2.0
+     */
+    public <A extends XmlAdapter> void setAdapter( Class<A> type, A adapter );
+
+    /**
+     * Gets the adapter associated with the specified type.
+     *
+     * This is the reverse operation of the {@link #setAdapter} method.
+     *
+     * @throws IllegalArgumentException
+     *      if the type parameter is null.
+     * @throws UnsupportedOperationException
+     *      if invoked agains a JAXB 1.0 implementation.
+     * @since JAXB 2.0
+     */
+    public <A extends XmlAdapter> A getAdapter( Class<A> type );
+
+
+    /**
+     * <p>Associate a context that enables binary data within an XML document
+     * to be transmitted as XML-binary optimized attachment.
+     * The attachment is referenced from the XML document content model
+     * by content-id URIs(cid) references stored within the xml document.
+     *
+     * @throws IllegalStateException if attempt to concurrently call this
+     *                               method during a marshal operation.
+     */
+    void setAttachmentMarshaller(AttachmentMarshaller am);
+
+    AttachmentMarshaller getAttachmentMarshaller();
+
+    /**
+     * Specify the JAXP 1.3 {@link javax.xml.validation.Schema Schema}
+     * object that should be used to validate subsequent marshal operations
+     * against.  Passing null into this method will disable validation.
+     *
+     * <p>
+     * This method allows the caller to validate the marshalled XML as it's marshalled.
+     *
+     * @param schema Schema object to validate marshal operations against or null to disable validation
+     * @throws UnsupportedOperationException could be thrown if this method is
+     *         invoked on an Marshaller created from a JAXBContext referencing
+     *         JAXB 1.0 mapped classes
+     * @since 2.0
+     */
+    public void setSchema( Schema schema );
+
+    /**
+     * Get the JAXP 1.3 {@link javax.xml.validation.Schema Schema} object
+     * being used to perform marshal-time validation.  If there is no
+     * Schema set on the marshaller, then this method will return null
+     * indicating that marshal-time validation will not be performed.
+     *
+     * @return the Schema object being used to perform marshal-time
+     *      validation or null if not present.
+     * @throws UnsupportedOperationException could be thrown if this method is
+     *         invoked on an Marshaller created from a JAXBContext referencing
+     *         JAXB 1.0 mapped classes
+     * @since 2.0
+     */
+    public Schema getSchema();
 }
 
 

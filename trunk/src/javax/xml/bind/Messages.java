@@ -59,7 +59,10 @@ class Messages
         
     static final String MISSING_PROPERTY = // 2 args
         "ContextFinder.MissingProperty";
-        
+
+    static final String NO_PACKAGE_IN_CONTEXTPATH = // 0 args
+        "ContextFinder.NoPackageInContextPath";
+
     static final String NAME_VALUE = // 2 args
         "PropertyException.NameValue";
         

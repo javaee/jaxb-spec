@@ -102,7 +102,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <p> 
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 @Retention(RUNTIME) @Target({FIELD, METHOD})
@@ -138,7 +138,17 @@ public @interface XmlElement {
      * if namespace is different from that of the containing
      * class. 
      */
-    String namespace() default "##default" ;
+    String namespace() default "##default";
+
+    /**
+     * Default value of this element.
+     *
+     * <p>
+     * The '\u0000' value specified as a default of this annotation element
+     * is used as a poor-man's substitute for null to allow implementations
+     * to recognize the 'no default value' state.  
+     */
+    String defaultValue() default "\u0000";
 
     /**
      * The Java class being referenced.

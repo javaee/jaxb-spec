@@ -178,5 +178,15 @@ public @interface XmlElementDecl {
      */
     String substitutionHeadName() default "";
 
+    /**
+     * Default value of this element.
+     *
+     * <p>
+     * The '\u0000' value specified as a default of this annotation element
+     * is used as a poor-man's substitute for null to allow implementations
+     * to recognize the 'no default value' state.
+     */
+    String defaultValue() default "\u0000";
+    
     public final class GLOBAL {}
 }

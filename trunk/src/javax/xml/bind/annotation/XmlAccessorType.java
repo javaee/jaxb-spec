@@ -54,17 +54,17 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <p>By default, if <tt> XmlAccessorType </tt> on a package is absent,
  * then the following package level annotation is assumed.</p>
  *
- *   XmlAccessorType(AccessType.PROPERTY)
+ *   XmlAccessorType(AccessType.PUBLIC_MEMBER)
  *
  * <p> By default, if XmlAccessorType on a top level value
  * class is absent and none of super classes is annotated with <tt>
  * XmlAccessorType </tt>, then the following default is assumed: </p>
  *
- *   XmlAccessorType(AccessType.PROPERTY)
+ *   XmlAccessorType(AccessType.PUBLIC_MEMBER)
  *
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version  $Revision: 1.1 $
+ * @version  $Revision: 1.2 $
  */
 
 @Inherited @Retention(RUNTIME) @Target({PACKAGE, TYPE})
@@ -73,15 +73,7 @@ public @interface XmlAccessorType {
     /**
      * Specifies whether fields or properties are serialized. 
      * 
-     * If the value is AccessType.PROPERTY, then properties are
-     * serialized by default and fields are assumed to be annotated
-     * with {@link XmlTransient}.
-     *
-     * If the value is AccessType.FIELD, then fields are serialized by
-     * default and properties are assumed to be annotated with 
-     * with {@link XmlTransient}.
-     * 
+     * @see AccessType
      */
-
-    AccessType value() default AccessType.PROPERTY;
+    AccessType value() default AccessType.PUBLIC_MEMBER;
 }

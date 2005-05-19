@@ -5,8 +5,7 @@
 
 package javax.xml.bind.annotation;
 
-import java.lang.annotation.Target;
-import static java.lang.annotation.ElementType.*;
+
 
 /**
  * Used by XmlAccessorType to control serialization of fields or
@@ -19,11 +18,35 @@ import static java.lang.annotation.ElementType.*;
  *
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
+ * @see XmlAccessorType
  */
 
 public enum AccessType {
+    /**
+     * Every getter/setter pair in a JAXB-bound class will be automatically
+     * bound to XML, unless annotated by {@link XmlTransient}.
+     *
+     * Fields are bound to XML only when they are explicitly annotated
+     * by some of the JAXB annotations.
+     */
     PROPERTY,
-    FIELD
-} 
+    /**
+     * Every field in a JAXB-bound class will be automatically
+     * bound to XML, unless annotated by {@link XmlTransient}.
+     *
+     * Getter/setter pairs are bound to XML only when they are explicitly annotated
+     * by some of the JAXB annotations.
+     */
+    FIELD,
+    /**
+     * Every public getter/setter pair and every public field will be
+     * automatically bound to XML, unless annotated by {@link XmlTransient}.
+     *
+     * Fields or getter/setter pairs that are private, protected, or 
+     * defaulted to package-only access are bound to XML only when they are
+     * explicitly annotated by the appropriate JAXB annotations.
+     */
+    PUBLIC_MEMBER
+}
 

@@ -5,6 +5,9 @@
 
 package javax.xml.bind;
 
+import javax.xml.bind.annotation.adapters.XmlAdapter;
+import javax.xml.bind.attachment.AttachmentUnmarshaller;
+import javax.xml.validation.Schema;
 import java.io.Reader;
 
 /**
@@ -209,7 +212,7 @@ import java.io.Reader;
  * 
  * 
  * @author <ul><li>Ryan Shoemaker, Sun Microsystems, Inc.</li><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Joe Fialli, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.7 $ $Date: 2005-02-17 21:13:35 $
+ * @version $Revision: 1.8 $ $Date: 2005-05-19 17:51:24 $
  * @see JAXBContext
  * @see Marshaller
  * @see Validator
@@ -495,6 +498,9 @@ public interface Unmarshaller {
      *        unmarshal, false otherwise
      * @throws JAXBException if an error occurred while enabling or disabling
      *         validation at unmarshal time
+     * @throws UnsupportedOperationException could be thrown if this method is
+     *         invoked on an Unmarshaller created from a JAXBContext referencing
+     *         JAXB 2.0 mapped classes
      * @deprecated since 2.0, please see {@link #setSchema(javax.xml.validation.Schema)}
      */
     public void setValidating( boolean validating ) 
@@ -514,6 +520,9 @@ public interface Unmarshaller {
      *         unmarshal operations, false otherwise
      * @throws JAXBException if an error occurs while retrieving the validating
      *         flag
+     * @throws UnsupportedOperationException could be thrown if this method is
+     *         invoked on an Unmarshaller created from a JAXBContext referencing
+     *         JAXB 2.0 mapped classes
      * @deprecated since 2.0, please see {@link #getSchema()}
      */
     public boolean isValidating() 
@@ -601,6 +610,9 @@ public interface Unmarshaller {
      * API.
      *
      * @param schema Schema object to validate unmarshal operations against or null to disable validation
+     * @throws UnsupportedOperationException could be thrown if this method is
+     *         invoked on an Unmarshaller created from a JAXBContext referencing
+     *         JAXB 1.0 mapped classes
      * @since 2.0
      */
     public void setSchema( javax.xml.validation.Schema schema );
@@ -622,8 +634,82 @@ public interface Unmarshaller {
      * 
      * @return the Schema object being used to perform unmarshal-time
      *      validation or null if not present
+     * @throws UnsupportedOperationException could be thrown if this method is
+     *         invoked on an Unmarshaller created from a JAXBContext referencing
+     *         JAXB 1.0 mapped classes
      * @since 2.0
      */
     public javax.xml.validation.Schema getSchema();
 
+    /**
+     * Associates a configured instance of {@link XmlAdapter} with this unmarshaller.
+     *
+     * <p>
+     * This is a convenience method that invokes <code>setAdapter(adapter.getClass(),adapter);</code>.
+     *
+     * @see #setAdapter(Class,XmlAdapter)
+     * @throws IllegalArgumentException
+     *      if the adapter parameter is null.
+     * @throws UnsupportedOperationException
+     *      if invoked agains a JAXB 1.0 implementation.
+     * @since JAXB 2.0
+     */
+    public void setAdapter( XmlAdapter adapter );
+
+    /**
+     * Associates a configured instance of {@link XmlAdapter} with this unmarshaller.
+     *
+     * <p>
+     * Every unmarshaller internally maintains a
+     * {@link java.util.Map}&lt;{@link Class},{@link XmlAdapter}>,
+     * which it uses for unmarshalling classes whose fields/methods are annotated
+     * with {@link javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter}.
+     *
+     * <p>
+     * This method allows applications to use a configured instance of {@link XmlAdapter}.
+     * When an instance of an adapter is not given, an unmarshaller will create
+     * one by invoking its default constructor.
+     *
+     * @param type
+     *      The type of the adapter. The specified instance will be used when
+     *      {@link javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter#value()}
+     *      refers to this type.
+     * @param adapter
+     *      The instance of the adapter to be used. If null, it will un-register
+     *      the current adapter set for this type.
+     * @throws IllegalArgumentException
+     *      if the type parameter is null.
+     * @throws UnsupportedOperationException
+     *      if invoked agains a JAXB 1.0 implementation.
+     * @since JAXB 2.0
+     */
+    public <A extends XmlAdapter> void setAdapter( Class<A> type, A adapter );
+
+    /**
+     * Gets the adapter associated with the specified type.
+     *
+     * This is the reverse operation of the {@link #setAdapter} method.
+     *
+     * @throws IllegalArgumentException
+     *      if the type parameter is null.
+     * @throws UnsupportedOperationException
+     *      if invoked agains a JAXB 1.0 implementation.
+     * @since JAXB 2.0
+     */
+    public <A extends XmlAdapter> A getAdapter( Class<A> type );
+
+   /**
+    * <p>Associate a context that resolves cid's, content-id URIs, to 
+    *    binary data passed as attachments.</p>
+    *
+    * <p>Unmarshal time validation, enabled via {@link #setSchema(Schema)},
+    * must be supported even when unmarshaller is performing XOP processing.
+    * </p>
+    *
+    * @throws IllegalStateException if attempt to concurrently call this 
+    *                               method during a unmarshal operation.
+    */
+   void setAttachmentUnmarshaller(AttachmentUnmarshaller au);
+
+   AttachmentUnmarshaller getAttachmentUnmarshaller();
 }

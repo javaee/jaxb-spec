@@ -5,11 +5,15 @@
 
 package javax.xml.bind.annotation.adapters;
 
+import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.Marshaller;
+
 /**
  * Adapts a Java type for custom marshaling.
  *
  * <p> <b> Usage: </b> </p>
  *
+ * <p>
  * Some Java types do not map naturally to a XML representation, for
  * example <tt>HashMap</tt> or other non JavaBean classes. Conversely,
  * a XML repsentation may map to a Java type but an application may
@@ -22,6 +26,7 @@ package javax.xml.bind.annotation.adapters;
  * access XML content and the <i> value type</i>, that is mapped to an
  * XML representation.  
  *
+ * <p>
  * This abstract class defines methods for adapting a bound type to a value
  * type or vice versa. The methods are invoked by the JAXB binding
  * framework during marshaling and unmarshalling:
@@ -148,11 +153,23 @@ public abstract class XmlAdapter<ValueType,BoundType> {
 
     /**
      * Convert a value type to a bound type.
+     *
+     * @param v
+     *      The value to be converted. Can be null.
+     * @throws Exception
+     *      if there's an error during the conversion. The caller is responsible for
+     *      reporting the error to the user through {@link javax.xml.bind.ValidationEventHandler}.
      */
-    public abstract BoundType unmarshal(ValueType v);
+    public abstract BoundType unmarshal(ValueType v) throws Exception;
 
     /**
      * Convert a bound type to a value type.
+     *
+     * @param v
+     *      The value to be convereted. Can be null.
+     * @throws Exception
+     *      if there's an error during the conversion. The caller is responsible for
+     *      reporting the error to the user through {@link javax.xml.bind.ValidationEventHandler}.
      */
-    public abstract ValueType marshal(BoundType v);
+    public abstract ValueType marshal(BoundType v) throws Exception;
 }

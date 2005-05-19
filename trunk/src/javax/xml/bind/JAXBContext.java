@@ -188,7 +188,7 @@ import java.util.Map;
  * </blockquote>
  *
  * @author <ul><li>Ryan Shoemaker, Sun Microsystems, Inc.</li><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Joe Fialli, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.4 $ $Date: 2005-03-15 19:03:30 $
+ * @version $Revision: 1.5 $ $Date: 2005-05-19 17:51:24 $
  * @see Marshaller
  * @see Unmarshaller
  * @since JAXB1.0
@@ -218,6 +218,14 @@ public abstract class JAXBContext {
      * a different class loader, either set it via the 
      * <tt>Thread.setContextClassLoader()</tt> api or use the 
      * {@link #newInstance(String,ClassLoader) newInstance} method.
+     * @throws JAXBException if an error was encountered while creating the
+     *                       <tt>JAXBContext</tt> such as
+     * <ol>
+     *   <li>failure to locate either ObjectFactory.class or jaxb.index in the pacakges</li>
+     *   <li>an ambiguity among global elements contained in the contextPath</li>
+     *   <li>failure to locate a value for the context factory provider property</li>
+     *   <li>mixing schema derived packages from different providers on the same contextPath</li>
+     * </ol>
      */
     public static JAXBContext newInstance( String contextPath ) 
         throws JAXBException {
@@ -252,8 +260,16 @@ public abstract class JAXBContext {
      * character are ignored. The file must be encoded in UTF-8. Classes that 
      * are reachable, as defined in {@link #newInstance(Class[])}, from the 
      * listed classes are also registered with JAXBContext. 
-     * 
      * </blockquote>
+     *
+     * <p>
+     * Every package listed on the contextPath must meet <b>one or both</b> of the
+     * following conditions otherwise a <tt>JAXBException</tt> will be thrown:
+     * </p>
+     * <ol>
+     *   <li>it must contain ObjectFactory.class</li>
+     *   <li>it must contain jaxb.index</li>
+     * </ol>
      *
      * <p>
      * In the case of schema to java interface/implementation binding,
@@ -282,11 +298,13 @@ public abstract class JAXBContext {
      *
      * @return a new instance of a <tt>JAXBContext</tt>
      * @throws JAXBException if an error was encountered while creating the
-     *                       <tt>JAXBContext</tt>, such as an ambiguity among
-     *                       global elements contained in the contextPath,
-     *                       failure to locate a value for the context factory
-     *                       property, or mixing schema derived packages from
-     *                       different providers on the same contextPath.
+     *                       <tt>JAXBContext</tt> such as
+     * <ol>
+     *   <li>failure to locate either ObjectFactory.class or jaxb.index in the pacakges</li>
+     *   <li>an ambiguity among global elements contained in the contextPath</li>
+     *   <li>failure to locate a value for the context factory provider property</li>
+     *   <li>mixing schema derived packages from different providers on the same contextPath</li>
+     * </ol>
      */
     public static JAXBContext newInstance( String contextPath, ClassLoader classLoader ) throws JAXBException {
 
@@ -313,12 +331,13 @@ public abstract class JAXBContext {
      *
      * @return a new instance of a <tt>JAXBContext</tt>
      * @throws JAXBException if an error was encountered while creating the
-     *                       <tt>JAXBContext</tt>, such as an ambiguity among
-     *                       global elements contained in the contextPath,
-     *                       failure to locate a value for the context factory
-     *                       property, or mixing schema derived packages from
-     *                       different providers on the same contextPath.
-     *
+     *                       <tt>JAXBContext</tt> such as
+     * <ol>
+     *   <li>failure to locate either ObjectFactory.class or jaxb.index in the pacakges</li>
+     *   <li>an ambiguity among global elements contained in the contextPath</li>
+     *   <li>failure to locate a value for the context factory provider property</li>
+     *   <li>mixing schema derived packages from different providers on the same contextPath</li>
+     * </ol>
      * @since JAXB 2.0
      */
     public static JAXBContext newInstance( String contextPath, ClassLoader classLoader, Map<String,?>  properties  )
@@ -422,7 +441,7 @@ public abstract class JAXBContext {
      * Not only the new context will recognize all the classes specified,
      * but it will also recognize any classes that are directly/indirectly
      * referenced statically from the specified classes. Subclasses of 
-     * referenced classes nor <tt>&#64XmlTransient</tt> referenced classes 
+     * referenced classes nor <tt>&#64;XmlTransient</tt> referenced classes 
      * are not registered with JAXBContext.
      *
      * For example, in the following Java code, if you do
@@ -430,7 +449,7 @@ public abstract class JAXBContext {
      * will recognize both <tt>Foo</tt> and <tt>Bar</tt>, but not <tt>Zot</tt> or <tt>FooBar</tt>:
      * <pre><xmp>
      * class Foo {
-     *      &#64XmlTransient FooBar c;
+     *      &#64;XmlTransient FooBar c;
      *      Bar b;
      * }
      * class Bar { int x; }

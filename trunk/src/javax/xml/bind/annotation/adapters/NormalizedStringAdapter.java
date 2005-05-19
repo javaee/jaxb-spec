@@ -5,6 +5,8 @@
 
 package javax.xml.bind.annotation.adapters;
 
+
+
 /**
  * {@link XmlAdapter} to handle <tt>xs:normalizedString</tt>.
  *

@@ -4,16 +4,18 @@
  */
 package javax.xml.bind.helpers;
 
-import javax.xml.bind.Marshaller;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.PropertyException;
 import javax.xml.bind.ValidationEventHandler;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
+import javax.xml.bind.attachment.AttachmentMarshaller;
 import javax.xml.stream.XMLEventWriter;
 import javax.xml.stream.XMLStreamWriter;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.dom.DOMResult;
-
+import javax.xml.transform.sax.SAXResult;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.validation.Schema;
 import java.io.UnsupportedEncodingException;
 // J2SE1.4 feature
 // import java.nio.charset.Charset;
@@ -33,7 +35,7 @@ import java.io.UnsupportedEncodingException;
  * {@link Marshaller#marshal(Object, javax.xml.transform.Result) marshal(Object, javax.xml.stream.XMLEventWriter)}.
  *
  * @author <ul><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.3 $ $Date: 2004-07-28 20:26:01 $
+ * @version $Revision: 1.4 $ $Date: 2005-05-19 17:51:28 $
  * @see javax.xml.bind.Marshaller
  * @since JAXB1.0
  */
@@ -419,4 +421,33 @@ public abstract class AbstractMarshallerImpl implements Marshaller
         throw new UnsupportedOperationException();
     }
 
+    public void setSchema(Schema schema) {
+        throw new UnsupportedOperationException();
+    }
+
+    public Schema getSchema() {
+        throw new UnsupportedOperationException();
+    }
+
+    public void setAdapter(XmlAdapter adapter) {
+        if(adapter==null)
+            throw new IllegalArgumentException();
+        setAdapter((Class)adapter.getClass(),adapter);
+    }
+
+    public <A extends XmlAdapter> void setAdapter(Class<A> type, A adapter) {
+        throw new UnsupportedOperationException();
+    }
+
+    public <A extends XmlAdapter> A getAdapter(Class<A> type) {
+        throw new UnsupportedOperationException();
+    }
+
+    public void setAttachmentMarshaller(AttachmentMarshaller am) {
+        throw new UnsupportedOperationException();
+    }
+
+    public AttachmentMarshaller getAttachmentMarshaller() {
+        throw new UnsupportedOperationException();
+    }
 }
