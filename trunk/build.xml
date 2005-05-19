@@ -24,13 +24,13 @@
     <!-- libraries that are referenced when compiling Java source files -->
     <path id="javac.classpath">
         <pathelement path="lib/jsr173_1.0_api.jar" />
+        <pathelement path="lib/activation.jar" />
     </path>
 
     <!-- libraries that are referenced when generating docs -->
     <path id="doc.classpath">
         <pathelement path="build/classes" />
-        <pathelement path="lib/jsr173_1.0_api.jar" />
-        <pathelement path="lib/activation.jar" />
+        <path refid="javac.classpath" />
     </path>
 
     <!-- prepare to build -->
