@@ -30,6 +30,7 @@
     <path id="doc.classpath">
         <pathelement path="build/classes" />
         <pathelement path="lib/jsr173_1.0_api.jar" />
+        <pathelement path="lib/activation.jar" />
     </path>
 
     <!-- prepare to build -->
