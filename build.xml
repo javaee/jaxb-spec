@@ -30,7 +30,8 @@
     <!-- libraries that are referenced when generating docs -->
     <path id="doc.classpath">
         <pathelement path="build/classes" />
-        <path refid="javac.classpath" />
+        <pathelement path="lib/jsr173_1.0_api.jar" />
+        <pathelement path="lib/activation.jar" />
     </path>
 
     <!-- prepare to build -->
