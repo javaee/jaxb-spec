@@ -113,7 +113,7 @@ import javax.xml.bind.Marshaller;
  *      
  * </pre>
  *
- * <p> <b> Step 4: </b> Use the adapter.
+ * <p> <b> Step 5: </b> Use the adapter.
  *
  * <pre>
  *     public class Foo {

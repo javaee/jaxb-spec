@@ -10,6 +10,7 @@ import org.w3c.dom.Element;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import javax.xml.bind.annotation.*;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 import java.util.List;
@@ -19,14 +20,24 @@ import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * Maps a JAXB property to XML infoset representation and/or {@link JAXBElement).
+ * Maps a JavaBean property to XML infoset representation and/or JAXB element.
  *
- * Such as:
+ * <p>
+ * This annotation serves as a "catch-all" property while unmarshalling 
+ * xml content into a instance of a JAXB annotated class. It typically
+ * annotates a multi-valued JavaBean property, but it can occur on
+ * single value JavaBean property. During unmarshalling, each xml element 
+ * that does not match a static &#64;XmlElement or &#64;XmlElementRef 
+ * annotation for the other JavaBean properties on the class, is added to this 
+ * "catch-all" property.
+ *
+ * <p>
+ * <h2>Usages:</h2>
  * <pre>
  * &#64;XmlAnyElement
  * public {@link Element}[] others;
  * 
- * // Collection of {@link Element} or {@link JAXBElement}.
+ * // Collection of {@link Element} or JAXB elements.
  * &#64;XmlAnyElement(lax="true")
  * public {@link Object}[] others;
  *
@@ -37,33 +48,30 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * private {@link Element} node;
  * </pre>
  *
+ * <h2>Restriction usage constraints</h2>
  * <p>
  * This annotation is mutually exclusive with
- * {@link XmlElement}, {@link XmlAttribute}, {@link XmlValue}, {@link XmlElementRef},
- * {@link XmlElements}, {@link XmlElementRefs}, {@link XmlID}, and {@link XmlIDREF}.
+ * {@link XmlElement}, {@link XmlAttribute}, {@link XmlValue},
+ * {@link XmlElements}, {@link XmlID}, and {@link XmlIDREF}.
  *
  * <p>
+ * There can be only one {@link XmlAnyElement} annotated JavaBean property
+ * in a class and its super classes.
+ *
+ * <h2>Relationship to other annotations</h2>
+ * <p>
  * This annotation can be used with {@link XmlJavaTypeAdapter}, so that users
- * can map their own data structure to DOM, which in turn be composed into XML.
+ * can map their own data structure to DOM, which in turn can be composed 
+ * into XML.
  *
  * <p>
  * This annotation can be used with {@link XmlMixed} like this:
  * <pre>
- * // List of java.lang.String or {@link Element}
+ * // List of java.lang.String or DOM nodes.
  * &#64;XmlAnyElement &#64;XmlMixed
  * List&lt;Object> others;
  * </pre>
  *
- * <p>
- * This annotation serves as a "catch-all" property for the unmarshaller.
- * Each element that does not match a static &#64;XmlElement annotation for
- * a JavaBean property on the class, is added to this element collection.
- * There can not be two {@link XmlAnyElement} annotations on the same class
- * (or between a class and its base class.)
- *
- * <p>
- * Design decision: simplify design by not representing wildcard namespace 
- * constraints.
  *
  * <h2>Schema To Java example</h2>
  *
@@ -73,7 +81,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  *   <xs:sequence>
  *     <xs:element name="a" type="xs:int" />
  *     <xs:element name="b" type="xs:int" />
- *     <xs:any namespace="##other" processContent="lax" minOccurs="0" maxOccurs="unbounded" />
+ *     <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded" />
  *   </xs:sequence>
  * </xs:complexType>
  * </xmp></pre>
@@ -83,7 +91,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  *   int a;
  *   int b;
  *   &#64;{@link XmlAnyElement}
- *   List&lt;Element> others;   // default property name is to be determined by the spec.
+ *   List&lt;Element> any;
  * }
  * </pre>
  *
@@ -108,7 +116,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  *   <xs:extension base="foo">
  *     <xs:sequence>
  *       <xs:element name="c" type="xs:int" />
- *       <xs:any namespace="##other" processContent="lax" minOccurs="0" maxOccurs="unbounded" />
+ *       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded" />
  *     </xs:sequence>
  *   </xs:extension>
  * </xs:complexType>
@@ -117,7 +125,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * <pre><xmp>
  * class Bar extends Foo {
  *   int c;
- *   // note that you won't get the 2nd wildcard.
+ *   // Foo.getAny() also represents wildcard content for type definition bar.
  * }
  * </xmp></pre>
  *
@@ -131,7 +139,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  *   <b>3</b>
  *   <e:other />
  *   <c>5</c>     // this now goes to Bar.c
- *   <e:other />  // this will go to Foo.others
+ *   <e:other />  // this will go to Foo.any
  * </bar>
  * </xmp></pre>
  *
@@ -150,24 +158,28 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  *   <xs:choice maxOccurs="unbounded" minOccurs="0">
  *     <xs:element name="a" type="xs:int" />
  *     <xs:element name="b" type="xs:int" />
- *     <xs:any namespace="##other" processContent="lax" />
- *   </xs:sequence>
+ *     <xs:any namespace="##other" processContents="lax" />
+ *   </xs:choice>
  * </xs:complexType>
  * </xmp></pre>
  *
  * <pre>
  * class Foo {
- *   &#64;{@link XmlAnyElement}
+ *   &#64;{@link XmlAnyElement}(lax="true")
  *   &#64;{@link XmlElementRefs}({
- *     &#64;{@link XmlElementRef}(name="a")
- *     &#64;{@link XmlElementRef}(name="b")
+ *     &#64;{@link XmlElementRef}(name="a", type="JAXBElement.class")
+ *     &#64;{@link XmlElementRef}(name="b", type="JAXBElement.class")
  *   })
- *   {@link List}&lt;{@link Element}|{@link JAXBElement}> others;
+ *   {@link List}&lt;{@link Object}> others;
  * }
  *
+ * &#64;XmlRegistry
  * class ObjectFactory {
  *   ...
+ *   &#64;XmlElementDecl(name = "a", namespace = "", scope = Foo.class)
  *   {@link JAXBElement}&lt;Integer> createFooA( Integer i ) { ... }
+ *
+ *   &#64;XmlElementDecl(name = "b", namespace = "", scope = Foo.class)
  *   {@link JAXBElement}&lt;Integer> createFooB( Integer i ) { ... }
  * </pre>
  *

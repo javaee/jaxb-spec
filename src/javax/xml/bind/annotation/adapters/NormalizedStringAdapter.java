@@ -18,7 +18,14 @@ package javax.xml.bind.annotation.adapters;
  * @since JAXB 2.0
  */
 public final class NormalizedStringAdapter extends XmlAdapter<String,String> {
+    /**
+     * Removes leading and trailing whitespaces of the string
+     * given as the parameter, then replace
+     * any tab, CR, and LF by a whitespace character ' '.
+     */
     public String unmarshal(String text) {
+        if(text==null)      return null;    // be defensive
+
         int i=text.length()-1;
 
         // look for the first whitespace char.
@@ -41,9 +48,14 @@ public final class NormalizedStringAdapter extends XmlAdapter<String,String> {
         return new String(buf);
     }
 
-    public String marshal(String s) {
-        return s;
-    }
+    /**
+     * No-op.
+     *
+     * Just return the same string given as the parameter.
+     */
+        public String marshal(String s) {
+            return s;
+        }
 
 
     /**

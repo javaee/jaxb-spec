@@ -33,13 +33,14 @@ import static java.lang.annotation.ElementType.PARAMETER;
  * @author <ul><li>Sekhar Vajjhala, Sun Microsystems Inc.</li> <li> Kohsuke Kawaguchi, Sun Microsystems Inc.</li></ul>
  * @since JAXB2.0
  * @see XmlAdapter
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 @Retention(RUNTIME) @Target({FIELD,METHOD,TYPE,PARAMETER})        
 public @interface XmlJavaTypeAdapter {
     /**
-     * Points to the clsss that converts a Java value to a 
+     * Points to the clsss that converts a value type to a bound type or vice versa.
+     * See {@link XmlAdapter} for more details.
      */
     Class<? extends XmlAdapter> value();
 }

@@ -18,7 +18,14 @@ package javax.xml.bind.annotation.adapters;
  * @since JAXB 2.0
  */
 public class CollapsedStringAdapter extends XmlAdapter<String,String> {
+    /**
+     * Removes leading and trailing whitespaces of the string
+     * given as the parameter, then truncate any
+     * sequnce of tab, CR, LF, and SP by a single whitespace character ' '.
+     */
     public String unmarshal(String text) {
+        if(text==null)  return null;        // be defensive
+
         int len = text.length();
 
         // most of the texts are already in the collapsed form.
@@ -70,6 +77,11 @@ public class CollapsedStringAdapter extends XmlAdapter<String,String> {
         return result.toString();
     }
 
+    /**
+     * No-op.
+     *
+     * Just return the same string given as the parameter.
+     */
     public String marshal(String s) {
         return s;
     }
