@@ -5,8 +5,11 @@
 
 package javax.xml.bind;
 
+import org.w3c.dom.Node;
+
 import java.util.Collections;
 import java.util.Map;
+import java.io.IOException;
 
 /**
  * <p>
@@ -188,7 +191,7 @@ import java.util.Map;
  * </blockquote>
  *
  * @author <ul><li>Ryan Shoemaker, Sun Microsystems, Inc.</li><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Joe Fialli, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.5 $ $Date: 2005-05-19 17:51:24 $
+ * @version $Revision: 1.6 $ $Date: 2005-06-03 23:26:32 $
  * @see Marshaller
  * @see Unmarshaller
  * @since JAXB1.0
@@ -586,14 +589,39 @@ public abstract class JAXBContext {
     public abstract Validator createValidator() throws JAXBException;
 
     /**
+     * Creates a <tt>Binder</tt> object that can be used for
+     * associative/in-place unmarshalling/marshalling.
+     *
+     * @return always a new valid <tt>Binder</tt> object.
+     *
+     * @throws UnsupportedOperationException
+     *      if this operation is not supported by the implementation.
+     *
+     * @since JAXB 2.0
+     */
+    public <T> Binder<T> createBinder(Class<T> domType) {
+        // to make JAXB 1.0 implementations work, this method must not be
+        // abstract
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Creates a <tt>Binder</tt> for W3C DOM.
+     *
+     * @return always a new valid <tt>Binder</tt> object.
+     *
+     * @since JAXB 2.0
+     */
+    public Binder<Node> createBinder() {
+        return createBinder(Node.class);
+    }
+
+    /**
      * Creates a <tt>JAXBIntrospector</tt> object that can be used to
      * introspect JAXB objects.
      *
      * @return
      *      always return a non-null valid <tt>JAXBIntrospector</tt> object.
-     *
-     * @throws JAXBException if an error was encountered while creating the
-     *                       <tt>JAXBIntrospector</tt> object.
      *
      * @throws UnsupportedOperationException
      *      Calling this method on JAXB 1.0 implementations will throw
@@ -601,10 +629,31 @@ public abstract class JAXBContext {
      *  
      * @since JAXB 2.0
      */
-    public JAXBIntrospector createJAXBIntrospector() throws JAXBException {
+    public JAXBIntrospector createJAXBIntrospector() {
         // to make JAXB 1.0 implementations work, this method must not be
         // abstract
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Generates the schema documents for this context.
+     *
+     * @param outputResolver
+     *      this object controls the output to which schemas
+     *      will be sent.
+     *
+     * @throws IOException
+     *      if {@link SchemaOutputResolver} throws an {@link IOException}.
+     *
+     * @throws UnsupportedOperationException
+     *      Calling this method on JAXB 1.0 implementations will throw
+     *      an UnsupportedOperationException.
+     *
+     * @since JAXB 2.0
+     */
+    public void generateSchema(SchemaOutputResolver outputResolver) throws IOException  {
+        // to make JAXB 1.0 implementations work, this method must not be
+        // abstract
+        throw new UnsupportedOperationException();
+    }
 }
