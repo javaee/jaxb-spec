@@ -11,14 +11,9 @@ package javax.xml.bind.annotation;
  * Used by XmlAccessorType to control serialization of fields or
  * properties. 
  *
- * <p> <b> NOTE: The name of this annotation was intentionally chosen to
- * match the one in EJB 3.0, pending investigation of whether this
- * might be candidate for moving to Common Annotations JSR since it is
- * shared with EJB 3.0. </b> </p>
- *
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  * @see XmlAccessorType
  */
 
@@ -47,6 +42,11 @@ public enum AccessType {
      * defaulted to package-only access are bound to XML only when they are
      * explicitly annotated by the appropriate JAXB annotations.
      */
-    PUBLIC_MEMBER
+    PUBLIC_MEMBER,
+    /**
+     * None of the field is bound to XML unless they are specifically
+     * annotated with some of the JAXB annotations.
+     */
+    NODEFAULT
 }
 
