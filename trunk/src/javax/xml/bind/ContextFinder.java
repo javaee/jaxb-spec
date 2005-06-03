@@ -31,7 +31,7 @@ import static javax.xml.bind.JAXBContext.JAXB_CONTEXT_FACTORY;
  * This code is designed to implement the JAXB 1.0 spec pluggability feature
  *
  * @author <ul><li>Ryan Shoemaker, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  * @see JAXBContext
  */
 class ContextFinder {
@@ -295,7 +295,8 @@ class ContextFinder {
         }
 
         // else no provider found
-        throw new JAXBException(Messages.format(Messages.PROVIDER_NOT_FOUND_NO_ARGS));
+        logger.fine("Trying to create the platform default provider");
+        return newInstance(contextPath, PLATFORM_DEFAULT_FACTORY_CLASS, classLoader, properties);
     }
 
     // TODO: log each step in the look up process
@@ -311,7 +312,7 @@ class ContextFinder {
             ClassLoader classLoader = c.getClassLoader();
             Package pkg = c.getPackage();
             if(pkg==null)
-                continue;       // this is possible for primitives and arrays
+                continue;       // this is possible for primitives, arrays, and classes that are loaded by poorly implemented ClassLoaders
             String packageName = pkg.getName().replace('.', '/');
 
             // TODO: do we want to optimize away searching the same package?  org.Foo, org.Bar, com.Baz
@@ -321,12 +322,14 @@ class ContextFinder {
             // c.getResourceAsStream("jaxb.properties");
 
             // build the resource name and use the property loader code
-            StringBuilder propFileName = new StringBuilder().append(packageName).append("/jaxb.properties");
-
-            Properties props = loadJAXBProperties(classLoader, propFileName.toString());
+            String resourceName = packageName+"/jaxb.properties";
+            logger.fine("Trying to locate "+resourceName);
+            Properties props = loadJAXBProperties(classLoader, resourceName);
             if (props == null) {
+                logger.fine("  not found");
                 continue;
             } else {
+                logger.fine("  found");
                 if (props.containsKey(JAXB_CONTEXT_FACTORY)) {
                     // trim() seems redundant, but adding to satisfy customer complaint
                     factoryClassName = props.getProperty(JAXB_CONTEXT_FACTORY).trim();
@@ -338,12 +341,16 @@ class ContextFinder {
         }
 
         // search for a system property second (javax.xml.bind.JAXBContext)
+        logger.fine("Checking system property "+jaxbContextFQCN);
         factoryClassName = System.getProperty(jaxbContextFQCN, null);
         if(  factoryClassName != null ) {
+            logger.fine("  found "+factoryClassName);
             return newInstance( classes, properties, factoryClassName );
         }
+        logger.fine("  not found");
 
         // search META-INF services next
+        logger.fine("Checking META-INF/services");
         BufferedReader r;
         try {
             final String resource = new StringBuilder("META-INF/services/").append(jaxbContextFQCN).toString();
@@ -370,7 +377,8 @@ class ContextFinder {
         }
 
         // else no provider found
-        throw new JAXBException(Messages.format(Messages.PROVIDER_NOT_FOUND_NO_ARGS));
+        logger.fine("Trying to create the platform default provider");
+        return newInstance(classes, properties, PLATFORM_DEFAULT_FACTORY_CLASS);
     }
 
 
@@ -441,4 +449,19 @@ class ContextFinder {
     static URL which(Class clazz) {
         return which(clazz, clazz.getClassLoader());
     }
+
+    /**
+     * When JAXB is in J2SE, rt.jar has to have a JAXB implementation.
+     * However, rt.jar cannot have META-INF/services/javax.xml.bind.JAXBContext
+     * because if it has, it will take precedence over any file that applications have
+     * in their jar files.
+     *
+     * <p>
+     * When the user bundles his own JAXB implementation, we'd like to use it, and we
+     * want the platform default to be used only when there's no other JAXB provider.
+     *
+     * <p>
+     * For this reason, we have to hard-code the class name into the API.
+     */
+    private static final String PLATFORM_DEFAULT_FACTORY_CLASS = "com.sun.xml.bind.v2.ContextFactory";
 }
