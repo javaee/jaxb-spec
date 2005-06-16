@@ -16,9 +16,9 @@
     </description>
 
     <!-- properties -->
-    <property name="release.spec.title"    value="Public Review Candidate"/>
+    <property name="release.spec.title"    value="Public Review"/>
     <property name="release.spec.version"  value="2.0"/>
-    <property name="release.spec.date"     value="June 3, 2005"/>
+    <property name="release.spec.date"     value="June 21, 2005"/>
     <property name="release.spec.feedback" value="spec-comments@jsr222.dev.java.net"/>
 
     <!-- libraries that are referenced when compiling Java source files -->
@@ -115,7 +115,7 @@ href='http://java.sun.com/xml/jaxb'>http://java.sun.com/xml/jaxb</a></i><br>
 <![CDATA[JAXB<br>v${release.spec.version}]]>
             </header>
             <footer>
-<![CDATA[<a href='https://jaxb.dev.java.net/nonav/jaxb20-ed/JAXBv2.0.pSpec.20050301.web.txt'>JAXB 2.0 ED Specification License</a>]]>
+<![CDATA[<a href='http://jaxb.dev.java.net/nonav/jaxb20-pd/JSR222.PR.2005.06.08.Sun_Eval.web.txt'>JAXB 2.0 PD Specification License</a>]]>
             </footer>
             <bottom>
 <![CDATA[<font size=-1>
