@@ -17,54 +17,50 @@ import static java.lang.annotation.RetentionPolicy.*;
  * 
  * <p> <b> Usage </b> </p>
  *
- * <p> The XmlAccessorType can be used with the following
- * program elements:</p>
+ * <p> <tt>@XmlAccessorType</tt> annotation can be used with the following program elements:</p>
  * 
  * <ul> 
  *   <li> package</li>
- *   <li> a top level value class </li>
+ *   <li> a top level class </li>
  * </ul>
- *
- * Although the description below describes only top level value
- * class, the description applies to nested classes as well, since
- * nested classes are like top level classes.
  *
  * <p> See "Package Specification" in javax.xml.bind.package javadoc for
  * additional common information.</p>
  *
- * <p>This annotation can be used to specify whether a a field or
- * property is serialized by default. This allows a class designer to
- * select the default serialization of a class to be either fields or
- * getters/setters.
+ * <p>This annotation provides control over the default serialization
+ * of properties and fields in a class.
  * 
- * <p>The annotation <tt> XmlAccessorType </tt> on a package applies to
- * all types in the package. But the following rules inheritance
- * semantics apply to the <tt> XmlAccessorType </tt> on a class:
+ * <p>The annotation <tt> @XmlAccessorType </tt> on a package applies to
+ * all classes in the package. The following inheritance
+ * semantics apply:
  *
  * <ul>
- *   <li> If there is an annotation on the top level value class, then
- *        it is used. </li>
- *   <li> Otherwise, if a <tt> XmlAccessorType </tt> exists on one of
+ *   <li> If there is a <tt>@XmlAccessorType</tt> on a class, then it
+ *        is used. </li>  
+ *   <li> Otherwise, if a <tt>@XmlAccessorType</tt> exists on one of
  *        its super classes, then it is inherited.
- *   <li> Otherwise, the <tt> XmlAccessorType </tt> on a package is
+ *   <li> Otherwise, the <tt>@XmlAccessorType </tt> on a package is
  *        inherited.
  * </ul>
  * <p> <b> Defaulting Rules: </b> </p>
  *
- * <p>By default, if <tt> XmlAccessorType </tt> on a package is absent,
+ * <p>By default, if <tt>@XmlAccessorType </tt> on a package is absent,
  * then the following package level annotation is assumed.</p>
- *
- *   XmlAccessorType(AccessType.PUBLIC_MEMBER)
- *
- * <p> By default, if XmlAccessorType on a top level value
- * class is absent and none of super classes is annotated with <tt>
- * XmlAccessorType </tt>, then the following default is assumed: </p>
- *
- *   XmlAccessorType(AccessType.PUBLIC_MEMBER)
+ * <pre>
+ *   &#64;XmlAccessorType(AccessType.PUBLIC_MEMBER)
+ * </pre>
+ * <p> By default, if <tt>@XmlAccessorType</tt> on a class is absent,
+ * and none of its super classes is annotated with
+ * <tt>@XmlAccessorType</tt>, then the following default on the class
+ * is assumed: </p>
+ * <pre>
+ *   &#64;XmlAccessorType(AccessType.PUBLIC_MEMBER)
+ * </pre>
  *
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version  $Revision: 1.3 $
+ * @see AccessType
+ * @version  $Revision: 1.4 $
  */
 
 @Inherited @Retention(RUNTIME) @Target({PACKAGE, TYPE})

@@ -212,7 +212,7 @@ import java.io.Reader;
  * 
  * 
  * @author <ul><li>Ryan Shoemaker, Sun Microsystems, Inc.</li><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Joe Fialli, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.8 $ $Date: 2005-05-19 17:51:24 $
+ * @version $Revision: 1.9 $ $Date: 2005-06-16 17:15:59 $
  * @see JAXBContext
  * @see Marshaller
  * @see Validator
@@ -277,7 +277,7 @@ public interface Unmarshaller {
      *     binding.  See <a href="#unmarshalEx">Unmarshalling XML Data</a>
      * @throws IllegalArgumentException
      *      If the InputStream parameter is null
-     * @since 2.0
+     * @since JAXB2.0
      */
     public Object unmarshal( Reader reader ) throws JAXBException;
 
@@ -501,7 +501,7 @@ public interface Unmarshaller {
      * @throws UnsupportedOperationException could be thrown if this method is
      *         invoked on an Unmarshaller created from a JAXBContext referencing
      *         JAXB 2.0 mapped classes
-     * @deprecated since 2.0, please see {@link #setSchema(javax.xml.validation.Schema)}
+     * @deprecated since JAXB 2.0, please see {@link #setSchema(javax.xml.validation.Schema)}
      */
     public void setValidating( boolean validating ) 
         throws JAXBException;
@@ -523,7 +523,7 @@ public interface Unmarshaller {
      * @throws UnsupportedOperationException could be thrown if this method is
      *         invoked on an Unmarshaller created from a JAXBContext referencing
      *         JAXB 2.0 mapped classes
-     * @deprecated since 2.0, please see {@link #getSchema()}
+     * @deprecated since JAXB 2.0, please see {@link #getSchema()}
      */
     public boolean isValidating() 
         throws JAXBException;
@@ -540,7 +540,7 @@ public interface Unmarshaller {
      * error or fatal error is encountered.
      * <p>
      * Calling this method with a null parameter will cause the Unmarshaller
-     * to revert back to the default default event handler.
+     * to revert back to the default event handler.
      *
      * @param handler the validation event handler
      * @throws JAXBException if an error was encountered while setting the
@@ -609,11 +609,14 @@ public interface Unmarshaller {
      * This method replaces the deprecated {@link #setValidating(boolean) setValidating(boolean)}
      * API.
      *
+     * <p>
+     * Initially this property is set to <tt>null</tt>.
+     *
      * @param schema Schema object to validate unmarshal operations against or null to disable validation
      * @throws UnsupportedOperationException could be thrown if this method is
      *         invoked on an Unmarshaller created from a JAXBContext referencing
      *         JAXB 1.0 mapped classes
-     * @since 2.0
+     * @since JAXB2.0
      */
     public void setSchema( javax.xml.validation.Schema schema );
 
@@ -637,7 +640,7 @@ public interface Unmarshaller {
      * @throws UnsupportedOperationException could be thrown if this method is
      *         invoked on an Unmarshaller created from a JAXBContext referencing
      *         JAXB 1.0 mapped classes
-     * @since 2.0
+     * @since JAXB2.0
      */
     public javax.xml.validation.Schema getSchema();
 

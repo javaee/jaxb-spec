@@ -24,15 +24,41 @@ import static java.lang.annotation.RetentionPolicy.*;
  *   <li> field </li>
  * </ul>
  *
+ * <p> A static final field is mapped to a XML fixed attribute.
+ *
  * <p>See "Package Specification" in javax.xml.bind.package javadoc for
  * additional common information.</p>
  *
  * The usage is subject to the following constraints:
  * <ul>
- *   <li> The type of the JavaBean property must be mapped to a
- *        XML Schema simple type.</li>
- *   <li> The only other mapping annotations allowed with
- *        <tt>@XmlAttribute</tt> are: <tt>@XmlID</tt></li>
+ *   <li> If type of the field or the property is a collection
+ *        type, then the collection item type must be mapped to schema
+ *        simple type.
+ * <pre>
+ *     // Examples
+ *     &#64;XmlAttribute List&lt;Integer> items; //legal
+ *     &#64;XmlAttribute List&lt;Bar> foo; // illegal if Bar does not map to a schema simple type
+ * </pre> 
+ *   </li>
+ *   <li> If the type of the field or the property is a non
+ *         collection type, then the type of the property or field
+ *         must map to a simple schema type.
+ * <pre>
+ *     // Examples
+ *     &#64;XmlAttribute int foo; // legal
+ *     &#64;XmlAttribute Foo foo; // illegal if Foo does not map to a schema simple type
+ * </pre>
+ *   </li>
+ *   <li> This annotation can be used with the following annotations:
+ *            {@link XmlID}, 
+ *            {@link XmlIDREF},
+ *            {@link XmlList},
+ *            {@link XmlSchemaType},
+ *            {@link XmlValue},
+ *            {@link XmlAttachmentRef},
+ *            {@link XmlMimeType},
+ *            {@link XmlInlineBinaryData},
+ *            {@link javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter}</li>.
  * </ul>
  * </p>
  *
@@ -61,11 +87,11 @@ import static java.lang.annotation.RetentionPolicy.*;
  *     // Example: Code fragment
  *     class Foo {
  *         ...
- *         &#64;XmlAttribute List&lt;int> items;
+ *         &#64;XmlAttribute List&lt;Integer> items;
  *     } 
  *
  *     &lt;!-- Example: XML Schema fragment -->
- *     &lt;xs:complexType name="Foo">
+ *     &lt;xs:complexType name="foo">
  *     	 ...
  *       &lt;xs:attribute name="items">
  *         &lt;xs:simpleType>
@@ -75,7 +101,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *
  * </pre>
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  * @see XmlType
  * @since JAXB2.0
  */

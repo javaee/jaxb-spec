@@ -14,22 +14,13 @@ import static java.lang.annotation.RetentionPolicy.*;
 /**
  * Maps a JavaBean property to a XML element derived from property name.
  *
- * <hr>
- * <b> Note To reviewers: </b> JAXB 2.0 ED 0.40 allowed the use of
- * this annotation on both JavaBean property and class. However, now
- * it can only be used with a JavaBean property. &#64;XmlRootElement
- * is to be used for annotating the class. So examples and description
- * that applied to class have been moved into the &#64;XmlRootElement
- * annotation.
- * <hr>
- *
  * <p> <b>Usage</b> </p>
  * <p>
- * The &#64;XmlElement annotation can be used with the following program
+ * </tt>@XmlElement</tt> annotation can be used with the following program
  * elements: 
  * <ul> 
  *   <li> a JavaBean property </li>
- *   <li> field </li>
+ *   <li> non static, non transient field </li>
  *   <li> within {@link XmlElements}
  * <p>
  *
@@ -37,17 +28,25 @@ import static java.lang.annotation.RetentionPolicy.*;
  * 
  * The usage is subject to the following constraints:
  * <ul> 
- *   <li> The only other mapping annotations allowed with 
- *        <tt>&#64;XmlElement</tt> are: <tt>&#64;XmlID</tt> and <tt>&#64;XMLIDREF</tt> .</li>
+ *   <li> This annotation can be used with following annotations:
+ *            {@link XmlID}, 
+ *            {@link XmlIDREF},
+ *            {@link XmlList},
+ *            {@link XmlSchemaType},
+ *            {@link XmlValue},
+ *            {@link XmlAttachmentRef},
+ *            {@link XmlMimeType},
+ *            {@link XmlInlineBinaryData},
+ *            {@link javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter}</li>
  *   <li> if the type of JavaBean property is a collection type of
  *        array, an indexed property, or a parameterized list, and
  *        this annotation is used with {@link XmlElements} then,
  *        <tt>@XmlElement.type()</tt> must be DEFAULT.class since the
- *        component type is already known. </li>
+ *        collection item type is already known. </li>
  * </ul>
  *
  * <p>
- * A JavaBean property, when annotated with &#64XmlElement annotation
+ * A JavaBean property, when annotated with @XmlElement annotation
  * is mapped to a local element in the XML Schema complex type to
  * which the containing class is mapped.
  * 
@@ -102,7 +101,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <p> 
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 @Retention(RUNTIME) @Target({FIELD, METHOD})
@@ -128,15 +127,11 @@ public @interface XmlElement {
     boolean nillable() default false;
 
     /**
-     * Specifies the XML target namespace of the XML Schema
-     * element. The namespace must be a valid namespace URI.
-     * <p>
-     * It the value is "##default", then the namespace is the
-     * namespace of the containing class.
-     * <p>
-     * <b>Note to Reviewers: </b> TBD. address in later version
-     * if namespace is different from that of the containing
-     * class. 
+     * <p> Specifies the XML target namespace of the XML Schema
+     * element. 
+     * <p> If the value is "##default", then the namespace is the
+     * namespace of the containing class. Otherwise, it must be a
+     * valid namespace URI.
      */
     String namespace() default "##default";
 

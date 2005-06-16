@@ -1,5 +1,5 @@
 /*
- * Copyright 2004 Sun Microsystems, Inc. All rights reserved.
+ * Copyright 2005 Sun Microsystems, Inc. All rights reserved.
  * SUN PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
 
@@ -27,8 +27,6 @@ import javax.xml.transform.Source;
  * This interface is intended to be implemented by library writers
  * and consumed by JAXB providers. None of those methods are intended to
  * be called from applications.
- *
- * TODO: TO BE MOVED TO THE SPEC
  *
  * @author Kohsuke Kawaguchi
  */

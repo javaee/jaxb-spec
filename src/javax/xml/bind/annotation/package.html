@@ -32,9 +32,18 @@
           a JavaBean property. Thus, an annotation that can be applied
           to a JavaBean property can always be applied to a
           field. Hence in the Javadoc documentation, for brevity, the
-          term JavaBean property is used to mean either JavaBean
+          term JavaBean property or property is used to mean either JavaBean
           property or a field. Where required, both are explicitly
           mentioned.
+          <p>
+          <b>top level class:</b> For the purpose of mapping, there is
+          no semantic difference between a top level class and a
+          static nested class. Thus, an annotation that can be applied
+          to a top level class, can always be applied to a nested
+          static class. Hence in the Javadoc documentation, for
+          brevity, the term "top level class" or just class is used to
+          mean either a top level class or a nested static
+          class.
           <p>
           <b>mapping annotation:</b>A JAXB 2.0 defined program
           annotation based on the JSR 175 programming annotation
@@ -56,6 +65,16 @@
              <td>xs</td>
              <td>http://www.w3.org/2001/XMLSchema</td>
              <td>Namespace of XML Schema namespace</td>
+           </tr>
+           <tr valign="top">
+             <td>ref</td>
+             <td>http://ws-i.org/profiles/basic/1.1/xsd</td>
+             <td>Namespace for swaref schema component</td>
+           </tr>
+           <tr valign="top">
+             <td>xsi</td>
+             <td>http://www.w3.org/2001/XMLSchema-instance</td>
+             <td>XML Schema namespace for instances</td>
            </tr>
           </tbody>
         </table>

@@ -17,7 +17,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *
  * <p> <b> Usage </b> </p>
  *
- * <p> The <tt> @XmlAccessorOrder </tt> can be used with the following
+ * <p> <tt> @XmlAccessorOrder </tt> annotation can be used with the following
  * program elements:</p> 
  * 
  * <ul> 
@@ -25,41 +25,36 @@ import static java.lang.annotation.RetentionPolicy.*;
  *   <li> a top level class </li>
  * </ul>
  *
- * Although the description below describes only top level value
- * class, the description applies to nested classes as well, since
- * nested classes are like top level classes.
- *
  * <p> See "Package Specification" in javax.xml.bind.package javadoc for
  * additional common information.</p>
  *
- * <p>The annotation <tt> XmlAccessorOrder </tt> on a package applies to
- * all classes in a package. But the following rules inheritance
- * semantics apply to the <tt> XmlAccessorOrder </tt> on a class:
+ * <p>The annotation <tt> @XmlAccessorOrder </tt> on a package applies to
+ * all classes in a package. The following inheritance semantics apply:
  *
  * <ul>
- *   <li> If there is an annotation on the top level value class, then
+ *   <li> If there is a <tt>@XmlAccessorOrder</tt> on a class, then
  *        it is used. </li>
- *   <li> Otherwise, if a <tt> XmlAccessorOrder </tt> exists on one of
+ *   <li> Otherwise, if a <tt>@XmlAccessorOrder </tt> exists on one of
  *        its super classes, then it is inherited.
- *   <li> Otherwise, the <tt> XmlAccessorOrder </tt> on a package is
+ *   <li> Otherwise, the <tt>@XmlAccessorOrder </tt> on a package is
  *        inherited.
  * </ul>
  * <p> <b> Defaulting Rules: </b> </p>
  *
- * <p>By default, if <tt> XmlAccessorOrder </tt> on a package is absent,
+ * <p>By default, if <tt>@XmlAccessorOrder </tt> on a package is absent,
  * then the following package level annotation is assumed.</p>
- *
- *   XmlAccessorOrder(AccessorOrder.UNDEFINED)
- *
- * <p> By default, if XmlAccessorOrder on a top level value
- * class is absent and none of super classes is annotated with <tt>
- * XmlAccessorOrder </tt>, then the following default is assumed: </p>
- *
- *   XmlAccessorType(AccessorOrder.UNDEFINED)
- *
+ *<pre> 
+ *    &#64;XmlAccessorType(AccessorOrder.UNDEFINED) 
+ *</pre>
+ * <p> By default, if <tt>@XmlAccessorOrder</tt> on a class is absent
+ * and none of super classes is annotated with <tt> XmlAccessorOrder
+ * </tt>, then the following default on the class is assumed: </p> 
+ *<pre> 
+ *    &#64;XmlAccessorType(AccessorOrder.UNDEFINED) 
+ *</pre>
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version  $Revision: 1.1 $
+ * @version  $Revision: 1.2 $
  */
 
 @Inherited @Retention(RUNTIME) @Target({PACKAGE, TYPE})

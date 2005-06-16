@@ -27,7 +27,8 @@ import java.io.IOException;
  *   The JAXBContext instance is initialized from a list of colon 
  *   separated Java package names. Each java package contains
  *   JAXB mapped classes, schema-derived classes and/or user annotated 
- *   classes.
+ *   classes. Additionally, the java package may contain JAXB package annotations 
+ *   that must be processed. (see JLS 3rd Edition, Section 7.4.1. Package Annotations).
  *   </li>
  *   <li>{@link #newInstance(Class[]) JAXBContext.newInstance( com.acme.foo.Foo.class )} <br/>
  *    The JAXBContext instance is intialized with class(es) 
@@ -191,9 +192,10 @@ import java.io.IOException;
  * </blockquote>
  *
  * @author <ul><li>Ryan Shoemaker, Sun Microsystems, Inc.</li><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Joe Fialli, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.6 $ $Date: 2005-06-03 23:26:32 $
+ * @version $Revision: 1.7 $ $Date: 2005-06-16 17:15:59 $
  * @see Marshaller
  * @see Unmarshaller
+ * @see <a href="http://java.sun.com/docs/books/jls">S 7.4.1.1 "Package Annotations" in Java Language Specification, 3rd Edition</a>
  * @since JAXB1.0
  */
 public abstract class JAXBContext {
@@ -250,7 +252,9 @@ public abstract class JAXBContext {
      * JAXB mapped classes are listed in a 
      * <tt>jaxb.index</tt> resource file, format described below. 
      * Note that a java package can contain both schema-derived classes and 
-     * user annotated JAXB classes.
+     * user annotated JAXB classes. Additionally, the java package may 
+     * contain JAXB package annotations  that must be processed. (see JLS 3rd Edition, 
+     * Section 7.4.1. "Package Annotations").
      * </p>
      * 
      * <p>
@@ -341,7 +345,7 @@ public abstract class JAXBContext {
      *   <li>failure to locate a value for the context factory provider property</li>
      *   <li>mixing schema derived packages from different providers on the same contextPath</li>
      * </ol>
-     * @since JAXB 2.0
+     * @since JAXB2.0
      */
     public static JAXBContext newInstance( String contextPath, ClassLoader classLoader, Map<String,?>  properties  )
         throws JAXBException {
@@ -415,7 +419,7 @@ public abstract class JAXBContext {
 //     * @throws IllegalArgumentException
 //     *      if the parameter contains {@code null} (i.e., {@code newInstance(null);})
 //     *
-//     * @since 2.0
+//     * @since JAXB2.0
 //     */
 //    public static JAXBContext newInstance( Source[] externalBindings, Class... classesToBeBound )
 //        throws JAXBException {
@@ -463,7 +467,10 @@ public abstract class JAXBContext {
      * Therefore, a typical client application only needs to specify the
      * top-level classes, but it needs to be careful.
      *
-     * TODO: if we are to define other mechanisms, refer to them.
+     * <p>
+     * Note that for each java package registered with JAXBContext,
+     * when the optional package annotations exist, they must be processed. 
+     * (see JLS 3rd Edition, Section 7.4.1. "Package Annotations").
      *
      * @param classesToBeBound
      *      list of java classes to be recognized by the new {@link JAXBContext}.
@@ -488,7 +495,7 @@ public abstract class JAXBContext {
      * @throws IllegalArgumentException
      *      if the parameter contains {@code null} (i.e., {@code newInstance(null);})
      *
-     * @since 2.0
+     * @since JAXB2.0
      */
     public static JAXBContext newInstance( Class... classesToBeBound )
         throws JAXBException {
@@ -531,7 +538,7 @@ public abstract class JAXBContext {
      * @throws IllegalArgumentException
      *      if the parameter contains {@code null} (i.e., {@code newInstance(null);})
      *
-     * @since 2.0
+     * @since JAXB2.0
      */
     public static JAXBContext newInstance( Class[] classesToBeBound, Map<String,?> properties )
         throws JAXBException {
@@ -584,7 +591,7 @@ public abstract class JAXBContext {
      *
      * @throws JAXBException if an error was encountered while creating the
      *                       <tt>Validator</tt> object
-     * @deprecated since JAXB 2.0
+     * @deprecated since JAXB2.0
      */    
     public abstract Validator createValidator() throws JAXBException;
 
@@ -592,12 +599,15 @@ public abstract class JAXBContext {
      * Creates a <tt>Binder</tt> object that can be used for
      * associative/in-place unmarshalling/marshalling.
      *
+     * @param domType select the DOM API to use by passing in its DOM Node class.
+     *
      * @return always a new valid <tt>Binder</tt> object.
      *
      * @throws UnsupportedOperationException
-     *      if this operation is not supported by the implementation.
+     *      if DOM API corresponding to <tt>domType</tt> is not supported by 
+     *      the implementation.
      *
-     * @since JAXB 2.0
+     * @since JAXB2.0
      */
     public <T> Binder<T> createBinder(Class<T> domType) {
         // to make JAXB 1.0 implementations work, this method must not be
@@ -610,7 +620,7 @@ public abstract class JAXBContext {
      *
      * @return always a new valid <tt>Binder</tt> object.
      *
-     * @since JAXB 2.0
+     * @since JAXB2.0
      */
     public Binder<Node> createBinder() {
         return createBinder(Node.class);
@@ -627,7 +637,7 @@ public abstract class JAXBContext {
      *      Calling this method on JAXB 1.0 implementations will throw
      *      an UnsupportedOperationException.
      *  
-     * @since JAXB 2.0
+     * @since JAXB2.0
      */
     public JAXBIntrospector createJAXBIntrospector() {
         // to make JAXB 1.0 implementations work, this method must not be

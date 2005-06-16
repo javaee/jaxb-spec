@@ -21,17 +21,17 @@ import javax.xml.validation.Schema;
  * Modifications can be made to either the infoset preserving view or the 
  * JAXB representation of the document while the other view remains 
  * unmodified. The binder is able to synchronize the changes made in the 
- * modified view back into the other view using the Binder update methods,
- * {@link #updateXML(Object, Object)} and {@link #updateJAXB(Object)}.
+ * modified view back into the other view using the appropriate
+ * Binder update methods, {@link #updateXML(Object, Object)} or 
+ * {@link #updateJAXB(Object)}.
  * 
  * <p>
  * A typical usage scenario is the following:
  * <ul>
  *   <li>load XML document into an XML infoset representation</li>
- *   <li>
  *   <li>{@link #unmarshal(Object)} XML infoset view to JAXB view.
- *       Note to conserve resources, it is possible to only unmarshal a
- *       subtree of the XML infoset view to the JAXB view.</li>
+ *       (Note to conserve resources, it is possible to only unmarshal a
+ *       subtree of the XML infoset view to the JAXB view.)</li>
  *   <li>application access/updates JAXB view of XML document.</li>
  *   <li>{@link #updateXML(Object)} synchronizes modifications to JAXB view 
  *       back into the XML infoset view. Update operation preserves as 
@@ -40,8 +40,7 @@ import javax.xml.validation.Schema;
  * 
  * <p>
  * A Binder instance is created using the factory method 
- * {@link JAXBContext#createBinder()}.  (TBD: how does user specify
- * to use a non-default infoset preserving API.)
+ * {@link JAXBContext#createBinder()} or {@link JAXBContext#createBinder(Class)}.
  *
  * <p>
  * The template parameter, <code>XmlNode</code>, is the
@@ -330,13 +329,4 @@ public abstract class Binder<XmlNode> {
         if(name==null)  throw new IllegalArgumentException();
         throw new PropertyException(name);
     }
-
-    /* CHANGE TO API PENDING RI REVIEW 
-
-    final public JAXBContext jaxbContext;
-
-    protected Binder(JAXBContext context) {
-	jaxbContext = context;
-    }
-    */
 }

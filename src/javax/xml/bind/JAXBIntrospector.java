@@ -10,7 +10,6 @@ import  javax.xml.namespace.QName;
  * Provide access to JAXB xml binding data for a JAXB object.
  *
  * <p>
- * WORK IN PROGRESS:
  * Intially, the intent of this class is to just conceptualize how 
  * a JAXB application developer can access xml binding information, 
  * independent if binding model is java to schema or schema to java.

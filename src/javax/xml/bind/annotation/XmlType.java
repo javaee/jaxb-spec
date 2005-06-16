@@ -10,6 +10,7 @@ import java.lang.annotation.Target;
 
 import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * <p>
@@ -19,18 +20,23 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <p> The <tt>@XmlType</tt> annnotation can be used with the following program
  * elements:
  * <ul>
- *   <li> a top level value class </li>
+ *   <li> a top level class </li>
  * </ul>
  *
  * <p>See "Package Specification" in javax.xml.bind.package javadoc for
  * additional common information.</p>
  * 
  * <p>
- * A class maps naturally to XML Schema type. A value class is a data
- * container for values represented by properties and fields. A  
- * schema type is a data container for values represented by schema
- * components within a schema type's content model (e.g. model groups,
- * attributes etc).
+ * A class maps to a XML Schema type. A class is a data container for
+ * values represented by properties and fields. A schema type is a
+ * data container for values represented by schema components within a
+ * schema type's content model (e.g. model groups, attributes etc).
+ * <p> To be mapped, a class must either have a public zero arg
+ * constructor or a static zero arg factory method.  In 
+ * the absence of either, {@link XmlJavaTypeAdapter} annotation can
+ * be used to adapt the class. The static factory method can be
+ * specified in <tt>factoryMethod()</tt> and <tt>factoryClass()</tt>
+ * annotation elements.
  * <p>
  * A class maps to either a XML Schema complex type or a XML Schema simple
  * type. The XML Schema type is derived based on the 
@@ -44,26 +50,26 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <ul>
  *   <li><b>global element: </b> A global element of an anonmyous
  *      type can be derived by annotating the class with @{@link
- *      XmlRootElement}. See Example 5 below. </li> 
+ *      XmlRootElement}. See Example 3 below. </li> 
  *
  *   <li><b>local element: </b> A JavaBean property that references
  *      the class annotated with @XmlType(name="") and mapped to an
- *      element is associated with an anonymous type. See Example 6
+ *      element is associated with an anonymous type. See Example 4
  *      below.</li> 
  *
  *   <li><b>attribute: </b> A JavaBean property that references
  *      the class annotated with @and is mapped to a attribute is
- *      associated with ean anonymous type. See Example 7 below. </li>
+ *      associated with an anonymous type. See Example 5 below. </li>
  * </ul>
  * <b> Mapping to XML Schema Complex Type </b>
  * <ul>
  *   <li>If class is annotated with <tt>@XmlType(name="") </tt>, then
  *   class is mapped to an anonymous type. Otherwise class name maps
- *   to a complex type name. The <tt>XmlName()</tt> annotation member
+ *   to a complex type name. The <tt>XmlName()</tt> annotation element
  *   can be used to customize the name.</li>  
  *
  *   <li> Properties and fields that are mapped to elements map to a
- *   content model within the complex type. The annotation member
+ *   content model within the complex type. The annotation element
  *   <tt>propOrder()</tt> can be used to customize the the content model to be
  *   <tt>xs:all</tt> or <tt>xs:sequence</tt> and also for specifying
  *   the order of XML elements in <tt>xs:sequence</tt>. </li> 
@@ -72,7 +78,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *        complex type.  </li>
  *
  *   <li> The targetnamespace of the XML Schema type can be customized
- *        using the annotation member <tt>namespace()</tt>. </li>
+ *        using the annotation element <tt>namespace()</tt>. </li>
  * </ul>
  *
  * <p>
@@ -149,9 +155,11 @@ import static java.lang.annotation.RetentionPolicy.*;
  * </blockquote>
  * 
  * <p> <b> Example 1: </b> Map a class to a complex type with
- *     xs:sequence </p>
+ *   xs:sequence with a customized ordering of JavaBean properties. 
+ * </p>
  *
  * <pre>
+ *   &#64;XmlType(propOrder={"street", "city" , "state", "zip", "name" })
  *   public class USAddress {
  *     String getName() {..};
  *     void setName(String) {..};
@@ -167,24 +175,21 @@ import static java.lang.annotation.RetentionPolicy.*;
  *
  *     java.math.BigDecimal getZip() {..};
  *     void setZip(java.math.BigDecimal) {..};
- * }
+ *   }
  *
- * &lt;!-- XML Schema mapping for USAddress -->
- * &lt;xs:complexType name="USAddress">
- *   &lt;xs:sequence>
- *     &lt;xs:element name="name" type="xs:string"/>
- *     &lt;xs:element name="street" type="xs:string"/>
- *     &lt;xs:element name="city" type="xs:string"/>
- *     &lt;xs:element name="state" type="xs:string"/>
- *     &lt;xs:element name="zip" type="xs:decimal"/>
- *   &lt;/xs:sequence>
- * &lt;/xs:complexType>
- *
+ *   &lt;!-- XML Schema mapping for USAddress -->
+ *   &lt;xs:complexType name="USAddress">
+ *     &lt;xs:sequence>
+ *       &lt;xs:element name="street" type="xs:string"/>
+ *       &lt;xs:element name="city" type="xs:string"/>
+ *       &lt;xs:element name="state" type="xs:string"/>
+ *       &lt;xs:element name="zip" type="xs:decimal"/>
+ *       &lt;xs:element name="name" type="xs:string"/>
+ *     &lt;/xs:all>
+ *   &lt;/xs:complexType> 
  * </pre>
- * <p>
  * <p> <b> Example 2: </b> Map a class to a complex type with
  *     xs:all </p>
- *
  * <pre>
  * &#64;XmlType(propOrder={})
  * public class USAddress { ...}
@@ -200,27 +205,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *   &lt;/xs:sequence>
  * &lt;/xs:complexType>
  *</pre>
- * <p> <b> Example 3: </b> Map a class to a complex type with
- *   xs:sequence with a customized ordering of JavaBean properties. 
- * </p>
- *
- * <pre>
- *   &#64;XmlType(propOrder={"street", "city" , "state", "zip", "name" })
- *   public class USAddress { ...}
- *
- *   &lt;!-- XML Schema mapping for USAddress -->
- *   &lt;xs:complexType name="USAddress">
- *     &lt;xs:sequence>
- *       &lt;xs:element name="street" type="xs:string"/>
- *       &lt;xs:element name="city" type="xs:string"/>
- *       &lt;xs:element name="state" type="xs:string"/>
- *       &lt;xs:element name="zip" type="xs:decimal"/>
- *       &lt;xs:element name="name" type="xs:string"/>
- *     &lt;/xs:all>
- *   &lt;/xs:complexType> 
- * </pre>
- *
- * <p> <b> Example 4: </b> Map a class to a global element with an
+ * <p> <b> Example 3: </b> Map a class to a global element with an
  * anonymous type. 
  * </p>
  * <pre>
@@ -242,7 +227,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *   &lt;/xs:element>
  * </pre>
  *
- * <p> <b> Example 5: </b> Map a property to a local element with
+ * <p> <b> Example 4: </b> Map a property to a local element with
  * anonmyous type. 
  * <pre>
  *   //Example: Code fragment
@@ -271,7 +256,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *   &lt;/xs:complexType> 
  * </pre>
  *
- * <p> <b> Example 6: </b> Map a property to an attribute with
+ * <p> <b> Example 5: </b> Map a property to an attribute with
  * anonmyous type.
  * 
  * <pre>
@@ -309,7 +294,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * @see XmlValue
  * @see XmlSchema
  * @since JAXB2.0
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 @Retention(RUNTIME) @Target({TYPE})
@@ -331,12 +316,11 @@ public @interface XmlType {
      *     identifier of the JavaBean property. The order in which
      *     JavaBean properties are listed is the order of XML Schema
      *     elements to which the JavaBean properties are mapped. </p>
-     * <p> All of the JavaBean properties being mapped must be
-     *     listed (i.e. if a JavaBean property mapping is prevented
-     *     by <tt>@XmlTransient</tt>, then it does not have to be
-     *     listed). Otherwise, it is an error.
-     * <p> By default, the JavaBean properties are ordered using a
-     *     default order specified in the JAXB 2.0 specification.
+     * <p> All of the JavaBean properties being mapped to XML Schema elements
+     *     must be listed. If a JavaBean property is marked with
+     *     <tt>@XmlTransient</tt>, then it is ignored. 
+     * <p> The default ordering of JavaBean properties is determined
+     *     by @{@link XmlAccessorOrder}. 
      */
     String[] propOrder() default {""};
 
@@ -346,6 +330,25 @@ public @interface XmlType {
      * containing the class is mapped.
      */
     String namespace() default "##default" ;
+   
+    /**
+     * Class containing a zero arg factory method for creating an
+     * instance of the annotated class. The default is this class.
+     *
+     */
+    Class factoryClass() default DEFAULT.class;
+
+    static final class DEFAULT {};
+
+    /**
+     * Name of a zero arg factory method in factoryClass() for
+     * creating an instance of the annotated class. The factory method
+     * is used during unmarshalling to create an instance of the
+     * annotated class. It is intended to be used for classes that do
+     * not contain a zero arg constructor.
+     * 
+     */
+    String factoryMethod() default "";
 }
 
 
