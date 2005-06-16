@@ -21,7 +21,7 @@ import static java.lang.annotation.ElementType.METHOD;
  * <tt>&#64;XmlElementRef</tt> annotation can be used with a 
  * JavaBean property or from within {@link XmlElementRefs}
  * <p>
- * This annotation dynamically associates an XML element name with the JavaBbean
+ * This annotation dynamically associates an XML element name with the JavaBean
  * property. When a JavaBean property is annotated with {@link
  * XmlElement}, the XML element name is statically derived from the
  * JavaBean property name. However, when this annotation is used, the

@@ -27,7 +27,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * program elements: 
  * <ul> 
  *   <li> a JavaBean property </li>
- *   <li> field </li>
+ *   <li> non static, non transient field </li>
  * </ul>
  * 
  * <p> The usage is subject to the following constraints:
@@ -215,7 +215,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * @author Sekhar Vajjhala, Sun Microsystems, Inc. 
  * @see XmlID
  * @since JAXB2.0
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 @Retention(RUNTIME) @Target({FIELD, METHOD})

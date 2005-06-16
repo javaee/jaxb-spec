@@ -14,15 +14,6 @@ import static java.lang.annotation.ElementType.TYPE;
 /**
  * Maps a class to an XML element.
  *
- * <hr>
- * <b> Note To reviewers: </b> This annotation is derived
- * &#64;XmlElement. JAXB 2.0 ED 0.40 allowed the use of
- * &#64;XmlElement annotation on both JavaBean property and
- * class. Instead, &#64;XmlRootElement is to be used for
- * annotating the class. So examples and description that applied to
- * class have been moved from &#64;XmlElement into this annotation.
- * <hr>
- * 
  * <p> <b>Usage</b> </p>
  * <p>
  * The &#64;XmlRootElement annotation can be used with the following program

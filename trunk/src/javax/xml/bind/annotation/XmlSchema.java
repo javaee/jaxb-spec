@@ -24,11 +24,15 @@ import static java.lang.annotation.RetentionPolicy.*;
  * 
  * This is a package level annotation and follows the recommendations
  * and restrictions contained in JSR 175, section III, "Annotations".
- * Thus the usage is subject to the following constraints:
+ * Thus the usage is subject to the following constraints and
+ * recommendations.
  * <ul>
  *   <li> There can only be one package declaration as noted in JSR
  *        175, section III, "Annotations". </li>
- *   <li> The location is not specified.  </li>
+ *   <li> JSR 175 recommends package-info.java for package level
+ *        annotations. JAXB Providers that follow this recommendation
+ *        will allow the package level annotations to be defined in
+ *        package-info.java.
  * </ul>
  * <p>
  *
@@ -36,8 +40,8 @@ import static java.lang.annotation.RetentionPolicy.*;
  * package is mapped.</p>
  *
  * <pre>
- *    &#64;XmlSchema (
- *      namespace = ""http://www.example.com/MYPO1"
+ *    &#64;javax.xml.bind.annotation.XmlSchema (
+ *      namespace = "http://www.example.com/MYPO1"
  *    )
  *    
  *    &lt;!-- XML Schema fragment -->
@@ -55,12 +59,12 @@ import static java.lang.annotation.RetentionPolicy.*;
  *
  * <pre>
  *    // Package level annotation
- *    &#64;XmlSchema (
+ *    &#64;javax.xml.bind.annotation.XmlSchema (
  *      xmlns = { 
- *        &#64;XmlNs(prefix = "po", 
+ *        &#64;javax.xml.bind.annotation.XmlNs(prefix = "po", 
  *                   namespaceURI="http://www.example.com/myPO1"),
  *
- *        &#64;XmlNs(prefix="xs",
+ *        &#64;javax.xml.bind.annotation.XmlNs(prefix="xs",
  *                   namespaceURI="http://www.w3.org/2001/XMLSchema")
  *      )
  *    )
@@ -75,10 +79,10 @@ import static java.lang.annotation.RetentionPolicy.*;
  *
  * <p><b>Example 3:</b> Customize elementFormDefault</p>
  * <pre>
- *    &#64;XmlSchema (
- *      elementFormDefault="unqualified"
+ *    &#64;javax.xml.bind.annotation.XmlSchema (
+ *      elementFormDefault=XmlNsForm.unqualified
  *      ...
- *    }
+ *    )
  * 
  *    &lt;!-- XML Schema fragment -->
  *    &lt;schema
@@ -90,7 +94,7 @@ import static java.lang.annotation.RetentionPolicy.*;
 
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 @Retention(RUNTIME) @Target({PACKAGE})

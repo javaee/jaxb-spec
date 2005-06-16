@@ -39,9 +39,20 @@ import java.lang.annotation.Target;
  * following program elements: 
  * <ul> 
  *   <li> JavaBean property </li>
- *   <li> field </li>
+ *   <li> non static, non trasient field </li>
  * </ul>
  *
+ * <p>The usage is subject to the following constraints:
+ * <ul>
+ *   <li> The property must be a collection property </li>
+ *   <li> This annotation can be used with the following annotations:
+ *            {@link XmlElement}, 
+ *            {@link XmlElements},
+ *            {@link XmlElementRef},
+ *            {@link XmlElementRefs},
+ *            {@link javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter}</li>.
+ * </ul>
+
  * It can be placed on a collection property along with 
  * along with either {@link XmlElement}, {@link XmlElements},
  * {@link XmlElementRef}, or   {@link XmlElementRefs}.

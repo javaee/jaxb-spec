@@ -71,10 +71,6 @@ public abstract class AttachmentUnmarshaller {
     *       <td>java.awt.Image</td>
     *     </tr>
     *     <tr>
-    *       <td>text/plain</td>
-    *       <td>java.lang.String</td>
-    *     </tr>
-    *     <tr>
     *       <td>text/xml  or application/xml</td>
     *       <td>javax.xml.transform.Source</td>
     *     </tr>

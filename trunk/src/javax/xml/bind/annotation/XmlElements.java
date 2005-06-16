@@ -27,7 +27,7 @@ import java.lang.annotation.Target;
  * following program elements: </p>
  * <ul>
  *   <li> a JavaBean property </li>
- *   <li> field </li>
+ *   <li> non static, non transient field </li>
  * </ul>
  *
  * This annotation is intended for annotation a JavaBean collection
@@ -39,9 +39,9 @@ import java.lang.annotation.Target;
  * <ul>
  *   <li> type of the JavaBean property must be one of: indexed
  *        property, array, List, java.util.Set.
- *        <br> java.util.Map does not map naturally to XML Schema
+ *        <br> java.util.HashMap does not map naturally to XML Schema
  *        construct. Hence <tt>@XmlJavaTypeAdapter</tt> should be used
- *        to customize <tt>java.util.Map</tt>.</li>
+ *        to customize <tt>java.util.HashMap</tt>.</li>
  *
  *   <li> This annotation can only be used with the following
  *        annotations: &#64;XmlIDREF. </li>

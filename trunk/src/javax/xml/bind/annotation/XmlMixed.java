@@ -36,7 +36,7 @@ import javax.xml.bind.JAXBElement;
  * </ul>
  *
  * Below is an example of binding and creation of mixed content.
- * <pre>
+ * <pre><xmp>
  *  <!-- schema fragment having  mixed content -->
  *  <xs:complexType name="letterBody" mixed="true">
  *    <xs:sequence>
@@ -72,17 +72,17 @@ import javax.xml.bind.JAXBElement;
  *		&#64;XmlElementRef(name="name", type=JAXBElement.class)})
  *	List getContent(){...}
  * }
- * </pre>
+ * </xmp></pre>
  * The following is an XML instance document with mixed content
- * <pre>
+ * <pre><xmp>
  * <letterBody>
  * Dear Mr.<name>Robert Smith</name>
  * Your order of <quantity>1</quantity> <productName>Baby
  * Monitor</productName> shipped from our warehouse. ....
  * </letterBody>
- * </pre>
+ * </xmp></pre>
  * that can be constructed using following JAXB API calls.
- * <pre>
+ * <pre><xmp>
  * LetterBody lb = ObjectFactory.createLetterBody();
  * JAXBElement<LetterBody> lbe = ObjectFactory.createLetterBody(lb);
  * List gcl = lb.getContent();  //add mixed content to general content property.
@@ -96,9 +96,8 @@ import javax.xml.bind.JAXBElement;
  * gcl.add(ObjectFactory.
  * 	 		createLetterBodyQuantity(new BigInteger("1")));
  * gcl.add(ObjectFactory.createLetterBodyProductName("Baby Monitor"));
- * 
  * gcl.add("shipped from our warehouse");  // add text information item
- * </pre>
+ * </xmp></pre>
  *
  * <p>See "Package Specification" in javax.xml.bind.package javadoc for
  * additional common information.</p>

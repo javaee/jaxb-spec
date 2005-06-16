@@ -245,7 +245,7 @@ import javax.xml.validation.Schema;
  * </blockquote>
  * 
  * @author <ul><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Ryan Shoemaker, Sun Microsystems, Inc.</li><li>Joe Fialli, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.6 $ $Date: 2005-06-03 23:26:32 $
+ * @version $Revision: 1.7 $ $Date: 2005-06-16 17:15:59 $
  * @see JAXBContext
  * @see Validator
  * @see Unmarshaller
@@ -638,11 +638,14 @@ public interface Marshaller {
      * <p>
      * This method allows the caller to validate the marshalled XML as it's marshalled.
      *
+     * <p>
+     * Initially this property is set to <tt>null</tt>.
+     *
      * @param schema Schema object to validate marshal operations against or null to disable validation
      * @throws UnsupportedOperationException could be thrown if this method is
      *         invoked on an Marshaller created from a JAXBContext referencing
      *         JAXB 1.0 mapped classes
-     * @since 2.0
+     * @since JAXB2.0
      */
     public void setSchema( Schema schema );
 
@@ -657,7 +660,7 @@ public interface Marshaller {
      * @throws UnsupportedOperationException could be thrown if this method is
      *         invoked on an Marshaller created from a JAXBContext referencing
      *         JAXB 1.0 mapped classes
-     * @since 2.0
+     * @since JAXB2.0
      */
     public Schema getSchema();
 }

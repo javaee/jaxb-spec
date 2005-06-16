@@ -67,7 +67,7 @@ import static java.lang.annotation.ElementType.METHOD;
  * parameter in binding of element declaration in schema derived
  * code. 
  * <p>
- * <b>TBD: </b>The following example may be replaced in a future revision of
+ * The following example may be replaced in a future revision of
  * this javadoc.
  * 
  * <pre><xmp>

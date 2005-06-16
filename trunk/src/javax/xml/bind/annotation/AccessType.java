@@ -13,7 +13,7 @@ package javax.xml.bind.annotation;
  *
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  * @see XmlAccessorType
  */
 
@@ -27,7 +27,7 @@ public enum AccessType {
      */
     PROPERTY,
     /**
-     * Every field in a JAXB-bound class will be automatically
+     * Every non static, non field in a JAXB-bound class will be automatically
      * bound to XML, unless annotated by {@link XmlTransient}.
      *
      * Getter/setter pairs are bound to XML only when they are explicitly annotated
@@ -44,8 +44,8 @@ public enum AccessType {
      */
     PUBLIC_MEMBER,
     /**
-     * None of the field is bound to XML unless they are specifically
-     * annotated with some of the JAXB annotations.
+     * None of the fields or properties is bound to XML unless they
+     * are specifically  annotated with some of the JAXB annotations.
      */
     NODEFAULT
 }

@@ -24,7 +24,7 @@ import static java.lang.annotation.ElementType.METHOD;
  * following program elements: 
  * <ul> 
  *   <li> JavaBean property </li>
- *   <li> field </li>
+ *   <li> non static, non transient field </li>
  * </ul>
  *
  * <p>See "Package Specification" in javax.xml.bind.package javadoc for
