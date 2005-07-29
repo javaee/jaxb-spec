@@ -27,7 +27,7 @@ import javax.xml.bind.attachment.AttachmentMarshaller;
  * neither 
  * {@link AttachmentMarshaller#addMtomAttachment(DataHandler, String, String)}
  * nor 
- * {@link AttachmentMarshaller#addMtomAttachment(byte[], String, String)} is 
+ * {@link AttachmentMarshaller#addMtomAttachment(byte[], int, int, String, String, String)} is 
  * ever called for the property. The binary data will always be inlined.
  *
  * @author Joseph Fialli
