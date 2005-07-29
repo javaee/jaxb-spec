@@ -2,7 +2,6 @@ package javax.xml.bind.attachment;
 
 import javax.activation.DataHandler;
 import javax.xml.bind.Marshaller;
-import javax.xml.bind.annotation.XmlAttachmentRef;
 
 /**
  * <p>Enable JAXB marshalling to optimize storage of binary data.</p>
@@ -28,7 +27,7 @@ import javax.xml.bind.annotation.XmlAttachmentRef;
  * @author Joseph Fialli
  * @since JAXB 2.0
  * 
- * @see javax.xml.bind.Marshaller#setAttachmentMarshaller(AttachmentMarshaller)
+ * @see Marshaller#setAttachmentMarshaller(AttachmentMarshaller)
  * 
  * @see <a href="http://www.w3.org/TR/2005/REC-xop10-20050125/">XML-binary Optimized Packaging</a>
  * @see <a href="http://www.ws-i.org/Profiles/AttachmentsProfile-1.0-2004-08-24.html">WS-I Attachments Profile Version 1.0.</a>
@@ -98,7 +97,21 @@ public abstract class AttachmentMarshaller {
      * binary data should be inlined or optimized as an attachment.
      *
      * @param data
-     *       represents the data to be attached. Must be non-null.
+     *      represents the data to be attached. Must be non-null. The actual data region is
+     *      specified by <tt>(data,offset,len)</tt> tuple.
+     *
+     * @param mimeType
+     *      If the data has an associated MIME type known to JAXB, that is passed
+     *      as this parameter. If none is known, "application/octet-stream".
+     *      This parameter may never be null.
+     * 
+     * @param offset
+     *       The offset within the array of the first byte to be read; 
+     *       must be non-negative and no larger than array.length
+     * 
+     * @param length
+     *       The number of bytes to be read from the given array; 
+     *       must be non-negative and no larger than array.length
      *
      * @param elementNamespace
      *      the namespace URI of the element that encloses the base64Binary data.
@@ -112,7 +125,7 @@ public abstract class AttachmentMarshaller {
      *
      * @see #addMtomAttachment(DataHandler, String, String)
      */
-    public abstract String addMtomAttachment(byte[] data, String elementNamespace, String elementLocalName);
+    public abstract String addMtomAttachment(byte[] data, int offset, int length, String mimeType, String elementNamespace, String elementLocalName);
 
     /**
      * <p>Read-only property that returns true if JAXB marshaller should enable XOP creation.</p>
