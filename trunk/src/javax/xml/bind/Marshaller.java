@@ -170,9 +170,9 @@ import javax.xml.validation.Schema;
  * JAXB Providers will fully allow marshalling invalid content, others will fail
  * on the first validation error.
  * <p>
- * Although there is no way to enable validation during the marshal operation,
+ * Even when schema validation is not explictly enabled for the marshal operation,
  * it is possible that certain types of validation events will be detected 
- * during the operation.  These events will be reported to the registered
+ * during the operation.  Validation events will be reported to the registered
  * event handler.  If the client application has not registered an event handler
  * prior to invoking one of the marshal API's, then events will be delivered to
  * the default event handler which will terminate the marshal operation after
@@ -244,8 +244,39 @@ import javax.xml.validation.Schema;
  * </dl>
  * </blockquote>
  * 
+ * <p>
+ * <a name="marshalEventCallback"></a>
+ * <b>Marshal Event Callbacks</b><br>
+ * <blockquote>
+ * "The {@link Marshaller} provides two styles of callback mechanisms
+ * that allow application specific processing during key points in the
+ * unmarshalling process.  In 'class defined' event callbacks, application
+ * specific code placed in JAXB mapped classes is triggered during
+ * marshalling.  'External listeners' allow for centralized processing
+ * of marshal events in one callback method rather than by type event callbacks.
+ *
+ * <p>
+ * Class defined event callback methods allow any JAXB mapped class to specify 
+ * its own specific callback methods by defining methods with the following method signatures:
+ * <blockquote>
+ * <pre>
+ *   // Invoked by Marshaller after it has created an instance of this object.
+ *   boolean beforeMarshal(Marshaller, Object parent);
+ * 
+ *   // Invoked by Marshaller after it has marshalled all properties of this object.
+ *   void afterMmarshal(Marshaller, Object parent);
+ * </pre>
+ * </blockquote>
+ * The class defined event callback methods should be used when the callback method requires
+ * access to non-public methods and/or fields of the class. 
+ * <p>
+ * The external listener callback mechanism enables the registration of a {@link Listener} 
+ * instance with a {@link Marshaller#setListener(Listener)}. The external listener receives all callback events, 
+ * allowing for more centralized processing than per class defined callback methods.
+ * </blockquote>
+ * 
  * @author <ul><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Ryan Shoemaker, Sun Microsystems, Inc.</li><li>Joe Fialli, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.7 $ $Date: 2005-06-16 17:15:59 $
+ * @version $Revision: 1.8 $ $Date: 2005-07-29 22:08:06 $
  * @see JAXBContext
  * @see Validator
  * @see Unmarshaller
@@ -663,7 +694,77 @@ public interface Marshaller {
      * @since JAXB2.0
      */
     public Schema getSchema();
+
+   /**
+    * <p> 
+    * Register an instance of an implementation of this class with a {@link Marshaller} to externally listen
+    * for marshal events.
+    * 
+    * <p>
+    * This class enables pre and post processing of each marshalled object. 
+    * The event callbacks are called when marshalling from an instance that maps to an xml element or 
+    * complex type definition. The event callbacks are not called when marshalling from an instance of a
+    * Java datatype that represents a simple type definition. 
+    *
+    * <p>
+    * External listener is one of two different mechanisms for defining marshal event callbacks.
+    * See <a href="Marshaller.html#marshalEventCallback">Marshal Event Callbacks</a> for an overview.
+    * 
+    * @see #setListener(Listener)
+    * @see #getListener() 
+    * @since JAXB2.0
+    */
+   public static abstract class Listener {
+       /**
+	* <p>
+	* Callback method invoked before marshalling from <tt>source</tt> to XML.
+	*
+	* <p>
+        * This method is invoked just before marshalling process starts to marshal <tt>source</tt>.
+	* Note that if the class of <tt>source</tt> defines its own <tt>beforeMarshal</tt> method,
+	* the class specific callback method is invoked just before this method is invoked.
+	*
+	* @param source instance of JAXB mapped class prior to marshalling from it.
+	* 
+	*/
+       public void beforeMarshal(Object source) {}
+
+       /**
+	* <p>
+	* Callback method invoked after marshalling <tt>source</tt> to XML.
+	* 
+	* <p>
+	* This method is invoked after <tt>source</tt> and all its descendants have been marshalled.
+	* Note that if the class of <tt>source</tt> defines its own <tt>afterMarshal</tt> method,
+	* the class specific callback method is invoked just before this method is invoked.
+	*
+	* @param source instance of JAXB mapped class after marshalling it.
+	*/
+       public void afterMarshal(Object source) {}
+   }
+
+    /**
+     * <p>
+     * Register marshal event callback {@link Listener} with this {@link Marshaller}.
+     * 
+     * <p>
+     * There is only one Listener per Marshaller. Setting a Listener replaces the previous set Listener.
+     * One can unregister current Listener by setting listener to <tt>null</tt>.
+     *
+     * @param listener an instance of a class that implements {@link Listener}
+     * @since JAXB2.0
+     */
+    public void     setListener(Listener listener);
+
+    /**
+     * <p>Return {@link Listener} registered with this {@link Marshaller}.
+     * 
+     * @return registered {@link Listener} or <code>null</code> if no Listener is registered with this Marshaller.
+     * @since JAXB2.0
+     */
+    public Listener getListener();
 }
+
 
 
 
