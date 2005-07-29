@@ -98,7 +98,7 @@ public abstract class AttachmentMarshaller {
      *
      * @param data
      *      represents the data to be attached. Must be non-null. The actual data region is
-     *      specified by <tt>(data,offset,len)</tt> tuple.
+     *      specified by <tt>(data,offset,length)</tt> tuple.
      *
      * @param mimeType
      *      If the data has an associated MIME type known to JAXB, that is passed
