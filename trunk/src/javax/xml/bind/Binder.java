@@ -6,6 +6,7 @@
 package javax.xml.bind;
 
 import javax.xml.validation.Schema;
+import javax.xml.bind.JAXBContext;
 
 /**
  * Enable synchronization between XML infoset nodes and JAXB objects 
@@ -70,6 +71,14 @@ public abstract class Binder<XmlNode> {
      * When {@link #getSchema()} is non-null, <code>xmlNode</code>
      * and its descendants is validated during this operation.
      *
+     * <p>
+     * This method throws {@link UnmarshalException} when the Binder's
+     * {@link JAXBContext} does not have a mapping for the XML element name
+     * or the type, specifiable via <tt>@xsi:type</tt>, of <tt>xmlNode</tt>
+     * to a JAXB mapped class. The method {@link #unmarshal(Object, Class)} 
+     * enables an application to specify the JAXB mapped class that
+     * the <tt>xmlNode</tt> should be mapped to. 
+     *
      * @param xmlNode 
      *      the document/element to unmarshal XML data from.
      *
@@ -85,6 +94,45 @@ public abstract class Binder<XmlNode> {
      *      If the node parameter is null
      */
     public abstract Object unmarshal( XmlNode xmlNode ) throws JAXBException;
+
+    /**
+     * Unmarshal XML root element by provided <tt>declaredType</tt> 
+     * to a JAXB object tree.
+     *
+     * <p>
+     * Implements <a href="Unmarshaller.html#unmarshalByDeclaredType">Unmarshal by Declared Type</a>
+     * 
+     * <p>
+     * This method is similar to {@link Unmarshaller#unmarshal(Node, Class)}
+     * with the addition of maintaining the association between XML nodes 
+     * and the produced JAXB objects, enabling future update operations,
+     * {@link #updateXML(Object, Object)} or {@link #updateJAXB(Object)}.
+     *
+     * <p>
+     * When {@link #getSchema()} is non-null, <code>xmlNode</code>
+     * and its descendants is validated during this operation.
+     *
+     * @param xmlNode 
+     *      the document/element to unmarshal XML data from.
+     * @param declaredType
+     *      appropriate JAXB mapped class to hold <tt>node</tt>'s XML data.
+     *
+     * @return
+     * <a href="#unmarshalDeclaredTypeReturn">JAXB Element</a> representation 
+     * of <tt>node</tt>
+     *
+     * @throws UnmarshalException
+     *     If the {@link ValidationEventHandler ValidationEventHandler}
+     *     returns false from its <tt>handleEvent</tt> method or the 
+     *     <tt>Binder</tt> is unable to perform the XML to Java
+     *     binding.
+     * @throws IllegalArgumentException
+     *      If the node parameter is null
+     * @since JAXB2.0
+     */
+    public abstract <T> JAXBElement<T> 
+	unmarshal( XmlNode xmlNode, Class<T> declaredType ) 
+	throws JAXBException;
 
     /**
      * Marshal a JAXB object tree to a new XML document.
@@ -151,7 +199,7 @@ public abstract class Binder<XmlNode> {
      *
      * <p>
      * An association between an XML element and a JAXB object is
-     * established by the bind methods and the update methods.
+     * established by the unmarshal, marshal and update methods.
      * Note that this association is partial; not all XML elements
      * have associated JAXB objects, and not all JAXB objects have
      * associated XML elements.
