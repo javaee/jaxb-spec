@@ -100,11 +100,6 @@ public abstract class AttachmentMarshaller {
      *      represents the data to be attached. Must be non-null. The actual data region is
      *      specified by <tt>(data,offset,length)</tt> tuple.
      *
-     * @param mimeType
-     *      If the data has an associated MIME type known to JAXB, that is passed
-     *      as this parameter. If none is known, "application/octet-stream".
-     *      This parameter may never be null.
-     * 
      * @param offset
      *       The offset within the array of the first byte to be read; 
      *       must be non-negative and no larger than array.length
@@ -113,6 +108,11 @@ public abstract class AttachmentMarshaller {
      *       The number of bytes to be read from the given array; 
      *       must be non-negative and no larger than array.length
      *
+     * @param mimeType
+     *      If the data has an associated MIME type known to JAXB, that is passed
+     *      as this parameter. If none is known, "application/octet-stream".
+     *      This parameter may never be null.
+     * 
      * @param elementNamespace
      *      the namespace URI of the element that encloses the base64Binary data.
      *      Can be empty but never null.
