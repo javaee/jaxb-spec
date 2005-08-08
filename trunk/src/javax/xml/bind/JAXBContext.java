@@ -70,15 +70,20 @@ import java.io.IOException;
  * </blockquote>
  *
  * <p>
+ * <a name="Unmarshalling"></a>
  * <b>Unmarshalling</b>
  * <p>
  * <blockquote>
  * The {@link Unmarshaller} class provides the client application the ability
  * to convert XML data into a tree of Java content objects.
- * The unmarshal method for a schema (within a namespace) allows for
+ * The unmarshal method allows for 
  * any global XML element declared in the schema to be unmarshalled as
- * the root of an instance document. The <tt>JAXBContext</tt> object 
- * allows the merging of global elements across a set of schemas (listed
+ * the root of an instance document.
+ * Additionally, the unmarshal method allows for an unrecognized root element that 
+ * has  an xsi:type attribute's value that references a type definition declared in 
+ * the schema  to be unmarshalled as the root of an instance document.
+ * The <tt>JAXBContext</tt> object 
+ * allows the merging of global elements and type definitions across a set of schemas (listed
  * in the <tt>contextPath</tt>). Since each schema in the schema set can belong
  * to distinct namespaces, the unification of schemas to an unmarshalling 
  * context should be namespace independent.  This means that a client 
@@ -192,7 +197,7 @@ import java.io.IOException;
  * </blockquote>
  *
  * @author <ul><li>Ryan Shoemaker, Sun Microsystems, Inc.</li><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Joe Fialli, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.7 $ $Date: 2005-06-16 17:15:59 $
+ * @version $Revision: 1.8 $ $Date: 2005-08-08 19:18:07 $
  * @see Marshaller
  * @see Unmarshaller
  * @see <a href="http://java.sun.com/docs/books/jls">S 7.4.1.1 "Package Annotations" in Java Language Specification, 3rd Edition</a>

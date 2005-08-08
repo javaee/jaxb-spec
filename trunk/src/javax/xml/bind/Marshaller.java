@@ -273,10 +273,15 @@ import javax.xml.validation.Schema;
  * The external listener callback mechanism enables the registration of a {@link Listener} 
  * instance with a {@link Marshaller#setListener(Listener)}. The external listener receives all callback events, 
  * allowing for more centralized processing than per class defined callback methods.
+ * <p>
+ * The 'class defined' and external listener event callback methods are independent of each other,
+ * both can be called for one event. 
+ * <p>
+ * An event callback method throwing an exception terminates the current marshal process.
  * </blockquote>
  * 
  * @author <ul><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Ryan Shoemaker, Sun Microsystems, Inc.</li><li>Joe Fialli, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.8 $ $Date: 2005-07-29 22:08:06 $
+ * @version $Revision: 1.9 $ $Date: 2005-08-08 19:18:08 $
  * @see JAXBContext
  * @see Validator
  * @see Unmarshaller
