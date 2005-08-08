@@ -31,7 +31,7 @@ import static javax.xml.bind.JAXBContext.JAXB_CONTEXT_FACTORY;
  * This code is designed to implement the JAXB 1.0 spec pluggability feature
  *
  * @author <ul><li>Ryan Shoemaker, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  * @see JAXBContext
  */
 class ContextFinder {
@@ -361,7 +361,7 @@ class ContextFinder {
             else
                 resourceURL = classLoader.getResource(resource);
 
-            if (resource != null) {
+            if (resourceURL != null) {
                 logger.fine("Reading "+resourceURL);
                 r = new BufferedReader(new InputStreamReader(resourceURL.openStream(), "UTF-8"));
                 factoryClassName = r.readLine().trim();
