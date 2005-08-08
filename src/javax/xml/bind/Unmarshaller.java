@@ -336,7 +336,7 @@ import java.io.Reader;
  * <a name="unmarshalEventCallback"></a>
  * <b>Unmarshal Event Callbacks</b><br>
  * <blockquote>
- * "The {@link Unmarshaller} provides two styles of callback mechanisms
+ * The {@link Unmarshaller} provides two styles of callback mechanisms
  * that allow application specific processing during key points in the
  * unmarshalling process.  In 'class defined' event callbacks, application
  * specific code placed in JAXB mapped classes is triggered during
@@ -361,12 +361,18 @@ import java.io.Reader;
  * <p>
  * The external listener callback mechanism enables the registration of a {@link Listener} 
  * instance with an {@link Unmarshaller#setListener(Listener)}. The external listener receives all callback events, 
- * allowing for more centralized processing than per class defined callback methods.  
+ * allowing for more centralized processing than per class defined callback methods.  The external listener 
+ * receives events when unmarshalling proces is marshalling to a JAXB element or to JAXB mapped class.
+ * <p>
+ * The 'class defined' and external listener event callback methods are independent of each other,
+ * both can be called for one event. 
+ * <p>
+ * An event callback method throwing an exception terminates the current unmarshal process.
  * 
  * </blockquote>
  * 
  * @author <ul><li>Ryan Shoemaker, Sun Microsystems, Inc.</li><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Joe Fialli, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.10 $ $Date: 2005-07-29 22:08:06 $
+ * @version $Revision: 1.11 $ $Date: 2005-08-08 19:18:07 $
  * @see JAXBContext
  * @see Marshaller
  * @see Validator
@@ -1036,7 +1042,7 @@ public interface Unmarshaller {
     * <p>
     * This class enables pre and post processing of an instance of a JAXB mapped class 
     * as XML data is unmarshalled into it. The event callbacks are called when unmarshalling
-    * XML content into an instance that represents an element or complex type definition. 
+    * XML content into a JAXBElement instance or a JAXB mapped class that represents a complex type definition. 
     * The event callbacks are not called when unmarshalling to an instance of a
     * Java datatype that represents a simple type definition. 
     *
@@ -1044,8 +1050,8 @@ public interface Unmarshaller {
     * External listener is one of two different mechanisms for defining unmarshal event callbacks.
     * See <a href="Unmarshaller.html#unmarshalEventCallback">Unmarshal Event Callbacks</a> for an overview.
     * 
-    * @see #setListener(Listener)
-    * @see #getListener()
+    * (@link #setListener(Listener)}
+    * (@link #getListener()}
     * @since JAXB2.0
     */
    public static abstract class Listener {
