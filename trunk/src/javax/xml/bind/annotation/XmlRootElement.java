@@ -12,7 +12,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import static java.lang.annotation.ElementType.TYPE;
 
 /**
- * Maps a class to an XML element.
+ * Maps a class or an enum type to an XML element.
  *
  * <p> <b>Usage</b> </p>
  * <p>
@@ -20,11 +20,16 @@ import static java.lang.annotation.ElementType.TYPE;
  * elements: 
  * <ul> 
  *   <li> a top level value class </li>
+ *   <li> an enum type </li>
  * </ul>
+ *
+ * <p>See "Package Specification" in javax.xml.bind.package javadoc for
+ * additional common information.</p>
+ * 
  * <p>
- * When a top level class is annotated with the &#64;XmlRootElement annotation,
- * then the value of the class is represented as XML element in an XML
- * document.
+ * When a top level class or an enum type is annotated with the 
+ * &#64;XmlRootElement annotation, then its value is represented 
+ * as XML element in an XML document.
  *
  * <p>
  * <b>Example 1: </b> Associate an element with XML Schema type
@@ -78,7 +83,7 @@ import static java.lang.annotation.ElementType.TYPE;
  *     &#64;XmlRootElement
  *     class Point3D extends Point {
  *         int z;
- *         Point(int _x,int _y,int _z) {super(_x,_y);z=_z;}
+ *         Point3D(int _x,int _y,int _z) {super(_x,_y);z=_z;}
  *     }
  *
  *     //Example: Code fragment corresponding to XML output * 
