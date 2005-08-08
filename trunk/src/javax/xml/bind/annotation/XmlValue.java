@@ -44,7 +44,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *       type.  </li>
  * 
  *   <li>If the type of the field or property is not a collection
- *       type, then the type must map to a XML Schema schema type. </li>
+ *       type, then the type must map to a XML Schema simple type. </li>
  *
  * </ul>
  * </p>
@@ -105,7 +105,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @see XmlType
  * @since JAXB2.0
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 @Retention(RUNTIME) @Target({FIELD, METHOD})
