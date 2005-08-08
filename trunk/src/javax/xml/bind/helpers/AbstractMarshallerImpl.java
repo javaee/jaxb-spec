@@ -35,7 +35,7 @@ import java.io.UnsupportedEncodingException;
  * {@link Marshaller#marshal(Object, javax.xml.transform.Result) marshal(Object, javax.xml.stream.XMLEventWriter)}.
  *
  * @author <ul><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.4 $ $Date: 2005-05-19 17:51:28 $
+ * @version $Revision: 1.5 $ $Date: 2005-08-08 20:26:39 $
  * @see javax.xml.bind.Marshaller
  * @since JAXB1.0
  */
@@ -448,6 +448,14 @@ public abstract class AbstractMarshallerImpl implements Marshaller
     }
 
     public AttachmentMarshaller getAttachmentMarshaller() {
+        throw new UnsupportedOperationException();
+    }
+
+    public void setListener(Listener listener) {
+        throw new UnsupportedOperationException();
+    }
+
+    public Listener getListener() {
         throw new UnsupportedOperationException();
     }
 }
