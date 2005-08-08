@@ -11,7 +11,7 @@ package javax.xml.bind.annotation;
  *
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  * @see XmlAccessorOrder
  */
 
@@ -22,7 +22,7 @@ public enum AccessorOrder {
     UNDEFINED,
     /**
      * The ordering of fields and properties in a class is in
-     * alphabetical order i.e. the ordering as determined by the
+     * alphabetical order as determined by the
      * method java.lang.String.compareTo(String anotherString).
      */
     ALPHABETICAL
