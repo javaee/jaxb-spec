@@ -28,8 +28,9 @@ import static java.lang.annotation.ElementType.TYPE;
  *
  * <p> The usage is subject to the following constraints:
  * <ul> 
- *   <li> The only other mapping annotations allowed with
- *        <tt>@XmlEnum</tt> are: </tt>@XmlType</tt></li>
+ *   <li> This annotation can be used the following other annotations: 
+ *         {@link @XmlType}
+ *         {@link @XmlRootElement} </li>
  * </ul>
  * <p>See "Package Specification" in javax.xml.bind.package javadoc for
  * additional common information </p>
