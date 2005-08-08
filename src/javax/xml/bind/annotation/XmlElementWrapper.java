@@ -39,7 +39,7 @@ import java.lang.annotation.Target;
  * following program elements: 
  * <ul> 
  *   <li> JavaBean property </li>
- *   <li> non static, non trasient field </li>
+ *   <li> non static, non transient field </li>
  * </ul>
  *
  * <p>The usage is subject to the following constraints:
@@ -52,10 +52,6 @@ import java.lang.annotation.Target;
  *            {@link XmlElementRefs},
  *            {@link javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter}</li>.
  * </ul>
-
- * It can be placed on a collection property along with 
- * along with either {@link XmlElement}, {@link XmlElements},
- * {@link XmlElementRef}, or   {@link XmlElementRefs}.
  *
  * <p>See "Package Specification" in javax.xml.bind.package javadoc for
  * additional common information.</p>
