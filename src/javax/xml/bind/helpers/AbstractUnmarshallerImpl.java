@@ -7,12 +7,14 @@ package javax.xml.bind.helpers;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
+import org.w3c.dom.Node;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.PropertyException;
 import javax.xml.bind.UnmarshalException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.ValidationEventHandler;
+import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import javax.xml.bind.attachment.AttachmentUnmarshaller;
 import javax.xml.parsers.ParserConfigurationException;
@@ -44,7 +46,7 @@ import java.net.URL;
  * @author <ul>
  *         <li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li>
  *         </ul>
- * @version $Revision: 1.4 $ $Date: 2005-05-19 17:51:29 $
+ * @version $Revision: 1.5 $ $Date: 2005-08-08 20:26:39 $
  * @see javax.xml.bind.Unmarshaller
  * @since JAXB1.0
  */
@@ -347,19 +349,29 @@ public abstract class AbstractUnmarshallerImpl implements Unmarshaller
         throw new PropertyException(name);
     }
     
-    /* (non-Javadoc)
-     * @see javax.xml.bind.Unmarshaller#unmarshal(javax.xml.stream.XMLEventReader)
-     */
     public Object unmarshal(XMLEventReader reader) throws JAXBException {
         
         throw new UnsupportedOperationException();
     }
 
-    /* (non-Javadoc)
-     * @see javax.xml.bind.Unmarshaller#unmarshal(javax.xml.stream.XMLStreamReader)
-     */
     public Object unmarshal(XMLStreamReader reader) throws JAXBException {
         
+        throw new UnsupportedOperationException();
+    }
+
+    public <T> JAXBElement<T> unmarshal(Node node, Class<T> expectedType) throws JAXBException {
+        throw new UnsupportedOperationException();
+    }
+
+    public <T> JAXBElement<T> unmarshal(Source source, Class<T> expectedType) throws JAXBException {
+        throw new UnsupportedOperationException();
+    }
+
+    public <T> JAXBElement<T> unmarshal(XMLStreamReader reader, Class<T> expectedType) throws JAXBException {
+        throw new UnsupportedOperationException();
+    }
+
+    public <T> JAXBElement<T> unmarshal(XMLEventReader reader, Class<T> expectedType) throws JAXBException {
         throw new UnsupportedOperationException();
     }
 
@@ -390,6 +402,14 @@ public abstract class AbstractUnmarshallerImpl implements Unmarshaller
     }
 
     public AttachmentUnmarshaller getAttachmentUnmarshaller() {
+        throw new UnsupportedOperationException();
+    }
+
+    public void setListener(Listener listener) {
+        throw new UnsupportedOperationException();
+    }
+
+    public Listener getListener() {
         throw new UnsupportedOperationException();
     }
 }
