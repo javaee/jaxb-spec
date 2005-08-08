@@ -54,7 +54,8 @@ import static java.lang.annotation.RetentionPolicy.*;
  *</pre>
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version  $Revision: 1.2 $
+ * @version  $Revision: 1.3 $
+ * @see AccessorOrder
  */
 
 @Inherited @Retention(RUNTIME) @Target({PACKAGE, TYPE})
