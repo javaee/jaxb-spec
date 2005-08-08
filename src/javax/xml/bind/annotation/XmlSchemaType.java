@@ -21,7 +21,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * elements: 
  * <ul> 
  *   <li> a JavaBean property </li>
- *   <li> non static, non transient field </li>
+ *   <li> field </li>
  *   <li> package</li>
  * </ul>
  *
