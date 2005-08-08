@@ -61,6 +61,8 @@ import javax.xml.bind.JAXBElement;
  *      // type instance factory
  * 	LetterBody> createLetterBody();
  * }
+ * </xmp></pre>
+ * <pre>
  * public class LetterBody {
  * 	// Mixed content can contain instances of Element classes
  * 	// Name, Quantity and ProductName. Text data is represented as
@@ -72,7 +74,7 @@ import javax.xml.bind.JAXBElement;
  *		&#64;XmlElementRef(name="name", type=JAXBElement.class)})
  *	List getContent(){...}
  * }
- * </xmp></pre>
+ * </pre>
  * The following is an XML instance document with mixed content
  * <pre><xmp>
  * <letterBody>
