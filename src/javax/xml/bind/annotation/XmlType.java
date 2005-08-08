@@ -14,18 +14,20 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * <p>
- * Maps a class to a XML Schema type.
+ * Maps a class or an enum type to a XML Schema type.
  *
  * <p><b>Usage</b></p>
  * <p> The <tt>@XmlType</tt> annnotation can be used with the following program
  * elements:
  * <ul>
  *   <li> a top level class </li>
+ *   <li> an enum type </li>
  * </ul>
  *
  * <p>See "Package Specification" in javax.xml.bind.package javadoc for
  * additional common information.</p>
- * 
+ *
+ * <h3> Mapping a Class </h3> 
  * <p>
  * A class maps to a XML Schema type. A class is a data container for
  * values represented by properties and fields. A schema type is a
@@ -153,6 +155,12 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *     </tbody>
  *   </table>
  * </blockquote>
+ * 
+ * <h3> Mapping an enum type </h3>
+ * 
+ * An enum type maps to a XML schema simple type with enumeration
+ * facets. The following annotation elements are ignored since they
+ * are not meaningful: <tt>propOrder()</tt> , <tt>factoryMethod()</tt> , <tt>factoryClass()</tt> .
  * 
  * <p> <b> Example 1: </b> Map a class to a complex type with
  *   xs:sequence with a customized ordering of JavaBean properties. 
@@ -294,7 +302,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * @see XmlValue
  * @see XmlSchema
  * @since JAXB2.0
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 @Retention(RUNTIME) @Target({TYPE})
