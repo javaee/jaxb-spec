@@ -190,7 +190,8 @@ public class JAXBElement<T> implements Serializable {
      * type than xml element declaration's declared type.
      */
     public boolean isTypeSubstituted() {
-        return this.value.getClass() != this.declaredType;
+        if(value==null)     return false;
+        return value.getClass() != declaredType;
     }
 
     private static final long serialVersionUID = 1L;
