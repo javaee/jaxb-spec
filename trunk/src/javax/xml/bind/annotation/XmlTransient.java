@@ -16,10 +16,10 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <p>
  * The <tt>@XmlTransient</tt> annotation is useful for resolving name
  * collisions between a JavaBean property name and a field name or
- * preventing the mapping of a file/property. A name collision can
+ * preventing the mapping of a field/property. A name collision can
  * occur when the decapitalized JavaBean property name and a field
  * name are the same. If the JavaBean property refers to the field,
- * then the name collision can be resolved by mapping preventing the
+ * then the name collision can be resolved by preventing the
  * mapping of either the field or the JavaBean property using the
  * <tt>@XmlTransient</tt> annotation. 
  * <p><b>Usage</b></p>
@@ -27,7 +27,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *     program elements: 
  * <ul> 
  *   <li> a JavaBean property </li>
- *   <li> non static, non transient field </li>
+ *   <li> field </li>
  * </ul>
  * 
  * <p>See "Package Specification" in javax.xml.bind.package javadoc for
@@ -59,7 +59,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 @Retention(RUNTIME) @Target({FIELD, METHOD})
