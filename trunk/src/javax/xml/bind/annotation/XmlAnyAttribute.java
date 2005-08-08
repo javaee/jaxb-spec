@@ -34,6 +34,7 @@ import static java.lang.annotation.ElementType.METHOD;
  * <ul> 
  *   <li> At most one field or property in a class can be annotated
  *        with <tt>&#64;XmlAnyAttribute</tt>.  </li>
+ *   <li> The type of the property or the field must <tt>java.util.Map</tt> </li>
  * </ul>
  *
  * <p>
