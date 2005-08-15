@@ -65,7 +65,7 @@ import static java.lang.annotation.ElementType.PARAMETER;
  *        {@link XmlElement}, 
  *        {@link XmlAttribute},
  *        {@link XmlValue},
- *        {@link XmIDREF}.
+ *        {@link XmlIDREF}.
  *  <ul>
  *    <li> The use of <tt>@XmlList</tt> with {@link XmlValue} while
  *         allowed, is redundant since  {@link XmlList} maps a
