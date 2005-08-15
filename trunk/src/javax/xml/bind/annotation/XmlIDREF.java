@@ -30,17 +30,17 @@ import static java.lang.annotation.RetentionPolicy.*;
  *   <li> non static, non transient field </li>
  * </ul>
  * 
+ * <p>See "Package Specification" in javax.xml.bind.package javadoc for
+ * additional common information.</p>
+ *
  * <p> The usage is subject to the following constraints:
  * <ul>
  *   <li> JavaBean property's type must contain a JavaBean property
  *        annotated with <tt>&#64;XmlID</tt>.</li>
  *  
- *   <li> The only additional mapping annotations that can be used
- *        with <tt>@xs:IDREF</tt> are: <tt>@XmlElement</tt>,
- *        <tt>@XmlAttribute</tt> and <tt>@XmlElements</tt>.</li>  
- *
- * <p>See "Package Specification" in javax.xml.bind.package javadoc for
- * additional common information.</p>
+ *   <li> This annotation can be used with the following annotations:
+ *        {@link XmlElement}, {@link XmlAttribute}, {@link XmlList}, 
+ *        and {@link XmlElements}.</li>  
  *
  * </ul>
  * <p><b>Example:</b> Map a JavaBean property to <tt>xs:IDREF</tt>
@@ -215,7 +215,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * @author Sekhar Vajjhala, Sun Microsystems, Inc. 
  * @see XmlID
  * @since JAXB2.0
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 @Retention(RUNTIME) @Target({FIELD, METHOD})
