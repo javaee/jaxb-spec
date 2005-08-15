@@ -43,8 +43,8 @@ import java.lang.annotation.Target;
  *        construct. Hence <tt>@XmlJavaTypeAdapter</tt> should be used
  *        to customize <tt>java.util.HashMap</tt>.</li>
  *
- *   <li> This annotation can only be used with the following
- *        annotations: &#64;XmlIDREF. </li>
+ *   <li> This annotation can be used with the following
+ *        annotations: @{@link XmlIDREF}, @{@link XmlElementWrapper}. </li>
  *   <li> If @XmlIDREF is also specified on the JavaBean property,
  *        then each &#64;XmlElement.type() must contain a JavaBean
  *        property annotated with <tt>&#64;XmlID</tt>.</li>
