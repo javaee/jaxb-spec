@@ -56,11 +56,16 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <pre>
  *   &#64;XmlAccessorType(AccessType.PUBLIC_MEMBER)
  * </pre>
+ * <p>This annotation can be used with the following annotations: 
+ *    {@link XmlType}, {@link XmlRootElement}, {@link XmlAccessorOrder}, 
+ *    {@link XmlSchema}, {@link XmlSchemaType}, {@link XmlSchemaTypes}, 
+ *    , {@link XmlJavaTypeAdapters}. It can also be used with the
+ *    following annotations at the package level: {@link XmlJavaTypeAdapter}.
  *
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
  * @see AccessType
- * @version  $Revision: 1.4 $
+ * @version  $Revision: 1.5 $
  */
 
 @Inherited @Retention(RUNTIME) @Target({PACKAGE, TYPE})
