@@ -19,7 +19,7 @@ import static java.lang.annotation.ElementType.TYPE;
  * The &#64;XmlRootElement annotation can be used with the following program
  * elements: 
  * <ul> 
- *   <li> a top level value class </li>
+ *   <li> a top level class </li>
  *   <li> an enum type </li>
  * </ul>
  *
@@ -31,6 +31,11 @@ import static java.lang.annotation.ElementType.TYPE;
  * &#64;XmlRootElement annotation, then its value is represented 
  * as XML element in an XML document.
  *
+ * <p> This annotation can be used with the following annotations:
+ * {@link XmlType}, {@link XmlEnum}, {@link XmlAccessorType}, 
+ * {@link XmlAccessorOrder}, {@link XmlJavaTypeAdapter}.
+ * <p>
+
  * <p>
  * <b>Example 1: </b> Associate an element with XML Schema type
  * <pre>
