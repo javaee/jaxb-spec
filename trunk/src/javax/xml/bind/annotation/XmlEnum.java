@@ -29,8 +29,8 @@ import static java.lang.annotation.ElementType.TYPE;
  * <p> The usage is subject to the following constraints:
  * <ul> 
  *   <li> This annotation can be used the following other annotations: 
- *         {@link @XmlType}
- *         {@link @XmlRootElement} </li>
+ *         {@link XmlType},
+ *         {@link XmlRootElement} </li>
  * </ul>
  * <p>See "Package Specification" in javax.xml.bind.package javadoc for
  * additional common information </p>
