@@ -25,6 +25,14 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  *   <li> package</li>
  * </ul>
  *
+ * <p> <tt>@XmlSchemaType</tt> annotation defined for Java type
+ * applies to all references to the Java type from a property/field. 
+ * A <tt>@XmlSchemaType</tt> annotation specified on the
+ * property/field overrides the <tt>@XmlSchemaType</tt> annotation
+ * specified at the package level.
+ *
+ * <p> This annotation can be used with the following annotations:
+ * {@link XmlElement},  {@link XmlAttribute}.
  * <p>
  * <b>Example 1: </b> Customize mapping of XMLGregorianCalendar on the
  *  field.
@@ -54,11 +62,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  *     }
  * </pre>
  * 
- * <p> <tt>@XmlSchemaType</tt> annotation defined for Java type
- * applies to all references to the Java type from a property/field. 
- * A <tt>@XmlSchemaType</tt> annotation specified on the
- * property/field overrides the <tt>@XmlSchemaType</tt> annotation
- * specified at the package level.
  */
 
 @Retention(RUNTIME) @Target({FIELD,METHOD,PACKAGE})        
