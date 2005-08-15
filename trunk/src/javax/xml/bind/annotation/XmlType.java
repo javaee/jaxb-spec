@@ -161,6 +161,13 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * An enum type maps to a XML schema simple type with enumeration
  * facets. The following annotation elements are ignored since they
  * are not meaningful: <tt>propOrder()</tt> , <tt>factoryMethod()</tt> , <tt>factoryClass()</tt> .
+ *
+ *  * <h3> Usage with other annotations </h3>
+ * <p> This annotation can be used with the following annotations: 
+ * {@link XmlRootElement}, {@link XmlAccessorOrder}, {@link XmlAccessorType},
+ * {@link XmlJavaTypeAdapter}, {@link XmlEnum}. However, {@link
+ * XmlAccessorOrder} and {@link XmlAccessorType} are ignored when this
+ * annotation is used on an enum type.
  * 
  * <p> <b> Example 1: </b> Map a class to a complex type with
  *   xs:sequence with a customized ordering of JavaBean properties. 
@@ -302,7 +309,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * @see XmlValue
  * @see XmlSchema
  * @since JAXB2.0
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 @Retention(RUNTIME) @Target({TYPE})
