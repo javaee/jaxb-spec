@@ -6,6 +6,9 @@
 package javax.xml.bind;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBIntrospector;
 import javax.xml.bind.attachment.AttachmentMarshaller;
 import javax.xml.validation.Schema;
 
@@ -16,12 +19,12 @@ import javax.xml.validation.Schema;
  * marshalling methods:
  *
  * <p>
- * <i>Assume the following setup code in all following code fragments:</i>
+ * <i>Assume the following setup code for all following code fragments:</i>
  * <blockquote>
  *    <pre>
  *       JAXBContext jc = JAXBContext.newInstance( "com.acme.foo" );
  *       Unmarshaller u = jc.createUnmarshaller();
- *       FooObject obj = (FooObject)u.unmarshal( new File( "foo.xml" ) );
+ *       Object element = u.unmarshal( new File( "foo.xml" ) );
  *       Marshaller m = jc.createMarshaller();
  *    </pre>
  * </blockquote>
@@ -31,7 +34,7 @@ import javax.xml.validation.Schema;
  * <blockquote>
  *    <pre>
  *       OutputStream os = new FileOutputStream( "nosferatu.xml" );
- *       m.marshal( obj, os );
+ *       m.marshal( element, os );
  *    </pre>
  * </blockquote>
  *
@@ -40,7 +43,7 @@ import javax.xml.validation.Schema;
  * <blockquote>
  *    <pre>
  *       // assume MyContentHandler instanceof ContentHandler
- *       m.marshal( obj, new MyContentHandler() );  
+ *       m.marshal( element, new MyContentHandler() );  
  *    </pre>
  * </blockquote>
  *
@@ -53,7 +56,7 @@ import javax.xml.validation.Schema;
  *       DocumentBuilder db = dbf.newDocumentBuilder();
  *       Document doc = db.newDocument();
  *
- *       m.marshal( obj, doc );
+ *       m.marshal( element, doc );
  *    </pre>
  * </blockquote>
  *
@@ -61,7 +64,7 @@ import javax.xml.validation.Schema;
  * Marshalling to a java.io.OutputStream:
  * <blockquote>
  *    <pre>
- *       m.marshal( obj, System.out );
+ *       m.marshal( element, System.out );
  *    </pre>
  * </blockquote>
  *
@@ -69,7 +72,7 @@ import javax.xml.validation.Schema;
  * Marshalling to a java.io.Writer:
  * <blockquote>
  *    <pre>
- *       m.marshal( obj, new PrintWriter( System.out ) );
+ *       m.marshal( element, new PrintWriter( System.out ) );
  *    </pre>
  * </blockquote>
  *
@@ -80,7 +83,7 @@ import javax.xml.validation.Schema;
  *       // assume MyContentHandler instanceof ContentHandler
  *       SAXResult result = new SAXResult( new MyContentHandler() );
  *
- *       m.marshal( obj, result );
+ *       m.marshal( element, result );
  *    </pre>
  * </blockquote>
  *
@@ -90,7 +93,7 @@ import javax.xml.validation.Schema;
  *    <pre>
  *       DOMResult result = new DOMResult();
  *       
- *       m.marshal( obj, result );
+ *       m.marshal( element, result );
  *    </pre>
  * </blockquote>
  *
@@ -100,7 +103,7 @@ import javax.xml.validation.Schema;
  *    <pre>
  *       StreamResult result = new StreamResult( System.out );
  * 
- *       m.marshal( obj, result );
+ *       m.marshal( element, result );
  *    </pre>
  * </blockquote>
  *
@@ -111,7 +114,7 @@ import javax.xml.validation.Schema;
  *       XMLStreamWriter xmlStreamWriter = 
  *           XMLOutputFactory.newInstance().createXMLStreamWriter( ... );
  * 
- *       m.marshal( obj, xmlStreamWriter );
+ *       m.marshal( element, xmlStreamWriter );
  *    </pre>
  * </blockquote>
  *
@@ -122,23 +125,26 @@ import javax.xml.validation.Schema;
  *       XMLEventWriter xmlEventWriter = 
  *           XMLOutputFactory.newInstance().createXMLEventWriter( ... );
  * 
- *       m.marshal( obj, xmlEventWriter );
+ *       m.marshal( element, xmlEventWriter );
  *    </pre>
  * </blockquote>
  *
  * <p>
- * <a name="objMarshalling"></a>
- * <b>Marshalling <tt>java.lang.Object</tt> Objects</b><br>
+ * <a name="elementMarshalling"></a>
+ * <b>Marshalling content tree rooted by a JAXB element</b><br>
  * <blockquote>
- * Although each of the marshal methods accepts a <tt>java.lang.Object</tt> as 
- * its first parameter, JAXB Providers are not required to be able to marshal
- * <b>any</b> arbitrary <tt>java.lang.Object</tt>.  If the <tt>JAXBContext</tt> 
- * object that was used to create this <tt>Marshaller</tt> does not have enough 
- * information to know how to marshal the object parameter (or any objects 
- * reachable from it), then the marshal operation will throw a 
- * {@link MarshalException MarshalException}.  Even though JAXB Providers are not 
- * required to be able to marshal arbitrary <tt>java.lang.Object</tt> objects, 
- * some providers may allow it.
+ * The first parameter of the overloaded 
+ * <tt>Marshaller.marshal(java.lang.Object, ...)</tt> methods must be a 
+ * JAXB element as computed by 
+ * {@link JAXBIntrospector#isElement(java.lang.Object)}; 
+ * otherwise, a <tt>Marshaller.marshal</tt> method must throw a 
+ * {@link MarshalException}. There exist two mechanisms 
+ * to enable marshalling an instance that is not a JAXB element.
+ * One method is to wrap the instance as a value of a {@link JAXBElement}, 
+ * and pass the wrapper element as the first parameter to 
+ * a <tt>Marshaller.marshal</tt> method. For java to schema binding, it 
+ * is also possible to simply annotate the instance's class with 
+ * &#64;{@link XmlRootElement}.
  * </blockquote>
  *
  * <p>
@@ -175,8 +181,11 @@ import javax.xml.validation.Schema;
  * during the operation.  Validation events will be reported to the registered
  * event handler.  If the client application has not registered an event handler
  * prior to invoking one of the marshal API's, then events will be delivered to
- * the default event handler which will terminate the marshal operation after
- * encountering the first error or fatal error.
+ * a default event handler which will terminate the marshal operation after
+ * encountering the first error or fatal error. Note that for JAXB 2.0 and
+ * later versions, {@link javax.xml.bind.helpers.DefaultValidationEventHandler} is
+ * no longer used.
+ * 
  * </blockquote>
  *
  * <p>
@@ -275,13 +284,14 @@ import javax.xml.validation.Schema;
  * allowing for more centralized processing than per class defined callback methods.
  * <p>
  * The 'class defined' and external listener event callback methods are independent of each other,
- * both can be called for one event. 
+ * both can be called for one event. The invocation ordering when both listener callback methods exist is
+ * defined in {@link Listener#beforeMarshal(Object)} and {@link Listener#afterMarshal(Object)}.
  * <p>
  * An event callback method throwing an exception terminates the current marshal process.
  * </blockquote>
  * 
  * @author <ul><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Ryan Shoemaker, Sun Microsystems, Inc.</li><li>Joe Fialli, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.9 $ $Date: 2005-08-08 19:18:08 $
+ * @version $Revision: 1.10 $ $Date: 2005-09-01 19:34:47 $
  * @see JAXBContext
  * @see Validator
  * @see Unmarshaller
@@ -326,7 +336,7 @@ public interface Marshaller {
         "jaxb.fragment";
 
     /**
-     * Marshal the content tree rooted at obj into the specified 
+     * Marshal the content tree rooted at <tt>jaxbElement</tt> into the specified 
      * <tt>javax.xml.transform.Result</tt>.
      * 
      * <p>
@@ -336,8 +346,8 @@ public interface Marshaller {
      * {@link javax.xml.transform.stream.StreamResult}. It can 
      * support other derived classes of <tt>Result</tt> as well.
      * 
-     * @param obj
-     *      The content tree to be marshalled. 
+     * @param jaxbElement
+     *      The root of content tree to be marshalled. 
      * @param result
      *      XML will be sent to this Result
      * 
@@ -347,19 +357,19 @@ public interface Marshaller {
      *      If the {@link ValidationEventHandler ValidationEventHandler}
      *      returns false from its <tt>handleEvent</tt> method or the 
      *      <tt>Marshaller</tt> is unable to marshal <tt>obj</tt> (or any 
-     *      object reachable from <tt>obj</tt>).  See <a href="#objMarshalling">
-     *      Marshalling objects</a>.
+     *      object reachable from <tt>obj</tt>).  See <a href="#elementMarshalling">
+     *      Marshalling a JAXB element</a>.
      * @throws IllegalArgumentException
      *      If any of the method parameters are null
      */
-    public void marshal( Object obj, javax.xml.transform.Result result )
+    public void marshal( Object jaxbElement, javax.xml.transform.Result result )
         throws JAXBException;
      
     /**
-     * Marshal the content tree rooted at obj into an output stream.
+     * Marshal the content tree rooted at <tt>jaxbElement</tt> into an output stream.
      * 
-     * @param obj
-     *      The content tree to be marshalled. 
+     * @param jaxbElement
+     *      The root of content tree to be marshalled. 
      * @param os
      *      XML will be added to this stream.
      * 
@@ -369,19 +379,19 @@ public interface Marshaller {
      *      If the {@link ValidationEventHandler ValidationEventHandler}
      *      returns false from its <tt>handleEvent</tt> method or the 
      *      <tt>Marshaller</tt> is unable to marshal <tt>obj</tt> (or any 
-     *      object reachable from <tt>obj</tt>).  See <a href="#objMarshalling">
-     *      Marshalling objects</a>.
+     *      object reachable from <tt>obj</tt>).  See <a href="#elementMarshalling">
+     *      Marshalling a JAXB element</a>.
      * @throws IllegalArgumentException
      *      If any of the method parameters are null
      */
-    public void marshal( Object obj, java.io.OutputStream os )
+    public void marshal( Object jaxbElement, java.io.OutputStream os )
         throws JAXBException;
      
     /**
-     * Marshal the content tree rooted at obj into a Writer.
+     * Marshal the content tree rooted at <tt>jaxbElement</tt> into a Writer.
      * 
-     * @param obj
-     *      The content tree to be marshalled. 
+     * @param jaxbElement
+     *      The root of content tree to be marshalled. 
      * @param writer
      *      XML will be sent to this writer.
      * 
@@ -391,19 +401,19 @@ public interface Marshaller {
      *      If the {@link ValidationEventHandler ValidationEventHandler}
      *      returns false from its <tt>handleEvent</tt> method or the 
      *      <tt>Marshaller</tt> is unable to marshal <tt>obj</tt> (or any 
-     *      object reachable from <tt>obj</tt>).  See <a href="#objMarshalling">
-     *      Marshalling objects</a>.
+     *      object reachable from <tt>obj</tt>).  See <a href="#elementMarshalling">
+     *      Marshalling a JAXB element</a>.
      * @throws IllegalArgumentException
      *      If any of the method parameters are null
      */
-    public void marshal( Object obj, java.io.Writer writer )
+    public void marshal( Object jaxbElement, java.io.Writer writer )
         throws JAXBException;
      
     /**
-     * Marshal the content tree rooted at obj into SAX2 events.
+     * Marshal the content tree rooted at <tt>jaxbElement</tt> into SAX2 events.
      * 
-     * @param obj
-     *      The content tree to be marshalled. 
+     * @param jaxbElement
+     *      The root of content tree to be marshalled. 
      * @param handler
      *      XML will be sent to this handler as SAX2 events.
      * 
@@ -413,18 +423,18 @@ public interface Marshaller {
      *      If the {@link ValidationEventHandler ValidationEventHandler}
      *      returns false from its <tt>handleEvent</tt> method or the 
      *      <tt>Marshaller</tt> is unable to marshal <tt>obj</tt> (or any 
-     *      object reachable from <tt>obj</tt>).  See <a href="#objMarshalling">
-     *      Marshalling objects</a>.
+     *      object reachable from <tt>obj</tt>).  See <a href="#elementMarshalling">
+     *      Marshalling a JAXB element</a>.
      * @throws IllegalArgumentException
      *      If any of the method parameters are null
      */
-    public void marshal( Object obj, org.xml.sax.ContentHandler handler )
+    public void marshal( Object jaxbElement, org.xml.sax.ContentHandler handler )
         throws JAXBException;
     
     /**
-     * Marshal the content tree rooted at obj into a DOM tree.
+     * Marshal the content tree rooted at <tt>jaxbElement</tt> into a DOM tree.
      * 
-     * @param obj
+     * @param jaxbElement
      *      The content tree to be marshalled. 
      * @param node
      *      DOM nodes will be added as children of this node.
@@ -438,20 +448,20 @@ public interface Marshaller {
      * @throws MarshalException
      *      If the {@link ValidationEventHandler ValidationEventHandler}
      *      returns false from its <tt>handleEvent</tt> method or the 
-     *      <tt>Marshaller</tt> is unable to marshal <tt>obj</tt> (or any 
-     *      object reachable from <tt>obj</tt>).  See <a href="#objMarshalling">
-     *      Marshalling objects</a>.
+     *      <tt>Marshaller</tt> is unable to marshal <tt>jaxbElement</tt> (or any 
+     *      object reachable from <tt>jaxbElement</tt>).  See <a href="#elementMarshalling">
+     *      Marshalling a JAXB element</a>.
      * @throws IllegalArgumentException
      *      If any of the method parameters are null
      */
-    public void marshal( Object obj, org.w3c.dom.Node node )
+    public void marshal( Object jaxbElement, org.w3c.dom.Node node )
         throws JAXBException;
     
     /**
-     * Marshal the content tree rooted at obj into a
+     * Marshal the content tree rooted at <tt>jaxbElement</tt> into a
      * {@link javax.xml.stream.XMLStreamWriter}.
      * 
-     * @param obj
+     * @param jaxbElement
      *      The content tree to be marshalled. 
      * @param writer
      *      XML will be sent to this writer.
@@ -462,21 +472,21 @@ public interface Marshaller {
      *      If the {@link ValidationEventHandler ValidationEventHandler}
      *      returns false from its <tt>handleEvent</tt> method or the 
      *      <tt>Marshaller</tt> is unable to marshal <tt>obj</tt> (or any 
-     *      object reachable from <tt>obj</tt>).  See <a href="#objMarshalling">
-     *      Marshalling objects</a>.
+     *      object reachable from <tt>obj</tt>).  See <a href="#elementMarshalling">
+     *      Marshalling a JAXB element</a>.
      * @throws IllegalArgumentException
      *      If any of the method parameters are null
      * @since JAXB 2.0
      */
-    public void marshal( Object obj, javax.xml.stream.XMLStreamWriter writer )
+    public void marshal( Object jaxbElement, javax.xml.stream.XMLStreamWriter writer )
         throws JAXBException;
     
     /**
-     * Marshal the content tree rooted at obj into a
+     * Marshal the content tree rooted at <tt>jaxbElement</tt> into a
      * {@link javax.xml.stream.XMLEventWriter}.
      * 
-     * @param obj
-     *      The content tree to be marshalled. 
+     * @param jaxbElement
+     *      The content tree rooted at jaxbElement to be marshalled. 
      * @param writer
      *      XML will be sent to this writer.
      * 
@@ -486,13 +496,13 @@ public interface Marshaller {
      *      If the {@link ValidationEventHandler ValidationEventHandler}
      *      returns false from its <tt>handleEvent</tt> method or the 
      *      <tt>Marshaller</tt> is unable to marshal <tt>obj</tt> (or any 
-     *      object reachable from <tt>obj</tt>).  See <a href="#objMarshalling">
-     *      Marshalling objects</a>.
+     *      object reachable from <tt>obj</tt>).  See <a href="#elementMarshalling">
+     *      Marshalling a JAXB element</a>.
      * @throws IllegalArgumentException
      *      If any of the method parameters are null
      * @since JAXB 2.0
      */
-    public void marshal( Object obj, javax.xml.stream.XMLEventWriter writer )
+    public void marshal( Object jaxbElement, javax.xml.stream.XMLEventWriter writer )
         throws JAXBException;
     
     /**
@@ -700,53 +710,54 @@ public interface Marshaller {
      */
     public Schema getSchema();
 
-   /**
-    * <p> 
-    * Register an instance of an implementation of this class with a {@link Marshaller} to externally listen
-    * for marshal events.
-    * 
-    * <p>
-    * This class enables pre and post processing of each marshalled object. 
-    * The event callbacks are called when marshalling from an instance that maps to an xml element or 
-    * complex type definition. The event callbacks are not called when marshalling from an instance of a
-    * Java datatype that represents a simple type definition. 
-    *
-    * <p>
-    * External listener is one of two different mechanisms for defining marshal event callbacks.
-    * See <a href="Marshaller.html#marshalEventCallback">Marshal Event Callbacks</a> for an overview.
-    * 
-    * @see #setListener(Listener)
-    * @see #getListener() 
-    * @since JAXB2.0
-    */
-   public static abstract class Listener {
-       /**
-	* <p>
-	* Callback method invoked before marshalling from <tt>source</tt> to XML.
-	*
-	* <p>
-        * This method is invoked just before marshalling process starts to marshal <tt>source</tt>.
-	* Note that if the class of <tt>source</tt> defines its own <tt>beforeMarshal</tt> method,
-	* the class specific callback method is invoked just before this method is invoked.
-	*
-	* @param source instance of JAXB mapped class prior to marshalling from it.
-	* 
-	*/
-       public void beforeMarshal(Object source) {}
+    /**
+     * <p/>
+     * Register an instance of an implementation of this class with a {@link Marshaller} to externally listen
+     * for marshal events.
+     * <p/>
+     * <p/>
+     * This class enables pre and post processing of each marshalled object.
+     * The event callbacks are called when marshalling from an instance that maps to an xml element or
+     * complex type definition. The event callbacks are not called when marshalling from an instance of a
+     * Java datatype that represents a simple type definition.
+     * <p/>
+     * <p/>
+     * External listener is one of two different mechanisms for defining marshal event callbacks.
+     * See <a href="Marshaller.html#marshalEventCallback">Marshal Event Callbacks</a> for an overview.
+     *
+     * @see Marshaller#setListener(Listener)
+     * @see Marshaller#getListener()
+     * @since JAXB2.0
+     */
+    public static abstract class Listener {
+        /**
+         * <p/>
+         * Callback method invoked before marshalling from <tt>source</tt> to XML.
+         * <p/>
+         * <p/>
+         * This method is invoked just before marshalling process starts to marshal <tt>source</tt>.
+         * Note that if the class of <tt>source</tt> defines its own <tt>beforeMarshal</tt> method,
+         * the class specific callback method is invoked just before this method is invoked.
+         *
+         * @param source instance of JAXB mapped class prior to marshalling from it.
+         */
+        public void beforeMarshal(Object source) {
+        }
 
-       /**
-	* <p>
-	* Callback method invoked after marshalling <tt>source</tt> to XML.
-	* 
-	* <p>
-	* This method is invoked after <tt>source</tt> and all its descendants have been marshalled.
-	* Note that if the class of <tt>source</tt> defines its own <tt>afterMarshal</tt> method,
-	* the class specific callback method is invoked just before this method is invoked.
-	*
-	* @param source instance of JAXB mapped class after marshalling it.
-	*/
-       public void afterMarshal(Object source) {}
-   }
+        /**
+         * <p/>
+         * Callback method invoked after marshalling <tt>source</tt> to XML.
+         * <p/>
+         * <p/>
+         * This method is invoked after <tt>source</tt> and all its descendants have been marshalled.
+         * Note that if the class of <tt>source</tt> defines its own <tt>afterMarshal</tt> method,
+         * the class specific callback method is invoked just before this method is invoked.
+         *
+         * @param source instance of JAXB mapped class after marshalling it.
+         */
+        public void afterMarshal(Object source) {
+        }
+    }
 
     /**
      * <p>
@@ -759,7 +770,7 @@ public interface Marshaller {
      * @param listener an instance of a class that implements {@link Listener}
      * @since JAXB2.0
      */
-    public void     setListener(Listener listener);
+    public void setListener(Listener listener);
 
     /**
      * <p>Return {@link Listener} registered with this {@link Marshaller}.
