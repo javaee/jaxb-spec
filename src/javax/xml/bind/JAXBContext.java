@@ -197,7 +197,7 @@ import java.io.IOException;
  * </blockquote>
  *
  * @author <ul><li>Ryan Shoemaker, Sun Microsystems, Inc.</li><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Joe Fialli, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.8 $ $Date: 2005-08-08 19:18:07 $
+ * @version $Revision: 1.9 $ $Date: 2005-09-01 19:28:56 $
  * @see Marshaller
  * @see Unmarshaller
  * @see <a href="http://java.sun.com/docs/books/jls">S 7.4.1.1 "Package Annotations" in Java Language Specification, 3rd Edition</a>
@@ -231,7 +231,7 @@ public abstract class JAXBContext {
      * @throws JAXBException if an error was encountered while creating the
      *                       <tt>JAXBContext</tt> such as
      * <ol>
-     *   <li>failure to locate either ObjectFactory.class or jaxb.index in the pacakges</li>
+     *   <li>failure to locate either ObjectFactory.class or jaxb.index in the packages</li>
      *   <li>an ambiguity among global elements contained in the contextPath</li>
      *   <li>failure to locate a value for the context factory provider property</li>
      *   <li>mixing schema derived packages from different providers on the same contextPath</li>
@@ -251,10 +251,12 @@ public abstract class JAXBContext {
      * <p>
      * The client application must supply a context path which is a list of 
      * colon (':', \u005Cu003A) separated java package names that contain 
-     * schema-derived classes and/or JAXB-annotated classes. Schema-derived 
+     * schema-derived classes and/or fully qualified JAXB-annotated classes. 
+     * Schema-derived 
      * code is registered with the JAXBContext by the 
-     * ObjectFactory.class generated per package. Programmer annotated 
-     * JAXB mapped classes are listed in a 
+     * ObjectFactory.class generated per package. 
+     * Alternatively than being listed in the context path, programmer 
+     * annotated JAXB mapped classes can be listed in a 
      * <tt>jaxb.index</tt> resource file, format described below. 
      * Note that a java package can contain both schema-derived classes and 
      * user annotated JAXB classes. Additionally, the java package may 
@@ -262,18 +264,6 @@ public abstract class JAXBContext {
      * Section 7.4.1. "Package Annotations").
      * </p>
      * 
-     * <p>
-     * <b>Format for jaxb.index</b>
-     * <p>
-     * <blockquote>
-     * The file should contain a newline-separated list of class names. Space and 
-     * tab characters, as well as blank lines, are ignored. The comment character 
-     * is '#' (0x23); on each line all characters following the first comment 
-     * character are ignored. The file must be encoded in UTF-8. Classes that 
-     * are reachable, as defined in {@link #newInstance(Class[])}, from the 
-     * listed classes are also registered with JAXBContext. 
-     * </blockquote>
-     *
      * <p>
      * Every package listed on the contextPath must meet <b>one or both</b> of the
      * following conditions otherwise a <tt>JAXBException</tt> will be thrown:
@@ -284,7 +274,31 @@ public abstract class JAXBContext {
      * </ol>
      *
      * <p>
-     * In the case of schema to java interface/implementation binding,
+     * <b>Format for jaxb.index</b>
+     * <p>
+     * The file contains a newline-separated list of class names. 
+     * Space and tab characters, as well as blank 
+     * lines, are ignored. The comment character 
+     * is '#' (0x23); on each line all characters following the first comment 
+     * character are ignored. The file must be encoded in UTF-8. Classes that 
+     * are reachable, as defined in {@link #newInstance(Class[])}, from the 
+     * listed classes are also registered with JAXBContext. 
+     * <p>
+     * Constraints on class name occuring in a <tt>jaxb.index</tt> file are:
+     * <ul>
+     *   <li>Must not end with ".class".</li>
+     *   <li>Class names are resolved relative to package containing 
+     *       <tt>jaxb.index</tt> file. Only classes occuring directly in package 
+     *       containing <tt>jaxb.index</tt> file are allowed.</li>
+     *   <li>Fully qualified class names are not allowed.
+     *       A qualified class name,relative to current package,
+     *       is only allowed to specify a nested or inner class.</li>
+     * </ul>
+     *
+     * <p>
+     * To maintain compatibility with JAXB 1.0 schema to java 
+     * interface/implementation binding, enabled by schema customization
+     * <tt><jaxb:globalBindings valueClass="false"></tt>, 
      * the JAXB provider will ensure that each package on the context path
      * has a <tt>jaxb.properties</tt> file which contains a value for the 
      * <tt>javax.xml.bind.context.factory</tt> property and that all values
@@ -312,7 +326,7 @@ public abstract class JAXBContext {
      * @throws JAXBException if an error was encountered while creating the
      *                       <tt>JAXBContext</tt> such as
      * <ol>
-     *   <li>failure to locate either ObjectFactory.class or jaxb.index in the pacakges</li>
+     *   <li>failure to locate either ObjectFactory.class or jaxb.index in the packages</li>
      *   <li>an ambiguity among global elements contained in the contextPath</li>
      *   <li>failure to locate a value for the context factory provider property</li>
      *   <li>mixing schema derived packages from different providers on the same contextPath</li>
@@ -345,7 +359,7 @@ public abstract class JAXBContext {
      * @throws JAXBException if an error was encountered while creating the
      *                       <tt>JAXBContext</tt> such as
      * <ol>
-     *   <li>failure to locate either ObjectFactory.class or jaxb.index in the pacakges</li>
+     *   <li>failure to locate either ObjectFactory.class or jaxb.index in the packages</li>
      *   <li>an ambiguity among global elements contained in the contextPath</li>
      *   <li>failure to locate a value for the context factory provider property</li>
      *   <li>mixing schema derived packages from different providers on the same contextPath</li>
@@ -459,7 +473,7 @@ public abstract class JAXBContext {
      * For example, in the following Java code, if you do
      * <tt>newInstance(Foo.class)</tt>, the newly created {@link JAXBContext}
      * will recognize both <tt>Foo</tt> and <tt>Bar</tt>, but not <tt>Zot</tt> or <tt>FooBar</tt>:
-     * <pre><xmp>
+     * <pre>
      * class Foo {
      *      &#64;XmlTransient FooBar c;
      *      Bar b;
@@ -467,7 +481,7 @@ public abstract class JAXBContext {
      * class Bar { int x; }
      * class Zot extends Bar { int y; }
      * class FooBar { }
-     * </xmp></pre>
+     * </pre>
      *
      * Therefore, a typical client application only needs to specify the
      * top-level classes, but it needs to be careful.
@@ -513,12 +527,11 @@ public abstract class JAXBContext {
      * Obtain a new instance of a <tt>JAXBContext</tt> class.
      *
      * <p>
-     * This is mostly the same as {@link JAXBContext#newInstance(Class[])},
-     * but this version allows you to pass in an implementation-specific
-     * 'properties' to configure the instanciation of {@link JAXBContext}.
+     * An overloading of {@link JAXBContext#newInstance(Class[])}
+     * to configure 'properties' for this instantiation of {@link JAXBContext}.
      *
      * <p>
-     * The interpretation of properties is up to implementations.
+     * The interpretation of properties is implementation specific.
      *
      * @param classesToBeBound
      *      list of java classes to be recognized by the new {@link JAXBContext}.
