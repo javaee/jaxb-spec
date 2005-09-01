@@ -41,9 +41,6 @@ import static java.lang.annotation.RetentionPolicy.*;
  *   <li> The only other mapping annotations that can be used
  *        with <tt>&#64;XmlID</tt>
  *        are:<tt>&#64;XmlElement</tt> and <tt>&#64;XmlAttribute</tt>.</li>  
- *   <li>If the JavaBean property is a read/write property, then the
- *       <tt>@XmlID</tt> can be used to annotate either the getter
- *       or setter method but not both.</li> 
  * </ul>
  * 
  * <p><b>Example</b>: Map a JavaBean property's type to <tt>xs:ID</tt></p>
@@ -71,7 +68,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @see XmlIDREF
  * @since JAXB2.0
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 @Retention(RUNTIME) @Target({FIELD, METHOD})
