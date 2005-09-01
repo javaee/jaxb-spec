@@ -35,9 +35,13 @@ import static java.lang.annotation.RetentionPolicy.*;
  *
  * <p> The usage is subject to the following constraints:
  * <ul>
- *   <li> JavaBean property's type must contain a JavaBean property
- *        annotated with <tt>&#64;XmlID</tt>.</li>
- *  
+ *
+ *   <li> If the type of the field or property is a collection type,
+ *        then the collection item type must contain a property or
+ *        field annotated with <tt>&#64;XmlID</tt>.  </li> 
+ *   <li> If the field or property is single valued, then the type of
+ *        the property or field must contain a property or field
+ *        annotated with <tt>&#64;XmlID</tt>. </li> 
  *   <li> This annotation can be used with the following annotations:
  *        {@link XmlElement}, {@link XmlAttribute}, {@link XmlList}, 
  *        and {@link XmlElements}.</li>  
@@ -215,7 +219,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * @author Sekhar Vajjhala, Sun Microsystems, Inc. 
  * @see XmlID
  * @since JAXB2.0
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 @Retention(RUNTIME) @Target({FIELD, METHOD})
