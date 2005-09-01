@@ -13,6 +13,7 @@ import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.ElementType.PARAMETER;
+import static java.lang.annotation.ElementType.PACKAGE;
 
 
 /**
@@ -20,27 +21,68 @@ import static java.lang.annotation.ElementType.PARAMETER;
  *
  * <p> <b> Usage: </b> </p>
  *
- * <hr>
- * <b> Note to Reviewers: </b> This annotation has been completely
- * redesigned since JAXB 2.0 ED, 0.40. See {@link XmlAdapter}. 
- * <hr>
+ * <p> The <tt>@XmlJavaTypeAdapter</tt> annotation can be used with the
+ * following program elements:  
+ * <ul> 
+ *   <li> a JavaBean property </li>
+ *   <li> field </li>
+ *   <li> parameter </li>
+ *   <li> package </li>
+ *   <li> from within {@link XmlJavaTypeAdapters} </li>
+ * </ul>
  *
- * <p> This annotation allows the use of an adapter that implements
- * the {@link XmlAdapter} interface for custom marshaling.
+ * <p> When <tt>@XmlJavaTypeAdapter</tt> annotation is defined on a
+ * class, it applies to all references to the class.
+ * <p> When <tt>@XmlJavaTypeAdapter</tt> annotation is defined at the
+ * package level it applies to all references from within the package
+ * to <tt>@XmlJavaTypeAdapter.type()</tt>.
+ * <p> When <tt>@XmlJavaTypeAdapter</tt> annotation is defined on the
+ * field, property or parameter, then the annotation applies to the
+ * field, property or the parameter only.
+ * <p> A <tt>@XmlJavaTypeAdapter</tt> annotation on a field, property
+ * or parameter overrides the <tt>@XmlJavaTypeAdapter</tt> annotation
+ * associated with the class being referenced by the field, property
+ * or parameter.  
+ * <p> A <tt>@XmlJavaTypeAdapter</tt> annotation on a class overrides
+ * the <tt>@XmlJavaTypeAdapter</tt> annotation specified at the
+ * package level for that class.
  *
- * <b> Example: </b> See example in {@link XmlAdapter}
+ * <p>This annotation can be used with the following other annotations:
+ * {@link XmlElement}, {@link XmlAttribute}, {@link XmlRootElement}, 
+ * {@link XmlElementRef}, {@link XmlElementRefs}, {@link XmlAnyElement},
+ * {@link XmlType}. This can also be used at the package level with 
+ * the following annotations: {@link XmlAccessorType}, 
+ * {@link XmlSchema}, {@link XmlSchemaType}, {@link XmlSchemaTypes}.
+ * 
+ * <p><b> Example: </b> See example in {@link XmlAdapter}
  *
  * @author <ul><li>Sekhar Vajjhala, Sun Microsystems Inc.</li> <li> Kohsuke Kawaguchi, Sun Microsystems Inc.</li></ul>
  * @since JAXB2.0
  * @see XmlAdapter
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
-@Retention(RUNTIME) @Target({FIELD,METHOD,TYPE,PARAMETER})        
+@Retention(RUNTIME) @Target({PACKAGE,FIELD,METHOD,TYPE,PARAMETER})        
 public @interface XmlJavaTypeAdapter {
     /**
      * Points to the clsss that converts a value type to a bound type or vice versa.
      * See {@link XmlAdapter} for more details.
      */
     Class<? extends XmlAdapter> value();
+
+    /**
+     * If this annotation is used at the package level, then value of
+     * the type() must be specified.
+     */
+
+    Class type() default DEFAULT.class;
+
+    /**
+     * Used in {@link XmlJavaTypeAdapter#type()} to
+     * signal that the type be inferred from the signature
+     * of the field, property, parameter or the class.
+     */
+
+    static final class DEFAULT {}
+    
 }
