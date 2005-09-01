@@ -41,7 +41,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  *     //Example: Code fragment
  *     public class USPrice {
  *         &#64;XmlElement
- *         &#64;XmlSchemaType("date")
+ *         &#64;XmlSchemaType(name="date")
  *         public XMLGregorianCalendar date;
  *     }
  * 
@@ -58,7 +58,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * <pre>
  *     package foo;
  *     &#64;javax.xml.bind.annotation.XmlSchemaType(
- *          "date", type=javax.xml.datatype.XMLGregorianCalendar.class)
+ *          name="date", type=javax.xml.datatype.XMLGregorianCalendar.class)
  *     }
  * </pre>
  * 
