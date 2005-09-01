@@ -216,6 +216,21 @@
           <b>mapping annotation:</b>A JAXB 2.0 defined program
           annotation based on the JSR 175 programming annotation
           facility.
+         <h3>Common Usage Constraints</h3>
+          <p>The following usage constraints are defined here since
+          they apply to more than annotation:
+          <ul>
+            <li>If the JavaBean property has both a read/write
+                property, a JAXB defined annotation can be used to
+                annotate either the getter or setter method but not
+                both. </li>
+            <li>A JavaBean property must have a setter method if
+                either &#64;XmlAccessorType.PUBLIC_MEMBER or
+                &#64;XmlAccessorType.PROPERTY is in effect for that
+                property with the following exception: if the
+                property's type is <tt>java.util.List</tt>, then the
+                setter method is not required.  </li>
+          </ul>
          <h3>Notations</h3>
          <b>Namespace prefixes</b> 
          <p>The following namespace prefixes are used in the XML Schema
