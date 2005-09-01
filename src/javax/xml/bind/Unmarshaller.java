@@ -174,6 +174,12 @@ import java.io.Reader;
  * These methods are useful for unmarshalling XML data where
  * the root element corresponds to a local element declaration in the schema.
  * </blockquote>
+ * 
+ * <blockquote>
+ * An unmarshal method never returns null. If the unmarshal process is unable to unmarshal
+ * the root of XML content to a JAXB mapped object, a fatal error is reported that
+ * terminates processing by throwing JAXBException.
+ * </blockquote>
  *
  * <p>
  * <a name="unmarshalGlobal"></a>
@@ -314,10 +320,13 @@ import java.io.Reader;
  * <p>
  * Since unmarshalling invalid XML content is defined in JAXB 2.0, 
  * the Unmarshaller default validation event handler was made more lenient
- * than in JAXB 1.0.  For a JAXB 1.0 client application, 
- * {@link javax.xml.bind.helpers.DefaultValidationEventHandler} terminates the marshal 
- * operation after encountering either a fatal error or an error. 
- * For a JAXB 2.0 client application, the default event handler only 
+ * than in JAXB 1.0.  When schema-derived code generated
+ * by JAXB 1.0 binding compiler is registered with {@link JAXBContext}, 
+ * the default unmarshal validation handler is 
+ * {@link javax.xml.bind.helpers.DefaultValidationEventHandler} and it
+ * terminates the marshal  operation after encountering either a fatal error or an error. 
+ * For a JAXB 2.0 client application, there is no explicitly defined default
+ * validation handler and the default event handling only 
  * terminates the marshal operation after encountering a fatal error.
  * 
  * </blockquote>
@@ -365,14 +374,15 @@ import java.io.Reader;
  * receives events when unmarshalling proces is marshalling to a JAXB element or to JAXB mapped class.
  * <p>
  * The 'class defined' and external listener event callback methods are independent of each other,
- * both can be called for one event. 
- * <p>
+ * both can be called for one event.  The invocation ordering when both listener callback methods exist is
+ * defined in {@link Listener#beforeUnmarshal(Object, Object)} and {@link Listener#afterUnmarshal(Object, Object)}. 
+* <p>
  * An event callback method throwing an exception terminates the current unmarshal process.
  * 
  * </blockquote>
  * 
  * @author <ul><li>Ryan Shoemaker, Sun Microsystems, Inc.</li><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Joe Fialli, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.11 $ $Date: 2005-08-08 19:18:07 $
+ * @version $Revision: 1.12 $ $Date: 2005-09-01 19:39:04 $
  * @see JAXBContext
  * @see Marshaller
  * @see Validator
@@ -631,7 +641,7 @@ public interface Unmarshaller {
      *     <tt>Unmarshaller</tt> is unable to perform the XML to Java
      *     binding.  See <a href="#unmarshalEx">Unmarshalling XML Data</a>
      * @throws IllegalArgumentException
-     *      If the Source parameter is null
+     *      If any parameter is null
      * @since JAXB2.0
      */
     public <T> JAXBElement<T> unmarshal( javax.xml.transform.Source source, Class<T> declaredType )
@@ -1019,74 +1029,77 @@ public interface Unmarshaller {
      */
     public <A extends XmlAdapter> A getAdapter( Class<A> type );
 
-   /**
-    * <p>Associate a context that resolves cid's, content-id URIs, to 
-    *    binary data passed as attachments.</p>
-    *
-    * <p>Unmarshal time validation, enabled via {@link #setSchema(Schema)},
-    * must be supported even when unmarshaller is performing XOP processing.
-    * </p>
-    *
-    * @throws IllegalStateException if attempt to concurrently call this 
-    *                               method during a unmarshal operation.
-    */
-   void setAttachmentUnmarshaller(AttachmentUnmarshaller au);
+    /**
+     * <p>Associate a context that resolves cid's, content-id URIs, to
+     * binary data passed as attachments.</p>
+     * <p/>
+     * <p>Unmarshal time validation, enabled via {@link #setSchema(Schema)},
+     * must be supported even when unmarshaller is performing XOP processing.
+     * </p>
+     *
+     * @throws IllegalStateException if attempt to concurrently call this
+     *                               method during a unmarshal operation.
+     */
+    void setAttachmentUnmarshaller(AttachmentUnmarshaller au);
 
-   AttachmentUnmarshaller getAttachmentUnmarshaller();
+    AttachmentUnmarshaller getAttachmentUnmarshaller();
 
-   /**
-    * <p>
-    * Register an instance of an implementation of this class with {@link Unmarshaller} to externally listen 
-    * for unmarshal events.
-    * 
-    * <p>
-    * This class enables pre and post processing of an instance of a JAXB mapped class 
-    * as XML data is unmarshalled into it. The event callbacks are called when unmarshalling
-    * XML content into a JAXBElement instance or a JAXB mapped class that represents a complex type definition. 
-    * The event callbacks are not called when unmarshalling to an instance of a
-    * Java datatype that represents a simple type definition. 
-    *
-    * <p>
-    * External listener is one of two different mechanisms for defining unmarshal event callbacks.
-    * See <a href="Unmarshaller.html#unmarshalEventCallback">Unmarshal Event Callbacks</a> for an overview.
-    * 
-    * (@link #setListener(Listener)}
-    * (@link #getListener()}
-    * @since JAXB2.0
-    */
-   public static abstract class Listener {
-       /**
-	* <p>
-	* Callback method invoked before unmarshalling into <tt>target</tt>.
-	*
-	* <p>
-        * This method is invoked immediately after <tt>target</tt> was created and 
-	* before the unmarshalling of this object begins. Note that 
-	* if the class of <tt>target</tt> defines its own <tt>beforeUnmarshal</tt> method,
-	* the class specific callback method is invoked before this method is invoked.
-	*
-	* @param target non-null instance of JAXB mapped class prior to unmarshalling into it.
-	* @param parent instance of JAXB mapped class that will eventually reference <tt>target</tt>.
-	*               <tt>null</tt> when <tt>target</tt> is root element.
-	*/
-       public void beforeUnmarshal(Object target, Object parent) {}
+    /**
+     * <p/>
+     * Register an instance of an implementation of this class with {@link Unmarshaller} to externally listen
+     * for unmarshal events.
+     * <p/>
+     * <p/>
+     * This class enables pre and post processing of an instance of a JAXB mapped class
+     * as XML data is unmarshalled into it. The event callbacks are called when unmarshalling
+     * XML content into a JAXBElement instance or a JAXB mapped class that represents a complex type definition.
+     * The event callbacks are not called when unmarshalling to an instance of a
+     * Java datatype that represents a simple type definition.
+     * <p/>
+     * <p/>
+     * External listener is one of two different mechanisms for defining unmarshal event callbacks.
+     * See <a href="Unmarshaller.html#unmarshalEventCallback">Unmarshal Event Callbacks</a> for an overview.
+     * <p/>
+     * (@link #setListener(Listener)}
+     * (@link #getListener()}
+     *
+     * @since JAXB2.0
+     */
+    public static abstract class Listener {
+        /**
+         * <p/>
+         * Callback method invoked before unmarshalling into <tt>target</tt>.
+         * <p/>
+         * <p/>
+         * This method is invoked immediately after <tt>target</tt> was created and
+         * before the unmarshalling of this object begins. Note that
+         * if the class of <tt>target</tt> defines its own <tt>beforeUnmarshal</tt> method,
+         * the class specific callback method is invoked before this method is invoked.
+         *
+         * @param target non-null instance of JAXB mapped class prior to unmarshalling into it.
+         * @param parent instance of JAXB mapped class that will eventually reference <tt>target</tt>.
+         *               <tt>null</tt> when <tt>target</tt> is root element.
+         */
+        public void beforeUnmarshal(Object target, Object parent) {
+        }
 
-       /**
-	* <p>
-	* Callback method invoked after unmarshalling XML data into <tt>target</tt>.
-	* 
-	* <p>
-	* This method is invoked after all the properties (except IDREF) are unmarshalled into <tt>target</tt>,
-	* but before <tt>target</tt> is set into its <tt>parent</tt> object.
-	* Note that if the class of <tt>target</tt> defines its own <tt>afterUnmarshal</tt> method,
-	* the class specific callback method is invoked before this method is invoked.
-	*
-	* @param target non-null instance of JAXB mapped class prior to unmarshalling into it. 
-	* @param parent instance of JAXB mapped class that will reference <tt>target</tt>.
-	*               <tt>null</tt> when <tt>target</tt> is root element.
-	*/
-       public void afterUnmarshal(Object target, Object parent) {}
-   }
+        /**
+         * <p/>
+         * Callback method invoked after unmarshalling XML data into <tt>target</tt>.
+         * <p/>
+         * <p/>
+         * This method is invoked after all the properties (except IDREF) are unmarshalled into <tt>target</tt>,
+         * but before <tt>target</tt> is set into its <tt>parent</tt> object.
+         * Note that if the class of <tt>target</tt> defines its own <tt>afterUnmarshal</tt> method,
+         * the class specific callback method is invoked before this method is invoked.
+         *
+         * @param target non-null instance of JAXB mapped class prior to unmarshalling into it.
+         * @param parent instance of JAXB mapped class that will reference <tt>target</tt>.
+         *               <tt>null</tt> when <tt>target</tt> is root element.
+         */
+        public void afterUnmarshal(Object target, Object parent) {
+        }
+    }
 
     /**
      * <p>
