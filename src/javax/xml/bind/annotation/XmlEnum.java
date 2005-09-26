@@ -43,6 +43,7 @@ import static java.lang.annotation.ElementType.TYPE;
  *
  * <p><b>Examples:</b> See examples in {@link XmlEnumValue}
  *
+ * @since JAXB2.0
  */
 
 @Retention(RUNTIME) @Target({TYPE})

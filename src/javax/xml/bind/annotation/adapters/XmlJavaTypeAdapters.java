@@ -33,6 +33,7 @@ import java.lang.annotation.Target;
  *
  * @author <ul><li>Sekhar Vajjhala, Sun Microsystems, Inc.</li></ul>
  * @see XmlJavaTypeAdapter
+ * @since JAXB2.0
  */
 @Retention(RUNTIME) @Target({PACKAGE})
 public @interface XmlJavaTypeAdapters {

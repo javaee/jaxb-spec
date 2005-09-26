@@ -79,6 +79,7 @@ import static java.lang.annotation.ElementType.PARAMETER;
  *  </ul>
  *
  * @author <ul><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Sekhar Vajjhala, Sun Microsystems, Inc.</li></ul>
+ * @since JAXB2.0
  */
 @Retention(RUNTIME) @Target({FIELD,METHOD,PARAMETER})
 public @interface XmlList {

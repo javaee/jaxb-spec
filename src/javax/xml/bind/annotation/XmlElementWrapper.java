@@ -61,6 +61,7 @@ import java.lang.annotation.Target;
  * @see XmlElements
  * @see XmlElementRef
  * @see XmlElementRefs
+ * @since JAXB2.0
  *
  */
 

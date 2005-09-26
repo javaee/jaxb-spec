@@ -37,12 +37,6 @@ import java.lang.annotation.Target;
  *
  * <p>The usage is subject to the following constraints:
  * <ul>
- *   <li> type of the JavaBean property must be one of: indexed
- *        property, array, List, java.util.Set.
- *        <br> java.util.HashMap does not map naturally to XML Schema
- *        construct. Hence <tt>@XmlJavaTypeAdapter</tt> should be used
- *        to customize <tt>java.util.HashMap</tt>.</li>
- *
  *   <li> This annotation can be used with the following
  *        annotations: @{@link XmlIDREF}, @{@link XmlElementWrapper}. </li>
  *   <li> If @XmlIDREF is also specified on the JavaBean property,
@@ -115,10 +109,43 @@ import java.lang.annotation.Target;
  *    &lt;/xs:complexType>
  * </pre>
  *
+ * <p><b>Example 3:</b> Change element name based on type using an adapter. 
+ * </p>
+ * <pre>
+ *    class Foo {
+ *       &#64;XmlJavaTypeAdapter(QtoPAdapter.class)
+ *       &#64;XmlElements({
+ *           &#64;XmlElement(name="A",type=PX.class),
+ *           &#64;XmlElement(name="B",type=PY.class)
+ *       })
+ *       Q bar;
+ *    }
+ * 
+ *    &#64;XmlType abstract class P {...}
+ *    &#64;XmlType(name="PX") class PX extends P {...}
+ *    &#64;XmlType(name="PY") class PY extends P {...}
+ *
+ *    &lt;!-- XML Schema fragment -->
+ *    &lt;xs:complexType name="Foo">
+ *      &lt;xs:sequence>
+ *        &lt;xs:element name="bar">
+ *          &lt;xs:complexType>
+ *            &lt;xs:choice minOccurs="0" maxOccurs="unbounded">
+ *              &lt;xs:element name="A" type="PX"/>
+ *              &lt;xs:element name="B" type="PY"/>
+ *            &lt;/xs:choice>
+ *          &lt;/xs:complexType>
+ *        &lt;/xs:element>
+ *      &lt;/xs:sequence>
+ *    &lt;/xs:complexType>
+ * </pre>
+ * 
  * @author <ul><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Sekhar Vajjhala, Sun Microsystems, Inc.</li></ul>
  * @see XmlElement 
  * @see XmlElementRef
  * @see XmlElementRefs
+ * @see XmlJavaTypeAdapter
+ * @since JAXB2.0
  */
 @Retention(RUNTIME) @Target({FIELD,METHOD})
 public @interface XmlElements {

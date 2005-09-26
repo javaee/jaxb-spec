@@ -20,6 +20,7 @@ import javax.xml.transform.dom.DOMSource;
  * {@link DomHandler} implementation for W3C DOM (<code>org.w3c.dom</code> package.)
  *
  * @author Kohsuke Kawaguchi
+ * @since JAXB2.0
  */
 public class W3CDomHandler implements DomHandler<Element,DOMResult> {
 
