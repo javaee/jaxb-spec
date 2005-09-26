@@ -18,7 +18,7 @@
     <!-- properties -->
     <property name="release.spec.title"    value="Proposed Final Draft"/>
     <property name="release.spec.version"  value="2.0"/>
-    <property name="release.spec.date"     value="Sep 2, 2005"/>
+    <property name="release.spec.date"     value="Sep 30, 2005"/>
     <property name="release.spec.feedback" value="spec-comments@jsr222.dev.java.net"/>
 
     <!-- libraries that are referenced when compiling Java source files -->
