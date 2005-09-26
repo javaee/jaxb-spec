@@ -27,6 +27,7 @@ import javax.xml.transform.Source;
  * the value of the attribute takes precedence and that will control the marshalling. 
  *
  * @author Kohsuke Kawaguchi
+ * @since JAXB2.0
  */
 @Retention(RUNTIME)
 @Target({FIELD,METHOD})

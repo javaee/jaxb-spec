@@ -31,6 +31,7 @@ import javax.xml.bind.attachment.AttachmentMarshaller;
  * ever called for the property. The binary data will always be inlined.
  *
  * @author Joseph Fialli
+ * @since JAXB2.0
  */
 @Retention(RUNTIME)
 @Target({FIELD,METHOD,TYPE})

@@ -62,6 +62,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  *     }
  * </pre>
  * 
+ * @since JAXB2.0
  */
 
 @Retention(RUNTIME) @Target({FIELD,METHOD,PACKAGE})        

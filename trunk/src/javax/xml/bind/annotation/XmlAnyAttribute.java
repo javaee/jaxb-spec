@@ -45,7 +45,8 @@ import static java.lang.annotation.ElementType.METHOD;
  * {@link Map}&lt;{@link QName},{@link Object}>. The attribute QName is the
  * map's key. The key's value is the String value of the attribute.
  *
- * @author Kohsuke Kawaguchi
+ * @author Kohsuke Kawaguchi, Sun Microsystems, Inc.
+ * @since JAXB2.0
  */
 @Retention(RUNTIME)
 @Target({FIELD,METHOD})
