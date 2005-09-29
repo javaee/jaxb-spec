@@ -15,6 +15,7 @@ import static java.lang.annotation.ElementType.TYPE;
 
 import javax.xml.transform.Source;
 import javax.xml.bind.attachment.AttachmentMarshaller;
+import javax.activation.DataHandler;
 
 /**
  * Disable consideration of XOP encoding for datatypes that are bound to 
