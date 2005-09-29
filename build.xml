@@ -115,7 +115,7 @@ href='http://java.sun.com/xml/jaxb'>http://java.sun.com/xml/jaxb</a></i><br>
 <![CDATA[JAXB<br>v${release.spec.version}]]>
             </header>
             <footer>
-<![CDATA[<a href='http://jaxb.dev.java.net/nonav/jaxb20-pd/JSR222.PR.2005.06.08.Sun_Eval.web.txt'>JAXB 2.0 PD Specification License</a>]]>
+<![CDATA[<a href='https://jaxb.dev.java.net/jaxb20-pfd/222-pfd-eval-spec-web.txt'>JAXB 2.0 PFD Specification License</a>]]>
             </footer>
             <bottom>
 <![CDATA[<font size=-1>
