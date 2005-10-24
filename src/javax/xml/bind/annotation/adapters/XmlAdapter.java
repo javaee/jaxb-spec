@@ -80,9 +80,10 @@ import javax.xml.bind.Marshaller;
  *
  *     &lt;xs:complexType name="myHashMapEntryType">
  *       &lt;xs:simpleContent>
- *         &lt;xs:extension base="xs:string"/>
+ *         &lt;xs:extension base="xs:string">
+ *           &lt;xs:attribute name="key" type="xs:int"/>
+ *         &lt;/xs:extension>
  *       &lt;/xs:simpleContent>
- *       &lt;xs:attribute name="key" type="xs:int"/>
  *     &lt;/xs:complexType>
  *
  * </pre>
