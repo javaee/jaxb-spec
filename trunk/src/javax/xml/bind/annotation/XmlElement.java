@@ -63,19 +63,13 @@ import static java.lang.annotation.RetentionPolicy.*;
  *     &lt;!-- Example: Local XML Schema element -->
  *     &lt;xs:complexType name="USPrice"/>
  *       &lt;xs:sequence>
- *         &lt;xs:element name="itemprice" type="xs:decimal"/>
+ *         &lt;xs:element name="itemprice" type="xs:decimal" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/xs:complexType>
  *   </pre>
  * <p>
  * 
- * <p>
- * <b>Example 2: </b> Associate a global element with XML Schema type
- * to which the class is mapped.
- * <p>
- * <b> Note to Reviewers: </b> Moved to {@link XmlRootElement}
- * <p>
- * <b> Example 3: </b> Map a field to a nillable element.
+ * <b> Example 2: </b> Map a field to a nillable element.
  *   <pre>
  * 
  *     //Example: Code fragment
@@ -87,7 +81,24 @@ import static java.lang.annotation.RetentionPolicy.*;
  *     &lt;!-- Example: Local XML Schema element -->
  *     &lt;xs:complexType name="USPrice">
  *       &lt;xs:sequence>
- *         &lt;xs:element name="price" type="xs:decimal" nillable="true"/>
+ *         &lt;xs:element name="price" type="xs:decimal" nillable="true" minOccurs="0"/>
+ *       &lt;/sequence>
+ *     &lt;/xs:complexType>
+ *   </pre>
+ * <p>
+ * <b> Example 3: </b> Map a field to a nillable, required element.
+ *   <pre>
+ * 
+ *     //Example: Code fragment
+ *     public class USPrice {
+ *         &#64;XmlElement(nillable=true, required=true)
+ *         public java.math.BigDecimal price;
+ *     }
+ *
+ *     &lt;!-- Example: Local XML Schema element -->
+ *     &lt;xs:complexType name="USPrice">
+ *       &lt;xs:sequence>
+ *         &lt;xs:element name="price" type="xs:decimal" nillable="true" minOccurs="1"/>
  *       &lt;/sequence>
  *     &lt;/xs:complexType>
  *   </pre>
@@ -101,7 +112,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <p> 
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 @Retention(RUNTIME) @Target({FIELD, METHOD})
@@ -118,13 +129,22 @@ public @interface XmlElement {
      * Customize the element declaration to be nillable. 
      * <p>If nillable() is true, then the JavaBean property is
      * mapped to a XML Schema nillable element declaration. 
-     * <p>If nillable() is false and the JavaBean property type is a
-     * collection type, then the JavaBean property is mapped to
-     * repeating occurance. 
-     * <p> Otherwise, the JavaBean property is mapped to an an 
-     * XML Schema element declaration with occurance range of 0..1.
      */
     boolean nillable() default false;
+
+    /**
+     * Customize the element declaration to be required.
+     * <p>If required() is true, then Javabean property is mapped to
+     * an XML schema element declaration with minOccurs="1". 
+     * maxOccurs is "1" for a single valued property and "unbounded"
+     * for a multivalued property.
+     * <p>If required() is false, then the Javabean property is mapped
+     * to XML Schema element declaration with minOccurs="0".
+     * maxOccurs is "1" for a single valued property and "unbounded"
+     * for a multivalued property.
+     */
+
+    boolean required() default false;
 
     /**
      * <p> Specifies the XML target namespace of the XML Schema
