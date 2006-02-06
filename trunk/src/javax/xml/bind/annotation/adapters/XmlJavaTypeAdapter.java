@@ -48,18 +48,18 @@ import static java.lang.annotation.ElementType.PACKAGE;
  * package level for that class.
  *
  * <p>This annotation can be used with the following other annotations:
- * {@link XmlElement}, {@link XmlAttribute}, {@link XmlRootElement}, 
- * {@link XmlElementRef}, {@link XmlElementRefs}, {@link XmlAnyElement},
- * {@link XmlType}. This can also be used at the package level with 
- * the following annotations: {@link XmlAccessorType}, 
- * {@link XmlSchema}, {@link XmlSchemaType}, {@link XmlSchemaTypes}.
+ * {@link XmlElement}, {@link XmlAttribute}, {@link XmlElementRef},
+ * {@link XmlElementRefs}, {@link XmlAnyElement}. This can also be
+ * used at the package level with the following annotations: {@link
+ * XmlAccessorType}, {@link XmlSchema}, {@link XmlSchemaType}, {@link
+ * XmlSchemaTypes}. 
  * 
  * <p><b> Example: </b> See example in {@link XmlAdapter}
  *
  * @author <ul><li>Sekhar Vajjhala, Sun Microsystems Inc.</li> <li> Kohsuke Kawaguchi, Sun Microsystems Inc.</li></ul>
  * @since JAXB2.0
  * @see XmlAdapter
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 @Retention(RUNTIME) @Target({PACKAGE,FIELD,METHOD,TYPE,PARAMETER})        
