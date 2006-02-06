@@ -33,7 +33,7 @@ import static java.lang.annotation.ElementType.TYPE;
  *
  * <p> This annotation can be used with the following annotations:
  * {@link XmlType}, {@link XmlEnum}, {@link XmlAccessorType}, 
- * {@link XmlAccessorOrder}, {@link XmlJavaTypeAdapter}.
+ * {@link XmlAccessorOrder}.
  * <p>
 
  * <p>
