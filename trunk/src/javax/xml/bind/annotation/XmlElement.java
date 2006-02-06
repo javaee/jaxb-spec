@@ -112,7 +112,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <p> 
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 @Retention(RUNTIME) @Target({FIELD, METHOD})
@@ -147,11 +147,9 @@ public @interface XmlElement {
     boolean required() default false;
 
     /**
-     * <p> Specifies the XML target namespace of the XML Schema
-     * element. 
+     * <p> XML target namespace of the XML Schema element. 
      * <p> If the value is "##default", then the namespace is the
-     * namespace of the containing class. Otherwise, it must be a
-     * valid namespace URI.
+     * namespace of the containing class.
      */
     String namespace() default "##default";
 
