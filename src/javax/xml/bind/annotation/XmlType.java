@@ -34,11 +34,12 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * data container for values represented by schema components within a
  * schema type's content model (e.g. model groups, attributes etc).
  * <p> To be mapped, a class must either have a public zero arg
- * constructor or a static zero arg factory method.  In 
- * the absence of either, {@link XmlJavaTypeAdapter} annotation can
- * be used to adapt the class. The static factory method can be
- * specified in <tt>factoryMethod()</tt> and <tt>factoryClass()</tt>
- * annotation elements.
+ * constructor or a static zero arg factory method. The static factory
+ * method can be specified in <tt>factoryMethod()</tt> and
+ * <tt>factoryClass()</tt> annotation elements. The static factory
+ * method or the zero arg constructor is used during unmarshalling to
+ * create an instance of this class. If both are present, the static
+ * factory method overrides the zero arg constructor.
  * <p>
  * A class maps to either a XML Schema complex type or a XML Schema simple
  * type. The XML Schema type is derived based on the 
@@ -48,35 +49,35 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * type by annotating the class with <tt>&#64XmlType(name="")</tt>. 
  * <p>
  * Either a global element, local element or a local attribute can be
- * associated with an anoymous type as follows:
+ * associated with an anonymous type as follows:
  * <ul>
- *   <li><b>global element: </b> A global element of an anonmyous
+ *   <li><b>global element: </b> A global element of an anonymous
  *      type can be derived by annotating the class with @{@link
  *      XmlRootElement}. See Example 3 below. </li> 
  *
  *   <li><b>local element: </b> A JavaBean property that references
- *      the class annotated with @XmlType(name="") and mapped to an
- *      element is associated with an anonymous type. See Example 4
+ *      a class annotated with @XmlType(name="") and is mapped to the
+ *      element associated with the anonymous type. See Example 4
  *      below.</li> 
  *
  *   <li><b>attribute: </b> A JavaBean property that references
- *      the class annotated with @and is mapped to a attribute is
- *      associated with an anonymous type. See Example 5 below. </li>
+ *      a class annotated with @XmlType(name="") and is mapped to the
+ *      attribute associated with the anonymous type. See Example 5 below. </li>
  * </ul>
  * <b> Mapping to XML Schema Complex Type </b>
  * <ul>
- *   <li>If class is annotated with <tt>@XmlType(name="") </tt>, then
- *   class is mapped to an anonymous type. Otherwise class name maps
+ *   <li>If class is annotated with <tt>@XmlType(name="") </tt>, it
+ *   is mapped to an anonymous type otherwise, the class name maps
  *   to a complex type name. The <tt>XmlName()</tt> annotation element
  *   can be used to customize the name.</li>  
  *
- *   <li> Properties and fields that are mapped to elements map to a
- *   content model within the complex type. The annotation element
- *   <tt>propOrder()</tt> can be used to customize the the content model to be
- *   <tt>xs:all</tt> or <tt>xs:sequence</tt> and also for specifying
+ *   <li> Properties and fields that are mapped to elements are mapped to a
+ *   content model within a complex type. The annotation element
+ *   <tt>propOrder()</tt> can be used to customize the content model to be
+ *   <tt>xs:all</tt> or <tt>xs:sequence</tt>.  It is used for specifying
  *   the order of XML elements in <tt>xs:sequence</tt>. </li> 
  *
- *   <li> Properties and fields mapped to attributes within the
+ *   <li> Properties and fields can be mapped to attributes within the
  *        complex type.  </li>
  *
  *   <li> The targetnamespace of the XML Schema type can be customized
@@ -86,9 +87,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * <p>
  * <b> Mapping class to XML Schema simple type </b>
  * <p>
- *  A class can be mapped to a XML Schema simple type using the
+ * A class can be mapped to a XML Schema simple type using the
  * <tt>@XmlValue</tt> annotation. For additional details and examples,
- * see <tt>@XmlValue</tt> annotation type.
+ * see @{@link XmlValue} annotation type.
  * <p>
  * The following table shows the mapping of the class to a XML Schema
  * complex type or simple type. The notational symbols used in the table are:
@@ -160,12 +161,13 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * 
  * An enum type maps to a XML schema simple type with enumeration
  * facets. The following annotation elements are ignored since they
- * are not meaningful: <tt>propOrder()</tt> , <tt>factoryMethod()</tt> , <tt>factoryClass()</tt> .
+ * are not meaningful: <tt>propOrder()</tt> , <tt>factoryMethod()</tt> , 
+ * <tt>factoryClass()</tt> .
  *
- *  * <h3> Usage with other annotations </h3>
+ *  <h3> Usage with other annotations </h3>
  * <p> This annotation can be used with the following annotations: 
  * {@link XmlRootElement}, {@link XmlAccessorOrder}, {@link XmlAccessorType},
- * {@link XmlJavaTypeAdapter}, {@link XmlEnum}. However, {@link
+ * {@link XmlEnum}. However, {@link
  * XmlAccessorOrder} and {@link XmlAccessorType} are ignored when this
  * annotation is used on an enum type.
  * 
@@ -272,7 +274,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * </pre>
  *
  * <p> <b> Example 5: </b> Map a property to an attribute with
- * anonmyous type.
+ * anonymous type.
  * 
  * <pre>
  *
@@ -303,13 +305,64 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *     &lt;/xs:complexType>
  * </pre>
  *
+ *  <p> <b> Example 6: </b> Define a factoryClass and factoryMethod
+ *
+ * <pre> 
+ *      &#64;XmlType(name="USAddressType", factoryClass=USAddressFactory.class,
+ *      factoryMethod="getUSAddress")
+ *      public class USAddress {
+ *
+ *          private String city;
+ *          private String name;
+ *          private String state;
+ *          private String street;
+ *          private int    zip;
+ *
+ *      public USAddress(String name, String street, String city, 
+ *          String state, int zip) {
+ *          this.name = name;
+ *          this.street = street;
+ *          this.city = city;
+ *          this.state = state;
+ *          this.zip = zip;
+ *      }
+ *  }
+ *
+ *  public class USAddressFactory {
+ *      public static USAddress getUSAddress(){
+ *       return new USAddress("Mark Baker", "23 Elm St", 
+ *          "Dayton", "OH", 90952);
+ *  }
+ *
+ * </pre>
+ *
+ *  <p> <b> Example 7: </b> Define factoryMethod and use the default factoryClass
+ * 
+ * <pre>
+ *      &#64;XmlType(name="USAddressType", factoryMethod="getNewInstance")
+ *      public class USAddress {
+ *
+ *          private String city;
+ *          private String name;
+ *          private String state;
+ *          private String street;
+ *          private int    zip;
+ *
+ *          private USAddress() {}
+ *
+ *          public static USAddress getNewInstance(){
+ *              return new USAddress();
+ *          }
+ *      }
+ * </pre>
+ *
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @see XmlElement
  * @see XmlAttribute
  * @see XmlValue
  * @see XmlSchema
  * @since JAXB2.0
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 @Retention(RUNTIME) @Target({TYPE})
@@ -348,19 +401,28 @@ public @interface XmlType {
    
     /**
      * Class containing a zero arg factory method for creating an
-     * instance of the annotated class. The default is this class.
+     * instance of this class. The default is this class.
+     * 
+     * <p>If <tt>factoryClass</tt> is DEFAULT.class and 
+     * <tt>factoryMethod</tt> is "", then there is no static factory
+     * method.
+     * 
+     * <p>If <tt>factoryClass</tt> is DEFAULT.class and
+     * <tt>factoryMethod</tt> is not "", then 
+     * <tt>factoryMethod</tt> is the name of a static factory method
+     * in this class. 
      *
+     * <p>If <tt>factoryClass</tt> is not DEFAULT.class, then 
+     * <tt>factoryMethod</tt> must not be "" and must be the name of
+     * a static factory method specified in <tt>factoryClass</tt>.
      */
     Class factoryClass() default DEFAULT.class;
 
     static final class DEFAULT {};
 
     /**
-     * Name of a zero arg factory method in factoryClass() for
-     * creating an instance of the annotated class. The factory method
-     * is used during unmarshalling to create an instance of the
-     * annotated class. It is intended to be used for classes that do
-     * not contain a zero arg constructor.
+     * Name of a zero arg factory method in the class specified in
+     * <tt>factoryClass</tt> factoryClass(). 
      * 
      */
     String factoryMethod() default "";
