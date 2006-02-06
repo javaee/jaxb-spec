@@ -17,6 +17,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.PARAMETER;
 
 /**
  * Marks a field/property that its XML form is a uri reference to mime content.
@@ -56,6 +57,6 @@ import static java.lang.annotation.ElementType.METHOD;
  * @since JAXB2.0
  */
 @Retention(RUNTIME)
-@Target({FIELD,METHOD})
+@Target({FIELD,METHOD,PARAMETER})
 public @interface XmlAttachmentRef {
 }
