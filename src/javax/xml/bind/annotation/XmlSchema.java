@@ -94,7 +94,7 @@ import static java.lang.annotation.RetentionPolicy.*;
 
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 @Retention(RUNTIME) @Target({PACKAGE})
@@ -108,8 +108,7 @@ public @interface XmlSchema {
     XmlNs[]  xmlns() default {};
 
     /**
-     * Name of the XML namespace. The name must be a valid
-     * namespace URI.
+     * Name of the XML namespace.
      */
     String namespace() default "";
 

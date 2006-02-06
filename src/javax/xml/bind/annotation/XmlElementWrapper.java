@@ -75,7 +75,7 @@ public @interface XmlElementWrapper {
 
     /**
      * XML target namespace of the XML wrapper element.
-     * namespace() must be a valid namespace URI. The default XML
+     * The default XML
      * namespace is the XML namespace of the enclosing class of the
      * Javabean property.
      *
