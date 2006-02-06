@@ -41,7 +41,12 @@ import static java.lang.annotation.RetentionPolicy.*;
  *        field annotated with <tt>&#64;XmlID</tt>.  </li> 
  *   <li> If the field or property is single valued, then the type of
  *        the property or field must contain a property or field
- *        annotated with <tt>&#64;XmlID</tt>. </li> 
+ *        annotated with <tt>&#64;XmlID</tt>.
+ *        <p>Note: If the collection item type or the type of the
+ *        property (for non collection type) is java.lang.Object, then
+ *        the instance must contain a property/field annotated with
+ *        @XmlID attribute.  
+ *        </li>
  *   <li> This annotation can be used with the following annotations:
  *        {@link XmlElement}, {@link XmlAttribute}, {@link XmlList}, 
  *        and {@link XmlElements}.</li>  
@@ -219,7 +224,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * @author Sekhar Vajjhala, Sun Microsystems, Inc. 
  * @see XmlID
  * @since JAXB2.0
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 @Retention(RUNTIME) @Target({FIELD, METHOD})
