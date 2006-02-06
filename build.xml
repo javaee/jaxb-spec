@@ -16,10 +16,11 @@
     </description>
 
     <!-- properties -->
-    <property name="release.spec.title"    value="Proposed Final Draft"/>
+    <property name="release.spec.title"    value="Proposed Final Draft - EG Update 1"/>
     <property name="release.spec.version"  value="2.0"/>
-    <property name="release.spec.date"     value="Sep 30, 2005"/>
+    <property name="release.spec.date"     value="Feb 6, 2005"/>
     <property name="release.spec.feedback" value="spec-comments@jsr222.dev.java.net"/>
+    <property name="compilerarg"           value=""/>
 
     <!-- libraries that are referenced when compiling Java source files -->
     <path id="javac.classpath">
@@ -51,6 +52,7 @@
                deprecation="off" >
             <classpath refid="javac.classpath" />
             <!--compilerarg line="-Xlint:unchecked"/--> 
+            <compilerarg line="${compilerarg}"/>
         </javac>
         <!-- copy i18n props into build dir -->
         <copy toDir="build/classes">
