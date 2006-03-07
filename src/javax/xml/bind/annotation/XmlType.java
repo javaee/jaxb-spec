@@ -33,13 +33,13 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * values represented by properties and fields. A schema type is a
  * data container for values represented by schema components within a
  * schema type's content model (e.g. model groups, attributes etc).
- * <p> To be mapped, a class must either have a public zero arg
- * constructor or a static zero arg factory method. The static factory
+ * <p> To be mapped, a class must either have a public no-arg
+ * constructor or a static no-arg factory method. The static factory
  * method can be specified in <tt>factoryMethod()</tt> and
  * <tt>factoryClass()</tt> annotation elements. The static factory
- * method or the zero arg constructor is used during unmarshalling to
+ * method or the no-arg constructor is used during unmarshalling to
  * create an instance of this class. If both are present, the static
- * factory method overrides the zero arg constructor.
+ * factory method overrides the no-arg constructor.
  * <p>
  * A class maps to either a XML Schema complex type or a XML Schema simple
  * type. The XML Schema type is derived based on the 
@@ -362,7 +362,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * @see XmlValue
  * @see XmlSchema
  * @since JAXB2.0
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 @Retention(RUNTIME) @Target({TYPE})
@@ -385,8 +385,9 @@ public @interface XmlType {
      *     JavaBean properties are listed is the order of XML Schema
      *     elements to which the JavaBean properties are mapped. </p>
      * <p> All of the JavaBean properties being mapped to XML Schema elements
-     *     must be listed. If a JavaBean property is marked with
-     *     <tt>@XmlTransient</tt>, then it is ignored. 
+     *     must be listed. 
+     * <p> A JavaBean property or field listed in propOrder must not
+     *     be transient or annotated with <tt>@XmlTransient</tt>.
      * <p> The default ordering of JavaBean properties is determined
      *     by @{@link XmlAccessorOrder}. 
      */
@@ -400,7 +401,7 @@ public @interface XmlType {
     String namespace() default "##default" ;
    
     /**
-     * Class containing a zero arg factory method for creating an
+     * Class containing a no-arg factory method for creating an
      * instance of this class. The default is this class.
      * 
      * <p>If <tt>factoryClass</tt> is DEFAULT.class and 
@@ -421,7 +422,7 @@ public @interface XmlType {
     static final class DEFAULT {};
 
     /**
-     * Name of a zero arg factory method in the class specified in
+     * Name of a no-arg factory method in the class specified in
      * <tt>factoryClass</tt> factoryClass(). 
      * 
      */

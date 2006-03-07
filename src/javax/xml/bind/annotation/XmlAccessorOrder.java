@@ -44,13 +44,13 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <p>By default, if <tt>@XmlAccessorOrder </tt> on a package is absent,
  * then the following package level annotation is assumed.</p>
  *<pre> 
- *    &#64;XmlAccessorType(AccessorOrder.UNDEFINED) 
+ *    &#64;XmlAccessorType(XmlAccessOrder.UNDEFINED) 
  *</pre>
  * <p> By default, if <tt>@XmlAccessorOrder</tt> on a class is absent
  * and none of super classes is annotated with <tt> XmlAccessorOrder
  * </tt>, then the following default on the class is assumed: </p> 
  *<pre> 
- *    &#64;XmlAccessorType(AccessorOrder.UNDEFINED) 
+ *    &#64;XmlAccessorType(XmlAccessOrder.UNDEFINED) 
  *</pre>
  * <p>This annotation can be used with the following annotations: 
  *    {@link XmlType}, {@link XmlRootElement}, {@link XmlAccessorType}, 
@@ -60,11 +60,11 @@ import static java.lang.annotation.RetentionPolicy.*;
  *
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version  $Revision: 1.4 $
- * @see AccessorOrder
+ * @version  $Revision: 1.5 $
+ * @see XmlAccessOrder
  */
 
 @Inherited @Retention(RUNTIME) @Target({PACKAGE, TYPE})
 public @interface XmlAccessorOrder {
-	AccessorOrder value() default AccessorOrder.UNDEFINED;
+	XmlAccessOrder value() default XmlAccessOrder.UNDEFINED;
 }

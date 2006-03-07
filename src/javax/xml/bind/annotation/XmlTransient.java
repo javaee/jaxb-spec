@@ -29,6 +29,9 @@ import static java.lang.annotation.RetentionPolicy.*;
  *   <li> a JavaBean property </li>
  *   <li> field </li>
  * </ul>
+ *
+ * <p><tt>@XmlTransient</tt>is mutually exclusive with all other
+ * JAXB defined annotations. </p>
  * 
  * <p>See "Package Specification" in javax.xml.bind.package javadoc for
  * additional common information.</p>
@@ -59,7 +62,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 @Retention(RUNTIME) @Target({FIELD, METHOD})
