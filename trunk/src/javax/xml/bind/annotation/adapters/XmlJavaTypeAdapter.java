@@ -5,6 +5,15 @@
 
 package javax.xml.bind.annotation.adapters;
 
+import javax.xml.bind.annotation.XmlAnyElement;
+import javax.xml.bind.annotation.XmlElementRefs;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlSchemaType;
+import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlSchema;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlSchemaTypes;
 import java.lang.annotation.Target;
 import java.lang.annotation.Retention;
 
@@ -50,16 +59,16 @@ import static java.lang.annotation.ElementType.PACKAGE;
  * <p>This annotation can be used with the following other annotations:
  * {@link XmlElement}, {@link XmlAttribute}, {@link XmlElementRef},
  * {@link XmlElementRefs}, {@link XmlAnyElement}. This can also be
- * used at the package level with the following annotations: {@link
- * XmlAccessorType}, {@link XmlSchema}, {@link XmlSchemaType}, {@link
- * XmlSchemaTypes}. 
+ * used at the package level with the following annotations:
+ * {@link XmlAccessorType}, {@link XmlSchema}, {@link XmlSchemaType},
+ * {@link XmlSchemaTypes}. 
  * 
  * <p><b> Example: </b> See example in {@link XmlAdapter}
  *
  * @author <ul><li>Sekhar Vajjhala, Sun Microsystems Inc.</li> <li> Kohsuke Kawaguchi, Sun Microsystems Inc.</li></ul>
  * @since JAXB2.0
  * @see XmlAdapter
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 @Retention(RUNTIME) @Target({PACKAGE,FIELD,METHOD,TYPE,PARAMETER})        

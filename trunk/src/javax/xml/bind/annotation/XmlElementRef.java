@@ -5,6 +5,7 @@
 
 package javax.xml.bind.annotation;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
@@ -67,7 +68,7 @@ import static java.lang.annotation.ElementType.METHOD;
  *        {@link javax.xml.bind.JAXBElement}, then the type referenced by the
  *        property or field must be annotated  with {@link XmlRootElement}. </li>
  *   <li> This annotation can be used with the following annotations:
- *        {@link XmlIDREF}, {@link XmlJavaTypeAdapter}.  
+ *        {@link XmlIDREF}, {@link XmlJavaTypeAdapter}.
  *   </ul>
  *
  * <p>See "Package Specification" in javax.xml.bind.package javadoc for

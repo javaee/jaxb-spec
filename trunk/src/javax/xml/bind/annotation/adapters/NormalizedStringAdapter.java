@@ -62,7 +62,7 @@ public final class NormalizedStringAdapter extends XmlAdapter<String,String> {
      * Returns true if the specified char is a white space character
      * but not 0x20.
      */
-    protected static final boolean isWhiteSpaceExceptSpace(char ch) {
+    protected static boolean isWhiteSpaceExceptSpace(char ch) {
         // most of the characters are non-control characters.
         // so check that first to quickly return false for most of the cases.
         if( ch>=0x20 )   return false;

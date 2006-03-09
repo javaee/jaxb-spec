@@ -5,6 +5,7 @@
 
 package javax.xml.bind.annotation;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.lang.annotation.Target;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Inherited;
@@ -55,12 +56,12 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <p>This annotation can be used with the following annotations: 
  *    {@link XmlType}, {@link XmlRootElement}, {@link XmlAccessorType}, 
  *    {@link XmlSchema}, {@link XmlSchemaType}, {@link XmlSchemaTypes}, 
- *    , {@link XmlJavaTypeAdapters}. It can also be used with the
+ *    , {@link XmlJavaTypeAdapter}. It can also be used with the
  *    following annotations at the package level: {@link XmlJavaTypeAdapter}.
  *
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version  $Revision: 1.5 $
+ * @version  $Revision: 1.6 $
  * @see XmlAccessOrder
  */
 

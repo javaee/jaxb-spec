@@ -45,7 +45,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *        <p>Note: If the collection item type or the type of the
  *        property (for non collection type) is java.lang.Object, then
  *        the instance must contain a property/field annotated with
- *        @XmlID attribute.  
+ *        <tt>&#64;XmlID</tt> attribute.  
  *        </li>
  *   <li> This annotation can be used with the following annotations:
  *        {@link XmlElement}, {@link XmlAttribute}, {@link XmlList}, 
@@ -224,7 +224,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * @author Sekhar Vajjhala, Sun Microsystems, Inc. 
  * @see XmlID
  * @since JAXB2.0
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 @Retention(RUNTIME) @Target({FIELD, METHOD})

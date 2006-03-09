@@ -5,7 +5,6 @@
 package javax.xml.bind;
 
 import org.xml.sax.ContentHandler;
-import javax.xml.bind.JAXBException;
 
 /**
  * Unmarshaller implemented as SAX ContentHandler.
@@ -36,7 +35,7 @@ import javax.xml.bind.JAXBException;
  * an object, s/he can still start a new round of unmarshalling.
  * 
  * @author <ul><li>Kohsuke KAWAGUCHI, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.2 $ $Date: 2004-06-14 21:23:05 $
+ * @version $Revision: 1.3 $ $Date: 2006-03-09 22:19:02 $
  * @see Unmarshaller#getUnmarshallerHandler()
  * @since JAXB1.0
  */

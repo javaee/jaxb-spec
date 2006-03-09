@@ -55,7 +55,7 @@ package javax.xml.bind;
  *  
  * <p>
  * @author <ul><li>Sekhar Vajjhala, Sun Microsystems, Inc.</li><li>Joe Fialli, Sun Microsystems Inc.</li><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Ryan Shoemaker,Sun Microsystems Inc.</li></ul>
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  * @see DatatypeConverter
  * @see ParseConversionEvent
  * @see PrintConversionEvent
@@ -76,8 +76,8 @@ public interface DatatypeConverterInterface {
     /**
      * <p>
      * Convert the string argument into a BigInteger value.
-     * @param
-     *     lexicalXSDInteger A string containing a lexical representation of 
+     * @param lexicalXSDInteger
+     *     A string containing a lexical representation of
      *     xsd:integer.
      * @return
      *     A BigInteger value represented by the string argument.
@@ -88,8 +88,8 @@ public interface DatatypeConverterInterface {
     /**
      * <p>
      * Convert the string argument into an int value.
-     * @param
-     *     lexicalXSDInt A string containing a lexical representation of 
+     * @param lexicalXSDInt
+     *     A string containing a lexical representation of
      *     xsd:int.
      * @return
      *     An int value represented byte the string argument.
@@ -100,8 +100,8 @@ public interface DatatypeConverterInterface {
     /**
      * <p>
      * Converts the string argument into a long value.
-     * @param
-     *     lexicalXSDLong A string containing lexical representation of 
+     * @param lexicalXSDLong
+     *     A string containing lexical representation of
      *     xsd:long.
      * @return
      *     A long value represented by the string argument.
@@ -112,8 +112,8 @@ public interface DatatypeConverterInterface {
     /**
      * <p>
      * Converts the string argument into a short value.
-     * @param
-     *     lexicalXSDShort A string containing lexical representation of 
+     * @param lexicalXSDShort
+     *     A string containing lexical representation of
      *     xsd:short.
      * @return
      *     A short value represented by the string argument.
@@ -124,8 +124,8 @@ public interface DatatypeConverterInterface {
     /**
      * <p>
      * Converts the string argument into a BigDecimal value.
-     * @param
-     *     lexicalXSDDecimal A string containing lexical representation of 
+     * @param lexicalXSDDecimal
+     *     A string containing lexical representation of
      *     xsd:decimal.
      * @return
      *     A BigDecimal value represented by the string argument.
@@ -136,8 +136,8 @@ public interface DatatypeConverterInterface {
     /**
      * <p>
      * Converts the string argument into a float value.
-     * @param
-     *     lexicalXSDFloat A string containing lexical representation of 
+     * @param lexicalXSDFloat
+     *     A string containing lexical representation of
      *     xsd:float.
      * @return
      *     A float value represented by the string argument.
@@ -148,8 +148,8 @@ public interface DatatypeConverterInterface {
     /**
      * <p>
      * Converts the string argument into a double value.
-     * @param
-     *     lexicalXSDDouble A string containing lexical representation of 
+     * @param lexicalXSDDouble
+     *     A string containing lexical representation of
      *     xsd:double.
      * @return
      *     A double value represented by the string argument.
@@ -160,8 +160,8 @@ public interface DatatypeConverterInterface {
     /**
      * <p>
      * Converts the string argument into a boolean value.
-     * @param
-     *     lexicalXSDBoolean A string containing lexical representation of 
+     * @param lexicalXSDBoolean
+     *     A string containing lexical representation of
      *     xsd:boolean.
      * @return
      *     A boolean value represented by the string argument.
@@ -172,8 +172,8 @@ public interface DatatypeConverterInterface {
     /**
      * <p>
      * Converts the string argument into a byte value.
-     * @param
-     *     lexicalXSDByte A string containing lexical representation of 
+     * @param lexicalXSDByte
+     *     A string containing lexical representation of
      *     xsd:byte.
      * @return
      *     A byte value represented by the string argument.
@@ -205,8 +205,8 @@ public interface DatatypeConverterInterface {
     /**
      * <p>
      * Converts the string argument into a Calendar value.
-     * @param
-     *     lexicalXSDDateTime A string containing lexical representation of 
+     * @param lexicalXSDDateTime
+     *     A string containing lexical representation of
      *     xsd:datetime.
      * @return
      *     A Calendar object represented by the string argument.
@@ -217,8 +217,8 @@ public interface DatatypeConverterInterface {
     /**
      * <p>
      * Converts the string argument into an array of bytes.
-     * @param
-     *     lexicalXSDBase64Binary A string containing lexical representation
+     * @param lexicalXSDBase64Binary
+     *     A string containing lexical representation
      *     of xsd:base64Binary.
      * @return
      *     An array of bytes represented by the string argument.
@@ -229,8 +229,8 @@ public interface DatatypeConverterInterface {
     /**
      * <p>
      * Converts the string argument into an array of bytes.
-     * @param
-     *     lexicalXSDHexBinary A string containing lexical representation of
+     * @param lexicalXSDHexBinary
+     *     A string containing lexical representation of
      *     xsd:hexBinary.
      * @return
      *     An array of bytes represented by the string argument.
@@ -241,8 +241,8 @@ public interface DatatypeConverterInterface {
     /**
      * <p>
      * Converts the string argument into a long value.
-     * @param
-     *     lexicalXSDUnsignedInt A string containing lexical representation 
+     * @param lexicalXSDUnsignedInt
+     *     A string containing lexical representation
      *     of xsd:unsignedInt.
      * @return
      *     A long value represented by the string argument.
@@ -253,8 +253,8 @@ public interface DatatypeConverterInterface {
     /**
      * <p>
      * Converts the string argument into an int value.
-     * @param
-     *     lexicalXSDUnsignedShort -A string containing lexical 
+     * @param lexicalXSDUnsignedShort
+     *     A string containing lexical
      *     representation of xsd:unsignedShort.
      * @return
      *     An int value represented by the string argument.
@@ -265,8 +265,8 @@ public interface DatatypeConverterInterface {
     /**
      * <p>
      * Converts the string argument into a Calendar value.
-     * @param
-     *     lexicalXSDTime A string containing lexical representation of 
+     * @param lexicalXSDTime
+     *     A string containing lexical representation of
      *     xsd:Time.
      * @return
      *     A Calendar value represented by the string argument.
@@ -277,8 +277,8 @@ public interface DatatypeConverterInterface {
     /**
      * <p>
      * Converts the string argument into a Calendar value.
-     * @param
-     *     lexicalXSDDate A string containing lexical representation of 
+     * @param lexicalXSDDate
+     *     A string containing lexical representation of
      *     xsd:Date.
      * @return
      *     A Calendar value represented by the string argument.
@@ -290,8 +290,8 @@ public interface DatatypeConverterInterface {
      * <p>
      * Return a string containing the lexical representation of the 
      * simple type.
-     * @param
-     *     lexicalXSDAnySimpleType A string containing lexical 
+     * @param lexicalXSDAnySimpleType
+     *     A string containing lexical 
      *     representation of the simple type.
      * @return
      *     A string containing the lexical representation of the 

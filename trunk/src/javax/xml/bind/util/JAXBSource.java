@@ -20,7 +20,6 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.transform.sax.SAXSource;
-import java.io.IOException;
 
 /**
  * JAXP {@link javax.xml.transform.Source} implementation
@@ -207,11 +206,11 @@ public class JAXBSource extends SAXSource {
             return errorHandler;
         }
 
-        public void parse(InputSource input) throws IOException, SAXException {
+        public void parse(InputSource input) throws SAXException {
             parse();
         }
 
-        public void parse(String systemId) throws IOException, SAXException {
+        public void parse(String systemId) throws SAXException {
             parse();
         }
 

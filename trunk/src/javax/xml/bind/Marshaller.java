@@ -5,10 +5,8 @@
 
 package javax.xml.bind;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBIntrospector;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 import javax.xml.bind.attachment.AttachmentMarshaller;
 import javax.xml.validation.Schema;
 
@@ -291,7 +289,7 @@ import javax.xml.validation.Schema;
  * </blockquote>
  * 
  * @author <ul><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Ryan Shoemaker, Sun Microsystems, Inc.</li><li>Joe Fialli, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.10 $ $Date: 2005-09-01 19:34:47 $
+ * @version $Revision: 1.11 $ $Date: 2006-03-09 22:19:02 $
  * @see JAXBContext
  * @see Validator
  * @see Unmarshaller

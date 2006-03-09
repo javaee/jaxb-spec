@@ -5,12 +5,10 @@
 
 package javax.xml.bind.annotation;
 
+import static java.lang.annotation.ElementType.TYPE;
 import java.lang.annotation.Retention;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Target;
-
-import static java.lang.annotation.ElementType.*;
-import static java.lang.annotation.RetentionPolicy.*;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * <p>
@@ -362,7 +360,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * @see XmlValue
  * @see XmlSchema
  * @since JAXB2.0
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 @Retention(RUNTIME) @Target({TYPE})
@@ -419,7 +417,7 @@ public @interface XmlType {
      */
     Class factoryClass() default DEFAULT.class;
 
-    static final class DEFAULT {};
+    static final class DEFAULT {}
 
     /**
      * Name of a no-arg factory method in the class specified in

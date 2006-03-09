@@ -30,10 +30,10 @@ import java.io.IOException;
  *   classes. Additionally, the java package may contain JAXB package annotations 
  *   that must be processed. (see JLS 3rd Edition, Section 7.4.1. Package Annotations).
  *   </li>
- *   <li>{@link #newInstance(Class[]) JAXBContext.newInstance( com.acme.foo.Foo.class )} <br/>
+ *   <li>{@link #newInstance(Class...) JAXBContext.newInstance( com.acme.foo.Foo.class )} <br/>
  *    The JAXBContext instance is intialized with class(es) 
  *    passed as parameter(s) and classes that are statically reachable from 
- *    these class(es). See {@link #newInstance(Class[])} for details.
+ *    these class(es). See {@link #newInstance(Class...)} for details.
  *   </li>
  * </ul>
  *
@@ -197,7 +197,7 @@ import java.io.IOException;
  * </blockquote>
  *
  * @author <ul><li>Ryan Shoemaker, Sun Microsystems, Inc.</li><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Joe Fialli, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.9 $ $Date: 2005-09-01 19:28:56 $
+ * @version $Revision: 1.10 $ $Date: 2006-03-09 22:19:01 $
  * @see Marshaller
  * @see Unmarshaller
  * @see <a href="http://java.sun.com/docs/books/jls">S 7.4.1.1 "Package Annotations" in Java Language Specification, 3rd Edition</a>
@@ -281,7 +281,7 @@ public abstract class JAXBContext {
      * lines, are ignored. The comment character 
      * is '#' (0x23); on each line all characters following the first comment 
      * character are ignored. The file must be encoded in UTF-8. Classes that 
-     * are reachable, as defined in {@link #newInstance(Class[])}, from the 
+     * are reachable, as defined in {@link #newInstance(Class...)}, from the
      * listed classes are also registered with JAXBContext. 
      * <p>
      * Constraints on class name occuring in a <tt>jaxb.index</tt> file are:
@@ -527,7 +527,7 @@ public abstract class JAXBContext {
      * Obtain a new instance of a <tt>JAXBContext</tt> class.
      *
      * <p>
-     * An overloading of {@link JAXBContext#newInstance(Class[])}
+     * An overloading of {@link JAXBContext#newInstance(Class...)}
      * to configure 'properties' for this instantiation of {@link JAXBContext}.
      *
      * <p>

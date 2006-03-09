@@ -5,9 +5,6 @@
 
 package javax.xml.bind.annotation;
 
-import java.lang.annotation.Target;
-import static java.lang.annotation.ElementType.*;
-
 /**
  * Enumeration of XML Schema namespace qualifications. 
  *
@@ -45,7 +42,7 @@ import static java.lang.annotation.ElementType.*;
  * 
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public enum XmlNsForm {UNQUALIFIED, QUALIFIED, UNSET}
 
