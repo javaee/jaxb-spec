@@ -127,6 +127,9 @@ href='http://java.sun.com/xml/jaxb'><i>http://java.sun.com/xml/jaxb</i></a>
 <p>Copyright &copy; 2004 by Sun Microsystems, Inc., 901 San Antonio Road, 
 <br>Palo Alto, California, 94303, U.S.A.  All Rights Reserved.  </font>]]>
             </bottom>
+            <link href="http://java.sun.com/j2se/1.5.0/docs/api"
+                  offline="true"
+                  packagelistLoc="lib/j2se-javadoc" />
         </javadoc>
     </target>
 
