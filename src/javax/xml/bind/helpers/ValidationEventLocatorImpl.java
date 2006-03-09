@@ -22,7 +22,7 @@ import org.xml.sax.SAXParseException;
  * convenience.
  *
  * @author <ul><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li></ul> 
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  * @see javax.xml.bind.Validator
  * @see javax.xml.bind.ValidationEventHandler
  * @see javax.xml.bind.ValidationEvent
@@ -243,13 +243,11 @@ public class ValidationEventLocatorImpl implements ValidationEventLocator
      */
     public String toString() {
         return MessageFormat.format("[node={0},object={1},url={2},line={3},col={4},offset={5}]",
-            new Object[]{
-                getNode(),
-                getObject(),
-                getURL(),
-                String.valueOf(getLineNumber()),
-                String.valueOf(getColumnNumber()),
-                String.valueOf(getOffset())
-            });
+            getNode(),
+            getObject(),
+            getURL(),
+            String.valueOf(getLineNumber()),
+            String.valueOf(getColumnNumber()),
+            String.valueOf(getOffset()));
     }
 }

@@ -46,7 +46,7 @@ import java.net.URL;
  * @author <ul>
  *         <li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li>
  *         </ul>
- * @version $Revision: 1.5 $ $Date: 2005-08-08 20:26:39 $
+ * @version $Revision: 1.6 $ $Date: 2006-03-09 22:19:04 $
  * @see javax.xml.bind.Unmarshaller
  * @since JAXB1.0
  */
@@ -111,7 +111,7 @@ public abstract class AbstractUnmarshallerImpl implements Unmarshaller
     }
 
     // use the client specified XMLReader contained in the SAXSource.
-    private final Object unmarshal( SAXSource source ) throws JAXBException {
+    private Object unmarshal( SAXSource source ) throws JAXBException {
         
         XMLReader reader = source.getXMLReader();
         if( reader == null )

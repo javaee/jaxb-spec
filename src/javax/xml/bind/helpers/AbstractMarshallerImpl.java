@@ -35,7 +35,7 @@ import java.io.UnsupportedEncodingException;
  * {@link Marshaller#marshal(Object, javax.xml.transform.Result) marshal(Object, javax.xml.stream.XMLEventWriter)}.
  *
  * @author <ul><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.5 $ $Date: 2005-08-08 20:26:39 $
+ * @version $Revision: 1.6 $ $Date: 2006-03-09 22:19:03 $
  * @see javax.xml.bind.Marshaller
  * @since JAXB1.0
  */
@@ -297,7 +297,7 @@ public abstract class AbstractMarshallerImpl implements Marshaller
         }
         if( JAXB_FORMATTED_OUTPUT.equals(name) ) {
             checkBoolean( name, value );                    
-            setFormattedOutput( ((Boolean)value).booleanValue() );
+            setFormattedOutput((Boolean) value );
             return;
         }
         if( JAXB_NO_NAMESPACE_SCHEMA_LOCATION.equals(name) ) {
@@ -312,7 +312,7 @@ public abstract class AbstractMarshallerImpl implements Marshaller
         }
         if( JAXB_FRAGMENT.equals(name) )  {
             checkBoolean(name, value);
-            setFragment( ((Boolean)value).booleanValue() );
+            setFragment((Boolean) value );
             return;
         }
 

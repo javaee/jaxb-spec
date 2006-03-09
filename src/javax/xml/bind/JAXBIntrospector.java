@@ -21,6 +21,7 @@ import  javax.xml.namespace.QName;
  * {@link JAXBContext#createJAXBIntrospector()}.
  *
  * @see JAXBContext#createJAXBIntrospector()
+ * @since JAXB2.0
  */
 public abstract class JAXBIntrospector {
 

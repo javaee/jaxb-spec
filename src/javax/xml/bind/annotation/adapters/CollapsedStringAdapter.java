@@ -88,7 +88,7 @@ public class CollapsedStringAdapter extends XmlAdapter<String,String> {
 
 
     /** returns true if the specified char is a white space character. */
-    protected static final boolean isWhiteSpace(char ch) {
+    protected static boolean isWhiteSpace(char ch) {
         // most of the characters are non-control characters.
         // so check that first to quickly return false for most of the cases.
         if( ch>0x20 )   return false;

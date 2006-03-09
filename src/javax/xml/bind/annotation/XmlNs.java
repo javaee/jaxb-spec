@@ -5,10 +5,9 @@
 
 package javax.xml.bind.annotation;
 
-import java.lang.annotation.Target;
 import java.lang.annotation.Retention;
-import static java.lang.annotation.ElementType.*;
-import static java.lang.annotation.RetentionPolicy.*;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import java.lang.annotation.Target;
 
 /**
  * <p>
@@ -24,7 +23,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <p><b>Example:</b>See <tt>XmlSchema</tt> annotation type for an example.
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 @Retention(RUNTIME) @Target({})

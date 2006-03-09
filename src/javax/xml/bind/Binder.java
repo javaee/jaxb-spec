@@ -5,8 +5,9 @@
 
 package javax.xml.bind;
 
+import org.w3c.dom.Node;
+
 import javax.xml.validation.Schema;
-import javax.xml.bind.JAXBContext;
 
 /**
  * Enable synchronization between XML infoset nodes and JAXB objects 
