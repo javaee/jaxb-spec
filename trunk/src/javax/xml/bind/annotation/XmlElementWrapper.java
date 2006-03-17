@@ -75,22 +75,12 @@ public @interface XmlElementWrapper {
 
     /**
      * XML target namespace of the XML wrapper element.
-     * <p>
-     * If the value is "##default", then the namespace is determined
-     * as follows:
-     * <ol>
-     *  <li>
-     *  If the enclosing package has {@link XmlSchema} annotation,
-     *  and its {@link XmlSchema#elementFormDefault() elementFormDefault}
-     *  is {@link XmlNsForm#QUALIFIED QUALIFIED}, then the namespace of
-     *  the enclosing class.
+     * The default XML
+     * namespace is the XML namespace of the enclosing class of the
+     * Javabean property.
      *
-     *  <li>
-     *  Otherwise "" (which produces unqualified element in the default
-     *  namespace.
-     * </ol>
      */
-    String namespace() default "##default";
+    String namespace() default "##default" ;
 
     /**
      * If true, the absence of the collection is represented by

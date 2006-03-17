@@ -113,7 +113,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <p> 
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 
 @Retention(RUNTIME) @Target({FIELD, METHOD})
@@ -148,21 +148,9 @@ public @interface XmlElement {
     boolean required() default false;
 
     /**
-     * XML target namespace of the XML Schema element.
-     * <p>
-     * If the value is "##default", then the namespace is determined
-     * as follows:
-     * <ol>
-     *  <li>
-     *  If the enclosing package has {@link XmlSchema} annotation,
-     *  and its {@link XmlSchema#elementFormDefault() elementFormDefault}
-     *  is {@link XmlNsForm#QUALIFIED QUALIFIED}, then the namespace of
-     *  the enclosing class.
-     *
-     *  <li>
-     *  Otherwise "" (which produces unqualified element in the default
-     *  namespace.
-     * </ol>
+     * <p> XML target namespace of the XML Schema element. 
+     * <p> If the value is "##default", then the namespace is the
+     * namespace of the containing class.
      */
     String namespace() default "##default";
 
