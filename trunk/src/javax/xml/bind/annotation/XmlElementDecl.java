@@ -188,5 +188,9 @@ public @interface XmlElementDecl {
      */
     String defaultValue() default "\u0000";
     
+    /**
+     * Used in {@link XmlElementDecl#scope()} to
+     * signal that the declaration is in the global scope.
+     */
     public final class GLOBAL {}
 }
