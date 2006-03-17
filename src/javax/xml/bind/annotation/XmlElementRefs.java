@@ -5,6 +5,7 @@
 
 package javax.xml.bind.annotation;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.FIELD;
