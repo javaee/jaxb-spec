@@ -80,7 +80,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <p><b>Example 3:</b> Customize elementFormDefault</p>
  * <pre>
  *    &#64;javax.xml.bind.annotation.XmlSchema (
- *      elementFormDefault=XmlNsForm.unqualified
+ *      elementFormDefault=XmlNsForm.UNQUALIFIED
  *      ...
  *    )
  * 
@@ -94,7 +94,7 @@ import static java.lang.annotation.RetentionPolicy.*;
 
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 @Retention(RUNTIME) @Target({PACKAGE})
