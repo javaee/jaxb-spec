@@ -1,5 +1,6 @@
 package javax.xml.bind.annotation;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
@@ -50,7 +51,7 @@ import java.lang.annotation.Target;
  *            {@link XmlElements},
  *            {@link XmlElementRef},
  *            {@link XmlElementRefs},
- *            {@link javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter}</li>.
+ *            {@link XmlJavaTypeAdapter}</li>.
  * </ul>
  *
  * <p>See "Package Specification" in javax.xml.bind.package javadoc for
@@ -75,12 +76,22 @@ public @interface XmlElementWrapper {
 
     /**
      * XML target namespace of the XML wrapper element.
-     * The default XML
-     * namespace is the XML namespace of the enclosing class of the
-     * Javabean property.
+     * <p>
+     * If the value is "##default", then the namespace is determined
+     * as follows:
+     * <ol>
+     *  <li>
+     *  If the enclosing package has {@link XmlSchema} annotation,
+     *  and its {@link XmlSchema#elementFormDefault() elementFormDefault}
+     *  is {@link XmlNsForm#QUALIFIED QUALIFIED}, then the namespace of
+     *  the enclosing class.
      *
+     *  <li>
+     *  Otherwise "" (which produces unqualified element in the default
+     *  namespace.
+     * </ol>
      */
-    String namespace() default "##default" ;
+    String namespace() default "##default";
 
     /**
      * If true, the absence of the collection is represented by

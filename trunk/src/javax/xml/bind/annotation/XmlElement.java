@@ -5,6 +5,7 @@
 
 package javax.xml.bind.annotation;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
@@ -38,7 +39,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *            {@link XmlMimeType},
  *            {@link XmlInlineBinaryData},
  *            {@link XmlElementWrapper},
- *            {@link javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter}</li>
+ *            {@link XmlJavaTypeAdapter}</li>
  *   <li> if the type of JavaBean property is a collection type of
  *        array, an indexed property, or a parameterized list, and
  *        this annotation is used with {@link XmlElements} then,
@@ -50,7 +51,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * A JavaBean property, when annotated with @XmlElement annotation
  * is mapped to a local element in the XML Schema complex type to
  * which the containing class is mapped.
- * 
+ *
  * <p>
  * <b>Example 1: </b> Map a public non static non final field to local
  * element
@@ -69,10 +70,10 @@ import static java.lang.annotation.RetentionPolicy.*;
  *     &lt;/xs:complexType>
  *   </pre>
  * <p>
- * 
+ *
  * <b> Example 2: </b> Map a field to a nillable element.
  *   <pre>
- * 
+ *
  *     //Example: Code fragment
  *     public class USPrice {
  *         &#64;XmlElement(nillable=true)
@@ -89,7 +90,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <p>
  * <b> Example 3: </b> Map a field to a nillable, required element.
  *   <pre>
- * 
+ *
  *     //Example: Code fragment
  *     public class USPrice {
  *         &#64;XmlElement(nillable=true, required=true)
@@ -104,23 +105,22 @@ import static java.lang.annotation.RetentionPolicy.*;
  *     &lt;/xs:complexType>
  *   </pre>
  * <p>
- * 
+ *
  * <p> <b>Example 4: </b>Map a JavaBean property to an XML element
- * with anonymous type.</p> 
+ * with anonymous type.</p>
  * <p>
  * See Example 6 in @{@link XmlType}.
- * 
- * <p> 
+ *
+ * <p>
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 
 @Retention(RUNTIME) @Target({FIELD, METHOD})
 public @interface XmlElement {
     /**
-     *
-     * Name of the XML Schema element. 
+     * Name of the XML Schema element.
      * <p> If the value is "##default", then element name is derived from the
      * JavaBean property name. 
      */
@@ -148,9 +148,21 @@ public @interface XmlElement {
     boolean required() default false;
 
     /**
-     * <p> XML target namespace of the XML Schema element. 
-     * <p> If the value is "##default", then the namespace is the
-     * namespace of the containing class.
+     * XML target namespace of the XML Schema element.
+     * <p>
+     * If the value is "##default", then the namespace is determined
+     * as follows:
+     * <ol>
+     *  <li>
+     *  If the enclosing package has {@link XmlSchema} annotation,
+     *  and its {@link XmlSchema#elementFormDefault() elementFormDefault}
+     *  is {@link XmlNsForm#QUALIFIED QUALIFIED}, then the namespace of
+     *  the enclosing class.
+     *
+     *  <li>
+     *  Otherwise "" (which produces unqualified element in the default
+     *  namespace.
+     * </ol>
      */
     String namespace() default "##default";
 
