@@ -16,9 +16,9 @@
     </description>
 
     <!-- properties -->
-    <property name="release.spec.title"    value="Final Release"/>
+    <property name="release.spec.title"    value="Pre-FCS Final Approval Ballot"/>
     <property name="release.spec.version"  value="2.0"/>
-    <property name="release.spec.date"     value="March 07, 2006"/>
+    <property name="release.spec.date"     value="March 28, 2006"/>
     <property name="release.spec.feedback" value="spec-comments@jsr222.dev.java.net"/>
     <property name="compilerarg"           value=""/>
 
