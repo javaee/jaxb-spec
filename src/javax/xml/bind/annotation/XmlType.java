@@ -360,7 +360,7 @@ import java.lang.annotation.Target;
  * @see XmlValue
  * @see XmlSchema
  * @since JAXB2.0
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 @Retention(RUNTIME) @Target({TYPE})
@@ -417,6 +417,11 @@ public @interface XmlType {
      */
     Class factoryClass() default DEFAULT.class;
 
+    /**
+     * Used in {@link XmlType#factoryClass()} to
+     * signal that either factory mehod is not used or
+     * that it's in the class with this {@link XmlType} itself. 
+     */
     static final class DEFAULT {}
 
     /**
