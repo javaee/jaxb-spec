@@ -37,6 +37,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  *            {@link XmlAttachmentRef},
  *            {@link XmlMimeType},
  *            {@link XmlInlineBinaryData},
+ *            {@link XmlElementWrapper},
  *            {@link javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter}</li>
  *   <li> if the type of JavaBean property is a collection type of
  *        array, an indexed property, or a parameterized list, and
@@ -112,7 +113,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <p> 
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since JAXB2.0
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 @Retention(RUNTIME) @Target({FIELD, METHOD})
