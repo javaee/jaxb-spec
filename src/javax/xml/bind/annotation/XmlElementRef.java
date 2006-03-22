@@ -86,7 +86,7 @@ import static java.lang.annotation.ElementType.METHOD;
  *         // element name will be derived from the &#64;XmlRootElement 
  *         // annotation on the type (for e.g. "jar" for JarTask). 
  *         &#64;XmlElementRef
- *         List<Task> tasks;
+ *         List&lt;Task> tasks;
  *     }
  *
  *     abstract class Task {
