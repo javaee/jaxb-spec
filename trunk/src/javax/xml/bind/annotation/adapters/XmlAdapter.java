@@ -74,7 +74,7 @@ import javax.xml.bind.Marshaller;
  *     &lt;xs:complexType name="myHashMapType">
  *       &lt;xs:sequence>
  *         &lt;xs:element name="entry" type="myHashMapEntryType"
- *                        maxOccurs="unbounded"/>
+ *                        minOccurs = "0" maxOccurs="unbounded"/>
  *       &lt;/xs:sequence>
  *     &lt;/xs:complexType>
  *
@@ -98,7 +98,7 @@ import javax.xml.bind.Marshaller;
  *
  *     public class MyHashMapEntryType {
  *         &#64;XmlAttribute
- *         public int key; 
+ *         public Integer key; 
  *
  *         &#64;XmlValue
  *         public String value;
