@@ -31,7 +31,7 @@ import static javax.xml.bind.JAXBContext.JAXB_CONTEXT_FACTORY;
  * This code is designed to implement the JAXB 1.0 spec pluggability feature
  *
  * @author <ul><li>Ryan Shoemaker, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  * @see JAXBContext
  */
 class ContextFinder {
@@ -95,8 +95,8 @@ class ContextFinder {
         throw new JAXBException(Messages.format(Messages.ILLEGAL_CAST,
                 // we don't care where the impl class is, we want to know where JAXBContext lives in the impl
                 // class' ClassLoader
-                originalType.getClass().getClassLoader().getResource("javax/xml/bind/JAXBContext.class").toString(),
-                targetTypeURL.toString()));
+                originalType.getClassLoader().getResource("javax/xml/bind/JAXBContext.class"),
+                targetTypeURL));
     }
 
     /**

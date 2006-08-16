@@ -268,10 +268,10 @@ import javax.xml.validation.Schema;
  * <blockquote>
  * <pre>
  *   // Invoked by Marshaller after it has created an instance of this object.
- *   boolean beforeMarshal(Marshaller, Object parent);
+ *   boolean beforeMarshal(Marshaller);
  * 
  *   // Invoked by Marshaller after it has marshalled all properties of this object.
- *   void afterMmarshal(Marshaller, Object parent);
+ *   void afterMmarshal(Marshaller);
  * </pre>
  * </blockquote>
  * The class defined event callback methods should be used when the callback method requires
@@ -289,7 +289,7 @@ import javax.xml.validation.Schema;
  * </blockquote>
  * 
  * @author <ul><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Ryan Shoemaker, Sun Microsystems, Inc.</li><li>Joe Fialli, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.11 $ $Date: 2006-03-09 22:19:02 $
+ * @version $Revision: 1.12 $ $Date: 2006-08-16 17:39:20 $
  * @see JAXBContext
  * @see Validator
  * @see Unmarshaller
