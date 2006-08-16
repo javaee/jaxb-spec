@@ -16,9 +16,9 @@
     </description>
 
     <!-- properties -->
-    <property name="release.spec.title"    value="Pre-FCS Final Approval Ballot"/>
-    <property name="release.spec.version"  value="2.0"/>
-    <property name="release.spec.date"     value="March 28, 2006"/>
+    <property name="release.spec.title"    value="Maintenance Release"/>
+    <property name="release.spec.version"  value="2.1-SNAPSHOT"/>
+    <property name="release.spec.date"     value="August 16, 2006"/>
     <property name="release.spec.feedback" value="spec-comments@jsr222.dev.java.net"/>
     <property name="compilerarg"           value=""/>
 
@@ -65,8 +65,14 @@
             depends="compile"
             description="create build/lib/jaxb-api.jar from compiled API sources">
         <jar jarfile="build/lib/jaxb-api.jar" 
-             basedir="build/classes"
-             manifest="manifest.mf"/>
+             basedir="build/classes">
+            <manifest>
+              <attribute name="Specification-Title" value="Java Architecture for XML Binding" />
+              <attribute name="Specification-Version" value="${release.spec.version}" />
+              <attribute name="Specification-Vendor" value="Sun Microsystems, Inc." />
+              <attribute name="Extension-Name" value="javax.xml.bind" />
+            </manifest>
+        </jar>
     </target>
 
     <!-- create the jaxb-api-doc.zip -->
