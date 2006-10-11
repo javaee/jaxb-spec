@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import javax.xml.bind.attachment.AttachmentMarshaller;
 import javax.xml.validation.Schema;
+import java.io.File;
 
 /**
  * <p>
@@ -289,35 +290,35 @@ import javax.xml.validation.Schema;
  * </blockquote>
  * 
  * @author <ul><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Ryan Shoemaker, Sun Microsystems, Inc.</li><li>Joe Fialli, Sun Microsystems, Inc.</li></ul>
- * @version $Revision: 1.12 $ $Date: 2006-08-16 17:39:20 $
+ * @version $Revision: 1.13 $ $Date: 2006-10-11 16:21:10 $
  * @see JAXBContext
  * @see Validator
  * @see Unmarshaller
  * @since JAXB1.0
  */
 public interface Marshaller {
-    
-    /** 
+
+    /**
      * The name of the property used to specify the output encoding in
      * the marshalled XML data.
      */
-    public static final String JAXB_ENCODING = 
+    public static final String JAXB_ENCODING =
         "jaxb.encoding";
 
-    /** 
+    /**
      * The name of the property used to specify whether or not the marshalled 
      * XML data is formatted with linefeeds and indentation. 
      */
-    public static final String JAXB_FORMATTED_OUTPUT = 
+    public static final String JAXB_FORMATTED_OUTPUT =
         "jaxb.formatted.output";
-    
-    /** 
+
+    /**
      * The name of the property used to specify the xsi:schemaLocation
      * attribute value to place in the marshalled XML output.
      */
-    public static final String JAXB_SCHEMA_LOCATION = 
+    public static final String JAXB_SCHEMA_LOCATION =
         "jaxb.schemaLocation";
-    
+
     /**
      * The name of the property used to specify the
      * xsi:noNamespaceSchemaLocation attribute value to place in the marshalled
@@ -362,7 +363,7 @@ public interface Marshaller {
      */
     public void marshal( Object jaxbElement, javax.xml.transform.Result result )
         throws JAXBException;
-     
+
     /**
      * Marshal the content tree rooted at <tt>jaxbElement</tt> into an output stream.
      * 
@@ -384,7 +385,30 @@ public interface Marshaller {
      */
     public void marshal( Object jaxbElement, java.io.OutputStream os )
         throws JAXBException;
-     
+
+    /**
+     * Marshal the content tree rooted at <tt>jaxbElement</tt> into a file.
+     *
+     * @param jaxbElement
+     *      The root of content tree to be marshalled.
+     * @param output
+     *      File to be written. If this file already exists, it will be overwritten.
+     *
+     * @throws JAXBException
+     *      If any unexpected problem occurs during the marshalling.
+     * @throws MarshalException
+     *      If the {@link ValidationEventHandler ValidationEventHandler}
+     *      returns false from its <tt>handleEvent</tt> method or the
+     *      <tt>Marshaller</tt> is unable to marshal <tt>obj</tt> (or any
+     *      object reachable from <tt>obj</tt>).  See <a href="#elementMarshalling">
+     *      Marshalling a JAXB element</a>.
+     * @throws IllegalArgumentException
+     *      If any of the method parameters are null
+     * @since JAXB2.1
+     */
+    public void marshal( Object jaxbElement, File output )
+        throws JAXBException;
+
     /**
      * Marshal the content tree rooted at <tt>jaxbElement</tt> into a Writer.
      * 
@@ -406,7 +430,7 @@ public interface Marshaller {
      */
     public void marshal( Object jaxbElement, java.io.Writer writer )
         throws JAXBException;
-     
+
     /**
      * Marshal the content tree rooted at <tt>jaxbElement</tt> into SAX2 events.
      * 
@@ -428,7 +452,7 @@ public interface Marshaller {
      */
     public void marshal( Object jaxbElement, org.xml.sax.ContentHandler handler )
         throws JAXBException;
-    
+
     /**
      * Marshal the content tree rooted at <tt>jaxbElement</tt> into a DOM tree.
      * 
@@ -454,7 +478,7 @@ public interface Marshaller {
      */
     public void marshal( Object jaxbElement, org.w3c.dom.Node node )
         throws JAXBException;
-    
+
     /**
      * Marshal the content tree rooted at <tt>jaxbElement</tt> into a
      * {@link javax.xml.stream.XMLStreamWriter}.
@@ -478,7 +502,7 @@ public interface Marshaller {
      */
     public void marshal( Object jaxbElement, javax.xml.stream.XMLStreamWriter writer )
         throws JAXBException;
-    
+
     /**
      * Marshal the content tree rooted at <tt>jaxbElement</tt> into a
      * {@link javax.xml.stream.XMLEventWriter}.
@@ -502,7 +526,7 @@ public interface Marshaller {
      */
     public void marshal( Object jaxbElement, javax.xml.stream.XMLEventWriter writer )
         throws JAXBException;
-    
+
     /**
      * Get a DOM tree view of the content tree(Optional).
      * 
@@ -528,7 +552,7 @@ public interface Marshaller {
      */
     public org.w3c.dom.Node getNode( java.lang.Object contentTree )
         throws JAXBException;
-    
+
     /**
      * Set the particular property in the underlying implementation of 
      * <tt>Marshaller</tt>.  This method can only be used to set one of
@@ -547,9 +571,9 @@ public interface Marshaller {
      * @throws IllegalArgumentException
      *      If the name parameter is null
      */
-    public void setProperty( String name, Object value ) 
-    	throws PropertyException;
-    
+    public void setProperty( String name, Object value )
+        throws PropertyException;
+
     /**
      * Get the particular property in the underlying implementation of 
      * <tt>Marshaller</tt>.  This method can only be used to get one of
@@ -568,7 +592,7 @@ public interface Marshaller {
      *      If the name parameter is null
      */
     public Object getProperty( String name ) throws PropertyException;
-    
+
     /**
      * Allow an application to register a validation event handler.
      * <p>
@@ -600,8 +624,8 @@ public interface Marshaller {
      */
     public ValidationEventHandler getEventHandler()
         throws JAXBException;
-        
-    
+
+
 
     /**
      * Associates a configured instance of {@link XmlAdapter} with this marshaller.
