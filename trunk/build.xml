@@ -18,7 +18,7 @@
     <!-- properties -->
     <property name="release.spec.title"    value="Maintenance Release"/>
     <property name="release.spec.version"  value="2.1-SNAPSHOT"/>
-    <property name="release.spec.date"     value="August 16, 2006"/>
+    <property name="release.spec.date"     value="October 11, 2006"/>
     <property name="release.spec.feedback" value="spec-comments@jsr222.dev.java.net"/>
     <property name="compilerarg"           value=""/>
 
