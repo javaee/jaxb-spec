@@ -5,9 +5,6 @@
 
 package javax.xml.bind.annotation.adapters;
 
-import javax.xml.bind.Unmarshaller;
-import javax.xml.bind.Marshaller;
-
 /**
  * Adapts a Java type for custom marshaling.
  *
@@ -110,7 +107,7 @@ import javax.xml.bind.Marshaller;
  *
  * <pre>
  *     public final class MyHashMapAdapter extends
- *                        XmlAdapter&lt;HashMap, MyHashMapType> { ... }
+ *                        XmlAdapter&lt;MyHashMapType,HashMap> { ... }
  *      
  * </pre>
  *
