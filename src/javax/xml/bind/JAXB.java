@@ -542,7 +542,9 @@ public final class JAXB {
                 }
             }
 
-            context.createMarshaller().marshal(jaxbObject, toResult(xml));
+            Marshaller m = context.createMarshaller();
+            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,true);
+            m.marshal(jaxbObject, toResult(xml));
         } catch (JAXBException e) {
             throw new DataBindingException(e);
         } catch (IOException e) {
