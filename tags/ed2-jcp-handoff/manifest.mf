@@ -1,5 +1,0 @@
-Manifest-Version: 1.0
-Specification-Title: Java Architecture for XML Binding
-Specification-Version: 2.0
-Specification-Vendor: Sun Microsystems, Inc.
-Extension-Name: javax.xml.bind
