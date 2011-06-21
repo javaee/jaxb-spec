@@ -168,7 +168,7 @@ href='http://jaxb.java.net'><i>http://jaxb.java.net</i></a>
                     <offlineLinks>
                         <offlineLink>
                             <url>http://download.oracle.com/javase/6/docs/api/</url>
-                            <location>../../../offline-javadoc</location>
+                            <location>${basedir}/offline-javadoc</location>
                         </offlineLink>
                     </offlineLinks>
                 </configuration>  
