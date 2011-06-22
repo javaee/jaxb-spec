@@ -86,9 +86,9 @@
     </licenses>
 
     <scm>
-        <connection>scm:svn:http://svn.java.net/svn/jsr222~svn/tags/jaxb-api-2.2.4</connection>
-        <developerConnection>scm:svn:https://svn.java.net/svn/jsr222~svn/tags/jaxb-api-2.2.4</developerConnection>
-        <url>http://java.net/projects/jsr222/sources/svn/show/tags/jaxb-api-2.2.4</url>
+        <connection>scm:svn:http://svn.java.net/svn/jsr222~svn/tags/jaxb-api-osgi-2.2.4</connection>
+        <developerConnection>scm:svn:https://svn.java.net/svn/jsr222~svn/tags/jaxb-api-osgi-2.2.4</developerConnection>
+        <url>http://java.net/projects/jsr222/sources/svn/show/tags/jaxb-api-osgi-2.2.4</url>
     </scm>
 
     <dependencies>
