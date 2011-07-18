@@ -44,11 +44,52 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <parent>
-        <relativePath>pom.xml</relativePath>
+        <groupId>net.java</groupId>
+        <artifactId>jvnet-parent</artifactId>
+        <version>1</version>
     </parent>
     
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>javax.xml.bind</groupId>
     <artifactId>jaxb-api-osgi</artifactId>
+    <version>2.2.1-SNAPSHOT</version>
     <packaging>bundle</packaging>
+
+    <name>Java Architecture for XML Binding</name>
+    <description>JAXB (JSR 222) API bundled for OSGi distribution</description>
+    <url>http://jaxb.java.net/</url>
+
+    <organization>
+        <name>Oracle Corporation</name>
+        <url>http://www.oracle.com/</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <name>Martin Grebac</name>
+            <email>martin.grebac@oracle.com</email>
+            <organization>Oracle Corporation</organization>
+        </developer>
+    </developers>
+    
+    <licenses>
+        <license>
+            <name>CDDL 1.1</name>
+            <url>https://glassfish.java.net/public/CDDL+GPL_1_1.html</url>
+            <distribution>repo</distribution>
+        </license>
+        <license>
+            <name>GPL2 w/ CPE</name>
+            <url>https://glassfish.java.net/public/CDDL+GPL_1_1.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:svn:http://svn.java.net/svn/jsr222~svn/branches/jaxb-2_1</connection>
+        <developerConnection>scm:svn:https://svn.java.net/svn/jsr222~svn/branches/jaxb-2_1</developerConnection>
+        <url>http://java.net/projects/jsr222/sources/svn/show/branches/jaxb-2_1</url>
+    </scm>
 
     <dependencies>
         <dependency>
@@ -62,6 +103,11 @@
             <version>1.1</version>
         </dependency>
     </dependencies>
+    
+    <properties>
+        <release.spec.feedback>spec-comments@jsr222.java.net</release.spec.feedback>
+        <release.spec.date>Dec 2006</release.spec.date>
+    </properties>
     
     <build>
  
@@ -177,5 +223,35 @@ href='http://jaxb.java.net'><i>http://jaxb.java.net</i></a>
         </plugins>
 
     </build>    
+
+    <profiles>
+        <profile>
+            <id>release-sign-artifacts</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.1</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>
