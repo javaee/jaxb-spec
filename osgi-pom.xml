@@ -91,19 +91,6 @@
         <url>http://java.net/projects/jsr222/sources/svn/show/branches/jaxb-2_2</url>
     </scm>
 
-    <dependencies>
-        <dependency>
-            <groupId>javax.xml.stream</groupId>
-            <artifactId>stax-api</artifactId>
-            <version>1.0-2</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.activation</groupId>
-            <artifactId>activation</artifactId>
-            <version>1.1</version>
-        </dependency>
-    </dependencies>
-    
     <properties>
         <release.spec.feedback>spec-comments@jsr222.java.net</release.spec.feedback>
         <release.spec.date>Dec 2009</release.spec.date>
