@@ -56,7 +56,6 @@ import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.security.AccessController;
-import java.security.PrivilegedAction;
 
 import static javax.xml.bind.JAXBContext.JAXB_CONTEXT_FACTORY;
 
@@ -130,7 +129,7 @@ class ContextFinder {
         return new JAXBException(Messages.format(Messages.ILLEGAL_CAST,
                 // we don't care where the impl class is, we want to know where JAXBContext lives in the impl
                 // class' ClassLoader
-                originalType.getClassLoader().getResource("javax/xml/bind/JAXBContext.class"),
+                getClassClassLoader(originalType).getResource("javax/xml/bind/JAXBContext.class"),
                 targetTypeURL));
     }
 
@@ -234,7 +233,7 @@ class ContextFinder {
                               Class[] classes,
                               Map properties,
                               String className) throws JAXBException {
-        ClassLoader cl = Thread.currentThread().getContextClassLoader();
+        ClassLoader cl = getContextClassLoader();
         Class spi;
         try {
             spi = safeLoadClass(className,cl);
@@ -326,7 +325,7 @@ class ContextFinder {
             }
         }
         
-        if (Thread.currentThread().getContextClassLoader() == classLoader) {
+        if (getContextClassLoader() == classLoader) {
             Class factory = lookupUsingOSGiServiceLoader("javax.xml.bind.JAXBContext");
             if (factory != null) {
                 logger.fine("OSGi environment detected");
@@ -370,11 +369,7 @@ class ContextFinder {
         // search for jaxb.properties in the class loader of each class first
         for (final Class c : classes) {
             // this classloader is used only to load jaxb.properties, so doing this should be safe.
-            ClassLoader classLoader = AccessController.doPrivileged(new PrivilegedAction<ClassLoader>() {
-                public ClassLoader run() {
-                    return c.getClassLoader();
-                }
-            });
+            ClassLoader classLoader = getClassClassLoader(c);
             Package pkg = c.getPackage();
             if(pkg==null)
                 continue;       // this is possible for primitives, arrays, and classes that are loaded by poorly implemented ClassLoaders
@@ -433,7 +428,7 @@ class ContextFinder {
         BufferedReader r;
         try {
             final String resource = new StringBuilder("META-INF/services/").append(jaxbContextFQCN).toString();
-            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+            ClassLoader classLoader = getContextClassLoader();
             URL resourceURL;
             if(classLoader==null)
                 resourceURL = ClassLoader.getSystemResource(resource);
@@ -539,7 +534,7 @@ class ContextFinder {
      *          the URL for the class or null if it wasn't found
      */
     static URL which(Class clazz) {
-        return which(clazz, clazz.getClassLoader());
+        return which(clazz, getClassClassLoader(clazz));
     }
 
     /**
@@ -584,6 +579,32 @@ class ContextFinder {
            }
            throw se;
        }
+    }
+
+    private static ClassLoader getContextClassLoader() {
+        if (System.getSecurityManager() == null) {
+            return Thread.currentThread().getContextClassLoader();
+        } else {
+            return (ClassLoader) java.security.AccessController.doPrivileged(
+                    new java.security.PrivilegedAction() {
+                        public java.lang.Object run() {
+                            return Thread.currentThread().getContextClassLoader();
+                        }
+                    });
+        }
+    }
+
+    private static ClassLoader getClassClassLoader(final Class c) {
+        if (System.getSecurityManager() == null) {
+            return c.getClassLoader();
+        } else {
+            return (ClassLoader) java.security.AccessController.doPrivileged(
+                    new java.security.PrivilegedAction() {
+                        public java.lang.Object run() {
+                            return c.getClassLoader();
+                        }
+                    });
+        }
     }
 
 }

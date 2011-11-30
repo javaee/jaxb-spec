@@ -310,7 +310,7 @@ public abstract class JAXBContext {
         throws JAXBException {
             
         //return newInstance( contextPath, JAXBContext.class.getClassLoader() );
-        return newInstance( contextPath, Thread.currentThread().getContextClassLoader() );
+        return newInstance( contextPath, getContextClassLoader());
     }
     
     /**
@@ -762,4 +762,18 @@ public abstract class JAXBContext {
         // abstract
         throw new UnsupportedOperationException();
     }
+    
+    private static ClassLoader getContextClassLoader() {
+        if (System.getSecurityManager() == null) {
+            return Thread.currentThread().getContextClassLoader();
+        } else {
+            return (ClassLoader) java.security.AccessController.doPrivileged(
+                    new java.security.PrivilegedAction() {
+                        public java.lang.Object run() {
+                            return Thread.currentThread().getContextClassLoader();
+                        }
+                    });
+        }
+    }
+    
 }
