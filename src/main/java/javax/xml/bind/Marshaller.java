@@ -386,7 +386,7 @@ public interface Marshaller {
      * 
      * @throws JAXBException
      *      If any unexpected problem occurs during the marshalling.
-     * @throws MarshalException
+     * @throws MarshalException`
      *      If the {@link ValidationEventHandler ValidationEventHandler}
      *      returns false from its <tt>handleEvent</tt> method or the 
      *      <tt>Marshaller</tt> is unable to marshal <tt>obj</tt> (or any 

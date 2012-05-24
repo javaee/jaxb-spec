@@ -233,7 +233,7 @@ import java.io.InputStream;
  * For each package/class explicitly passed in to the {@link #newInstance} method, in the order they are specified,
  * <tt>jaxb.properties</tt> file is looked up in its package, by using the associated classloader &mdash;
  * this is {@link Class#getClassLoader() the owner class loader} for a {@link Class} argument, and for a package
- * the speified {@link ClassLoader}.
+ * the specified {@link ClassLoader}.
  *
  * <p>
  * If such a file is discovered, it is {@link Properties#load(InputStream) loaded} as a property file, and

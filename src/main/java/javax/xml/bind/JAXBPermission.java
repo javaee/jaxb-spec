@@ -40,7 +40,6 @@
 
 package javax.xml.bind;
 
-import java.awt.*;
 import java.security.BasicPermission;
 
 /**
