@@ -3,7 +3,7 @@
 
     DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 
-    Copyright (c) 1997-2011 Oracle and/or its affiliates. All rights reserved.
+    Copyright (c) 1997-2012 Oracle and/or its affiliates. All rights reserved.
 
     The contents of this file are subject to the terms of either the GNU
     General Public License Version 2 only ("GPL") or the Common Development
@@ -131,6 +131,43 @@
                             <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                         </manifest>
                     </archive>
+                </configuration>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <version>2.3.4</version>
+                <configuration>
+                    <instructions>
+                        <Export-Package>{local-packages};version="${project.version}"</Export-Package>
+                        <Import-Package>
+                            javax.activation,
+                            javax.xml.bind;version="${project.version}",
+                            javax.xml.bind.annotation;version="${project.version}",
+                            javax.xml.bind.annotation.adapters;version="${project.version}",
+                            javax.xml.bind.attachment;version="${project.version}",
+                            javax.xml.bind.helpers;version="${project.version}",
+                            javax.xml.bind.util;version="${project.version}",
+                            javax.xml.datatype,
+                            javax.xml.namespace,
+                            javax.xml.parsers,
+                            javax.xml.stream,
+                            javax.xml.transform,
+                            javax.xml.transform.dom,
+                            javax.xml.transform.sax,
+                            javax.xml.transform.stream,
+                            javax.xml.validation,
+                            org.w3c.dom,
+                            org.xml.sax,
+                            org.xml.sax.ext,
+                            org.xml.sax.helpers    
+                        </Import-Package>
+                        <Bundle-SymbolicName>jaxb-api</Bundle-SymbolicName>
+                        <Bundle-Name>jaxb-api</Bundle-Name>
+                        <DynamicImport-Package>org.glassfish.hk2.osgiresourcelocator</DynamicImport-Package>
+                    </instructions>
                 </configuration>
             </plugin>
             
