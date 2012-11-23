@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2003-2011 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2003-2012 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -68,7 +68,7 @@ import java.io.InputStream;
  *   that must be processed. (see JLS, Section 7.4.1 "Named Packages").
  *   </li>
  *   <li>{@link #newInstance(Class...) JAXBContext.newInstance( com.acme.foo.Foo.class )} <br/>
- *    The JAXBContext instance is intialized with class(es) 
+ *    The JAXBContext instance is initialized with class(es) 
  *    passed as parameter(s) and classes that are statically reachable from 
  *    these class(es). See {@link #newInstance(Class...)} for details.
  *   </li>
@@ -642,12 +642,16 @@ public abstract class JAXBContext {
     public static JAXBContext newInstance( Class[] classesToBeBound, Map<String,?> properties )
         throws JAXBException {
 
-        if (classesToBeBound == null) throw new IllegalArgumentException();
+        if (classesToBeBound == null) {
+                throw new IllegalArgumentException();
+        }
 
         // but it is an error to have nulls in it.
-        for( int i=classesToBeBound.length-1; i>=0; i-- )
-            if(classesToBeBound[i]==null)
+        for (int i = classesToBeBound.length - 1; i >= 0; i--) {
+            if (classesToBeBound[i] == null) {
                 throw new IllegalArgumentException();
+            }
+        }
 
         return ContextFinder.find(classesToBeBound,properties);
     }
