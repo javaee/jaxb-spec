@@ -324,13 +324,12 @@ class ContextFinder {
                 return newInstance( contextPath, factoryClassName, classLoader, properties );
             }
         }
-        
-        if (getContextClassLoader() == classLoader) {
-            Class factory = lookupUsingOSGiServiceLoader("javax.xml.bind.JAXBContext");
-            if (factory != null) {
-                logger.fine("OSGi environment detected");
-                return newInstance(contextPath, factory, classLoader, properties);
-            }
+
+        // OSGi search
+        Class jaxbContext = lookupJaxbContextUsingOsgiServiceLoader();
+        if (jaxbContext != null) {
+            logger.fine("OSGi environment detected");
+            return newInstance(contextPath, jaxbContext, classLoader, properties);
         }
 
         logger.fine("Searching META-INF/services");
@@ -417,10 +416,11 @@ class ContextFinder {
             }
         }
 
-        Class factory = lookupUsingOSGiServiceLoader("javax.xml.bind.JAXBContext");
-        if (factory != null) {
+        // OSGi search
+        Class jaxbContext = lookupJaxbContextUsingOsgiServiceLoader();
+        if (jaxbContext != null) {
             logger.fine("OSGi environment detected");
-            return newInstance(classes, properties, factory);
+            return newInstance(classes, properties, jaxbContext);
         }
 
         // search META-INF services next
@@ -455,16 +455,15 @@ class ContextFinder {
         return newInstance(classes, properties, PLATFORM_DEFAULT_FACTORY_CLASS);
     }
 
-    private static Class lookupUsingOSGiServiceLoader(String factoryId) {
+    private static Class lookupJaxbContextUsingOsgiServiceLoader() {
         try {
-            // Use reflection to avoid having any dependendcy on ServiceLoader class
-            Class serviceClass = Class.forName(factoryId);
+            // Use reflection to avoid having any dependency on ServiceLoader class
             Class target = Class.forName("org.glassfish.hk2.osgiresourcelocator.ServiceLoader");
             Method m = target.getMethod("lookupProviderClasses", Class.class);
-            Iterator iter = ((Iterable) m.invoke(null, serviceClass)).iterator();
+            Iterator iter = ((Iterable) m.invoke(null, JAXBContext.class)).iterator();
             return iter.hasNext() ? (Class)iter.next() : null;
         } catch(Exception e) {
-            logger.log(Level.FINE, "Unable to find from OSGi: {0}", factoryId);
+            logger.log(Level.FINE, "Unable to find from OSGi: javax.xml.bind.JAXBContext");
             return null;
         }
     }
