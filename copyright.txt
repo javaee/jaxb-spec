@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2005-2013 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) YYYY Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -37,28 +37,3 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-
-package javax.xml.bind.annotation;
-
-/**
- * Used by XmlAccessorOrder to control the ordering of properties and
- * fields in a JAXB bound class.
- *
- * @author Sekhar Vajjhala, Sun Microsystems, Inc.
- * @since JAXB2.0
- * @see XmlAccessorOrder
- */
-
-public enum XmlAccessOrder { 
-    /**
-     * The ordering of fields and properties in a class is undefined. 
-     */
-    UNDEFINED,
-    /**
-     * The ordering of fields and properties in a class is in
-     * alphabetical order as determined by the
-     * method java.lang.String.compareTo(String anotherString).
-     */
-    ALPHABETICAL
-}
-

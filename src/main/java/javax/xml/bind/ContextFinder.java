@@ -1,14 +1,14 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2003-2011 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2003-2013 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
  * and Distribution License("CDDL") (collectively, the "License").  You
  * may not use this file except in compliance with the License.  You can
  * obtain a copy of the License at
- * https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
+ * http://glassfish.java.net/public/CDDL+GPL_1_1.html
  * or packager/legal/LICENSE.txt.  See the License for the specific
  * language governing permissions and limitations under the License.
  *
@@ -334,7 +334,7 @@ class ContextFinder {
 
         logger.fine("Searching META-INF/services");
         // search META-INF services next
-        BufferedReader r;
+        BufferedReader r = null;
         try {
             final StringBuilder resource = new StringBuilder().append("META-INF/services/").append(jaxbContextFQCN);
             final InputStream resourceStream =
@@ -342,7 +342,10 @@ class ContextFinder {
 
             if (resourceStream != null) {
                 r = new BufferedReader(new InputStreamReader(resourceStream, "UTF-8"));
-                factoryClassName = r.readLine().trim();
+                factoryClassName = r.readLine();
+                if (factoryClassName != null) {
+                    factoryClassName = factoryClassName.trim();
+                }
                 r.close();
                 return newInstance(contextPath, factoryClassName, classLoader, properties);
             } else {
@@ -353,6 +356,14 @@ class ContextFinder {
             throw new JAXBException(e);
         } catch (IOException e) {
             throw new JAXBException(e);
+        } finally {
+            try {
+                if (r != null) {
+                    r.close();
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(ContextFinder.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         // else no provider found
@@ -425,7 +436,7 @@ class ContextFinder {
 
         // search META-INF services next
         logger.fine("Checking META-INF/services");
-        BufferedReader r;
+        BufferedReader r = null;
         try {
             final String resource = new StringBuilder("META-INF/services/").append(jaxbContextFQCN).toString();
             ClassLoader classLoader = getContextClassLoader();
@@ -438,7 +449,10 @@ class ContextFinder {
             if (resourceURL != null) {
                 logger.log(Level.FINE, "Reading {0}", resourceURL);
                 r = new BufferedReader(new InputStreamReader(resourceURL.openStream(), "UTF-8"));
-                factoryClassName = r.readLine().trim();
+                factoryClassName = r.readLine();
+                if (factoryClassName != null) {
+                    factoryClassName = factoryClassName.trim();
+                }
                 return newInstance(classes, properties, factoryClassName);
             } else {
                 logger.log(Level.FINE, "Unable to find: {0}", resource);
@@ -448,6 +462,14 @@ class ContextFinder {
             throw new JAXBException(e);
         } catch (IOException e) {
             throw new JAXBException(e);
+        } finally {
+            if (r != null) {
+                try {
+                    r.close();
+                } catch (IOException ex) {
+                    logger.log(Level.FINE, "Unable to close stream", ex);
+                }
+            }
         }
   
         // else no provider found
