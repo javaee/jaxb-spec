@@ -307,7 +307,7 @@ import java.io.File;
  *   boolean beforeMarshal(Marshaller);
  * 
  *   // Invoked by Marshaller after it has marshalled all properties of this object.
- *   void afterMmarshal(Marshaller);
+ *   void afterMarshal(Marshaller);
  * </pre>
  * </blockquote>
  * The class defined event callback methods should be used when the callback method requires
