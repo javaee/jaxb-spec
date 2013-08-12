@@ -190,9 +190,7 @@ import java.io.File;
  * encoding used during these marshal operations.  Client applications are
  * expected to supply a valid character encoding name as defined in the
  * <a href="http://www.w3.org/TR/2000/REC-xml-20001006#charencoding">W3C XML 1.0
- * Recommendation</a> and supported by your 
- * <a href="http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc">
- * Java Platform</a>.
+ * Recommendation</a> and supported by your Java Platform</a>.
  * </blockquote>
  * 
  * <p>
