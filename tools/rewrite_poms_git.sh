@@ -15,7 +15,7 @@ command -v git > /dev/null 2>&1 || {
 GIT=$(command -v git 2>&1)
 LAST_GIT_COMMIT=$(${GIT} rev-parse --short HEAD) || exit 1
 
-CURRENT_VERSION=2.2.8
+CURRENT_VERSION=2.2.12
 
 DATESTAMP=`date +%y%m%d.%H%M`
 BUILD_NUMBER=b${DATESTAMP}
