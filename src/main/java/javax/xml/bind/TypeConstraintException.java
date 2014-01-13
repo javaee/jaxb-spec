@@ -72,8 +72,9 @@ public class TypeConstraintException extends java.lang.RuntimeException {
      * Exception reference
      *
      */
-    private Throwable linkedException;
+    private volatile Throwable linkedException;
 
+    static final long serialVersionUID = -3059799699420143848L;
 
     /** 
      * Construct a TypeConstraintException with the specified detail message.  The 
@@ -156,7 +157,7 @@ public class TypeConstraintException extends java.lang.RuntimeException {
      *                  indicates that the linked exception does not exist or
      *                  is unknown).
      */
-    public synchronized void setLinkedException( Throwable exception ) {
+    public void setLinkedException( Throwable exception ) {
         this.linkedException = exception;
     }
     
