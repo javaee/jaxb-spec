@@ -117,6 +117,26 @@
                 </excludes>
             </resource>
         </resources>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.glassfish.build</groupId>
+                    <artifactId>gfnexus-maven-plugin</artifactId>
+                    <version>0.16</version>
+                    <configuration>
+                        <stagingRepos>
+                            <stagingRepo>
+                                <ref>javax.xml.bind:jaxb-api:${project.version}:jar</ref>
+                                <profile>javax.xml.bind</profile>
+                            </stagingRepo>
+                        </stagingRepos>
+                        <promotionProfile>metro</promotionProfile>
+                        <message>JAXB_API-${project.version}</message>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         
         <plugins>
             <plugin>
@@ -350,6 +370,10 @@ href='http://jaxb.java.net'><i>http://jaxb.java.net</i></a>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
                 <version>1.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.glassfish.build</groupId>
+                <artifactId>gfnexus-maven-plugin</artifactId>
             </plugin>
         </plugins>
 
