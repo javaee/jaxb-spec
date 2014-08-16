@@ -65,7 +65,7 @@ import javax.xml.bind.Marshaller;
  * @author Marc Hadley
  * @author Kohsuke Kawaguchi
  * @author Joseph Fialli
- * @since JAXB 2.0
+ * @since 1.6, JAXB 2.0
  * 
  * @see Marshaller#setAttachmentMarshaller(AttachmentMarshaller)
  * 

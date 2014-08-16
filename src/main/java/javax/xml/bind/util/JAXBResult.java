@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2003-2013 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2003-2014 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -86,6 +86,7 @@ import javax.xml.transform.sax.SAXResult;
  * 
  * @author
  * 	Kohsuke Kawaguchi (kohsuke.kawaguchi@sun.com)
+ * @since 1.6
  */
 public class JAXBResult extends SAXResult {
 

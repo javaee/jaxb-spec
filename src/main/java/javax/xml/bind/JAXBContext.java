@@ -272,7 +272,7 @@ import java.io.InputStream;
  * @see Marshaller
  * @see Unmarshaller
  * @see S 7.4.1 "Named Packages" in Java Language Specification</a>
- * @since JAXB1.0
+ * @since 1.6, JAXB 1.0
  */
 public abstract class JAXBContext {
     
@@ -438,7 +438,7 @@ public abstract class JAXBContext {
      *   <li>failure to locate a value for the context factory provider property</li>
      *   <li>mixing schema derived packages from different providers on the same contextPath</li>
      * </ol>
-     * @since JAXB2.0
+     * @since 1.6, JAXB 2.0
      */
     public static JAXBContext newInstance( String contextPath, ClassLoader classLoader, Map<String,?>  properties  )
         throws JAXBException {
@@ -512,7 +512,7 @@ public abstract class JAXBContext {
 //     * @throws IllegalArgumentException
 //     *      if the parameter contains {@code null} (i.e., {@code newInstance(null);})
 //     *
-//     * @since JAXB2.0
+//     * @since JAXB 2.0
 //     */
 //    public static JAXBContext newInstance( Source[] externalBindings, Class... classesToBeBound )
 //        throws JAXBException {
@@ -591,7 +591,7 @@ public abstract class JAXBContext {
      * @throws IllegalArgumentException
      *      if the parameter contains {@code null} (i.e., {@code newInstance(null);})
      *
-     * @since JAXB2.0
+     * @since 1.6, JAXB 2.0
      */
     public static JAXBContext newInstance( Class... classesToBeBound )
         throws JAXBException {
@@ -637,7 +637,7 @@ public abstract class JAXBContext {
      * @throws IllegalArgumentException
      *      if the parameter contains {@code null} (i.e., {@code newInstance(null,someMap);})
      *
-     * @since JAXB2.0
+     * @since 1.6, JAXB 2.0
      */
     public static JAXBContext newInstance( Class[] classesToBeBound, Map<String,?> properties )
         throws JAXBException {
@@ -707,7 +707,7 @@ public abstract class JAXBContext {
      *      if DOM API corresponding to <tt>domType</tt> is not supported by 
      *      the implementation.
      *
-     * @since JAXB2.0
+     * @since 1.6, JAXB 2.0
      */
     public <T> Binder<T> createBinder(Class<T> domType) {
         // to make JAXB 1.0 implementations work, this method must not be
@@ -720,7 +720,7 @@ public abstract class JAXBContext {
      *
      * @return always a new valid <tt>Binder</tt> object.
      *
-     * @since JAXB2.0
+     * @since 1.6, JAXB 2.0
      */
     public Binder<Node> createBinder() {
         return createBinder(Node.class);
@@ -737,7 +737,7 @@ public abstract class JAXBContext {
      *      Calling this method on JAXB 1.0 implementations will throw
      *      an UnsupportedOperationException.
      *  
-     * @since JAXB2.0
+     * @since 1.6, JAXB 2.0
      */
     public JAXBIntrospector createJAXBIntrospector() {
         // to make JAXB 1.0 implementations work, this method must not be
@@ -759,7 +759,7 @@ public abstract class JAXBContext {
      *      Calling this method on JAXB 1.0 implementations will throw
      *      an UnsupportedOperationException.
      *
-     * @since JAXB 2.0
+     * @since 1.6, JAXB 2.0
      */
     public void generateSchema(SchemaOutputResolver outputResolver) throws IOException  {
         // to make JAXB 1.0 implementations work, this method must not be

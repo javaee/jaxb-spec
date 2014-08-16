@@ -326,7 +326,7 @@ import java.io.File;
  * @see JAXBContext
  * @see Validator
  * @see Unmarshaller
- * @since JAXB1.0
+ * @since 1.6, JAXB 1.0
  */
 public interface Marshaller {
 
@@ -436,7 +436,7 @@ public interface Marshaller {
      *      Marshalling a JAXB element</a>.
      * @throws IllegalArgumentException
      *      If any of the method parameters are null
-     * @since JAXB2.1
+     * @since 1.6, JAXB 2.1
      */
     public void marshal( Object jaxbElement, File output )
         throws JAXBException;
@@ -530,7 +530,7 @@ public interface Marshaller {
      *      Marshalling a JAXB element</a>.
      * @throws IllegalArgumentException
      *      If any of the method parameters are null
-     * @since JAXB 2.0
+     * @since 1.6, JAXB 2.0
      */
     public void marshal( Object jaxbElement, javax.xml.stream.XMLStreamWriter writer )
         throws JAXBException;
@@ -554,7 +554,7 @@ public interface Marshaller {
      *      Marshalling a JAXB element</a>.
      * @throws IllegalArgumentException
      *      If any of the method parameters are null
-     * @since JAXB 2.0
+     * @since 1.6, JAXB 2.0
      */
     public void marshal( Object jaxbElement, javax.xml.stream.XMLEventWriter writer )
         throws JAXBException;
@@ -670,7 +670,7 @@ public interface Marshaller {
      *      if the adapter parameter is null.
      * @throws UnsupportedOperationException
      *      if invoked agains a JAXB 1.0 implementation.
-     * @since JAXB 2.0
+     * @since 1.6, JAXB 2.0
      */
     public void setAdapter( XmlAdapter adapter );
 
@@ -699,7 +699,7 @@ public interface Marshaller {
      *      if the type parameter is null.
      * @throws UnsupportedOperationException
      *      if invoked agains a JAXB 1.0 implementation.
-     * @since JAXB 2.0
+     * @since 1.6, JAXB 2.0
      */
     public <A extends XmlAdapter> void setAdapter( Class<A> type, A adapter );
 
@@ -712,7 +712,7 @@ public interface Marshaller {
      *      if the type parameter is null.
      * @throws UnsupportedOperationException
      *      if invoked agains a JAXB 1.0 implementation.
-     * @since JAXB 2.0
+     * @since 1.6, JAXB 2.0
      */
     public <A extends XmlAdapter> A getAdapter( Class<A> type );
 
@@ -745,7 +745,7 @@ public interface Marshaller {
      * @throws UnsupportedOperationException could be thrown if this method is
      *         invoked on an Marshaller created from a JAXBContext referencing
      *         JAXB 1.0 mapped classes
-     * @since JAXB2.0
+     * @since 1.6, JAXB 2.0
      */
     public void setSchema( Schema schema );
 
@@ -760,7 +760,7 @@ public interface Marshaller {
      * @throws UnsupportedOperationException could be thrown if this method is
      *         invoked on an Marshaller created from a JAXBContext referencing
      *         JAXB 1.0 mapped classes
-     * @since JAXB2.0
+     * @since 1.6, JAXB 2.0
      */
     public Schema getSchema();
 
@@ -781,7 +781,7 @@ public interface Marshaller {
      *
      * @see Marshaller#setListener(Listener)
      * @see Marshaller#getListener()
-     * @since JAXB2.0
+     * @since 1.6, JAXB 2.0
      */
     public static abstract class Listener {
         /**
@@ -822,7 +822,7 @@ public interface Marshaller {
      * One can unregister current Listener by setting listener to <tt>null</tt>.
      *
      * @param listener an instance of a class that implements {@link Listener}
-     * @since JAXB2.0
+     * @since 1.6, JAXB 2.0
      */
     public void setListener(Listener listener);
 
@@ -830,7 +830,7 @@ public interface Marshaller {
      * <p>Return {@link Listener} registered with this {@link Marshaller}.
      * 
      * @return registered {@link Listener} or <code>null</code> if no Listener is registered with this Marshaller.
-     * @since JAXB2.0
+     * @since 1.6, JAXB 2.0
      */
     public Listener getListener();
 }

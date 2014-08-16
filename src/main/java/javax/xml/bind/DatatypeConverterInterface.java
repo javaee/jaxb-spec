@@ -93,7 +93,7 @@ package javax.xml.bind;
  * @see DatatypeConverter
  * @see ParseConversionEvent
  * @see PrintConversionEvent
- * @since JAXB1.0
+ * @since 1.6, JAXB 1.0
  */
 
 public interface DatatypeConverterInterface {

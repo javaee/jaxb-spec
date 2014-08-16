@@ -80,7 +80,7 @@ package javax.xml.bind;
  * @see Marshaller
  * @see ValidationEvent
  * @see javax.xml.bind.util.ValidationEventCollector
- * @since JAXB1.0
+ * @since 1.6, JAXB 1.0
  */
 public interface ValidationEventHandler {
     /**

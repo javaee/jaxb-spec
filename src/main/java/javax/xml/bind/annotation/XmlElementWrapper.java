@@ -102,7 +102,7 @@ import java.lang.annotation.Target;
  * @see XmlElements
  * @see XmlElementRef
  * @see XmlElementRefs
- * @since JAXB2.0
+ * @since 1.6, JAXB 2.0
  *
  */
 
@@ -154,7 +154,7 @@ public @interface XmlElementWrapper {
      * simply a mechanism to let users express their application constraints
      * better.
      *
-     * @since JAXB 2.1
+     * @since 1.6, JAXB 2.1
      */
     boolean required() default false;
 }
