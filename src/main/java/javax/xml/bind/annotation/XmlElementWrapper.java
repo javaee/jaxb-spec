@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2005-2013 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005-2014 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -59,15 +59,15 @@ import java.lang.annotation.Target;
  *      int[] names;
  *
  *    // XML Serialization Form 1 (Unwrapped collection)
- *    &lt;names> ... &lt;/names>
- *    &lt;names> ... &lt;/names>
+ *    &lt;names&gt; ... &lt;/names&gt;
+ *    &lt;names&gt; ... &lt;/names&gt;
  * 
  *    // XML Serialization Form 2 ( Wrapped collection )
- *    &lt;wrapperElement>
- *       &lt;names> value-of-item &lt;/names>
- *       &lt;names> value-of-item &lt;/names>
+ *    &lt;wrapperElement&gt;
+ *       &lt;names&gt; value-of-item &lt;/names&gt;
+ *       &lt;names&gt; value-of-item &lt;/names&gt;
  *       ....
- *    &lt;/wrapperElement>
+ *    &lt;/wrapperElement&gt;
  * </pre>
  *
  * <p> The two serialized XML forms allow a null collection to be

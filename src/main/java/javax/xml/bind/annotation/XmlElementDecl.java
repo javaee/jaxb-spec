@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2004-2013 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2004-2014 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -77,23 +77,23 @@ import static java.lang.annotation.ElementType.METHOD;
  *     &#64;XmlRegistry
  *     class ObjectFactory {
  *         &#64;XmlElementDecl(name="foo")
- *         JAXBElement&lt;String> createFoo(String s) { ... }
+ *         JAXBElement&lt;String&gt; createFoo(String s) { ... }
  *     }
  * </pre>
  * <pre> 
- *     &lt;!-- XML input -->
- *       &lt;foo>string</foo>
+ *     &lt;!-- XML input --&gt;
+ *       &lt;foo&gt;string&lt;/foo&gt;
  *
  *     // Example: code fragment corresponding to XML input
- *     JAXBElement<String> o =
- *     (JAXBElement<String>)unmarshaller.unmarshal(aboveDocument);
+ *     JAXBElement&lt;String&gt; o =
+ *     (JAXBElement&lt;String&gt;)unmarshaller.unmarshal(aboveDocument);
  *     // print JAXBElement instance to show values
  *     System.out.println(o.getName());   // prints  "{}foo"
  *     System.out.println(o.getValue());  // prints  "string"
  *     System.out.println(o.getValue().getClass()); // prints "java.lang.String"
  *
- *     &lt;!-- Example: XML schema definition -->
- *     &lt;xs:element name="foo" type="xs:string"/>
+ *     &lt;!-- Example: XML schema definition --&gt;
+ *     &lt;xs:element name="foo" type="xs:string"/&gt;
  * </pre>
  *
  * <p><b>Example 2: </b> Element declaration with non local scope
@@ -106,16 +106,16 @@ import static java.lang.annotation.ElementType.METHOD;
  * this javadoc.
  * 
  * <pre>
- *     &lt;!-- Example: XML schema definition -->
- *     &lt;xs:schema>
- *       &lt;xs:complexType name="pea">
- *         &lt;xs:choice maxOccurs="unbounded">
- *           &lt;xs:element name="foo" type="xs:string"/>
- *           &lt;xs:element name="bar" type="xs:string"/>
- *         &lt;/xs:choice>
- *       &lt;/xs:complexType> 
- *       &lt;xs:element name="foo" type="xs:int"/>
- *     &lt;/xs:schema>
+ *     &lt;!-- Example: XML schema definition --&gt;
+ *     &lt;xs:schema&gt;
+ *       &lt;xs:complexType name="pea"&gt;
+ *         &lt;xs:choice maxOccurs="unbounded"&gt;
+ *           &lt;xs:element name="foo" type="xs:string"/&gt;
+ *           &lt;xs:element name="bar" type="xs:string"/&gt;
+ *         &lt;/xs:choice&gt;
+ *       &lt;/xs:complexType&gt;
+ *       &lt;xs:element name="foo" type="xs:int"/&gt;
+ *     &lt;/xs:schema&gt;
  * </pre> 
  * <pre>
  *     // Example: expected default binding
@@ -124,19 +124,19 @@ import static java.lang.annotation.ElementType.METHOD;
  *             &#64;XmlElementRef(name="foo",type=JAXBElement.class)
  *             &#64;XmlElementRef(name="bar",type=JAXBElement.class)
  *         })
- *         List&lt;JAXBElement&lt;String>> fooOrBar;
+ *         List&lt;JAXBElement&lt;String&gt;&gt; fooOrBar;
  *     }
  * 
  *     &#64;XmlRegistry
  *     class ObjectFactory {
  *         &#64;XmlElementDecl(scope=Pea.class,name="foo")
- *         JAXBElement<String> createPeaFoo(String s);
+ *         JAXBElement&lt;String&gt; createPeaFoo(String s);
  * 
  *         &#64;XmlElementDecl(scope=Pea.class,name="bar")
- *         JAXBElement<String> createPeaBar(String s);
+ *         JAXBElement&lt;String&gt; createPeaBar(String s);
  * 
  *         &#64;XmlElementDecl(name="foo")
- *         JAXBElement<Integer> createFoo(Integer i);
+ *         JAXBElement&lt;Integer&gt; createFoo(Integer i);
  *     }
  * 
  * </pre>

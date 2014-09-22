@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2004-2013 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2004-2014 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -72,8 +72,8 @@ import static java.lang.annotation.ElementType.METHOD;
  * (section 5.5.5, "Element Property" of JAXB 2.0 specification). An
  * element property method signature is of the form:
  * <pre>
- *     public void setTerm(JAXBElement<? extends Operator>);
- *     public JAXBElement<? extends Operator> getTerm();
+ *     public void setTerm(JAXBElement&lt;? extends Operator&gt;);
+ *     public JAXBElement&lt;? extends Operator&gt; getTerm();
  * </pre>
  * <p>
  * An element factory method annotated with  {@link XmlElementDecl} is
@@ -121,7 +121,7 @@ import static java.lang.annotation.ElementType.METHOD;
  *         // element name will be derived from the &#64;XmlRootElement 
  *         // annotation on the type (for e.g. "jar" for JarTask). 
  *         &#64;XmlElementRef
- *         List&lt;Task> tasks;
+ *         List&lt;Task&gt; tasks;
  *     }
  *
  *     abstract class Task {
@@ -137,16 +137,16 @@ import static java.lang.annotation.ElementType.METHOD;
  *         ...
  *     }
  *
- *     &lt;!-- XML Schema fragment -->
- *     &lt;xs:element name="target" type="Target">
- *     &lt;xs:complexType name="Target">
- *       &lt;xs:sequence>
- *         &lt;xs:choice maxOccurs="unbounded">
- *           &lt;xs:element ref="jar">
- *           &lt;xs:element ref="javac">
- *         &lt;/xs:choice>
- *       &lt;/xs:sequence>
- *     &lt;/xs:complexType>
+ *     &lt;!-- XML Schema fragment --&gt;
+ *     &lt;xs:element name="target" type="Target"&gt;
+ *     &lt;xs:complexType name="Target"&gt;
+ *       &lt;xs:sequence&gt;
+ *         &lt;xs:choice maxOccurs="unbounded"&gt;
+ *           &lt;xs:element ref="jar"&gt;
+ *           &lt;xs:element ref="javac"&gt;
+ *         &lt;/xs:choice&gt;
+ *       &lt;/xs:sequence&gt;
+ *     &lt;/xs:complexType&gt;
  *
  * </pre>
  * <p>
@@ -159,14 +159,14 @@ import static java.lang.annotation.ElementType.METHOD;
  * </pre>
  * will produce the following XML output:
  * <pre>
- *     &lt;target>
- *       &lt;jar>
+ *     &lt;target&gt;
+ *       &lt;jar&gt;
  *         ....
- *       &lt;/jar>
- *       &lt;javac>
+ *       &lt;/jar&gt;
+ *       &lt;javac&gt;
  *         ....
- *       &lt;/javac>
- *     &lt;/target>
+ *       &lt;/javac&gt;
+ *     &lt;/target&gt;
  * </pre>
  * <p>
  * It is not an error to have a class that extends <tt>Task</tt>
@@ -197,17 +197,17 @@ import static java.lang.annotation.ElementType.METHOD;
  *         //  substituted in the XML document.
  *         // 
  *         &#64;XmlElementRef(type=JAXBElement.class,name="operator")
- *         JAXBElement&lt;? extends Operator> term;
+ *         JAXBElement&lt;? extends Operator&gt; term;
  *     }
  *
  *     &#64;XmlRegistry
  *     class ObjectFactory {
  *         &#64;XmlElementDecl(name="operator")
- *         JAXBElement&lt;Operator> createOperator(Operator o) {...}
+ *         JAXBElement&lt;Operator&gt; createOperator(Operator o) {...}
  *         &#64;XmlElementDecl(name="add",substitutionHeadName="operator")
- *         JAXBElement&lt;Operator> createAdd(Operator o) {...}
+ *         JAXBElement&lt;Operator&gt; createAdd(Operator o) {...}
  *         &#64;XmlElementDecl(name="sub",substitutionHeadName="operator")
- *         JAXBElement&lt;Operator> createSub(Operator o) {...}
+ *         JAXBElement&lt;Operator&gt; createSub(Operator o) {...}
  *     }
  *
  *     class Operator {
@@ -223,9 +223,9 @@ import static java.lang.annotation.ElementType.METHOD;
  * </pre>
  * will produce the following XML output:
  * <pre>
- *     &lt;math>
- *       &lt;add>...&lt;/add>
- *     &lt;/math>
+ *     &lt;math&gt;
+ *       &lt;add&gt;...&lt;/add&gt;
+ *     &lt;/math&gt;
  * </pre>
  *
  * 

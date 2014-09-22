@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2005-2013 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005-2014 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -81,12 +81,12 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  *         public XMLGregorianCalendar date;
  *     }
  * 
- *     &lt;!-- Example: Local XML Schema element -->
- *     &lt;xs:complexType name="USPrice"/>
- *       &lt;xs:sequence>
- *         &lt;xs:element name="date" type="xs:date"/>
- *       &lt;/sequence>
- *     &lt;/xs:complexType>
+ *     &lt;!-- Example: Local XML Schema element --&gt;
+ *     &lt;xs:complexType name="USPrice"/&gt;
+ *       &lt;xs:sequence&gt;
+ *         &lt;xs:element name="date" type="xs:date"/&gt;
+ *       &lt;/sequence&gt;
+ *     &lt;/xs:complexType&gt;
  * </pre>
  *
  * <p> <b> Example 2: </b> Customize mapping of XMLGregorianCalendar at package
