@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2003-2013 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2003-2014 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -190,7 +190,7 @@ import java.io.File;
  * encoding used during these marshal operations.  Client applications are
  * expected to supply a valid character encoding name as defined in the
  * <a href="http://www.w3.org/TR/2000/REC-xml-20001006#charencoding">W3C XML 1.0
- * Recommendation</a> and supported by your Java Platform</a>.
+ * Recommendation</a> and supported by your Java Platform.
  * </blockquote>
  * 
  * <p>
@@ -679,7 +679,7 @@ public interface Marshaller {
      *
      * <p>
      * Every marshaller internally maintains a
-     * {@link java.util.Map}&lt;{@link Class},{@link XmlAdapter}>,
+     * {@link java.util.Map}&lt;{@link Class},{@link XmlAdapter}&gt;,
      * which it uses for marshalling classes whose fields/methods are annotated
      * with {@link javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter}.
      *
@@ -765,17 +765,17 @@ public interface Marshaller {
     public Schema getSchema();
 
     /**
-     * <p/>
+     * <p>
      * Register an instance of an implementation of this class with a {@link Marshaller} to externally listen
      * for marshal events.
-     * <p/>
-     * <p/>
+     * </p>
+     * <p>
      * This class enables pre and post processing of each marshalled object.
      * The event callbacks are called when marshalling from an instance that maps to an xml element or
      * complex type definition. The event callbacks are not called when marshalling from an instance of a
      * Java datatype that represents a simple type definition.
-     * <p/>
-     * <p/>
+     * </p>
+     * <p>
      * External listener is one of two different mechanisms for defining marshal event callbacks.
      * See <a href="Marshaller.html#marshalEventCallback">Marshal Event Callbacks</a> for an overview.
      *
@@ -785,10 +785,10 @@ public interface Marshaller {
      */
     public static abstract class Listener {
         /**
-         * <p/>
+         * <p>
          * Callback method invoked before marshalling from <tt>source</tt> to XML.
-         * <p/>
-         * <p/>
+         * </p>
+         * <p>
          * This method is invoked just before marshalling process starts to marshal <tt>source</tt>.
          * Note that if the class of <tt>source</tt> defines its own <tt>beforeMarshal</tt> method,
          * the class specific callback method is invoked just before this method is invoked.
@@ -799,10 +799,10 @@ public interface Marshaller {
         }
 
         /**
-         * <p/>
+         * <p>
          * Callback method invoked after marshalling <tt>source</tt> to XML.
-         * <p/>
-         * <p/>
+         * </p>
+         * <p>
          * This method is invoked after <tt>source</tt> and all its descendants have been marshalled.
          * Note that if the class of <tt>source</tt> defines its own <tt>afterMarshal</tt> method,
          * the class specific callback method is invoked just before this method is invoked.

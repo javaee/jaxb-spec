@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2004-2013 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2004-2014 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -79,7 +79,7 @@ import java.lang.annotation.Target;
  * mapping of JavaBean properties and fields contained within the
  * class. The schema type to which the class is mapped can either be
  * named or anonymous. A class can be mapped to an anonymous schema
- * type by annotating the class with <tt>&#64XmlType(name="")</tt>. 
+ * type by annotating the class with <tt>&#64;XmlType(name="")</tt>.
  * <p>
  * Either a global element, local element or a local attribute can be
  * associated with an anonymous type as follows:
@@ -127,14 +127,14 @@ import java.lang.annotation.Target;
  * The following table shows the mapping of the class to a XML Schema
  * complex type or simple type. The notational symbols used in the table are:
  * <ul>
- *   <li> ->    : represents a mapping </li>
+ *   <li> -&gt;    : represents a mapping </li>
  *   <li> [x]+  : one or more occurances of x </li>
  *   <li> [ <tt>@XmlValue</tt> property ]: JavaBean property annotated with
  *         <tt>@XmlValue</tt></li>
  *   <li> X     : don't care
  * </ul>
  * <blockquote>
- *   <table border="1" cellpadding="4" cellspacing="3">
+ *   <table summary="" border="1" cellpadding="4" cellspacing="3">
  *     <tbody>
  *       <tr>
  *         <td><b>Target</b></td>
@@ -147,7 +147,7 @@ import java.lang.annotation.Target;
  *       <tr valign="top">
  *         <td>Class</td>
  *         <td>{}</td>
- *         <td>[property]+ -> elements</td>
+ *         <td>[property]+ -&gt; elements</td>
  *         <td>complexcontent<br>xs:all</td>
  *         <td> </td>
  *       </tr>
@@ -155,7 +155,7 @@ import java.lang.annotation.Target;
  *       <tr valign="top">
  *         <td>Class</td>
  *         <td>non empty</td>
- *         <td>[property]+ -> elements</td>
+ *         <td>[property]+ -&gt; elements</td>
  *         <td>complexcontent<br>xs:sequence</td>
  *         <td> </td>
  *       </tr>
@@ -163,7 +163,7 @@ import java.lang.annotation.Target;
  *       <tr valign="top">
  *         <td>Class</td>
  *         <td>X</td>
- *         <td>no property -> element</td>
+ *         <td>no property -&gt; element</td>
  *         <td>complexcontent<br>empty sequence</td>
  *         <td> </td>
  *       </tr>
@@ -171,8 +171,7 @@ import java.lang.annotation.Target;
  *       <tr valign="top">
  *         <td>Class</td>
  *         <td>X</td>
- *         <td>1 [ <tt>@XmlValue</tt> property] && <br> [property]+
- *             ->attributes</td> 
+ *         <td>1 [<tt>@XmlValue</tt> property] {@literal &&} <br> [property]+ -&gt; attributes</td>
  *         <td>simplecontent</td>
  *         <td> </td>
  *       </tr>
@@ -180,11 +179,9 @@ import java.lang.annotation.Target;
  *       <tr valign="top">
  *         <td>Class</td>
  *         <td>X</td>
- *         <td>1 [ <tt>@XmlValue</tt> property ]&& <br> no properties
- *         -> attribute</td> 
+ *         <td>1 [<tt>@XmlValue</tt> property] {@literal &&} <br> no properties -&gt; attribute</td>
  *         <td> </td>
  *         <td>simpletype</td>
- *         <td> </td>
  *       </tr>
  *     </tbody>
  *   </table>
@@ -227,16 +224,16 @@ import java.lang.annotation.Target;
  *     void setZip(java.math.BigDecimal) {..};
  *   }
  *
- *   &lt;!-- XML Schema mapping for USAddress -->
- *   &lt;xs:complexType name="USAddress">
- *     &lt;xs:sequence>
- *       &lt;xs:element name="street" type="xs:string"/>
- *       &lt;xs:element name="city" type="xs:string"/>
- *       &lt;xs:element name="state" type="xs:string"/>
- *       &lt;xs:element name="zip" type="xs:decimal"/>
- *       &lt;xs:element name="name" type="xs:string"/>
- *     &lt;/xs:all>
- *   &lt;/xs:complexType> 
+ *   &lt;!-- XML Schema mapping for USAddress --&gt;
+ *   &lt;xs:complexType name="USAddress"&gt;
+ *     &lt;xs:sequence&gt;
+ *       &lt;xs:element name="street" type="xs:string"/&gt;
+ *       &lt;xs:element name="city" type="xs:string"/&gt;
+ *       &lt;xs:element name="state" type="xs:string"/&gt;
+ *       &lt;xs:element name="zip" type="xs:decimal"/&gt;
+ *       &lt;xs:element name="name" type="xs:string"/&gt;
+ *     &lt;/xs:all&gt;
+ *   &lt;/xs:complexType&gt;
  * </pre>
  * <p> <b> Example 2: </b> Map a class to a complex type with
  *     xs:all </p>
@@ -244,16 +241,16 @@ import java.lang.annotation.Target;
  * &#64;XmlType(propOrder={})
  * public class USAddress { ...}
  * 
- * &lt;!-- XML Schema mapping for USAddress -->
- * &lt;xs:complexType name="USAddress">
- *   &lt;xs:all>
- *     &lt;xs:element name="name" type="xs:string"/>
- *     &lt;xs:element name="street" type="xs:string"/>
- *     &lt;xs:element name="city" type="xs:string"/>
- *     &lt;xs:element name="state" type="xs:string"/>
- *     &lt;xs:element name="zip" type="xs:decimal"/>
- *   &lt;/xs:sequence>
- * &lt;/xs:complexType>
+ * &lt;!-- XML Schema mapping for USAddress --&gt;
+ * &lt;xs:complexType name="USAddress"&gt;
+ *   &lt;xs:all&gt;
+ *     &lt;xs:element name="name" type="xs:string"/&gt;
+ *     &lt;xs:element name="street" type="xs:string"/&gt;
+ *     &lt;xs:element name="city" type="xs:string"/&gt;
+ *     &lt;xs:element name="state" type="xs:string"/&gt;
+ *     &lt;xs:element name="zip" type="xs:decimal"/&gt;
+ *   &lt;/xs:sequence&gt;
+ * &lt;/xs:complexType&gt;
  *</pre>
  * <p> <b> Example 3: </b> Map a class to a global element with an
  * anonymous type. 
@@ -263,22 +260,22 @@ import java.lang.annotation.Target;
  *   &#64;XmlType(name="")
  *   public class USAddress { ...}
  *
- *   &lt;!-- XML Schema mapping for USAddress -->
- *   &lt;xs:element name="USAddress">
- *     &lt;xs:complexType>
- *       &lt;xs:sequence>
- *         &lt;xs:element name="name" type="xs:string"/>
- *         &lt;xs:element name="street" type="xs:string"/>
- *         &lt;xs:element name="city" type="xs:string"/>
- *         &lt;xs:element name="state" type="xs:string"/>
- *         &lt;xs:element name="zip" type="xs:decimal"/>
- *       &lt;/xs:sequence>
- *     &lt;/xs:complexType>
- *   &lt;/xs:element>
+ *   &lt;!-- XML Schema mapping for USAddress --&gt;
+ *   &lt;xs:element name="USAddress"&gt;
+ *     &lt;xs:complexType&gt;
+ *       &lt;xs:sequence&gt;
+ *         &lt;xs:element name="name" type="xs:string"/&gt;
+ *         &lt;xs:element name="street" type="xs:string"/&gt;
+ *         &lt;xs:element name="city" type="xs:string"/&gt;
+ *         &lt;xs:element name="state" type="xs:string"/&gt;
+ *         &lt;xs:element name="zip" type="xs:decimal"/&gt;
+ *       &lt;/xs:sequence&gt;
+ *     &lt;/xs:complexType&gt;
+ *   &lt;/xs:element&gt;
  * </pre>
  *
  * <p> <b> Example 4: </b> Map a property to a local element with
- * anonmyous type. 
+ * anonymous type.
  * <pre>
  *   //Example: Code fragment
  *   public class Invoice {
@@ -290,20 +287,20 @@ import java.lang.annotation.Target;
  *   public class USAddress { ... }
  *   } 
  *
- *   &lt;!-- XML Schema mapping for USAddress -->
- *   &lt;xs:complexType name="Invoice">
- *     &lt;xs:sequence>
- *       &lt;xs:element name="addr">
- *         &lt;xs:complexType>
- *           &lt;xs:element name="name", type="xs:string"/>
- *           &lt;xs:element name="city", type="xs:string"/>
- *           &lt;xs:element name="city" type="xs:string"/>
- *           &lt;xs:element name="state" type="xs:string"/>
- *           &lt;xs:element name="zip" type="xs:decimal"/>
- *         &lt;/xs:complexType>
+ *   &lt;!-- XML Schema mapping for USAddress --&gt;
+ *   &lt;xs:complexType name="Invoice"&gt;
+ *     &lt;xs:sequence&gt;
+ *       &lt;xs:element name="addr"&gt;
+ *         &lt;xs:complexType&gt;
+ *           &lt;xs:element name="name", type="xs:string"/&gt;
+ *           &lt;xs:element name="city", type="xs:string"/&gt;
+ *           &lt;xs:element name="city" type="xs:string"/&gt;
+ *           &lt;xs:element name="state" type="xs:string"/&gt;
+ *           &lt;xs:element name="zip" type="xs:decimal"/&gt;
+ *         &lt;/xs:complexType&gt;
  *       ...
- *     &lt;/xs:sequence>
- *   &lt;/xs:complexType> 
+ *     &lt;/xs:sequence&gt;
+ *   &lt;/xs:complexType&gt;
  * </pre>
  *
  * <p> <b> Example 5: </b> Map a property to an attribute with
@@ -325,17 +322,17 @@ import java.lang.annotation.Target;
  *         public java.math.BigDecimal price;
  *     }
  *
- *     &lt;!-- Example: XML Schema fragment -->
- *     &lt;xs:complexType name="Item">
- *       &lt;xs:sequence>
- *         &lt;xs:element name="name" type="xs:string"/>
- *         &lt;xs:attribute name="price">
- *           &lt;xs:simpleType>
- *             &lt;xs:restriction base="xs:decimal"/>
- *           &lt;/xs:simpleType>
- *         &lt;/xs:attribute>
- *       &lt;/xs:sequence>
- *     &lt;/xs:complexType>
+ *     &lt;!-- Example: XML Schema fragment --&gt;
+ *     &lt;xs:complexType name="Item"&gt;
+ *       &lt;xs:sequence&gt;
+ *         &lt;xs:element name="name" type="xs:string"/&gt;
+ *         &lt;xs:attribute name="price"&gt;
+ *           &lt;xs:simpleType&gt;
+ *             &lt;xs:restriction base="xs:decimal"/&gt;
+ *           &lt;/xs:simpleType&gt;
+ *         &lt;/xs:attribute&gt;
+ *       &lt;/xs:sequence&gt;
+ *     &lt;/xs:complexType&gt;
  * </pre>
  *
  *  <p> <b> Example 6: </b> Define a factoryClass and factoryMethod

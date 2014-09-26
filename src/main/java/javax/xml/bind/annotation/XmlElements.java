@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2004-2013 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2004-2014 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -98,21 +98,21 @@ import java.lang.annotation.Target;
  *    }
  *
  *    &lt;!-- XML Representation for a List of {1,2.5} 
- *            XML output is not wrapped using another element -->
+ *            XML output is not wrapped using another element --&gt;
  *    ...
- *    &lt;A> 1 &lt;/A>
- *    &lt;B> 2.5 &lt;/B>
+ *    &lt;A&gt; 1 &lt;/A&gt;
+ *    &lt;B&gt; 2.5 &lt;/B&gt;
  *    ...
  *
- *    &lt;!-- XML Schema fragment -->
- *    &lt;xs:complexType name="Foo">
- *      &lt;xs:sequence>
- *        &lt;xs:choice minOccurs="0" maxOccurs="unbounded">
- *          &lt;xs:element name="A" type="xs:int"/>
- *          &lt;xs:element name="B" type="xs:float"/>
- *        &lt;xs:choice>
- *      &lt;/xs:sequence>
- *    &lt;/xs:complexType>
+ *    &lt;!-- XML Schema fragment --&gt;
+ *    &lt;xs:complexType name="Foo"&gt;
+ *      &lt;xs:sequence&gt;
+ *        &lt;xs:choice minOccurs="0" maxOccurs="unbounded"&gt;
+ *          &lt;xs:element name="A" type="xs:int"/&gt;
+ *          &lt;xs:element name="B" type="xs:float"/&gt;
+ *        &lt;xs:choice&gt;
+ *      &lt;/xs:sequence&gt;
+ *    &lt;/xs:complexType&gt;
  *
  * </pre>
  *
@@ -130,19 +130,19 @@ import java.lang.annotation.Target;
  *        public List items;
  *    }
  *
- *    &lt;!-- XML Schema fragment -->
- *    &lt;xs:complexType name="Foo">
- *      &lt;xs:sequence>
- *        &lt;xs:element name="bar">
- *          &lt;xs:complexType>
- *            &lt;xs:choice minOccurs="0" maxOccurs="unbounded">
- *              &lt;xs:element name="A" type="xs:int"/>
- *              &lt;xs:element name="B" type="xs:float"/>
- *            &lt;/xs:choice>
- *          &lt;/xs:complexType>
- *        &lt;/xs:element>
- *      &lt;/xs:sequence>
- *    &lt;/xs:complexType>
+ *    &lt;!-- XML Schema fragment --&gt;
+ *    &lt;xs:complexType name="Foo"&gt;
+ *      &lt;xs:sequence&gt;
+ *        &lt;xs:element name="bar"&gt;
+ *          &lt;xs:complexType&gt;
+ *            &lt;xs:choice minOccurs="0" maxOccurs="unbounded"&gt;
+ *              &lt;xs:element name="A" type="xs:int"/&gt;
+ *              &lt;xs:element name="B" type="xs:float"/&gt;
+ *            &lt;/xs:choice&gt;
+ *          &lt;/xs:complexType&gt;
+ *        &lt;/xs:element&gt;
+ *      &lt;/xs:sequence&gt;
+ *    &lt;/xs:complexType&gt;
  * </pre>
  *
  * <p><b>Example 3:</b> Change element name based on type using an adapter. 
@@ -161,19 +161,19 @@ import java.lang.annotation.Target;
  *    &#64;XmlType(name="PX") class PX extends P {...}
  *    &#64;XmlType(name="PY") class PY extends P {...}
  *
- *    &lt;!-- XML Schema fragment -->
- *    &lt;xs:complexType name="Foo">
- *      &lt;xs:sequence>
- *        &lt;xs:element name="bar">
- *          &lt;xs:complexType>
- *            &lt;xs:choice minOccurs="0" maxOccurs="unbounded">
- *              &lt;xs:element name="A" type="PX"/>
- *              &lt;xs:element name="B" type="PY"/>
- *            &lt;/xs:choice>
- *          &lt;/xs:complexType>
- *        &lt;/xs:element>
- *      &lt;/xs:sequence>
- *    &lt;/xs:complexType>
+ *    &lt;!-- XML Schema fragment --&gt;
+ *    &lt;xs:complexType name="Foo"&gt;
+ *      &lt;xs:sequence&gt;
+ *        &lt;xs:element name="bar"&gt;
+ *          &lt;xs:complexType&gt;
+ *            &lt;xs:choice minOccurs="0" maxOccurs="unbounded"&gt;
+ *              &lt;xs:element name="A" type="PX"/&gt;
+ *              &lt;xs:element name="B" type="PY"/&gt;
+ *            &lt;/xs:choice&gt;
+ *          &lt;/xs:complexType&gt;
+ *        &lt;/xs:element&gt;
+ *      &lt;/xs:sequence&gt;
+ *    &lt;/xs:complexType&gt;
  * </pre>
  * 
  * @author <ul><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Sekhar Vajjhala, Sun Microsystems, Inc.</li></ul>

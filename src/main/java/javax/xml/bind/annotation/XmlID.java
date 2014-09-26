@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2004-2013 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2004-2014 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -89,15 +89,15 @@ import static java.lang.annotation.RetentionPolicy.*;
  *        .... other properties not shown 
  *    }
  *
- *    &lt;!-- Example: XML Schema fragment -->
- *    &lt;xs:complexType name="Customer">
- *      &lt;xs:complexContent>
- *        &lt;xs:sequence>
+ *    &lt;!-- Example: XML Schema fragment --&gt;
+ *    &lt;xs:complexType name="Customer"&gt;
+ *      &lt;xs:complexContent&gt;
+ *        &lt;xs:sequence&gt;
  *          ....
- *        &lt;/xs:sequence>
- *        &lt;xs:attribute name="customerID" type="xs:ID"/>
- *      &lt;/xs:complexContent>
- *    &lt;/xs:complexType>
+ *        &lt;/xs:sequence&gt;
+ *        &lt;xs:attribute name="customerID" type="xs:ID"/&gt;
+ *      &lt;/xs:complexContent&gt;
+ *    &lt;/xs:complexType&gt;
  * </pre>
  *
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.

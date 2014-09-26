@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2005-2013 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005-2014 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -77,7 +77,7 @@ import static java.lang.annotation.ElementType.METHOD;
  * each attribute that is not statically associated with another 
  * JavaBean property, via {@link XmlAttribute}, is entered into the 
  * wildcard attribute map represented by 
- * {@link Map}&lt;{@link QName},{@link Object}>. The attribute QName is the
+ * {@link Map}&lt;{@link QName},{@link Object}&gt;. The attribute QName is the
  * map's key. The key's value is the String value of the attribute.
  *
  * @author Kohsuke Kawaguchi, Sun Microsystems, Inc.

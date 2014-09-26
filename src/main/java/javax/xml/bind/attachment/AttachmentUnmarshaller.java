@@ -85,7 +85,7 @@ public abstract class AttachmentUnmarshaller {
     * 
     * <p>The returned <code>DataHandler</code> instance must be configured
     * to meet the following required mapping constaint. 
-    * <table border="2" rules="all" cellpadding="4">
+    * <table summary="" border="2" rules="all" cellpadding="4">
     *   <thead>
     *     <tr>
     *       <th align="center" colspan="2">
@@ -115,7 +115,7 @@ public abstract class AttachmentUnmarshaller {
     *     </tr>
     *   </tbody>
     *  </table>
-    * Note that it is allowable to support additional mappings.</p>
+    * Note that it is allowable to support additional mappings.
     * 
     * @param cid It is expected to be a valid lexical form of the XML Schema 
     * <code>xs:anyURI</code> datatype. If <code>{@link #isXOPPackage()}
