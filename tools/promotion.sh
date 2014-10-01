@@ -34,8 +34,8 @@ RELEASE_TAG=${RELEASE_VERSION}
 
 check_set_pom_file()
 {
-    if [ ! -f jaxb-ri/tools/set_pom_version.sh ]; then
-        echo "tools/set_pom_version.sh file not found!"
+    if [ ! -f ./tools/set_pom_version.sh ]; then
+        echo "./tools/set_pom_version.sh file not found!"
         exit 1
     fi
 }
@@ -76,7 +76,7 @@ git_clean()
 
 set_pom_version()
 {
-    ./jaxb-ri/tools/set_pom_version.sh $DEVELOPER_VERSION $RELEASE_VERSION
+    ./tools/set_pom_version.sh $DEVELOPER_VERSION $RELEASE_VERSION
     if [ $? -ne 0 ]; then
         echo "FAILED."
         echo "Setting version to poms failed: $!"
