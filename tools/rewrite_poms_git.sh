@@ -1,12 +1,5 @@
 #!/bin/bash
 
-SCRIPT_DIR=$(cd $(dirname $0); pwd -P)
-
-cd $SCRIPT_DIR/.. || {
-	echo >&2 "Cannot change to top of GIT working directory"
-	exit 1
-}
-
 command -v git > /dev/null 2>&1 || {
 	echo >&2 "Cannot locate git executable"
 	exit 1
@@ -33,10 +26,7 @@ cleanup()
 edit_poms()
 {
 	TMPFILE=`mktemp $TMPDIR/${RELEASE_VERSION}.XXXXXXXX` || cleanup
-	find \
-		$SCRIPT_DIR/../ \
-		-name pom.xml \
-		>> $TMPFILE
+	find . -name pom.xml >> $TMPFILE
 
 	echo "Updating pom files to have release versions ..."
 	while read line

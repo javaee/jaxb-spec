@@ -11,13 +11,6 @@ fi
 
 echo "Major release version found: $CURRENT_VERSION"  
 
-SCRIPT_DIR=$(cd $(dirname $0); pwd -P)
-
-cd $SCRIPT_DIR/../.. || {
-	echo >&2 "Cannot change to top of GIT working directory"
-	exit 1
-}
-
 command -v git > /dev/null 2>&1 || {
 	echo >&2 "Cannot locate git executable"
 	exit 1
