@@ -64,13 +64,7 @@ class ServiceLoaderUtil {
     private static final String OSGI_SERVICE_LOADER_CLASS_NAME = "org.glassfish.hk2.osgiresourcelocator.ServiceLoader";
     private static final String OSGI_SERVICE_LOADER_METHOD_NAME = "lookupProviderClasses";
 
-    private static Logger logger;
-
-    public static void setLogger(Logger l) {
-        logger = l;
-    }
-
-    static <P> P firstByServiceLoader(Class<P> spiClass, ExceptionHandler handler) {
+    static <P> P firstByServiceLoader(Class<P> spiClass, Logger logger) {
         // service discovery
         ServiceLoader<P> serviceLoader = ServiceLoader.load(spiClass);
         for (P impl : serviceLoader) {
@@ -80,7 +74,7 @@ class ServiceLoaderUtil {
         return null;
     }
 
-    static boolean isOsgi(ExceptionHandler handler) {
+    static boolean isOsgi(Logger logger) {
         try {
             Class.forName(OSGI_SERVICE_LOADER_CLASS_NAME);
             return true;
@@ -90,7 +84,7 @@ class ServiceLoaderUtil {
         return false;
     }
 
-    static Object lookupUsingOSGiServiceLoader(String factoryId, ExceptionHandler handler) {
+    static Object lookupUsingOSGiServiceLoader(String factoryId, Logger logger) {
         try {
             // Use reflection to avoid having any dependendcy on ServiceLoader class
             Class serviceClass = Class.forName(factoryId);
@@ -137,7 +131,7 @@ class ServiceLoaderUtil {
         }
     }
 
-    static Class nullSafeLoadClass(String className, ClassLoader classLoader, ExceptionHandler handler) throws ClassNotFoundException {
+    static Class nullSafeLoadClass(String className, ClassLoader classLoader) throws ClassNotFoundException {
         if (classLoader == null) {
             return Class.forName(className);
         } else {
@@ -158,7 +152,7 @@ class ServiceLoaderUtil {
      */
     static <T extends Exception> Object newInstance(String className, boolean isDefaultClassname, final ExceptionHandler<T> handler) throws T {
         try {
-            return safeLoadClass(className, isDefaultClassname, contextClassLoader(handler), handler).newInstance();
+            return safeLoadClass(className, isDefaultClassname, contextClassLoader(handler)).newInstance();
         } catch (ClassNotFoundException x) {
             throw handler.createException(x, "Provider " + className + " not found");
         } catch (Exception x) {
@@ -166,7 +160,7 @@ class ServiceLoaderUtil {
         }
     }
 
-    static Class safeLoadClass(String className, boolean isDefaultImplemenation, ClassLoader classLoader, ExceptionHandler handler) throws ClassNotFoundException {
+    static Class safeLoadClass(String className, boolean isDefaultImplemenation, ClassLoader classLoader) throws ClassNotFoundException {
         try {
             checkPackageAccess(className);
         } catch (SecurityException se) {
@@ -177,7 +171,7 @@ class ServiceLoaderUtil {
             // not platform default implementation ...
             throw se;
         }
-        return nullSafeLoadClass(className, classLoader, handler);
+        return nullSafeLoadClass(className, classLoader);
     }
 
     static String getJavaHomeLibConfigPath(String filename) {

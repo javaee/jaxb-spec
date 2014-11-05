@@ -83,15 +83,6 @@ class ContextFinder {
      */
     private static final String PLATFORM_DEFAULT_FACTORY_CLASS = "com.sun.xml.internal.bind.v2.ContextFactory";
 
-    private static final ServiceLoaderUtil.ExceptionHandler<JAXBException> EXCEPTION_HANDLER =
-            new ServiceLoaderUtil.ExceptionHandler<JAXBException>() {
-
-                @Override
-                public JAXBException createException(Throwable throwable, String message) {
-                    return new JAXBException(message, throwable);
-                }
-            };
-
     private static final Logger logger;
 
     static {
@@ -114,8 +105,6 @@ class ContextFinder {
             // just to be extra safe. in particular System.getProperty may throw
             // SecurityException.
         }
-
-        ServiceLoaderUtil.setLogger(logger);
     }
 
     /**
@@ -167,7 +156,7 @@ class ContextFinder {
                                    Map properties) throws JAXBException {
 
         try {
-            Class spFactory = ServiceLoaderUtil.safeLoadClass(className, isDefault(className), classLoader, EXCEPTION_HANDLER);
+            Class spFactory = ServiceLoaderUtil.safeLoadClass(className, isDefault(className), classLoader);
             return newInstance(contextPath, spFactory, classLoader, properties);
         } catch (ClassNotFoundException x) {
             throw new JAXBException(Messages.format(Messages.PROVIDER_NOT_FOUND, className), x);
@@ -252,7 +241,7 @@ class ContextFinder {
 
         Class spi;
         try {
-            spi = ServiceLoaderUtil.safeLoadClass(className, isDefault(className), getContextClassLoader(), EXCEPTION_HANDLER);
+            spi = ServiceLoaderUtil.safeLoadClass(className, isDefault(className), getContextClassLoader());
         } catch (ClassNotFoundException e) {
             throw new JAXBException(e);
         }
@@ -312,7 +301,7 @@ class ContextFinder {
         String factoryName = classNameFromSystemProperties();
         if (factoryName != null) return newInstance(contextPath, factoryName, classLoader, properties);
 
-        JAXBContext jaxbContext = (JAXBContext) ServiceLoaderUtil.lookupUsingOSGiServiceLoader("javax.xml.bind.JAXBContext", EXCEPTION_HANDLER);
+        JAXBContext jaxbContext = (JAXBContext) ServiceLoaderUtil.lookupUsingOSGiServiceLoader("javax.xml.bind.JAXBContext", logger);
         if (jaxbContext != null) return jaxbContext;
 
         // TODO: SPEC change required! This is supposed to be!
@@ -348,7 +337,7 @@ class ContextFinder {
         String factoryName = classNameFromSystemProperties();
         if (factoryName != null) return newInstance(classes, properties, factoryName);
 
-        JAXBContext obj = (JAXBContext) ServiceLoaderUtil.lookupUsingOSGiServiceLoader("javax.xml.bind.JAXBContext", EXCEPTION_HANDLER);
+        JAXBContext obj = (JAXBContext) ServiceLoaderUtil.lookupUsingOSGiServiceLoader("javax.xml.bind.JAXBContext", logger);
         if (obj != null) return obj;
 
         // TODO: to be removed - deprecated!!! Requires SPEC change!!!
