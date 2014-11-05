@@ -40,20 +40,15 @@
 
 package javax.xml.bind;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.ServiceLoader;
-import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -69,28 +64,10 @@ class ServiceLoaderUtil {
     private static final String OSGI_SERVICE_LOADER_CLASS_NAME = "org.glassfish.hk2.osgiresourcelocator.ServiceLoader";
     private static final String OSGI_SERVICE_LOADER_METHOD_NAME = "lookupProviderClasses";
 
-    private static final Logger logger;
+    private static Logger logger;
 
-    static {
-        logger = Logger.getLogger("javax.xml.bind");
-        try {
-            if (AccessController.doPrivileged(new GetPropertyAction("jaxb.debug")) != null) {
-                // disconnect the logger from a bigger framework (if any)
-                // and take the matters into our own hands
-                logger.setUseParentHandlers(false);
-                logger.setLevel(Level.ALL);
-                ConsoleHandler handler = new ConsoleHandler();
-                handler.setLevel(Level.ALL);
-                logger.addHandler(handler);
-            } else {
-                // don't change the setting of this logger
-                // to honor what other frameworks
-                // have done on configurations.
-            }
-        } catch (Throwable t) {
-            // just to be extra safe. in particular System.getProperty may throw
-            // SecurityException.
-        }
+    public static void setLogger(Logger l) {
+        logger = l;
     }
 
     static <P> P firstByServiceLoader(Class<P> spiClass, ExceptionHandler handler) {
@@ -225,51 +202,6 @@ class ServiceLoaderUtil {
 
         public abstract T createException(Throwable throwable, String message);
 
-    }
-
-    // TODO: to be removed - SPEC change required, firstByServiceLoaderDeprecated should be used instead.
-    @Deprecated
-    static String firstByServiceLoaderDeprecated(Class spiClass, ClassLoader classLoader) throws JAXBException {
-        final String jaxbContextFQCN = spiClass.getName();
-
-        logger.fine("Searching META-INF/services");
-
-        // search META-INF services next
-        BufferedReader r = null;
-        final String resource = new StringBuilder().append("META-INF/services/").append(jaxbContextFQCN).toString();
-        try {
-            final InputStream resourceStream =
-                    (classLoader == null) ?
-                            ClassLoader.getSystemResourceAsStream(resource) :
-                            classLoader.getResourceAsStream(resource);
-
-            if (resourceStream != null) {
-                r = new BufferedReader(new InputStreamReader(resourceStream, "UTF-8"));
-                String factoryClassName = r.readLine();
-                if (factoryClassName != null) {
-                    factoryClassName = factoryClassName.trim();
-                }
-                r.close();
-                logger.log(Level.FINE, "Configured factorty class:{0}", factoryClassName);
-                return factoryClassName;
-            } else {
-                logger.log(Level.FINE, "Unable to load:{0}", resource.toString());
-                return null;
-            }
-        } catch (UnsupportedEncodingException e) {
-            // should never happen
-            throw new JAXBException(e);
-        } catch (IOException e) {
-            throw new JAXBException(e);
-        } finally {
-            try {
-                if (r != null) {
-                    r.close();
-                }
-            } catch (IOException ex) {
-                logger.log(Level.SEVERE, "Unable to close resource: " + resource, ex);
-            }
-        }
     }
 
 }

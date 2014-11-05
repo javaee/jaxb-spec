@@ -40,8 +40,11 @@
 
 package javax.xml.bind;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -52,9 +55,6 @@ import java.util.StringTokenizer;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static javax.xml.bind.JAXBContext.JAXB_CONTEXT_FACTORY;
-import static javax.xml.bind.ServiceLoaderUtil.*;
 
 
 /**
@@ -83,15 +83,16 @@ class ContextFinder {
      */
     private static final String PLATFORM_DEFAULT_FACTORY_CLASS = "com.sun.xml.internal.bind.v2.ContextFactory";
 
+    private static final ServiceLoaderUtil.ExceptionHandler<JAXBException> EXCEPTION_HANDLER =
+            new ServiceLoaderUtil.ExceptionHandler<JAXBException>() {
+
+                @Override
+                public JAXBException createException(Throwable throwable, String message) {
+                    return new JAXBException(message, throwable);
+                }
+            };
+
     private static final Logger logger;
-
-    private static final ExceptionHandler<JAXBException> EXCEPTION_HANDLER = new ExceptionHandler<JAXBException>() {
-
-        @Override
-        public JAXBException createException(Throwable throwable, String message) {
-            return new JAXBException(message, throwable);
-        }
-    };
 
     static {
         logger = Logger.getLogger("javax.xml.bind");
@@ -113,6 +114,8 @@ class ContextFinder {
             // just to be extra safe. in particular System.getProperty may throw
             // SecurityException.
         }
+
+        ServiceLoaderUtil.setLogger(logger);
     }
 
     /**
@@ -164,7 +167,7 @@ class ContextFinder {
                                    Map properties) throws JAXBException {
 
         try {
-            Class spFactory = safeLoadClass(className, isDefault(className), classLoader, EXCEPTION_HANDLER);
+            Class spFactory = ServiceLoaderUtil.safeLoadClass(className, isDefault(className), classLoader, EXCEPTION_HANDLER);
             return newInstance(contextPath, spFactory, classLoader, properties);
         } catch (ClassNotFoundException x) {
             throw new JAXBException(Messages.format(Messages.PROVIDER_NOT_FOUND, className), x);
@@ -249,7 +252,7 @@ class ContextFinder {
 
         Class spi;
         try {
-            spi = safeLoadClass(className, isDefault(className), getContextClassLoader(), EXCEPTION_HANDLER);
+            spi = ServiceLoaderUtil.safeLoadClass(className, isDefault(className), getContextClassLoader(), EXCEPTION_HANDLER);
         } catch (ClassNotFoundException e) {
             throw new JAXBException(e);
         }
@@ -309,7 +312,7 @@ class ContextFinder {
         String factoryName = classNameFromSystemProperties();
         if (factoryName != null) return newInstance(contextPath, factoryName, classLoader, properties);
 
-        JAXBContext jaxbContext = (JAXBContext) lookupUsingOSGiServiceLoader("javax.xml.bind.JAXBContext", EXCEPTION_HANDLER);
+        JAXBContext jaxbContext = (JAXBContext) ServiceLoaderUtil.lookupUsingOSGiServiceLoader("javax.xml.bind.JAXBContext", EXCEPTION_HANDLER);
         if (jaxbContext != null) return jaxbContext;
 
         // TODO: SPEC change required! This is supposed to be!
@@ -338,14 +341,14 @@ class ContextFinder {
             // TODO: it's easier to look things up from the class
             // c.getResourceAsStream("jaxb.properties");
 
-            String className = classNameFromPackageProperties(JAXB_CONTEXT_FACTORY, getClassClassLoader(c), c.getPackage().getName().replace('.', '/'));
+            String className = classNameFromPackageProperties(JAXBContext.JAXB_CONTEXT_FACTORY, getClassClassLoader(c), c.getPackage().getName().replace('.', '/'));
             if (className != null) return newInstance(classes, properties, className);
         }
 
         String factoryName = classNameFromSystemProperties();
         if (factoryName != null) return newInstance(classes, properties, factoryName);
 
-        JAXBContext obj = (JAXBContext) lookupUsingOSGiServiceLoader("javax.xml.bind.JAXBContext", EXCEPTION_HANDLER);
+        JAXBContext obj = (JAXBContext) ServiceLoaderUtil.lookupUsingOSGiServiceLoader("javax.xml.bind.JAXBContext", EXCEPTION_HANDLER);
         if (obj != null) return obj;
 
         // TODO: to be removed - deprecated!!! Requires SPEC change!!!
@@ -500,6 +503,52 @@ class ContextFinder {
                             return ClassLoader.getSystemClassLoader();
                         }
                     });
+        }
+    }
+
+    // TODO: to be removed - SPEC change required
+    //    ServiceLoaderUtil.firstByServiceLoaderDeprecated should be used instead.
+    @Deprecated
+    static String firstByServiceLoaderDeprecated(Class spiClass, ClassLoader classLoader) throws JAXBException {
+        final String jaxbContextFQCN = spiClass.getName();
+
+        logger.fine("Searching META-INF/services");
+
+        // search META-INF services next
+        BufferedReader r = null;
+        final String resource = new StringBuilder().append("META-INF/services/").append(jaxbContextFQCN).toString();
+        try {
+            final InputStream resourceStream =
+                    (classLoader == null) ?
+                            ClassLoader.getSystemResourceAsStream(resource) :
+                            classLoader.getResourceAsStream(resource);
+
+            if (resourceStream != null) {
+                r = new BufferedReader(new InputStreamReader(resourceStream, "UTF-8"));
+                String factoryClassName = r.readLine();
+                if (factoryClassName != null) {
+                    factoryClassName = factoryClassName.trim();
+                }
+                r.close();
+                logger.log(Level.FINE, "Configured factorty class:{0}", factoryClassName);
+                return factoryClassName;
+            } else {
+                logger.log(Level.FINE, "Unable to load:{0}", resource.toString());
+                return null;
+            }
+        } catch (UnsupportedEncodingException e) {
+            // should never happen
+            throw new JAXBException(e);
+        } catch (IOException e) {
+            throw new JAXBException(e);
+        } finally {
+            try {
+                if (r != null) {
+                    r.close();
+                }
+            } catch (IOException ex) {
+                logger.log(Level.SEVERE, "Unable to close resource: " + resource, ex);
+            }
         }
     }
 

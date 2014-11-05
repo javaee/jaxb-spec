@@ -1,3 +1,28 @@
+/*
+ * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2 only, as
+ * published by the Free Software Foundation.  Oracle designates this
+ * particular file as subject to the "Classpath" exception as provided
+ * by Oracle in the LICENSE file that accompanied this code.
+ *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+ * version 2 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version
+ * 2 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
+ * or visit www.oracle.com if you need additional information or have any
+ * questions.
+ */
+
 package jaxb.test;
 
 import javax.xml.bind.JAXBContext;
@@ -6,7 +31,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 
 /**
- * Created by miran on 29/10/14.
+ * Tests creation of JAXBContext - base class for different tests
  */
 public class JAXBTest {
 
@@ -22,6 +47,8 @@ public class JAXBTest {
     }
 
     protected void test(String[] args) {
+
+        // 3rd parameter means that TCCL should be used
         if (args.length > 2) {
             setContextClassLoader();
         }
@@ -45,7 +72,7 @@ public class JAXBTest {
     }
 
     /**
-     * UGLY HACK
+     * Alloas to test loading classes using TCCL.
      */
     private void setContextClassLoader() {
         try {
@@ -65,7 +92,8 @@ public class JAXBTest {
 
     private static void assertTrue(boolean condition, String msg) {
         if (!condition) {
-            log(" FAILED -  ERROR: " + msg); //throw new RuntimeException(msg);
+            log(" FAILED -  ERROR: " + msg);
+            throw new RuntimeException(msg);
         } else {
             log(" PASSED");
         }

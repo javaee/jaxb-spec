@@ -1,20 +1,37 @@
-Tests for JAX-B API involves several different jdk/ServiceLoader configurations, so the easiest way is using bash.
+/*
+ * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2 only, as
+ * published by the Free Software Foundation.  Oracle designates this
+ * particular file as subject to the "Classpath" exception as provided
+ * by Oracle in the LICENSE file that accompanied this code.
+ *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+ * version 2 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version
+ * 2 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
+ * or visit www.oracle.com if you need additional information or have any
+ * questions.
+ */
 
-Steps to run tests:
+Tests for JAX-B API involves several different jdk/ServiceLoader configurations,
+so the easiest way is using bash.
 
-1) build jaxb-api:
-  cd ../..
-  mvn clean package
-  cp target/ 
+To run tests, use following scripts:
 
-2) setup JDK properly (jdk8 or jdk9)
-  export JAVA_HOME=~/java/jdk9-dev-clean
-  export PATH=$JAVA_HOME/bin:$PATH
+1) ./setup.sh
+    builds jaxb-api and creates directory endorsed which is picked up by tests
 
-3) ensure endorsed
-  ls -al $JAVA_HOME/jre/lib/endorsed
-  mkdir -p $JAVA_HOME/jre/lib/endorsed
-  cp target/jaxb-api-2.2.13-SNAPSHOT.jar $JAVA_HOME/jre/lib/endorsed/
-
-4) ren tests:
-  cd src/tests-bash/
+2) ./runtests.sh
+    runs all the scenarios declared in scenarios.sh
+    it just writes results, to be sure nothing is failing, run:
+     ./runtests.sh |grep FAILED

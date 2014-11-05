@@ -1,5 +1,30 @@
 #!/bin/sh
 
+#
+# Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+# DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+#
+# This code is free software; you can redistribute it and/or modify it
+# under the terms of the GNU General Public License version 2 only, as
+# published by the Free Software Foundation.  Oracle designates this
+# particular file as subject to the "Classpath" exception as provided
+# by Oracle in the LICENSE file that accompanied this code.
+#
+# This code is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+# version 2 for more details (a copy is included in the LICENSE file that
+# accompanied this code).
+#
+# You should have received a copy of the GNU General Public License version
+# 2 along with this work; if not, write to the Free Software Foundation,
+# Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+#
+# Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
+# or visit www.oracle.com if you need additional information or have any
+# questions.
+#
+
 
 #
 # Last SPEC's version javadoc:
@@ -55,7 +80,21 @@
 #        15) - - ServiceLoader > ServiceLoader
 #
 
+export ENDORSED_DIR="`pwd`/endorsed"
+export ENDORSED="-Djava.endorsed.dirs=$ENDORSED_DIR"
+
+echo "JAVA_HOME: " $JAVA_HOME
+echo "endorsed dirs: " $ENDORSED
+ls -al $ENDORSED_DIR
 javac -version
+
+
+scenario() {
+    echo ""
+    echo "================================================"
+    echo " Scenario " $1
+    echo "================================================"
+}
 
 compile() {
     javac -XDignore.symbol.file  $1
@@ -69,26 +108,24 @@ compile() {
 #
 test() {
     JVM_OPTS=$3
-#    export D=$DEBUG
+    # export D=$DEBUG
     export D=
     echo - JAXBTestContextPath ---
-    java $JVM_OPTS $D jaxb.test.JAXBTestContextPath $1 $2
+    java $JVM_OPTS $D $ENDORSED jaxb.test.JAXBTestContextPath $1 $2
 
     echo - JAXBTestClasses ---
-    java $JVM_OPTS $D jaxb.test.JAXBTestClasses $1 $2
+    java $JVM_OPTS $D $ENDORSED jaxb.test.JAXBTestClasses $1 $2
 
     echo - JAXBTestContextPath+ClassLoader ---
-    java $JVM_OPTS -cp ../classes $D jaxb.test.JAXBTestContextPath $1 $2 WithClassLoader
+    java $JVM_OPTS $ENDORSED -cp ../classes $D jaxb.test.JAXBTestContextPath $1 $2 WithClassLoader
 
-# parametrized classloader not applicable for method with classes:
-#    echo JAXBTestClasses+ClassLoader
-#    java -cp ../classes $D jaxb.test.JAXBTestClasses $1 $2 WithClassLoader
-
+    # parametrized classloader not applicable for method with classes:
+    #    echo JAXBTestClasses+ClassLoader
+    #    java -cp ../classes $D jaxb.test.JAXBTestClasses $1 $2 WithClassLoader
 }
 
 clean() {
     rm -rf META-INF
-    # TODO: rm -rf $JAVA_HOME/jre/lib/jaxws.properties
 }
 
 #
@@ -101,7 +138,7 @@ prepare() {
     SVC=$2
 
     echo ""
-    echo "- prepare/clean -------------------------------------------"
+    echo "- prepare/clean -"
     clean
     if [ "$SVC" != "-" ]; then
         mkdir -p META-INF/services
@@ -131,81 +168,22 @@ prepare() {
 
 }
 
-echo "- compilation ---------------------------------------------"
+cd src
+
+echo "- compilation -"
 find . -name '*.class' -delete
 
 compile 'jaxb/factory/*.java'
 compile 'jaxb/test/usr/*.java'
 compile 'jaxb/test/*.java'
 
-ls -al ../classes/
+# preparation for testing TCCL method
+rm -rf ../classes/
 mkdir -p ../classes/jaxb/test
-ls -al
 cp jaxb/test/*.class ../classes/jaxb/test
+find ../classes/
 
 
 export DEFAULT=com.sun.xml.internal.bind.v2.runtime.JAXBContextImpl
 
-##prepare props svc
-
-# 1
-prepare javax.xml.bind.context.factory=jaxb.factory.Valid -
-test jaxb.factory.Valid\$PropValidJAXBContext -
-
-# 2
-prepare something=AnotherThing -
-test - javax.xml.bind.JAXBException
-
-# 3
-prepare javax.xml.bind.context.factory=non.existing.FactoryClass -
-test - javax.xml.bind.JAXBException
-
-# 4
-prepare javax.xml.bind.context.factory=jaxb.factory.Invalid -
-test - javax.xml.bind.JAXBException
-
-# 5
-prepare - -
-test jaxb.factory.Valid\$PropValidJAXBContext - -Djavax.xml.bind.context.factory=jaxb.factory.Valid
-
-# 6
-prepare - -
-test - javax.xml.bind.JAXBException -Djavax.xml.bind.context.factory=jaxb.factory.NonExisting
-
-# 7
-prepare - -
-test - javax.xml.bind.JAXBException -Djavax.xml.bind.context.factory=jaxb.factory.Invalid
-
-# 8
-prepare - $'jaxb.factory.Valid\n'
-test jaxb.factory.Valid\$PropValidJAXBContext  -
-
-# 9
-prepare - jaxb.factory.Valid
-test jaxb.factory.Valid\$PropValidJAXBContext -
-
-# 10
-prepare - jaxb.factory.NonExisting
-test - javax.xml.bind.JAXBException
-
-# 11
-prepare - jaxb.factory.Invalid
-test - javax.xml.bind.JAXBException
-
-# 12
-prepare - -
-test $DEFAULT -
-
-# 13
-prepare javax.xml.bind.context.factory=jaxb.factory.Valid jaxb.factory.Valid2
-test jaxb.factory.Valid\$PropValidJAXBContext - -Djavax.xml.bind.context.factory=jaxb.factory.Valid3
-
-# 14
-prepare - jaxb.factory.Valid2
-test jaxb.factory.Valid\$PropValidJAXBContext - -Djavax.xml.bind.context.factory=jaxb.factory.Valid
-
-# 15
-prepare - jaxb.factory.Valid2
-test jaxb.factory.Valid2\$PropValidJAXBContext2 -
-
-
+source ../scenarios.sh
