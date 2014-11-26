@@ -50,28 +50,28 @@ import java.io.InputStream;
 
 /**
  * <p>
- * The <tt>JAXBContext</tt> class provides the client's entry point to the 
- * JAXB API. It provides an abstraction for managing the XML/Java binding 
- * information necessary to implement the JAXB binding framework operations: 
+ * The <tt>JAXBContext</tt> class provides the client's entry point to the
+ * JAXB API. It provides an abstraction for managing the XML/Java binding
+ * information necessary to implement the JAXB binding framework operations:
  * unmarshal, marshal and validate.
  *
  * <p>A client application normally obtains new instances of this class using
- * one of these two styles for newInstance methods, although there are other 
+ * one of these two styles for newInstance methods, although there are other
  * specialized forms of the method available:
  *
  * <ul>
- *   <li>{@link #newInstance(String,ClassLoader) JAXBContext.newInstance( "com.acme.foo:com.acme.bar" )} <br>
- *   The JAXBContext instance is initialized from a list of colon 
- *   separated Java package names. Each java package contains
- *   JAXB mapped classes, schema-derived classes and/or user annotated 
- *   classes. Additionally, the java package may contain JAXB package annotations 
- *   that must be processed. (see JLS, Section 7.4.1 "Named Packages").
- *   </li>
- *   <li>{@link #newInstance(Class...) JAXBContext.newInstance( com.acme.foo.Foo.class )} <br>
- *    The JAXBContext instance is initialized with class(es) 
- *    passed as parameter(s) and classes that are statically reachable from 
- *    these class(es). See {@link #newInstance(Class...)} for details.
- *   </li>
+ * <li>{@link #newInstance(String, ClassLoader) JAXBContext.newInstance( "com.acme.foo:com.acme.bar" )} <br>
+ * The JAXBContext instance is initialized from a list of colon
+ * separated Java package names. Each java package contains
+ * JAXB mapped classes, schema-derived classes and/or user annotated
+ * classes. Additionally, the java package may contain JAXB package annotations
+ * that must be processed. (see JLS, Section 7.4.1 "Named Packages").
+ * </li>
+ * <li>{@link #newInstance(Class...) JAXBContext.newInstance( com.acme.foo.Foo.class )} <br>
+ * The JAXBContext instance is initialized with class(es)
+ * passed as parameter(s) and classes that are statically reachable from
+ * these class(es). See {@link #newInstance(Class...)} for details.
+ * </li>
  * </ul>
  *
  * <p>
@@ -84,24 +84,24 @@ import java.io.InputStream;
  * </pre>
  *
  * <p><i>
- * The following JAXB 1.0 requirement is only required for schema to 
+ * The following JAXB 1.0 requirement is only required for schema to
  * java interface/implementation binding. It does not apply to JAXB annotated
- * classes. JAXB Providers must generate a <tt>jaxb.properties</tt> file in 
- * each package containing schema derived classes.  The property file must 
- * contain a property named <tt>javax.xml.bind.context.factory</tt> whose 
- * value is the name of the class that implements the <tt>createContext</tt> 
+ * classes. JAXB Providers must generate a <tt>jaxb.properties</tt> file in
+ * each package containing schema derived classes.  The property file must
+ * contain a property named <tt>javax.xml.bind.context.factory</tt> whose
+ * value is the name of the class that implements the <tt>createContext</tt>
  * APIs.</i>
- * 
+ *
  * <p><i>
- * The class supplied by the provider does not have to be assignable to 
+ * The class supplied by the provider does not have to be assignable to
  * <tt>javax.xml.bind.JAXBContext</tt>, it simply has to provide a class that
  * implements the <tt>createContext</tt> APIs.</i>
- * 
+ *
  * <p><i>
- * In addition, the provider must call the 
- * {@link DatatypeConverter#setDatatypeConverter(DatatypeConverterInterface) 
- * DatatypeConverter.setDatatypeConverter} api prior to any client 
- * invocations of the marshal and unmarshal methods.  This is necessary to 
+ * In addition, the provider must call the
+ * {@link DatatypeConverter#setDatatypeConverter(DatatypeConverterInterface)
+ * DatatypeConverter.setDatatypeConverter} api prior to any client
+ * invocations of the marshal and unmarshal methods.  This is necessary to
  * configure the datatype converter that will be used during these operations.</i>
  *
  * <a name="Unmarshalling"></a>
@@ -109,17 +109,17 @@ import java.io.InputStream;
  * <p>
  * The {@link Unmarshaller} class provides the client application the ability
  * to convert XML data into a tree of Java content objects.
- * The unmarshal method allows for 
+ * The unmarshal method allows for
  * any global XML element declared in the schema to be unmarshalled as
  * the root of an instance document.
- * Additionally, the unmarshal method allows for an unrecognized root element that 
- * has  an xsi:type attribute's value that references a type definition declared in 
+ * Additionally, the unmarshal method allows for an unrecognized root element that
+ * has  an xsi:type attribute's value that references a type definition declared in
  * the schema  to be unmarshalled as the root of an instance document.
- * The <tt>JAXBContext</tt> object 
+ * The <tt>JAXBContext</tt> object
  * allows the merging of global elements and type definitions across a set of schemas (listed
  * in the <tt>contextPath</tt>). Since each schema in the schema set can belong
- * to distinct namespaces, the unification of schemas to an unmarshalling 
- * context should be namespace independent.  This means that a client 
+ * to distinct namespaces, the unification of schemas to an unmarshalling
+ * context should be namespace independent.  This means that a client
  * application is able to unmarshal XML documents that are instances of
  * any of the schemas listed in the <tt>contextPath</tt>.  For example:
  *
@@ -134,21 +134,21 @@ import java.io.InputStream;
  * <p>
  * The client application may also generate Java content trees explicitly rather
  * than unmarshalling existing XML data.  For all JAXB-annotated value classes,
- * an application can create content using constructors. 
+ * an application can create content using constructors.
  * For schema-derived interface/implementation classes and for the
  * creation of elements that are not bound to a JAXB-annotated
- * class, an application needs to have access and knowledge about each of 
- * the schema derived <tt> ObjectFactory</tt> classes that exist in each of 
- * java packages contained in the <tt>contextPath</tt>.  For each schema 
- * derived java class, there is a static factory method that produces objects 
- * of that type.  For example, 
- * assume that after compiling a schema, you have a package <tt>com.acme.foo</tt> 
- * that contains a schema derived interface named <tt>PurchaseOrder</tt>.  In 
- * order to create objects of that type, the client application would use the 
+ * class, an application needs to have access and knowledge about each of
+ * the schema derived <tt> ObjectFactory</tt> classes that exist in each of
+ * java packages contained in the <tt>contextPath</tt>.  For each schema
+ * derived java class, there is a static factory method that produces objects
+ * of that type.  For example,
+ * assume that after compiling a schema, you have a package <tt>com.acme.foo</tt>
+ * that contains a schema derived interface named <tt>PurchaseOrder</tt>.  In
+ * order to create objects of that type, the client application would use the
  * factory method like this:
  *
  * <pre>
- *       com.acme.foo.PurchaseOrder po = 
+ *       com.acme.foo.PurchaseOrder po =
  *           com.acme.foo.ObjectFactory.createPurchaseOrder();
  * </pre>
  *
@@ -162,9 +162,9 @@ import java.io.InputStream;
  *
  * <p>
  * <i><B>SPEC REQUIREMENT:</B> the provider must generate a class in each
- * package that contains all of the necessary object factory methods for that 
- * package named ObjectFactory as well as the static 
- * <tt>newInstance( javaContentInterface )</tt> method</i>  
+ * package that contains all of the necessary object factory methods for that
+ * package named ObjectFactory as well as the static
+ * <tt>newInstance( javaContentInterface )</tt> method</i>
  *
  * <h3>Marshalling</h3>
  * <p>
@@ -173,11 +173,11 @@ import java.io.InputStream;
  * between marshalling a content tree that is created manually using the factory
  * methods and marshalling a content tree that is the result an <tt>unmarshal
  * </tt> operation.  Clients can marshal a java content tree back to XML data
- * to a <tt>java.io.OutputStream</tt> or a <tt>java.io.Writer</tt>.  The 
- * marshalling process can alternatively produce SAX2 event streams to a 
- * registered <tt>ContentHandler</tt> or produce a DOM Node object.  
- * Client applications have control over the output encoding as well as 
- * whether or not to marshal the XML data as a complete document or 
+ * to a <tt>java.io.OutputStream</tt> or a <tt>java.io.Writer</tt>.  The
+ * marshalling process can alternatively produce SAX2 event streams to a
+ * registered <tt>ContentHandler</tt> or produce a DOM Node object.
+ * Client applications have control over the output encoding as well as
+ * whether or not to marshal the XML data as a complete document or
  * as a fragment.
  *
  * <p>
@@ -210,16 +210,16 @@ import java.io.InputStream;
  * {@link Unmarshaller#setSchema(javax.xml.validation.Schema)} API for more
  * information.
  *
- * 
+ *
  * <h3>JAXB Runtime Binding Framework Compatibility</h3>
  * <p>
- * The following JAXB 1.0 restriction only applies to binding schema to 
+ * The following JAXB 1.0 restriction only applies to binding schema to
  * interfaces/implementation classes.
- * Since this binding does not require a common runtime system, a JAXB 
+ * Since this binding does not require a common runtime system, a JAXB
  * client application must not attempt to mix runtime objects (<tt>JAXBContext,
- * Marshaller</tt>, etc. ) from different providers.  This does not 
- * mean that the client application isn't portable, it simply means that a 
- * client has to use a runtime system provided by the same provider that was 
+ * Marshaller</tt>, etc. ) from different providers.  This does not
+ * mean that the client application isn't portable, it simply means that a
+ * client has to use a runtime system provided by the same provider that was
  * used to compile the schema.
  *
  *
@@ -238,7 +238,7 @@ import java.io.InputStream;
  * <p>
  * If such a file is discovered, it is {@link Properties#load(InputStream) loaded} as a property file, and
  * the value of the {@link #JAXB_CONTEXT_FACTORY} key will be assumed to be the provider factory class.
- * This class is then loaded by the associated classloader discussed above.
+ * This class is then loaded by the associated class loader discussed above.
  *
  * <p>
  * This phase of the look up allows some packages to force the use of a certain JAXB implementation.
@@ -249,10 +249,18 @@ import java.io.InputStream;
  * factory class. This phase of the look up enables per-JVM override of the JAXB implementation.
  *
  * <li>
- * Look for <tt>/META-INF/services/javax.xml.bind.JAXBContext</tt> file in the associated classloader.
- * This file follows the standard service descriptor convention, and if such a file exists, its content
- * is assumed to be the provider factory class. This phase of the look up is for automatic discovery.
- * It allows users to just put a JAXB implementation in a classpath and use it without any furhter configuration.
+ * Provider of {@link javax.xml.bind.JAXBContextFactory} is loaded using the service-provider loading
+ * facilities, defined by the {@link java.util.ServiceLoader} class, to attempt
+ * to locate and load an implementation of the service using the {@linkplain
+ * java.util.ServiceLoader#load(java.lang.Class) default loading mechanism}: the service-provider loading facility
+ * will use the {@linkplain java.lang.Thread#getContextClassLoader() current thread's context class loader}
+ * to attempt to load the context factory. If the context class loader is null, the
+ * {@linkplain ClassLoader#getSystemClassLoader() system class loader} will be used.
+ * <br>
+ * In case of {@link java.util.ServiceConfigurationError service
+ * configuration error} a {@link javax.xml.bind.JAXBException} will be thrown.
+ * </li>
+ * <p/>
  *
  * <li>
  * Finally, if all the steps above fail, then the rest of the look up is unspecified. That said,
@@ -261,12 +269,14 @@ import java.io.InputStream;
  * </ol>
  *
  * <p>
- * Once the provider factory class is discovered, its
- * <tt>public static JAXBContext createContext(String,ClassLoader,Map)</tt> method
- * (see {@link #newInstance(String, ClassLoader, Map)} for the parameter semantics.)
- * or <tt>public static JAXBContext createContet(Class[],Map)</tt> method
- * (see {@link #newInstance(Class[], Map)} for the parameter semantics) are invoked
+ * Once the provider factory class {@link javax.xml.bind.JAXBContextFactory} is discovered, one of its methods
+ * {@link javax.xml.bind.JAXBContextFactory#createContext(String, ClassLoader, java.util.Map)} or
+ * {@link javax.xml.bind.JAXBContextFactory#createContext(Class[], java.util.Map)} are invoked
  * to create a {@link JAXBContext}.
+ *
+ * <p>Service discovery algorithms from previous specification versions are still supported to allow backwards
+ * compatibility, but it is strongly recommended to migrate to new properties and extend
+ * {@link javax.xml.bind.JAXBContextFactory} to implement provider.</p>
  *
  * @author <ul><li>Ryan Shoemaker, Sun Microsystems, Inc.</li><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Joe Fialli, Sun Microsystems, Inc.</li></ul>
  * @see Marshaller
@@ -280,9 +290,8 @@ public abstract class JAXBContext {
      * The name of the property that contains the name of the class capable
      * of creating new <tt>JAXBContext</tt> objects.
      */
-    public static final String JAXB_CONTEXT_FACTORY = 
-        "javax.xml.bind.context.factory";
-       
+    public static final String JAXB_CONTEXT_FACTORY = "javax.xml.bind.JAXBContextFactory";
+
 
     protected JAXBContext() {
     }

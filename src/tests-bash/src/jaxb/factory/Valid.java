@@ -39,15 +39,15 @@ import java.util.Map;
 public class Valid {
 
     public static JAXBContext createContext(java.lang.String path, java.lang.ClassLoader cl) {
-        return new PropValidJAXBContext();
+        return new JAXBContext1();
     }
 
     public static JAXBContext createContext(Class[] classes, Map<String, Object> properties) throws JAXBException {
-        return new PropValidJAXBContext();
+        return new JAXBContext1();
     }
 
 
-    public static class PropValidJAXBContext extends JAXBContext {
+    public static class JAXBContext1 extends JAXBContext {
 
         @Override
         public Unmarshaller createUnmarshaller() throws JAXBException {

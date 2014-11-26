@@ -83,6 +83,9 @@ class ContextFinder {
      */
     private static final String PLATFORM_DEFAULT_FACTORY_CLASS = "com.sun.xml.internal.bind.v2.ContextFactory";
 
+    // previous value of JAXBContext.JAXB_CONTEXT_FACTORY, using also this to ensure bacwards compatibility
+    private static final String JAXB_CONTEXT_FACTORY_DEPRECATED = "javax.xml.bind.context.factory";
+
     private static final Logger logger;
 
     static {
@@ -106,6 +109,13 @@ class ContextFinder {
             // SecurityException.
         }
     }
+
+    private static ServiceLoaderUtil.ExceptionHandler<JAXBException> EXCEPTION_HANDLER = new ServiceLoaderUtil.ExceptionHandler<JAXBException>() {
+        @Override
+        public JAXBException createException(Throwable throwable, String message) {
+            return new JAXBException(message, throwable);
+        }
+    };
 
     /**
      * If the {@link InvocationTargetException} wraps an exception that shouldn't be wrapped,
@@ -294,8 +304,8 @@ class ContextFinder {
         logger.fine("Searching jaxb.properties");
         while (packages.hasMoreTokens()) {
             // com.acme.foo - > com/acme/foo/jaxb.properties
-            String className = classNameFromPackageProperties(factoryId, classLoader, packages.nextToken(":").replace('.', '/'));
-            if (className != null) return newInstance(contextPath, className, classLoader, properties);
+            String factoryClassName = classNameFromPackageProperties(classLoader, packages.nextToken(":").replace('.', '/'), factoryId, JAXB_CONTEXT_FACTORY_DEPRECATED);
+            if (factoryClassName != null) return newInstance(contextPath, factoryClassName, classLoader, properties);
         }
 
         String factoryName = classNameFromSystemProperties();
@@ -304,11 +314,11 @@ class ContextFinder {
         JAXBContext jaxbContext = (JAXBContext) ServiceLoaderUtil.lookupUsingOSGiServiceLoader("javax.xml.bind.JAXBContext", logger);
         if (jaxbContext != null) return jaxbContext;
 
-        // TODO: SPEC change required! This is supposed to be!
-        // JAXBContext obj = firstByServiceLoader(JAXBContext.class, EXCEPTION_HANDLER);
-        // if (obj != null) return obj;
+        // TODO: SPEC change required! java.util.ServiceLoader
+        JAXBContextFactory obj = ServiceLoaderUtil.firstByServiceLoader(JAXBContextFactory.class, logger, EXCEPTION_HANDLER);
+        if (obj != null) return obj.createContext(contextPath, classLoader, properties);
 
-        // TODO: Deprecated - SPEC change required!
+        // to ensure backwards compatibility
         factoryName = firstByServiceLoaderDeprecated(JAXBContext.class, classLoader);
         if (factoryName != null) return newInstance(contextPath, factoryName, classLoader, properties);
 
@@ -330,23 +340,24 @@ class ContextFinder {
             // TODO: it's easier to look things up from the class
             // c.getResourceAsStream("jaxb.properties");
 
-            String className = classNameFromPackageProperties(JAXBContext.JAXB_CONTEXT_FACTORY, getClassClassLoader(c), c.getPackage().getName().replace('.', '/'));
-            if (className != null) return newInstance(classes, properties, className);
+            String factoryClassName = classNameFromPackageProperties(getClassClassLoader(c), c.getPackage().getName().replace('.', '/'), JAXBContext.JAXB_CONTEXT_FACTORY, JAXB_CONTEXT_FACTORY_DEPRECATED);
+            if (factoryClassName != null) return newInstance(classes, properties, factoryClassName);
         }
 
-        String factoryName = classNameFromSystemProperties();
-        if (factoryName != null) return newInstance(classes, properties, factoryName);
+        String factoryClassName = classNameFromSystemProperties();
+        if (factoryClassName != null) return newInstance(classes, properties, factoryClassName);
 
-        JAXBContext obj = (JAXBContext) ServiceLoaderUtil.lookupUsingOSGiServiceLoader("javax.xml.bind.JAXBContext", logger);
-        if (obj != null) return obj;
+        // TODO: verify in GF
+        JAXBContextFactory factoryFromOSGi = (JAXBContextFactory) ServiceLoaderUtil.lookupUsingOSGiServiceLoader("javax.xml.bind.JAXBContextFactory", logger);
+        if (factoryFromOSGi != null) return factoryFromOSGi.createContext(classes, properties);
 
-        // TODO: to be removed - deprecated!!! Requires SPEC change!!!
+        // TODO: SPEC change required! java.util.ServiceLoader
+        JAXBContextFactory factory = ServiceLoaderUtil.firstByServiceLoader(JAXBContextFactory.class, logger, EXCEPTION_HANDLER);
+        if (factory != null) return factory.createContext(classes, properties);
+
+        // to ensure backwards compatibility
         String className = firstByServiceLoaderDeprecated(JAXBContext.class, null);
         if (className != null) return newInstance(classes, properties, className);
-
-        //    // TODO: supposed to be:
-        //    obj = firstByServiceLoader(JAXBContext.class, EXCEPTION_HANDLER);
-        //    if (obj != null) return obj;
 
         // else no provider found
         logger.fine("Trying to create the platform default provider");
@@ -354,39 +365,60 @@ class ContextFinder {
     }
 
 
-    private static String classNameFromPackageProperties(String factoryId, ClassLoader classLoader, String packageName) throws JAXBException {
+    /**
+     * first factoryId should be the preffered one, more of those can be provided to support backwards compatibility
+     */
+    private static String classNameFromPackageProperties(ClassLoader classLoader, String packageName, String ... factoryIds) throws JAXBException {
         String resourceName = packageName + "/jaxb.properties";
         logger.log(Level.FINE, "Trying to locate {0}", resourceName);
         Properties props = loadJAXBProperties(classLoader, resourceName);
         if (props != null) {
-            if (props.containsKey(factoryId)) {
-                return props.getProperty(factoryId);
-            } else {
-                throw new JAXBException(Messages.format(Messages.MISSING_PROPERTY, packageName, factoryId));
+            for(String factoryId : factoryIds) {
+                if (props.containsKey(factoryId)) {
+                    return props.getProperty(factoryId);
+                }
             }
+            throw new JAXBException(Messages.format(Messages.MISSING_PROPERTY, packageName, factoryIds[0]));
         }
         return null;
     }
 
     private static String classNameFromSystemProperties() throws JAXBException {
-        logger.log(Level.FINE, "Checking system property {0}", JAXBContext.JAXB_CONTEXT_FACTORY);
-        // search for a system property second (javax.xml.bind.JAXBContext)
-        String factoryClassName = AccessController.doPrivileged(new GetPropertyAction(JAXBContext.JAXB_CONTEXT_FACTORY));
+        String factoryClassName = getSystemProperty(JAXBContext.JAXB_CONTEXT_FACTORY);
         if (factoryClassName != null) {
-            logger.log(Level.FINE, "  found {0}", factoryClassName);
             return factoryClassName;
-        } else { // leave this here to assure compatibility
-            logger.fine("  not found");
-            logger.log(Level.FINE, "Checking system property {0}", JAXBContext.class.getName());
-            factoryClassName = AccessController.doPrivileged(new GetPropertyAction(JAXBContext.class.getName()));
-            if (factoryClassName != null) {
-                logger.log(Level.FINE, "  found {0}", factoryClassName);
-                return factoryClassName;
-            } else {
-                logger.fine("  not found");
-            }
+        }
+        // leave this here to assure compatibility
+        factoryClassName = getDeprecatedSystemProperty(JAXB_CONTEXT_FACTORY_DEPRECATED);
+        if (factoryClassName != null) {
+            return factoryClassName;
+        }
+        // leave this here to assure compatibility
+        factoryClassName = getDeprecatedSystemProperty(JAXBContext.class.getName());
+        if (factoryClassName != null) {
+            return factoryClassName;
         }
         return null;
+    }
+
+    private static String getDeprecatedSystemProperty(String property) {
+        String value = getSystemProperty(property);
+        if (value != null) {
+            logger.log(Level.WARNING, "Using non-standard property: {0}. Property {1} should be used instead.",
+                    new Object[] {property, JAXBContext.JAXB_CONTEXT_FACTORY});
+        }
+        return value;
+    }
+
+    private static String getSystemProperty(String property) {
+        logger.log(Level.FINE, "Checking system property {0}", property);
+        String value = AccessController.doPrivileged(new GetPropertyAction(property));
+        if (value != null) {
+            logger.log(Level.FINE, "  found {0}", value);
+        } else {
+            logger.log(Level.FINE, "  not found");
+        }
+        return value;
     }
 
     private static Properties loadJAXBProperties(ClassLoader classLoader, String propFileName) throws JAXBException {

@@ -97,7 +97,7 @@ scenario() {
 }
 
 compile() {
-    javac -XDignore.symbol.file  $1
+    javac -cp ../endorsed/jaxws.jar:. -XDignore.symbol.file  $1
 }
 
 #
@@ -128,6 +128,14 @@ clean() {
     rm -rf META-INF
 }
 
+FACTORY_ID=javax.xml.bind.context.factory
+SVC_FACTORY_ID=javax.xml.bind.JAXBContext
+FACTORY_IMPL_PREFIX=jaxb.factory.
+
+#FACTORY_IMPL_PREFIX=jaxb.factory.jaxbctxfactory.New
+#FACTORY_ID=javax.xml.bind.JAXBContextFactory
+#SVC_FACTORY_ID=javax.xml.bind.JAXBContextFactory
+
 #
 # Sets up:
 #  1) jaxb.properties file
@@ -140,17 +148,18 @@ prepare() {
     echo ""
     echo "- prepare/clean -"
     clean
+
     if [ "$SVC" != "-" ]; then
         mkdir -p META-INF/services
-        echo "$SVC" > META-INF/services/javax.xml.bind.JAXBContext
+        echo "$SVC" > META-INF/services/$SVC_FACTORY_ID
     else
         rm -rf META-INF
     fi
 
     echo META-INF: $SVC
-    if [ -f META-INF/services/javax.xml.bind.JAXBContext ]; then
-      echo "   "`ls -al META-INF/services/javax.xml.bind.JAXBContext`
-      echo "   "`cat META-INF/services/javax.xml.bind.JAXBContext`
+    if [ -f META-INF/services/$SVC_FACTORY_ID ]; then
+      echo "   "`ls -al META-INF/services/$SVC_FACTORY_ID`
+      echo "   "`cat META-INF/services/$SVC_FACTORY_ID`
       echo ""
     fi
 
@@ -176,6 +185,8 @@ find . -name '*.class' -delete
 compile 'jaxb/factory/*.java'
 compile 'jaxb/test/usr/*.java'
 compile 'jaxb/test/*.java'
+
+compile 'jaxb/factory/jaxbctxfactory/*.java'
 
 # preparation for testing TCCL method
 rm -rf ../classes/
