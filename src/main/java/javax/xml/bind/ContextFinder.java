@@ -301,8 +301,10 @@ class ContextFinder {
         String factoryName = classNameFromSystemProperties();
         if (factoryName != null) return newInstance(contextPath, factoryName, classLoader, properties);
 
-        JAXBContext jaxbContext = (JAXBContext) ServiceLoaderUtil.lookupUsingOSGiServiceLoader("javax.xml.bind.JAXBContext", logger);
-        if (jaxbContext != null) return jaxbContext;
+        Class ctxFactory = (Class) ServiceLoaderUtil.lookupUsingOSGiServiceLoader("javax.xml.bind.JAXBContext", logger);
+        if (ctxFactory != null) {
+            return newInstance(contextPath, ctxFactory, classLoader, properties);
+        }
 
         // TODO: SPEC change required! This is supposed to be!
         // JAXBContext obj = firstByServiceLoader(JAXBContext.class, EXCEPTION_HANDLER);
@@ -337,8 +339,10 @@ class ContextFinder {
         String factoryName = classNameFromSystemProperties();
         if (factoryName != null) return newInstance(classes, properties, factoryName);
 
-        JAXBContext obj = (JAXBContext) ServiceLoaderUtil.lookupUsingOSGiServiceLoader("javax.xml.bind.JAXBContext", logger);
-        if (obj != null) return obj;
+        Class ctxFactoryClass = (Class) ServiceLoaderUtil.lookupUsingOSGiServiceLoader("javax.xml.bind.JAXBContext", logger);
+        if (ctxFactoryClass != null) {
+            return newInstance(classes, properties, ctxFactoryClass);
+        }
 
         // TODO: to be removed - deprecated!!! Requires SPEC change!!!
         String className = firstByServiceLoaderDeprecated(JAXBContext.class, null);
