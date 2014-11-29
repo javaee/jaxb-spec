@@ -156,7 +156,7 @@ class ContextFinder {
                                    Map properties) throws JAXBException {
 
         try {
-            Class spFactory = ServiceLoaderUtil.safeLoadClass(className, isDefault(className), classLoader);
+            Class spFactory = ServiceLoaderUtil.safeLoadClass(className, PLATFORM_DEFAULT_FACTORY_CLASS, classLoader);
             return newInstance(contextPath, spFactory, classLoader, properties);
         } catch (ClassNotFoundException x) {
             throw new JAXBException(Messages.format(Messages.PROVIDER_NOT_FOUND, className), x);
@@ -172,10 +172,6 @@ class ContextFinder {
             // some other type of exception - just wrap it
             throw new JAXBException(Messages.format(Messages.COULD_NOT_INSTANTIATE, className, x), x);
         }
-    }
-
-    private static boolean isDefault(String className) {
-        return PLATFORM_DEFAULT_FACTORY_CLASS.equals(className);
     }
 
     static JAXBContext newInstance(String contextPath, Class spFactory, ClassLoader classLoader, Map properties) throws JAXBException {
@@ -241,7 +237,7 @@ class ContextFinder {
 
         Class spi;
         try {
-            spi = ServiceLoaderUtil.safeLoadClass(className, isDefault(className), getContextClassLoader());
+            spi = ServiceLoaderUtil.safeLoadClass(className, PLATFORM_DEFAULT_FACTORY_CLASS, getContextClassLoader());
         } catch (ClassNotFoundException e) {
             throw new JAXBException(e);
         }

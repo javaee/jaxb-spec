@@ -150,9 +150,9 @@ class ServiceLoaderUtil {
      * @return instantiated object or throws Runtime/checked exception, depending on ExceptionHandler's type
      * @throws T
      */
-    static <T extends Exception> Object newInstance(String className, boolean isDefaultClassname, final ExceptionHandler<T> handler) throws T {
+    static <T extends Exception> Object newInstance(String className, String defaultImplClassName, final ExceptionHandler<T> handler) throws T {
         try {
-            return safeLoadClass(className, isDefaultClassname, contextClassLoader(handler)).newInstance();
+            return safeLoadClass(className, defaultImplClassName, contextClassLoader(handler)).newInstance();
         } catch (ClassNotFoundException x) {
             throw handler.createException(x, "Provider " + className + " not found");
         } catch (Exception x) {
@@ -160,12 +160,12 @@ class ServiceLoaderUtil {
         }
     }
 
-    static Class safeLoadClass(String className, boolean isDefaultImplemenation, ClassLoader classLoader) throws ClassNotFoundException {
+    static Class safeLoadClass(String className, String defaultImplClassName, ClassLoader classLoader) throws ClassNotFoundException {
         try {
             checkPackageAccess(className);
         } catch (SecurityException se) {
             // anyone can access the platform default factory class without permission
-            if (isDefaultImplemenation) {
+            if (defaultImplClassName != null && defaultImplClassName.equals(className)) {
                 return Class.forName(className);
             }
             // not platform default implementation ...
