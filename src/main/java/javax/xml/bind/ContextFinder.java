@@ -522,7 +522,7 @@ class ContextFinder {
                 logger.log(Level.FINE, "Configured factorty class:{0}", factoryClassName);
                 return factoryClassName;
             } else {
-                logger.log(Level.FINE, "Unable to load:{0}", resource.toString());
+                logger.log(Level.FINE, "Unable to load:{0}", resource);
                 return null;
             }
         } catch (UnsupportedEncodingException e) {

@@ -109,12 +109,18 @@ class ServiceLoaderUtil {
         String factoryClassName = null;
         if (f.exists()) {
             Properties props = new Properties();
-            FileInputStream stream = new FileInputStream(f);
-            props.load(stream);
-            factoryClassName = props.getProperty(factoryId);
+            FileInputStream stream = null;
             try {
-                stream.close();
-            } catch (IOException ignored) {
+                stream = new FileInputStream(f);
+                props.load(stream);
+                factoryClassName = props.getProperty(factoryId);
+            } finally {
+                if (stream != null) {
+                    try {
+                        stream.close();
+                    } catch (IOException ignored) {
+                    }
+                }
             }
         }
         return factoryClassName;
