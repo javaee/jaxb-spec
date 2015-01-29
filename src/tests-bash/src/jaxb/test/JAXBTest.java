@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2015, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -76,7 +76,7 @@ public class JAXBTest {
      */
     private void setContextClassLoader() {
         try {
-            String path = new File(".").getAbsoluteFile().getParent();
+            String path = new File(".").getAbsoluteFile().getParentFile().getParent() + "/src/";
             System.out.println("    Creating URLClassLoader to load classes from: " + path);
             ClassLoader cl = new URLClassLoader(
                     new URL[]{

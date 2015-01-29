@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2003-2014 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2003-2015 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -341,7 +341,7 @@ class ContextFinder {
         }
 
         // TODO: to be removed - deprecated!!! Requires SPEC change!!!
-        String className = firstByServiceLoaderDeprecated(JAXBContext.class, null);
+        String className = firstByServiceLoaderDeprecated(JAXBContext.class, getContextClassLoader());
         if (className != null) return newInstance(classes, properties, className);
 
         //    // TODO: supposed to be:

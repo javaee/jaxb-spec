@@ -62,5 +62,5 @@ test jaxb.factory.Valid2\$PropValidJAXBContext2 -
 
 scenario cleanup
 prepare - -
-rm -rf ../classes
+rm -rf ../ctx-classloader-test
 find . -name '*.class' -delete
