@@ -1,7 +1,7 @@
 #!/bin/sh
 
 #
-# Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2015, Oracle and/or its affiliates. All rights reserved.
 # DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
 #
 # This code is free software; you can redistribute it and/or modify it
@@ -88,6 +88,11 @@ echo "endorsed dirs: " $ENDORSED
 ls -al $ENDORSED_DIR
 javac -version
 
+export D=
+if [ "$1" = "debug" ]; then
+    export D=$DEBUG
+fi;
+
 
 scenario() {
     echo ""
@@ -101,27 +106,33 @@ compile() {
 }
 
 #
-# Each test call tests 3 different cases:
-#  1) ContextFactory.createContext(Class[] classes, Map<String,Object> properties )
-#  2) ContextFactory.createContext( String path )
-#  3) ContextFactory.createContext( String path ) + setting TCCL
+# Each test call tests 5 different cases:
+#  1) JAXBContext.newInstance( String path )
+#  2) JAXBContext.newInstance( Class ... classes )
+#  3) JAXBContext.newInstance( Class[] classes, Map<String,Object> properties )
+#  4) JAXBContext.newInstance( String path ) + setting TCCL
+#  5) JAXBContext.newInstance( Class[] classes, Map<String,Object> properties ) + setting TCCL
 #
 test() {
     JVM_OPTS=$3
-    # export D=$DEBUG
-    export D=
+
     echo - JAXBTestContextPath ---
     java $JVM_OPTS $D $ENDORSED jaxb.test.JAXBTestContextPath $1 $2
 
     echo - JAXBTestClasses ---
     java $JVM_OPTS $D $ENDORSED jaxb.test.JAXBTestClasses $1 $2
 
+    echo - JAXBTestClasses2 ---
+    java $JVM_OPTS $D $ENDORSED jaxb.test.JAXBTestClasses2 $1 $2
+
+    prepareCtxClassloader
+
     echo - JAXBTestContextPath+ClassLoader ---
-    java $JVM_OPTS $ENDORSED -cp ../classes $D jaxb.test.JAXBTestContextPath $1 $2 WithClassLoader
+    java $JVM_OPTS $D $ENDORSED -cp ../ctx-classloader-test jaxb.test.JAXBTestContextPath $1 $2 WithClassLoader
 
     # parametrized classloader not applicable for method with classes:
-    #    echo JAXBTestClasses+ClassLoader
-    #    java -cp ../classes $D jaxb.test.JAXBTestClasses $1 $2 WithClassLoader
+    echo - JAXBTestClasses2+ClassLoader -
+    java $JVM_OPTS $D $ENDORSED -cp ../ctx-classloader-test jaxb.test.JAXBTestClasses2 $1 $2 WithClassLoader
 }
 
 clean() {
@@ -166,6 +177,14 @@ prepare() {
       echo ""
     fi
 
+    #listDirectory
+}
+
+function listDirectory() {
+    echo == prepared done ================================
+    echo `pwd`:
+    find ..
+    echo =================================================
 }
 
 cd src
@@ -177,11 +196,22 @@ compile 'jaxb/factory/*.java'
 compile 'jaxb/test/usr/*.java'
 compile 'jaxb/test/*.java'
 
-# preparation for testing TCCL method
-rm -rf ../classes/
-mkdir -p ../classes/jaxb/test
-cp jaxb/test/*.class ../classes/jaxb/test
-find ../classes/
+function prepareCtxClassloader() {
+    TCCL_DIR=../ctx-classloader-test
+
+    # preparation for testing TCCL method
+    # copying compiled user classes + property files
+    rm -rf $TCCL_DIR
+    mkdir -p $TCCL_DIR/jaxb/test/usr
+
+    cp jaxb/test/*.class $TCCL_DIR/jaxb/test > /dev/null 2>&1
+
+    cp jaxb/test/usr/*.class $TCCL_DIR/jaxb/test/usr > /dev/null 2>&1
+    cp jaxb/test/usr/*.properties ../ctx-classloader-test/jaxb/test/usr > /dev/null 2>&1
+
+    # debug: list firectory content
+    #find ../
+}
 
 
 export DEFAULT=com.sun.xml.internal.bind.v2.runtime.JAXBContextImpl
