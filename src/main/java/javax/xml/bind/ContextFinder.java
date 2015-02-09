@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2003-2014 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2003-2015 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -166,7 +166,7 @@ class ContextFinder {
                                    Map properties) throws JAXBException {
 
         try {
-            Class spFactory = ServiceLoaderUtil.safeLoadClass(className, isDefault(className), classLoader);
+            Class spFactory = ServiceLoaderUtil.safeLoadClass(className, PLATFORM_DEFAULT_FACTORY_CLASS, classLoader);
             return newInstance(contextPath, spFactory, classLoader, properties);
         } catch (ClassNotFoundException x) {
             throw new JAXBException(Messages.format(Messages.PROVIDER_NOT_FOUND, className), x);
@@ -182,10 +182,6 @@ class ContextFinder {
             // some other type of exception - just wrap it
             throw new JAXBException(Messages.format(Messages.COULD_NOT_INSTANTIATE, className, x), x);
         }
-    }
-
-    private static boolean isDefault(String className) {
-        return PLATFORM_DEFAULT_FACTORY_CLASS.equals(className);
     }
 
     static JAXBContext newInstance(String contextPath, Class spFactory, ClassLoader classLoader, Map properties) throws JAXBException {
@@ -251,7 +247,7 @@ class ContextFinder {
 
         Class spi;
         try {
-            spi = ServiceLoaderUtil.safeLoadClass(className, isDefault(className), getContextClassLoader());
+            spi = ServiceLoaderUtil.safeLoadClass(className, PLATFORM_DEFAULT_FACTORY_CLASS, getContextClassLoader());
         } catch (ClassNotFoundException e) {
             throw new JAXBException(e);
         }
@@ -311,8 +307,10 @@ class ContextFinder {
         String factoryName = classNameFromSystemProperties();
         if (factoryName != null) return newInstance(contextPath, factoryName, classLoader, properties);
 
-        JAXBContext jaxbContext = (JAXBContext) ServiceLoaderUtil.lookupUsingOSGiServiceLoader("javax.xml.bind.JAXBContext", logger);
-        if (jaxbContext != null) return jaxbContext;
+        Class ctxFactory = (Class) ServiceLoaderUtil.lookupUsingOSGiServiceLoader("javax.xml.bind.JAXBContext", logger);
+        if (ctxFactory != null) {
+            return newInstance(contextPath, ctxFactory, classLoader, properties);
+        }
 
         // TODO: SPEC change required! java.util.ServiceLoader
         JAXBContextFactory obj = ServiceLoaderUtil.firstByServiceLoader(JAXBContextFactory.class, logger, EXCEPTION_HANDLER);
@@ -347,16 +345,17 @@ class ContextFinder {
         String factoryClassName = classNameFromSystemProperties();
         if (factoryClassName != null) return newInstance(classes, properties, factoryClassName);
 
-        // TODO: verify in GF
-        JAXBContextFactory factoryFromOSGi = (JAXBContextFactory) ServiceLoaderUtil.lookupUsingOSGiServiceLoader("javax.xml.bind.JAXBContextFactory", logger);
-        if (factoryFromOSGi != null) return factoryFromOSGi.createContext(classes, properties);
+        Class ctxFactoryClass = (Class) ServiceLoaderUtil.lookupUsingOSGiServiceLoader("javax.xml.bind.JAXBContext", logger);
+        if (ctxFactoryClass != null) {
+            return newInstance(classes, properties, ctxFactoryClass);
+        }
 
         // TODO: SPEC change required! java.util.ServiceLoader
         JAXBContextFactory factory = ServiceLoaderUtil.firstByServiceLoader(JAXBContextFactory.class, logger, EXCEPTION_HANDLER);
         if (factory != null) return factory.createContext(classes, properties);
 
         // to ensure backwards compatibility
-        String className = firstByServiceLoaderDeprecated(JAXBContext.class, null);
+        String className = firstByServiceLoaderDeprecated(JAXBContext.class, getContextClassLoader());
         if (className != null) return newInstance(classes, properties, className);
 
         // else no provider found
@@ -554,7 +553,7 @@ class ContextFinder {
                 logger.log(Level.FINE, "Configured factorty class:{0}", factoryClassName);
                 return factoryClassName;
             } else {
-                logger.log(Level.FINE, "Unable to load:{0}", resource.toString());
+                logger.log(Level.FINE, "Unable to load:{0}", resource);
                 return null;
             }
         } catch (UnsupportedEncodingException e) {

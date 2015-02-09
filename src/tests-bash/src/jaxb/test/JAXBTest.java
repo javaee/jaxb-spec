@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2015, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -63,11 +63,11 @@ public class JAXBTest {
             String expectedExceptionClass = args[1];
             String throwableClass = throwable.getClass().getName();
             boolean correctException = throwableClass.equals(expectedExceptionClass);
-            assertTrue(correctException, "Got unexpected exception: [" +
-                    throwableClass + "], expected: [" + expectedExceptionClass + "]");
             if (!correctException) {
                 throwable.printStackTrace();
             }
+            assertTrue(correctException, "Got unexpected exception: [" +
+                    throwableClass + "], expected: [" + expectedExceptionClass + "]");
         }
     }
 
@@ -76,7 +76,7 @@ public class JAXBTest {
      */
     private void setContextClassLoader() {
         try {
-            String path = new File(".").getAbsoluteFile().getParent();
+            String path = new File(".").getAbsoluteFile().getParentFile().getParent() + "/src/";
 //            System.out.println("    Creating URLClassLoader to load classes from: " + path);
             ClassLoader cl = new URLClassLoader(
                     new URL[]{
@@ -86,7 +86,7 @@ public class JAXBTest {
             Thread.currentThread().setContextClassLoader(cl);
 //            System.out.println("    ...contextClassLoader set.");
         } catch (Throwable t) {
-            System.out.println("    Problem while creating URLClassLoader: ");
+            System.out.println("    FAILED: Problem while creating URLClassLoader: ");
             t.printStackTrace();
         }
     }
@@ -94,9 +94,9 @@ public class JAXBTest {
     private static void assertTrue(boolean condition, String msg) {
         if (!condition) {
             log(" FAILED -  ERROR: " + msg);
-            //throw new RuntimeException(msg);
+            throw new RuntimeException(msg);
         } else {
-            //log(" PASSED");
+            log(" PASSED");
         }
     }
 

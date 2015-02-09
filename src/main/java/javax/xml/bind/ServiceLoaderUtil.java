@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2014 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2015 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -113,12 +113,18 @@ class ServiceLoaderUtil {
         String factoryClassName = null;
         if (f.exists()) {
             Properties props = new Properties();
-            FileInputStream stream = new FileInputStream(f);
-            props.load(stream);
-            factoryClassName = props.getProperty(factoryId);
+            FileInputStream stream = null;
             try {
-                stream.close();
-            } catch (IOException ignored) {
+                stream = new FileInputStream(f);
+                props.load(stream);
+                factoryClassName = props.getProperty(factoryId);
+            } finally {
+                if (stream != null) {
+                    try {
+                        stream.close();
+                    } catch (IOException ignored) {
+                    }
+                }
             }
         }
         return factoryClassName;
@@ -154,9 +160,9 @@ class ServiceLoaderUtil {
      * @return instantiated object or throws Runtime/checked exception, depending on ExceptionHandler's type
      * @throws T
      */
-    static <T extends Exception> Object newInstance(String className, boolean isDefaultClassname, final ExceptionHandler<T> handler) throws T {
+    static <T extends Exception> Object newInstance(String className, String defaultImplClassName, final ExceptionHandler<T> handler) throws T {
         try {
-            return safeLoadClass(className, isDefaultClassname, contextClassLoader(handler)).newInstance();
+            return safeLoadClass(className, defaultImplClassName, contextClassLoader(handler)).newInstance();
         } catch (ClassNotFoundException x) {
             throw handler.createException(x, "Provider " + className + " not found");
         } catch (Exception x) {
@@ -164,12 +170,12 @@ class ServiceLoaderUtil {
         }
     }
 
-    static Class safeLoadClass(String className, boolean isDefaultImplemenation, ClassLoader classLoader) throws ClassNotFoundException {
+    static Class safeLoadClass(String className, String defaultImplClassName, ClassLoader classLoader) throws ClassNotFoundException {
         try {
             checkPackageAccess(className);
         } catch (SecurityException se) {
             // anyone can access the platform default factory class without permission
-            if (isDefaultImplemenation) {
+            if (defaultImplClassName != null && defaultImplClassName.equals(className)) {
                 return Class.forName(className);
             }
             // not platform default implementation ...

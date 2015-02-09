@@ -60,11 +60,6 @@ scenario 15
 prepare - ${FACTORY_IMPL_PREFIX}Valid
 test ${FACTORY_IMPL_PREFIX}Valid\$JAXBContext1 -
 
-scenario cleanup
-prepare - -
-rm -rf ../classes
-find . -name '*.class' -delete
-
 #    # system props: currently checked both:
 #    $FACTORY_ID > will change to (?) > javax.xml.bind.JAXBContextFactory
 #    javax.xml.binf.JAXBContext
