@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2005-2014 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005-2015 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -54,28 +54,28 @@ import java.lang.annotation.Target;
  *
  * <h2>Usage</h2>
  * <pre>
- * &#64;{@link XmlRootElement}
+ * {@code @}{@link XmlRootElement}
  * class Foo {
- *   &#64;{@link XmlAttachmentRef}
- *   &#64;{@link XmlAttribute}
+ *   {@code @}{@link XmlAttachmentRef}
+ *   {@code @}{@link XmlAttribute}
  *   {@link DataHandler} data;
  *
- *   &#64;{@link XmlAttachmentRef}
- *   &#64;{@link XmlElement}
+ *   {@code @}{@link XmlAttachmentRef}
+ *   {@code @}{@link XmlElement}
  *   {@link DataHandler} body;
  * }
  * </pre>
  * The above code maps to the following XML:
- * <pre>
- * &lt;xs:element name="foo" xmlns:ref="http://ws-i.org/profiles/basic/1.1/xsd"&gt;
- *   &lt;xs:complexType&gt;
- *     &lt;xs:sequence&gt;
- *       &lt;xs:element name="body" type="ref:swaRef" minOccurs="0" /&gt;
- *     &lt;/xs:sequence&gt;
- *     &lt;xs:attribute name="data" type="ref:swaRef" use="optional" /&gt;
- *   &lt;/xs:complexType&gt;
- * &lt;/xs:element&gt;
- * </pre>
+ * <pre>{@code
+ * <xs:element name="foo" xmlns:ref="http://ws-i.org/profiles/basic/1.1/xsd">
+ *   <xs:complexType>
+ *     <xs:sequence>
+ *       <xs:element name="body" type="ref:swaRef" minOccurs="0" />
+ *     </xs:sequence>
+ *     <xs:attribute name="data" type="ref:swaRef" use="optional" />
+ *   </xs:complexType>
+ * </xs:element>
+ * }</pre>
  *
  * <p>
  * The above binding supports WS-I AP 1.0 <a href="http://www.ws-i.org/Profiles/AttachmentsProfile-1.0-2004-08-24.html#Referencing_Attachments_from_the_SOAP_Envelope">WS-I Attachments Profile Version 1.0.</a>

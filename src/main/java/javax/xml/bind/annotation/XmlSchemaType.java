@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2005-2014 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005-2015 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -76,24 +76,24 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * <pre>
  *     //Example: Code fragment
  *     public class USPrice {
- *         &#64;XmlElement
- *         &#64;XmlSchemaType(name="date")
+ *         {@code @XmlElement}
+ *         {@code @XmlSchemaType}(name="date")
  *         public XMLGregorianCalendar date;
  *     }
- * 
- *     &lt;!-- Example: Local XML Schema element --&gt;
- *     &lt;xs:complexType name="USPrice"/&gt;
- *       &lt;xs:sequence&gt;
- *         &lt;xs:element name="date" type="xs:date"/&gt;
- *       &lt;/sequence&gt;
- *     &lt;/xs:complexType&gt;
- * </pre>
+ * {@code
+ *     <!-- Example: Local XML Schema element -->
+ *     <xs:complexType name="USPrice"/>
+ *       <xs:sequence>
+ *         <xs:element name="date" type="xs:date"/>
+ *       </sequence>
+ *     </xs:complexType>
+ * }</pre>
  *
  * <p> <b> Example 2: </b> Customize mapping of XMLGregorianCalendar at package
  *     level </p>
  * <pre>
  *     package foo;
- *     &#64;javax.xml.bind.annotation.XmlSchemaType(
+ *     {@code @javax.xml.bind.annotation.XmlSchemaType}(
  *          name="date", type=javax.xml.datatype.XMLGregorianCalendar.class)
  *     }
  * </pre>

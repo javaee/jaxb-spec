@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2004-2014 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2004-2015 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -53,12 +53,12 @@ import static java.lang.annotation.RetentionPolicy.*;
  * To preserve referential integrity of an object graph across XML
  * serialization followed by a XML deserialization, requires an object
  * reference to be marshalled by reference or containment
- * appropriately. Annotations <tt>&#64;XmlID</tt> and <tt>&#64;XmlIDREF</tt>
+ * appropriately. Annotations <tt>@XmlID</tt> and <tt>@XmlIDREF</tt>
  * together allow a customized mapping of a JavaBean property's
  * type by containment or reference. 
  *
  * <p><b>Usage</b> </p>
- * The <tt>&#64;XmlID</tt> annotation can be used with the following
+ * The <tt>@XmlID</tt> annotation can be used with the following
  * program elements: 
  * <ul> 
  *   <li> a JavaBean property </li>
@@ -71,34 +71,34 @@ import static java.lang.annotation.RetentionPolicy.*;
  * The usage is subject to the following constraints:
  * <ul> 
  *   <li> At most one field or property in a class can be annotated
- *        with <tt>&#64;XmlID</tt>.  </li>
+ *        with <tt>@XmlID</tt>.  </li>
  *   <li> The JavaBean property's type must be <tt>java.lang.String</tt>.</li>
  *   <li> The only other mapping annotations that can be used
- *        with <tt>&#64;XmlID</tt>
- *        are:<tt>&#64;XmlElement</tt> and <tt>&#64;XmlAttribute</tt>.</li>  
+ *        with <tt>@XmlID</tt>
+ *        are:<tt>@XmlElement</tt> and <tt>@XmlAttribute</tt>.</li>  
  * </ul>
  * 
  * <p><b>Example</b>: Map a JavaBean property's type to <tt>xs:ID</tt></p>
  * <pre>
  *    // Example: code fragment
  *    public class Customer {
- *        &#64;XmlAttribute
- *        &#64;XmlID
+ *        {@code @XmlAttribute}
+ *        {@code @XmlID}
  *        public String getCustomerID();
  *        public void setCustomerID(String id);
  *        .... other properties not shown 
  *    }
- *
- *    &lt;!-- Example: XML Schema fragment --&gt;
- *    &lt;xs:complexType name="Customer"&gt;
- *      &lt;xs:complexContent&gt;
- *        &lt;xs:sequence&gt;
+ * {@code
+ *    <!-- Example: XML Schema fragment -->
+ *    <xs:complexType name="Customer">
+ *      <xs:complexContent>
+ *        <xs:sequence>
  *          ....
- *        &lt;/xs:sequence&gt;
- *        &lt;xs:attribute name="customerID" type="xs:ID"/&gt;
- *      &lt;/xs:complexContent&gt;
- *    &lt;/xs:complexType&gt;
- * </pre>
+ *        </xs:sequence>
+ *        <xs:attribute name="customerID" type="xs:ID"/>
+ *      </xs:complexContent>
+ *    </xs:complexType>
+ * }</pre>
  *
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @see XmlIDREF

@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2005-2014 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005-2015 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -54,21 +54,21 @@ import java.lang.annotation.Target;
  * XML element around collections. The annotation therefore supports
  * two forms of serialization shown below. 
  *
- * <pre>
+ * <pre>{@code
  *    //Example: code fragment
  *      int[] names;
  *
  *    // XML Serialization Form 1 (Unwrapped collection)
- *    &lt;names&gt; ... &lt;/names&gt;
- *    &lt;names&gt; ... &lt;/names&gt;
+ *    <names> ... </names>
+ *    <names> ... </names>
  * 
  *    // XML Serialization Form 2 ( Wrapped collection )
- *    &lt;wrapperElement&gt;
- *       &lt;names&gt; value-of-item &lt;/names&gt;
- *       &lt;names&gt; value-of-item &lt;/names&gt;
+ *    <wrapperElement>
+ *       <names> value-of-item </names>
+ *       <names> value-of-item </names>
  *       ....
- *    &lt;/wrapperElement&gt;
- * </pre>
+ *    </wrapperElement>
+ * }</pre>
  *
  * <p> The two serialized XML forms allow a null collection to be
  * represented either by absence or presence of an element with a

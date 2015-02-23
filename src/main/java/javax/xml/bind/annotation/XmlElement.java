@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2004-2014 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2004-2015 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -94,17 +94,17 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <pre>
  *     //Example: Code fragment
  *     public class USPrice {
- *         &#64;XmlElement(name="itemprice")
+ *         {@code @XmlElement}(name="itemprice")
  *         public java.math.BigDecimal price;
  *     }
- *
- *     &lt;!-- Example: Local XML Schema element --&gt;
- *     &lt;xs:complexType name="USPrice"/&gt;
- *       &lt;xs:sequence&gt;
- *         &lt;xs:element name="itemprice" type="xs:decimal" minOccurs="0"/&gt;
- *       &lt;/sequence&gt;
- *     &lt;/xs:complexType&gt;
- *   </pre>
+ * {@code
+ *     <!-- Example: Local XML Schema element -->
+ *     <xs:complexType name="USPrice"/>
+ *       <xs:sequence>
+ *         <xs:element name="itemprice" type="xs:decimal" minOccurs="0"/>
+ *       </sequence>
+ *     </xs:complexType>
+ *   }</pre>
  * <p>
  *
  * <b> Example 2: </b> Map a field to a nillable element.
@@ -112,34 +112,34 @@ import static java.lang.annotation.RetentionPolicy.*;
  *
  *     //Example: Code fragment
  *     public class USPrice {
- *         &#64;XmlElement(nillable=true)
+ *         {@code @}XmlElement(nillable=true)
  *         public java.math.BigDecimal price;
  *     }
- *
- *     &lt;!-- Example: Local XML Schema element --&gt;
- *     &lt;xs:complexType name="USPrice"&gt;
- *       &lt;xs:sequence&gt;
- *         &lt;xs:element name="price" type="xs:decimal" nillable="true" minOccurs="0"/&gt;
- *       &lt;/sequence&gt;
- *     &lt;/xs:complexType&gt;
- *   </pre>
+ * {@code
+ *     <!-- Example: Local XML Schema element -->
+ *     <xs:complexType name="USPrice">
+ *       <xs:sequence>
+ *         <xs:element name="price" type="xs:decimal" nillable="true" minOccurs="0"/>
+ *       </sequence>
+ *     </xs:complexType>
+ *   }</pre>
  * <p>
  * <b> Example 3: </b> Map a field to a nillable, required element.
  *   <pre>
  *
  *     //Example: Code fragment
  *     public class USPrice {
- *         &#64;XmlElement(nillable=true, required=true)
+ *         {@code @}XmlElement(nillable=true, required=true)
  *         public java.math.BigDecimal price;
  *     }
- *
- *     &lt;!-- Example: Local XML Schema element --&gt;
- *     &lt;xs:complexType name="USPrice"&gt;
- *       &lt;xs:sequence&gt;
- *         &lt;xs:element name="price" type="xs:decimal" nillable="true" minOccurs="1"/&gt;
- *       &lt;/sequence&gt;
- *     &lt;/xs:complexType&gt;
- *   </pre>
+ * {@code
+ *     <!-- Example: Local XML Schema element -->
+ *     <xs:complexType name="USPrice">
+ *       <xs:sequence>
+ *         <xs:element name="price" type="xs:decimal" nillable="true" minOccurs="1"/>
+ *       </sequence>
+ *     </xs:complexType>
+ *   }</pre>
  *
  * <p> <b>Example 4: </b>Map a JavaBean property to an XML element
  * with anonymous type.</p>
@@ -194,7 +194,7 @@ public @interface XmlElement {
      *  the enclosing class.
      *
      *  <li>
-     *  Otherwise &#39;&#39; (which produces unqualified element in the default
+     *  Otherwise {@code ''} (which produces unqualified element in the default
      *  namespace.
      * </ol>
      */
