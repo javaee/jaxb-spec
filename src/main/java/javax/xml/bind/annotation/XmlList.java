@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2005-2014 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005-2015 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -65,41 +65,41 @@ import static java.lang.annotation.ElementType.PARAMETER;
  * For example,
  *
  * <pre>
- * &#64;XmlRootElement
+ * {@code @XmlRootElement}
  * class Foo {
- *     &#64;XmlElement
- *     List&lt;String&gt; data;
+ *     {@code @XmlElement}
+ *     {@code List<String>} data;
  * }
  * </pre>
  *
  * would produce XML like this:
  *
- * <pre>
- * &lt;foo&gt;
- *   &lt;data&gt;abc&lt;/data&gt;
- *   &lt;data&gt;def&lt;/data&gt;
- * &lt;/foo&gt;
- * </pre>
+ * <pre>{@code
+ * <foo>
+ *   <data>abc</data>
+ *   <data>def</data>
+ * </foo>
+ * }</pre>
  *
- * &#64;XmlList annotation, on the other hand, allows multiple values to be 
+ * {@code @XmlList} annotation, on the other hand, allows multiple values to be 
  * represented as whitespace-separated tokens in a single element. For example,
  *
  * <pre>
- * &#64;XmlRootElement
+ * {@code @XmlRootElement}
  * class Foo {
- *     &#64;XmlElement
- *     &#64;XmlList
- *     List&lt;String&gt; data;
+ *     {@code @XmlElement}
+ *     {@code @XmlList}
+ *     {@code List<String>} data;
  * }
  * </pre>
  *
  * the above code will produce XML like this:
  *
- * <pre>
- * &lt;foo&gt;
- *   &lt;data&gt;abc def&lt;/data&gt;
- * &lt;/foo&gt;
- * </pre>
+ * <pre>{@code
+ * <foo>
+ *   <data>abc def</data>
+ * </foo>
+ * }</pre>
  *
  * <p>This annotation can be used with the following annotations:
  *        {@link XmlElement}, 

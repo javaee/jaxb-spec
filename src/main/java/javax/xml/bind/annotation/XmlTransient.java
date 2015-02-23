@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2004-2014 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2004-2015 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -87,20 +87,20 @@ import static java.lang.annotation.RetentionPolicy.*;
  *
  *       // The field name "name" collides with the property name 
  *       // obtained by bean decapitalization of getName() below
- *       &#64;XmlTransient public String name;
+ *       {@code @XmlTransient} public String name;
  *
  *       String getName() {..};
  *       String setName() {..};
  *   }
  *
- *    
- *   &lt;!-- Example: XML Schema fragment --&gt;
- *   &lt;xs:complexType name="USAddress"&gt;
- *     &lt;xs:sequence&gt;
- *       &lt;xs:element name="name" type="xs:string"/&gt;
- *     &lt;/xs:sequence&gt;
- *   &lt;/xs:complexType&gt;
- * </pre>
+ * {@code   
+ *   <!-- Example: XML Schema fragment -->
+ *   <xs:complexType name="USAddress">
+ *     <xs:sequence>
+ *       <xs:element name="name" type="xs:string"/>
+ *     </xs:sequence>
+ *   </xs:complexType>
+ * }</pre>
  *
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since 1.6, JAXB 2.0

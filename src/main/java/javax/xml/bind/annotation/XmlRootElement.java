@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2004-2014 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2004-2015 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -51,7 +51,7 @@ import static java.lang.annotation.ElementType.TYPE;
  *
  * <p> <b>Usage</b> </p>
  * <p>
- * The &#64;XmlRootElement annotation can be used with the following program
+ * The {@code @XmlRootElement} annotation can be used with the following program
  * elements: 
  * <ul> 
  *   <li> a top level class </li>
@@ -63,7 +63,7 @@ import static java.lang.annotation.ElementType.TYPE;
  * 
  * <p>
  * When a top level class or an enum type is annotated with the 
- * &#64;XmlRootElement annotation, then its value is represented 
+ * {@code @XmlRootElement} annotation, then its value is represented 
  * as XML element in an XML document.
  *
  * <p> This annotation can be used with the following annotations:
@@ -75,7 +75,7 @@ import static java.lang.annotation.ElementType.TYPE;
  * <b>Example 1: </b> Associate an element with XML Schema type
  * <pre>
  *     // Example: Code fragment
- *     &#64;XmlRootElement
+ *     {@code @XmlRootElement}
  *     class Point {
  *        int x;
  *        int y;
@@ -88,28 +88,28 @@ import static java.lang.annotation.ElementType.TYPE;
  *     marshal( new Point(3,5), System.out);
  * </pre>
  *
- * <pre>
- *     &lt;!-- Example: XML output --&gt;
- *     &lt;point&gt;
- *       &lt;x&gt; 3 &lt;/x&gt;
- *       &lt;y&gt; 5 &lt;/y&gt;
- *     &lt;/point&gt;
- * </pre>
+ * <pre>{@code
+ *     <!-- Example: XML output -->
+ *     <point>
+ *       <x> 3 </x>
+ *       <y> 5 </y>
+ *     </point>
+ * }</pre>
  *
  * The annotation causes an global element declaration to be produced
  * in the schema. The global element declaration is associated with
  * the XML schema type to which the class is mapped.
  *
- * <pre>
- *     &lt;!-- Example: XML schema definition --&gt;
- *     &lt;xs:element name="point" type="point"/&gt;
- *     &lt;xs:complexType name="point"&gt;
- *       &lt;xs:sequence&gt;
- *         &lt;xs:element name="x" type="xs:int"/&gt;
- *         &lt;xs:element name="y" type="xs:int"/&gt;
- *       &lt;/xs:sequence&gt;
- *     &lt;/xs:complexType&gt;
- * </pre>
+ * <pre>{@code
+ *     <!-- Example: XML schema definition -->
+ *     <xs:element name="point" type="point"/>
+ *     <xs:complexType name="point">
+ *       <xs:sequence>
+ *         <xs:element name="x" type="xs:int"/>
+ *         <xs:element name="y" type="xs:int"/>
+ *       </xs:sequence>
+ *     </xs:complexType>
+ * }</pre>
  *
  * <p>
  *
@@ -120,7 +120,7 @@ import static java.lang.annotation.ElementType.TYPE;
  * derived types. The following example shows this.
  * <pre>
  *     // Example: Code fragment
- *     &#64;XmlRootElement
+ *     {@code @XmlRootElement}
  *     class Point3D extends Point {
  *         int z;
  *         Point3D(int _x,int _y,int _z) {super(_x,_y);z=_z;}
@@ -128,46 +128,46 @@ import static java.lang.annotation.ElementType.TYPE;
  *
  *     //Example: Code fragment corresponding to XML output * 
  *     marshal( new Point3D(3,5,0), System.out );
+ * {@code
+ *     <!-- Example: XML output -->
+ *     <!-- The element name is point3D not point -->
+ *     <point3D>
+ *       <x>3</x>
+ *       <y>5</y>
+ *       <z>0</z>
+ *     </point3D>
  *
- *     &lt;!-- Example: XML output --&gt;
- *     &lt;!-- The element name is point3D not point --&gt;
- *     &lt;point3D&gt;
- *       &lt;x&gt;3&lt;/x&gt;
- *       &lt;y&gt;5&lt;/y&gt;
- *       &lt;z&gt;0&lt;/z&gt;
- *     &lt;/point3D&gt;
- *
- *     &lt;!-- Example: XML schema definition --&gt;
- *     &lt;xs:element name="point3D" type="point3D"/&gt;
- *     &lt;xs:complexType name="point3D"&gt;
- *       &lt;xs:complexContent&gt;
- *         &lt;xs:extension base="point"&gt;
- *           &lt;xs:sequence&gt;
- *             &lt;xs:element name="z" type="xs:int"/&gt;
- *           &lt;/xs:sequence&gt;
- *         &lt;/xs:extension&gt;
- *       &lt;/xs:complexContent&gt;
- *     &lt;/xs:complexType&gt;
- * </pre>
+ *     <!-- Example: XML schema definition -->
+ *     <xs:element name="point3D" type="point3D"/>
+ *     <xs:complexType name="point3D">
+ *       <xs:complexContent>
+ *         <xs:extension base="point">
+ *           <xs:sequence>
+ *             <xs:element name="z" type="xs:int"/>
+ *           </xs:sequence>
+ *         </xs:extension>
+ *       </xs:complexContent>
+ *     </xs:complexType>
+ * }</pre>
  *
  * <b>Example 3: </b> Associate a global element with XML Schema type
  * to which the class is mapped.
  * <pre>
  *     //Example: Code fragment
- *     &#64;XmlRootElement(name="PriceElement")
+ *     {@code @XmlRootElement}(name="PriceElement")
  *     public class USPrice {
- *         &#64;XmlElement
+ *         {@code @XmlElement}
  *         public java.math.BigDecimal price;
  *     }
- *
- *     &lt;!-- Example: XML schema definition --&gt;
- *     &lt;xs:element name="PriceElement" type="USPrice"/&gt;
- *     &lt;xs:complexType name="USPrice"&gt;
- *       &lt;xs:sequence&gt;
- *         &lt;xs:element name="price" type="xs:decimal"/&gt;
- *       &lt;/sequence&gt;
- *     &lt;/xs:complexType&gt;
- * </pre>
+ * {@code
+ *     <!-- Example: XML schema definition -->
+ *     <xs:element name="PriceElement" type="USPrice"/>
+ *     <xs:complexType name="USPrice">
+ *       <xs:sequence>
+ *         <xs:element name="price" type="xs:decimal"/>
+ *       </sequence>
+ *     </xs:complexType>
+ * }</pre>
  *
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since 1.6, JAXB 2.0

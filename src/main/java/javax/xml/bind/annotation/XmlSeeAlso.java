@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2006-2013 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2006-2015 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -73,7 +73,7 @@ import java.lang.annotation.Target;
  * <p>
  * {@link XmlSeeAlso} annotation would allow you to write:
  * <pre>
- * &#64;XmlSeeAlso({Dog.class,Cat.class})
+ * {@code @XmlSeeAlso}({Dog.class,Cat.class})
  * class Animal {}
  * class Dog extends Animal {}
  * class Cat extends Animal {}

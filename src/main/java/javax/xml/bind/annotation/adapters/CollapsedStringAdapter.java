@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2004-2013 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2004-2015 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -47,7 +47,7 @@ package javax.xml.bind.annotation.adapters;
  *
  * <p>
  * This adapter removes leading and trailing whitespaces, then truncate any
- * sequnce of tab, CR, LF, and SP by a single whitespace character ' '.
+ * sequence of tab, CR, LF, and SP by a single whitespace character ' '.
  *
  * @author Kohsuke Kawaguchi
  * @since 1.6, JAXB 2.0
@@ -56,7 +56,7 @@ public class CollapsedStringAdapter extends XmlAdapter<String,String> {
     /**
      * Removes leading and trailing whitespaces of the string
      * given as the parameter, then truncate any
-     * sequnce of tab, CR, LF, and SP by a single whitespace character ' '.
+     * sequence of tab, CR, LF, and SP by a single whitespace character ' '.
      */
     public String unmarshal(String text) {
         if(text==null)  return null;        // be defensive

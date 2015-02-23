@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2004-2014 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2004-2015 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -66,7 +66,7 @@ public abstract class JAXBIntrospector {
      * <ol>
      *   <li>It is an instance of <code>javax.xml.bind.JAXBElement</code>.</li>
      *   <li>The class of <code>object</code> is annotated with 
-     *       <code>&#64;XmlRootElement</code>.
+     *       <code>@XmlRootElement</code>.
      *   </li>
      * </ol>
      *
@@ -89,7 +89,7 @@ public abstract class JAXBIntrospector {
      *
      * <p>Convenience method to abstract whether working with either 
      *    a javax.xml.bind.JAXBElement instance or an instance of 
-     *    <tt>&#64;XmlRootElement</tt> annotated Java class.</p>
+     *    <tt>@XmlRootElement</tt> annotated Java class.</p>
      *
      * @param jaxbElement  object that #isElement(Object) returns true.
      *

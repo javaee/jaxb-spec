@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2004-2014 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2004-2015 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -53,13 +53,13 @@ import java.lang.annotation.Target;
  *
  * Multiple annotations of the same type are not allowed on a program
  * element. This annotation therefore serves as a container annotation
- * for multiple &#64;XmlElements as follows:
+ * for multiple {@code @XmlElements} as follows:
  *
  * <pre>
- * &#64;XmlElements({ @XmlElement(...),@XmlElement(...) })
+ * {@code @XmlElements}({ {@code @XmlElement}(...),{@code @XmlElement(...)} })
  * </pre>
  *
- * <p>The <tt>@XmlElements</tt> annnotation can be used with the
+ * <p>The <tt>@XmlElements</tt> annotation can be used with the
  * following program elements: </p>
  * <ul>
  *   <li> a JavaBean property </li>
@@ -74,10 +74,10 @@ import java.lang.annotation.Target;
  * <p>The usage is subject to the following constraints:
  * <ul>
  *   <li> This annotation can be used with the following
- *        annotations: @{@link XmlIDREF}, @{@link XmlElementWrapper}. </li>
+ *        annotations: {@code @}{@link XmlIDREF}, {@code @}{@link XmlElementWrapper}. </li>
  *   <li> If @XmlIDREF is also specified on the JavaBean property,
- *        then each &#64;XmlElement.type() must contain a JavaBean
- *        property annotated with <tt>&#64;XmlID</tt>.</li>
+ *        then each {@code @XmlElement.type()} must contain a JavaBean
+ *        property annotated with <tt>@XmlID</tt>.</li>
  * </ul>
  *
  * <p>See "Package Specification" in javax.xml.bind.package javadoc for
@@ -90,31 +90,31 @@ import java.lang.annotation.Target;
  *    
  *    // Mapped code fragment
  *    public class Foo {
- *        &#64;XmlElements(
- *            &#64;XmlElement(name="A", type=Integer.class),
- *            &#64;XmlElement(name="B", type=Float.class)
+ *        {@code @XmlElements}(
+ *            {@code @XmlElement}(name="A", type=Integer.class),
+ *            {@code @XmlElement}(name="B", type=Float.class)
  *         }
  *         public List items;
  *    }
  *
- *    &lt;!-- XML Representation for a List of {1,2.5} 
- *            XML output is not wrapped using another element --&gt;
+ *    <!-- XML Representation for a List of {1,2.5} 
+ *            XML output is not wrapped using another element -->
  *    ...
- *    &lt;A&gt; 1 &lt;/A&gt;
- *    &lt;B&gt; 2.5 &lt;/B&gt;
+ *    <A> 1 </A>
+ *    <B> 2.5 </B>
  *    ...
+ * {@code
+ *    <!-- XML Schema fragment -->
+ *    <xs:complexType name="Foo">
+ *      <xs:sequence>
+ *        <xs:choice minOccurs="0" maxOccurs="unbounded">
+ *          <xs:element name="A" type="xs:int"/>
+ *          <xs:element name="B" type="xs:float"/>
+ *        <xs:choice>
+ *      </xs:sequence>
+ *    </xs:complexType>
  *
- *    &lt;!-- XML Schema fragment --&gt;
- *    &lt;xs:complexType name="Foo"&gt;
- *      &lt;xs:sequence&gt;
- *        &lt;xs:choice minOccurs="0" maxOccurs="unbounded"&gt;
- *          &lt;xs:element name="A" type="xs:int"/&gt;
- *          &lt;xs:element name="B" type="xs:float"/&gt;
- *        &lt;xs:choice&gt;
- *      &lt;/xs:sequence&gt;
- *    &lt;/xs:complexType&gt;
- *
- * </pre>
+ * }</pre>
  *
  * <p><b>Example 2:</b> Map to a list of elements wrapped with another element
  * </p>
@@ -122,59 +122,59 @@ import java.lang.annotation.Target;
  * 
  *    // Mapped code fragment
  *    public class Foo {
- *        &#64;XmlElementWrapper(name="bar")
- *        &#64;XmlElements(
- *            &#64;XmlElement(name="A", type=Integer.class),
- *            &#64;XmlElement(name="B", type=Float.class)
+ *        {@code @XmlElementWrapper}(name="bar")
+ *        {@code @XmlElements}(
+ *            {@code @XmlElement}(name="A", type=Integer.class),
+ *            {@code @XmlElement}(name="B", type=Float.class)
  *        }
  *        public List items;
  *    }
- *
- *    &lt;!-- XML Schema fragment --&gt;
- *    &lt;xs:complexType name="Foo"&gt;
- *      &lt;xs:sequence&gt;
- *        &lt;xs:element name="bar"&gt;
- *          &lt;xs:complexType&gt;
- *            &lt;xs:choice minOccurs="0" maxOccurs="unbounded"&gt;
- *              &lt;xs:element name="A" type="xs:int"/&gt;
- *              &lt;xs:element name="B" type="xs:float"/&gt;
- *            &lt;/xs:choice&gt;
- *          &lt;/xs:complexType&gt;
- *        &lt;/xs:element&gt;
- *      &lt;/xs:sequence&gt;
- *    &lt;/xs:complexType&gt;
- * </pre>
+ * {@code
+ *    <!-- XML Schema fragment -->
+ *    <xs:complexType name="Foo">
+ *      <xs:sequence>
+ *        <xs:element name="bar">
+ *          <xs:complexType>
+ *            <xs:choice minOccurs="0" maxOccurs="unbounded">
+ *              <xs:element name="A" type="xs:int"/>
+ *              <xs:element name="B" type="xs:float"/>
+ *            </xs:choice>
+ *          </xs:complexType>
+ *        </xs:element>
+ *      </xs:sequence>
+ *    </xs:complexType>
+ * }</pre>
  *
  * <p><b>Example 3:</b> Change element name based on type using an adapter. 
  * </p>
  * <pre>
  *    class Foo {
- *       &#64;XmlJavaTypeAdapter(QtoPAdapter.class)
- *       &#64;XmlElements({
- *           &#64;XmlElement(name="A",type=PX.class),
- *           &#64;XmlElement(name="B",type=PY.class)
+ *       {@code @XmlJavaTypeAdapter}(QtoPAdapter.class)
+ *       {@code @XmlElements}({
+ *           {@code @XmlElement}(name="A",type=PX.class),
+ *           {@code @XmlElement}(name="B",type=PY.class)
  *       })
  *       Q bar;
  *    }
  * 
- *    &#64;XmlType abstract class P {...}
- *    &#64;XmlType(name="PX") class PX extends P {...}
- *    &#64;XmlType(name="PY") class PY extends P {...}
- *
- *    &lt;!-- XML Schema fragment --&gt;
- *    &lt;xs:complexType name="Foo"&gt;
- *      &lt;xs:sequence&gt;
- *        &lt;xs:element name="bar"&gt;
- *          &lt;xs:complexType&gt;
- *            &lt;xs:choice minOccurs="0" maxOccurs="unbounded"&gt;
- *              &lt;xs:element name="A" type="PX"/&gt;
- *              &lt;xs:element name="B" type="PY"/&gt;
- *            &lt;/xs:choice&gt;
- *          &lt;/xs:complexType&gt;
- *        &lt;/xs:element&gt;
- *      &lt;/xs:sequence&gt;
- *    &lt;/xs:complexType&gt;
- * </pre>
+ *    {@code @XmlType} abstract class P {...}
+ *    {@code @XmlType}(name="PX") class PX extends P {...}
+ *    {@code @XmlType}(name="PY") class PY extends P {...}
+ * {@code
+ *    <!-- XML Schema fragment -->
+ *    <xs:complexType name="Foo">
+ *      <xs:sequence>
+ *        <xs:element name="bar">
+ *          <xs:complexType>
+ *            <xs:choice minOccurs="0" maxOccurs="unbounded">
+ *              <xs:element name="A" type="PX"/>
+ *              <xs:element name="B" type="PY"/>
+ *            </xs:choice>
+ *          </xs:complexType>
+ *        </xs:element>
+ *      </xs:sequence>
+ *    </xs:complexType>
+ * }</pre>
  * 
  * @author <ul><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Sekhar Vajjhala, Sun Microsystems, Inc.</li></ul>
  * @see XmlElement 
@@ -186,7 +186,7 @@ import java.lang.annotation.Target;
 @Retention(RUNTIME) @Target({FIELD,METHOD})
 public @interface XmlElements {
     /**
-     * Collection of @{@link XmlElement} annotations
+     * Collection of {@code @}{@link XmlElement} annotations
      */
     XmlElement[] value();
 }
