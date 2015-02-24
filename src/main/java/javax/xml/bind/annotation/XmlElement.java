@@ -94,10 +94,11 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <pre>
  *     //Example: Code fragment
  *     public class USPrice {
- *         {@code @XmlElement}(name="itemprice")
+ *         &#64;XmlElement(name="itemprice")
  *         public java.math.BigDecimal price;
  *     }
  * {@code
+ * 
  *     <!-- Example: Local XML Schema element -->
  *     <xs:complexType name="USPrice"/>
  *       <xs:sequence>
@@ -112,10 +113,11 @@ import static java.lang.annotation.RetentionPolicy.*;
  *
  *     //Example: Code fragment
  *     public class USPrice {
- *         {@code @}XmlElement(nillable=true)
+ *         &#64;XmlElement(nillable=true)
  *         public java.math.BigDecimal price;
  *     }
  * {@code
+ * 
  *     <!-- Example: Local XML Schema element -->
  *     <xs:complexType name="USPrice">
  *       <xs:sequence>
@@ -129,10 +131,11 @@ import static java.lang.annotation.RetentionPolicy.*;
  *
  *     //Example: Code fragment
  *     public class USPrice {
- *         {@code @}XmlElement(nillable=true, required=true)
+ *         &#64;XmlElement(nillable=true, required=true)
  *         public java.math.BigDecimal price;
  *     }
  * {@code
+ * 
  *     <!-- Example: Local XML Schema element -->
  *     <xs:complexType name="USPrice">
  *       <xs:sequence>
@@ -194,7 +197,7 @@ public @interface XmlElement {
      *  the enclosing class.
      *
      *  <li>
-     *  Otherwise {@code ''} (which produces unqualified element in the default
+     *  Otherwise {@literal ''} (which produces unqualified element in the default
      *  namespace.
      * </ol>
      */

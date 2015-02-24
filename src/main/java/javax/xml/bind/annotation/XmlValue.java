@@ -99,10 +99,11 @@ import static java.lang.annotation.RetentionPolicy.*;
  * 
  *     // Example 1: Code fragment
  *     public class USPrice {
- *         {@code @XmlValue}
+ *         &#64;XmlValue
  *         public java.math.BigDecimal price;
  *     }
- * {@code 
+ * {@code
+ * 
  *     <!-- Example 1: XML Schema fragment -->
  *     <xs:simpleType name="USPrice">
  *       <xs:restriction base="xs:decimal"/>
@@ -117,13 +118,14 @@ import static java.lang.annotation.RetentionPolicy.*;
  *
  *   // Example 2: Code fragment
  *   public class InternationalPrice {
- *       {@code @XmlValue}
+ *       &#64;XmlValue
  *       public java.math.BigDecimal price;
  * 
- *       {@code @XmlAttribute}
+ *       &#64;XmlAttribute
  *       public String currency;
  *   }
- * {@code 
+ * {@code
+ * 
  *   <!-- Example 2: XML Schema fragment -->
  *   <xs:complexType name="InternationalPrice">
  *     <xs:simpleContent>

@@ -51,7 +51,7 @@ import static java.lang.annotation.ElementType.TYPE;
  *
  * <p> <b>Usage</b> </p>
  * <p>
- * The {@code @XmlRootElement} annotation can be used with the following program
+ * The &#64;XmlRootElement annotation can be used with the following program
  * elements: 
  * <ul> 
  *   <li> a top level class </li>
@@ -63,7 +63,7 @@ import static java.lang.annotation.ElementType.TYPE;
  * 
  * <p>
  * When a top level class or an enum type is annotated with the 
- * {@code @XmlRootElement} annotation, then its value is represented 
+ * &#64;XmlRootElement annotation, then its value is represented 
  * as XML element in an XML document.
  *
  * <p> This annotation can be used with the following annotations:
@@ -75,7 +75,7 @@ import static java.lang.annotation.ElementType.TYPE;
  * <b>Example 1: </b> Associate an element with XML Schema type
  * <pre>
  *     // Example: Code fragment
- *     {@code @XmlRootElement}
+ *     &#64;XmlRootElement
  *     class Point {
  *        int x;
  *        int y;
@@ -89,6 +89,7 @@ import static java.lang.annotation.ElementType.TYPE;
  * </pre>
  *
  * <pre>{@code
+ * 
  *     <!-- Example: XML output -->
  *     <point>
  *       <x> 3 </x>
@@ -101,6 +102,7 @@ import static java.lang.annotation.ElementType.TYPE;
  * the XML schema type to which the class is mapped.
  *
  * <pre>{@code
+ * 
  *     <!-- Example: XML schema definition -->
  *     <xs:element name="point" type="point"/>
  *     <xs:complexType name="point">
@@ -120,7 +122,7 @@ import static java.lang.annotation.ElementType.TYPE;
  * derived types. The following example shows this.
  * <pre>
  *     // Example: Code fragment
- *     {@code @XmlRootElement}
+ *     &#64;XmlRootElement
  *     class Point3D extends Point {
  *         int z;
  *         Point3D(int _x,int _y,int _z) {super(_x,_y);z=_z;}
@@ -129,6 +131,7 @@ import static java.lang.annotation.ElementType.TYPE;
  *     //Example: Code fragment corresponding to XML output * 
  *     marshal( new Point3D(3,5,0), System.out );
  * {@code
+ * 
  *     <!-- Example: XML output -->
  *     <!-- The element name is point3D not point -->
  *     <point3D>
@@ -154,12 +157,13 @@ import static java.lang.annotation.ElementType.TYPE;
  * to which the class is mapped.
  * <pre>
  *     //Example: Code fragment
- *     {@code @XmlRootElement}(name="PriceElement")
+ *     &#64;XmlRootElement(name="PriceElement")
  *     public class USPrice {
- *         {@code @XmlElement}
+ *         &#64;XmlElement
  *         public java.math.BigDecimal price;
  *     }
  * {@code
+ * 
  *     <!-- Example: XML schema definition -->
  *     <xs:element name="PriceElement" type="USPrice"/>
  *     <xs:complexType name="USPrice">

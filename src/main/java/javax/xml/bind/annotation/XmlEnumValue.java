@@ -71,12 +71,13 @@ import static java.lang.annotation.ElementType.FIELD;
  * <p> In the absence of this annotation, {@link Enum#name()} is used
  * as the XML representation.
  *
- * <p> <b>Example 1: </b>Map enum constant name {@code ->} enumeration facet</p>
+ * <p> <b>Example 1: </b>Map enum constant name {@literal ->} enumeration facet</p>
  * <pre>
  *     //Example: Code fragment
- *     {@code @XmlEnum}(String.class)
+ *     &#64;XmlEnum(String.class)
  *     public enum Card { CLUBS, DIAMONDS, HEARTS, SPADES }
  * {@code
+ * 
  *     <!-- Example: XML Schema fragment -->
  *     <xs:simpleType name="Card">
  *       <xs:restriction base="xs:string"/>
@@ -87,17 +88,18 @@ import static java.lang.annotation.ElementType.FIELD;
  *     </xs:simpleType>
  * }</pre>
  *
- * <p><b>Example 2: </b>Map enum constant name(value) {@code ->} enumeration facet </p>
+ * <p><b>Example 2: </b>Map enum constant name(value) {@literal ->} enumeration facet </p>
  * <pre>
  *     //Example: code fragment
- *     {@code @XmlType}
- *     {@code @XmlEnum}(Integer.class)
+ *     &#64;XmlType
+ *     &#64;XmlEnum(Integer.class)
  *     public enum Coin { 
- *         {@code @XmlEnumValue}("1") PENNY(1),
- *         {@code @XmlEnumValue}("5") NICKEL(5),
- *         {@code @XmlEnumValue}("10") DIME(10),
- *         {@code @XmlEnumValue}("25") QUARTER(25) }
+ *         &#64;XmlEnumValue("1") PENNY(1),
+ *         &#64;XmlEnumValue("5") NICKEL(5),
+ *         &#64;XmlEnumValue("10") DIME(10),
+ *         &#64;XmlEnumValue("25") QUARTER(25) }
  * {@code
+ * 
  *     <!-- Example: XML Schema fragment -->
  *     <xs:simpleType name="Coin">
  *       <xs:restriction base="xs:int">
@@ -109,17 +111,18 @@ import static java.lang.annotation.ElementType.FIELD;
  *     </xs:simpleType>
  * }</pre>
  *
- * <p><b>Example 3: </b>Map enum constant name {@code ->} enumeration facet </p>
+ * <p><b>Example 3: </b>Map enum constant name {@literal ->} enumeration facet </p>
  * 
  * <pre>
  *     //Code fragment
- *     {@code @XmlType}
- *     {@code @XmlEnum}(Integer.class)
+ *     &#64;XmlType
+ *     &#64;XmlEnum(Integer.class)
  *     public enum Code {
- *         {@code @XmlEnumValue}("1") ONE,
- *         {@code @XmlEnumValue}("2") TWO;
+ *         &#64;XmlEnumValue("1") ONE,
+ *         &#64;XmlEnumValue("2") TWO;
  *     }
  * {@code
+ * 
  *     <!-- Example: XML Schema fragment -->
  *     <xs:simpleType name="Code">
  *       <xs:restriction base="xs:int">

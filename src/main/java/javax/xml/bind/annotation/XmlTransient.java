@@ -87,13 +87,14 @@ import static java.lang.annotation.RetentionPolicy.*;
  *
  *       // The field name "name" collides with the property name 
  *       // obtained by bean decapitalization of getName() below
- *       {@code @XmlTransient} public String name;
+ *       &#64;XmlTransient public String name;
  *
  *       String getName() {..};
  *       String setName() {..};
  *   }
  *
  * {@code   
+ * 
  *   <!-- Example: XML Schema fragment -->
  *   <xs:complexType name="USAddress">
  *     <xs:sequence>

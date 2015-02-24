@@ -367,7 +367,7 @@ public abstract class JAXBContext {
      * <p>
      * To maintain compatibility with JAXB 1.0 schema to java 
      * interface/implementation binding, enabled by schema customization
-     * <tt>{@code <jaxb:globalBindings valueClass="false">}</tt>,
+     * <tt>{@literal <jaxb:globalBindings valueClass="false">}</tt>,
      * the JAXB provider will ensure that each package on the context path
      * has a <tt>jaxb.properties</tt> file which contains a value for the 
      * <tt>javax.xml.bind.context.factory</tt> property and that all values
@@ -549,7 +549,7 @@ public abstract class JAXBContext {
      * will recognize both <tt>Foo</tt> and <tt>Bar</tt>, but not <tt>Zot</tt> or <tt>FooBar</tt>:
      * <pre>
      * class Foo {
-     *      {@code @XmlTransient} FooBar c;
+     *      &#64;XmlTransient FooBar c;
      *      Bar b;
      * }
      * class Bar { int x; }

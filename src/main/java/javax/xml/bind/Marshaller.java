@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2003-2015 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2003-2014 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -178,7 +178,7 @@ import java.io.File;
  * and pass the wrapper element as the first parameter to 
  * a <tt>Marshaller.marshal</tt> method. For java to schema binding, it 
  * is also possible to simply annotate the instance's class with 
- * {@code @}{@link XmlRootElement}.
+ * &#64;{@link XmlRootElement}.
  * </blockquote>
  *
  * <p>
@@ -679,7 +679,7 @@ public interface Marshaller {
      *
      * <p>
      * Every marshaller internally maintains a
-     * {@link java.util.Map}{@code <}{@link Class},{@link XmlAdapter}{@code >},
+     * {@link java.util.Map}&lt;{@link Class},{@link XmlAdapter}&gt;,
      * which it uses for marshalling classes whose fields/methods are annotated
      * with {@link javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter}.
      *

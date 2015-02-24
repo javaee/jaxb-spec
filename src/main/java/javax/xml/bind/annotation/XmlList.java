@@ -65,10 +65,10 @@ import static java.lang.annotation.ElementType.PARAMETER;
  * For example,
  *
  * <pre>
- * {@code @XmlRootElement}
+ * &#64;XmlRootElement
  * class Foo {
- *     {@code @XmlElement}
- *     {@code List<String>} data;
+ *     &#64;XmlElement
+ *     List&lt;String&gt; data;
  * }
  * </pre>
  *
@@ -81,15 +81,15 @@ import static java.lang.annotation.ElementType.PARAMETER;
  * </foo>
  * }</pre>
  *
- * {@code @XmlList} annotation, on the other hand, allows multiple values to be 
+ * &#64;XmlList annotation, on the other hand, allows multiple values to be 
  * represented as whitespace-separated tokens in a single element. For example,
  *
  * <pre>
- * {@code @XmlRootElement}
+ * &#64;XmlRootElement
  * class Foo {
- *     {@code @XmlElement}
- *     {@code @XmlList}
- *     {@code List<String>} data;
+ *     &#64;XmlElement
+ *     &#64;XmlList
+ *     List&lt;String&gt; data;
  * }
  * </pre>
  *

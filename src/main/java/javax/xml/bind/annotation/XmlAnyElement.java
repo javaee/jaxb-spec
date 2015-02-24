@@ -61,23 +61,23 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * xml content into a instance of a JAXB annotated class. It typically
  * annotates a multi-valued JavaBean property, but it can occur on
  * single value JavaBean property. During unmarshalling, each xml element 
- * that does not match a static {@code @XmlElement} or {@code @XmlElementRef} 
+ * that does not match a static &#64;XmlElement or &#64;XmlElementRef 
  * annotation for the other JavaBean properties on the class, is added to this 
  * "catch-all" property.
  *
  * <h2>Usages:</h2>
  * <pre>
- * {@code @XmlAnyElement}
+ * &#64;XmlAnyElement
  * public {@link Element}[] others;
  * 
  * // Collection of {@link Element} or JAXB elements.
- * {@code @XmlAnyElement}(lax="true")
+ * &#64;XmlAnyElement(lax="true")
  * public {@link Object}[] others;
  *
- * {@code @XmlAnyElement}
- * private List{@code <}{@link Element}{@code >} nodes;
+ * &#64;XmlAnyElement
+ * private List&lt;{@link Element}&gt; nodes;
  *
- * {@code @XmlAnyElement}
+ * &#64;XmlAnyElement
  * private {@link Element} node;
  * </pre>
  *
@@ -101,8 +101,8 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * This annotation can be used with {@link XmlMixed} like this:
  * <pre>
  * // List of java.lang.String or DOM nodes.
- * {@code @XmlAnyElement} {@code @XmlMixed}
- * {@code List<Object>} others;
+ * &#64;XmlAnyElement &#64;XmlMixed
+ * List&lt;Object&gt; others;
  * </pre>
  *
  *
@@ -123,8 +123,8 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * class Foo {
  *   int a;
  *   int b;
- *   {@code @}{@link XmlAnyElement}
- *   {@code List<Element>} any;
+ *   &#64;{@link XmlAnyElement}
+ *   List&lt;Element&gt; any;
  * }
  * </pre>
  *
@@ -198,33 +198,33 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  *
  * <pre>
  * class Foo {
- *   {@code @}{@link XmlAnyElement}(lax="true")
- *   {@code @}{@link XmlElementRefs}({
- *     {@code @}{@link XmlElementRef}(name="a", type="JAXBElement.class")
- *     {@code @}{@link XmlElementRef}(name="b", type="JAXBElement.class")
+ *   &#64;{@link XmlAnyElement}(lax="true")
+ *   &#64;{@link XmlElementRefs}({
+ *     &#64;{@link XmlElementRef}(name="a", type="JAXBElement.class")
+ *     &#64;{@link XmlElementRef}(name="b", type="JAXBElement.class")
  *   })
- *   {@link List}{@code <}{@link Object}{@code >} others;
+ *   {@link List}&lt;{@link Object}&gt; others;
  * }
  *
- * {@code @XmlRegistry}
+ * &#64;XmlRegistry
  * class ObjectFactory {
  *   ...
- *   {@code @XmlElementDecl(name = "a", namespace = "", scope = Foo.class)}
- *   {@link JAXBElement}{@code <Integer>} createFooA( Integer i ) { ... }
+ *   &#64;XmlElementDecl(name = "a", namespace = "", scope = Foo.class)
+ *   {@link JAXBElement}&lt;Integer&gt; createFooA( Integer i ) { ... }
  *
- *   {@code @XmlElementDecl(name = "b", namespace = "", scope = Foo.class)}
- *   {@link JAXBElement}{@code <Integer>} createFooB( Integer i ) { ... }
+ *   &#64;XmlElementDecl(name = "b", namespace = "", scope = Foo.class)
+ *   {@link JAXBElement}&lt;Integer&gt; createFooB( Integer i ) { ... }
  * </pre>
  *
  * It can unmarshal instances like
  *
- * <pre>{@code
- * <foo xmlns:e="extra">
- *   <a>1</a>     // this will unmarshal to a {@link JAXBElement} instance whose value is 1.
- *   <e:other />  // this will unmarshal to a DOM {@link Element}.
- *   <b>3</b>     // this will unmarshal to a {@link JAXBElement} instance whose value is 1.
- * </foo>
- * }</pre>
+ * <pre>
+ *{@code <foo xmlns:e="extra">}
+ *{@code   <a>1</a>}     // this will unmarshal to a {@link JAXBElement} instance whose value is 1.
+ *{@code   <e:other />}  // this will unmarshal to a DOM {@link Element}.
+ *{@code   <b>3</b>}     // this will unmarshal to a {@link JAXBElement} instance whose value is 1.
+ *{@code </foo>}
+ * </pre>
  *
  *
  *
@@ -233,9 +233,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * The lax element of the annotation enables the emulation of the "lax" wildcard semantics.
  * For example, when the Java source code is annotated like this:
  * <pre>
- * {@code @}{@link XmlRootElement}
+ * &#64;{@link XmlRootElement}
  * class Foo {
- *   {@code @XmlAnyElement(lax=true)}
+ *   &#64;XmlAnyElement(lax=true)
  *   public {@link Object}[] others;
  * }
  * </pre>

@@ -253,7 +253,7 @@ import java.io.Reader;
  * to a JAXB mapped class by {@link JAXBContext}, that the root 
  * element's <tt>xsi:type</tt> attribute takes
  * precedence over the unmarshal methods <tt>declaredType</tt> parameter. 
- * These methods always return a <tt>{@code JAXBElement<declaredType>}</tt>
+ * These methods always return a <tt>{@literal JAXBElement<declaredType>}</tt>
  * instance. The table below shows how the properties of the returned JAXBElement 
  * instance are set.
  *
@@ -1024,7 +1024,7 @@ public interface Unmarshaller {
      *
      * <p>
      * Every unmarshaller internally maintains a
-     * {@link java.util.Map}{@code <}{@link Class},{@link XmlAdapter}{@code >},
+     * {@link java.util.Map}&lt;{@link Class},{@link XmlAdapter}&gt;,
      * which it uses for unmarshalling classes whose fields/methods are annotated
      * with {@link javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter}.
      *

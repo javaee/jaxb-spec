@@ -75,10 +75,11 @@ import static java.lang.annotation.RetentionPolicy.*;
  * package is mapped.</p>
  *
  * <pre>
- *    {@code @javax.xml.bind.annotation.XmlSchema} (
+ *    &#64;javax.xml.bind.annotation.XmlSchema (
  *      namespace = "http://www.example.com/MYPO1"
  *    )
  * {@code   
+ * 
  *    <!-- XML Schema fragment -->
  *    <schema
  *      xmlns=...
@@ -94,16 +95,17 @@ import static java.lang.annotation.RetentionPolicy.*;
  *
  * <pre>
  *    // Package level annotation
- *    {@code @javax.xml.bind.annotation.XmlSchema} (
+ *    &#64;javax.xml.bind.annotation.XmlSchema (
  *      xmlns = { 
- *        {@code @javax.xml.bind.annotation.XmlNs}(prefix = "po", 
+ *        &#64;javax.xml.bind.annotation.XmlNs(prefix = "po", 
  *                   namespaceURI="http://www.example.com/myPO1"),
  *
- *        {@code @javax.xml.bind.annotation.XmlNs}(prefix="xs",
+ *        &#64;javax.xml.bind.annotation.XmlNs(prefix="xs",
  *                   namespaceURI="http://www.w3.org/2001/XMLSchema")
- *      )
+ *      }
  *    )
  * {@code
+ * 
  *    <!-- XML Schema fragment -->
  *    <schema
  *        xmlns:xs="http://www.w3.org/2001/XMLSchema"
@@ -114,11 +116,12 @@ import static java.lang.annotation.RetentionPolicy.*;
  *
  * <p><b>Example 3:</b> Customize elementFormDefault</p>
  * <pre>
- *    {@code @javax.xml.bind.annotation.XmlSchema} (
+ *    &#64;javax.xml.bind.annotation.XmlSchema (
  *      elementFormDefault=XmlNsForm.UNQUALIFIED
  *      ...
  *    )
  * {@code
+ * 
  *    <!-- XML Schema fragment -->
  *    <schema
  *        xmlns="http://www.w3.org/2001/XMLSchema"
@@ -194,11 +197,11 @@ public @interface XmlSchema {
      * More precisely, the value must be either <tt>""</tt>, <tt>"##generate"</tt>, or
      * <a href="http://www.w3.org/TR/xmlschema-2/#anyURI">
      * a valid lexical representation of <tt>xs:anyURI</tt></a> that begins
-     * with <tt>{@code <scheme>}:</tt>.
+     * with <tt>&lt;scheme&gt;:</tt>.
      *
      * <p>
      * A schema generator is expected to generate a corresponding
-     * <tt>{@code <xs:import namespace="..." schemaLocation="..."/>}</tt> (or
+     * <tt>&lt;xs:import namespace="..." schemaLocation="..."/&gt;</tt> (or
      * no <tt>schemaLocation</tt> attribute at all if the empty string is specified.)
      * However, the schema generator is allowed to use a different value in
      * the <tt>schemaLocation</tt> attribute (including not generating
