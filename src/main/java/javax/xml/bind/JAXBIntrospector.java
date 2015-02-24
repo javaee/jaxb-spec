@@ -66,7 +66,7 @@ public abstract class JAXBIntrospector {
      * <ol>
      *   <li>It is an instance of <code>javax.xml.bind.JAXBElement</code>.</li>
      *   <li>The class of <code>object</code> is annotated with 
-     *       <code>@XmlRootElement</code>.
+     *       <code>&#64;XmlRootElement</code>.
      *   </li>
      * </ol>
      *

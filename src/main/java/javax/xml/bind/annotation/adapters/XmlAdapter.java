@@ -85,7 +85,7 @@ package javax.xml.bind.annotation.adapters;
  *
  * <p><b>Example:</b> Customized mapping of <tt>HashMap</tt></p>
  * <p> The following example illustrates the use of 
- * <tt>{@code @XmlAdapter}</tt> and <tt>{@code @XmlJavaTypeAdapter}</tt> to
+ * <tt>&#64;XmlAdapter</tt> and <tt>&#64;XmlJavaTypeAdapter</tt> to
  * customize the mapping of a <tt>HashMap</tt>.
  *
  * <p> <b> Step 1: </b> Determine the desired XML representation for HashMap.
@@ -125,14 +125,14 @@ package javax.xml.bind.annotation.adapters;
  *
  * <pre>
  *     public class MyHashMapType {
- *         {@code List<MyHashMapEntryType>} entry;
+ *         List&lt;MyHashMapEntryType&gt; entry;
  *     }
  *
  *     public class MyHashMapEntryType {
- *         {@code @XmlAttribute}
+ *         &#64;XmlAttribute
  *         public Integer key; 
  *
- *         {@code @XmlValue}
+ *         &#64;XmlValue
  *         public String value;
  *     }
  * </pre>
@@ -150,7 +150,7 @@ package javax.xml.bind.annotation.adapters;
  *
  * <pre>
  *     public class Foo {
- *         {@code @XmlJavaTypeAdapter(MyHashMapAdapter.class)}
+ *         &#64;XmlJavaTypeAdapter(MyHashMapAdapter.class)
  *         HashMap hashmap;
  *         ...
  *     }

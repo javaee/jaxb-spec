@@ -76,11 +76,12 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * <pre>
  *     //Example: Code fragment
  *     public class USPrice {
- *         {@code @XmlElement}
- *         {@code @XmlSchemaType}(name="date")
+ *         &#64;XmlElement
+ *         &#64;XmlSchemaType(name="date")
  *         public XMLGregorianCalendar date;
  *     }
  * {@code
+ * 
  *     <!-- Example: Local XML Schema element -->
  *     <xs:complexType name="USPrice"/>
  *       <xs:sequence>
@@ -93,7 +94,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  *     level </p>
  * <pre>
  *     package foo;
- *     {@code @javax.xml.bind.annotation.XmlSchemaType}(
+ *     &#64;javax.xml.bind.annotation.XmlSchemaType(
  *          name="date", type=javax.xml.datatype.XMLGregorianCalendar.class)
  *     }
  * </pre>

@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2005-2015 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005-2013 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -83,14 +83,14 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <p>By default, if <tt>@XmlAccessorType </tt> on a package is absent,
  * then the following package level annotation is assumed.</p>
  * <pre>
- *   {@code @XmlAccessorType}(XmlAccessType.PUBLIC_MEMBER)
+ *   &#64;XmlAccessorType(XmlAccessType.PUBLIC_MEMBER)
  * </pre>
  * <p> By default, if <tt>@XmlAccessorType</tt> on a class is absent,
  * and none of its super classes is annotated with
  * <tt>@XmlAccessorType</tt>, then the following default on the class
  * is assumed: </p>
  * <pre>
- *   {@code @XmlAccessorType}(XmlAccessType.PUBLIC_MEMBER)
+ *   &#64;XmlAccessorType(XmlAccessType.PUBLIC_MEMBER)
  * </pre>
  * <p>This annotation can be used with the following annotations: 
  *    {@link XmlType}, {@link XmlRootElement}, {@link XmlAccessorOrder}, 

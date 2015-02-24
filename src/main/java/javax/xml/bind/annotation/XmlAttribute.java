@@ -71,8 +71,8 @@ import static java.lang.annotation.RetentionPolicy.*;
  *        simple type.
  * <pre>
  *     // Examples
- *     {@code @XmlAttribute List<Integer>} items; //legal
- *     {@code @XmlAttribute List<Bar>} foo; // illegal if Bar does not map to a schema simple type
+ *     &#64;XmlAttribute List&lt;Integer&gt; items; //legal
+ *     &#64;XmlAttribute List&lt;Bar&gt; foo; // illegal if Bar does not map to a schema simple type
  * </pre> 
  *   </li>
  *   <li> If the type of the field or the property is a non
@@ -80,8 +80,8 @@ import static java.lang.annotation.RetentionPolicy.*;
  *         must map to a simple schema type.
  * <pre>
  *     // Examples
- *     {@code @}XmlAttribute int foo; // legal
- *     {@code @}XmlAttribute Foo foo; // illegal if Foo does not map to a schema simple type
+ *     &#64;XmlAttribute int foo; // legal
+ *     &#64;XmlAttribute Foo foo; // illegal if Foo does not map to a schema simple type
  * </pre>
  *   </li>
  *   <li> This annotation can be used with the following annotations:
@@ -100,11 +100,12 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <pre>
  *     //Example: Code fragment
  *     public class USPrice { 
- *         {@code @}XmlAttribute
+ *         &#64;XmlAttribute
  *         public java.math.BigDecimal getPrice() {...} ;
  *         public void setPrice(java.math.BigDecimal ) {...};
  *     }
  * {@code
+ * 
  *     <!-- Example: XML Schema fragment -->
  *     <xs:complexType name="USPrice">
  *       <xs:sequence>
@@ -121,9 +122,10 @@ import static java.lang.annotation.RetentionPolicy.*;
  *     // Example: Code fragment
  *     class Foo {
  *         ...
- *         {@code @XmlAttribute List<Integer>} items;
+ *         &#64;XmlAttribute List&lt;Integer&gt; items;
  *     } 
  * {@code
+ * 
  *     <!-- Example: XML Schema fragment -->
  *     <xs:complexType name="foo">
  *     	 ...

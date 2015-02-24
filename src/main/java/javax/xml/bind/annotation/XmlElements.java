@@ -53,10 +53,10 @@ import java.lang.annotation.Target;
  *
  * Multiple annotations of the same type are not allowed on a program
  * element. This annotation therefore serves as a container annotation
- * for multiple {@code @XmlElements} as follows:
+ * for multiple &#64;XmlElements as follows:
  *
  * <pre>
- * {@code @XmlElements}({ {@code @XmlElement}(...),{@code @XmlElement(...)} })
+ * &#64;XmlElements({ @XmlElement(...),@XmlElement(...) })
  * </pre>
  *
  * <p>The <tt>@XmlElements</tt> annotation can be used with the
@@ -74,10 +74,10 @@ import java.lang.annotation.Target;
  * <p>The usage is subject to the following constraints:
  * <ul>
  *   <li> This annotation can be used with the following
- *        annotations: {@code @}{@link XmlIDREF}, {@code @}{@link XmlElementWrapper}. </li>
+ *        annotations: @{@link XmlIDREF}, @{@link XmlElementWrapper}. </li>
  *   <li> If @XmlIDREF is also specified on the JavaBean property,
- *        then each {@code @XmlElement.type()} must contain a JavaBean
- *        property annotated with <tt>@XmlID</tt>.</li>
+ *        then each &#64;XmlElement.type() must contain a JavaBean
+ *        property annotated with <tt>&#64;XmlID</tt>.</li>
  * </ul>
  *
  * <p>See "Package Specification" in javax.xml.bind.package javadoc for
@@ -90,20 +90,21 @@ import java.lang.annotation.Target;
  *    
  *    // Mapped code fragment
  *    public class Foo {
- *        {@code @XmlElements}(
- *            {@code @XmlElement}(name="A", type=Integer.class),
- *            {@code @XmlElement}(name="B", type=Float.class)
- *         }
+ *        &#64;XmlElements(
+ *            &#64;XmlElement(name="A", type=Integer.class),
+ *            &#64;XmlElement(name="B", type=Float.class)
+ *         )
  *         public List items;
  *    }
- *
+ * {@code
+ * 
  *    <!-- XML Representation for a List of {1,2.5} 
  *            XML output is not wrapped using another element -->
  *    ...
  *    <A> 1 </A>
  *    <B> 2.5 </B>
  *    ...
- * {@code
+ *
  *    <!-- XML Schema fragment -->
  *    <xs:complexType name="Foo">
  *      <xs:sequence>
@@ -122,14 +123,15 @@ import java.lang.annotation.Target;
  * 
  *    // Mapped code fragment
  *    public class Foo {
- *        {@code @XmlElementWrapper}(name="bar")
- *        {@code @XmlElements}(
- *            {@code @XmlElement}(name="A", type=Integer.class),
- *            {@code @XmlElement}(name="B", type=Float.class)
+ *        &#64;XmlElementWrapper(name="bar")
+ *        &#64;XmlElements(
+ *            &#64;XmlElement(name="A", type=Integer.class),
+ *            &#64;XmlElement(name="B", type=Float.class)
  *        }
  *        public List items;
  *    }
  * {@code
+ * 
  *    <!-- XML Schema fragment -->
  *    <xs:complexType name="Foo">
  *      <xs:sequence>
@@ -149,18 +151,19 @@ import java.lang.annotation.Target;
  * </p>
  * <pre>
  *    class Foo {
- *       {@code @XmlJavaTypeAdapter}(QtoPAdapter.class)
- *       {@code @XmlElements}({
- *           {@code @XmlElement}(name="A",type=PX.class),
- *           {@code @XmlElement}(name="B",type=PY.class)
+ *       &#64;XmlJavaTypeAdapter(QtoPAdapter.class)
+ *       &#64;XmlElements({
+ *           &#64;XmlElement(name="A",type=PX.class),
+ *           &#64;XmlElement(name="B",type=PY.class)
  *       })
  *       Q bar;
  *    }
  * 
- *    {@code @XmlType} abstract class P {...}
- *    {@code @XmlType}(name="PX") class PX extends P {...}
- *    {@code @XmlType}(name="PY") class PY extends P {...}
+ *    &#64;XmlType abstract class P {...}
+ *    &#64;XmlType(name="PX") class PX extends P {...}
+ *    &#64;XmlType(name="PY") class PY extends P {...}
  * {@code
+ * 
  *    <!-- XML Schema fragment -->
  *    <xs:complexType name="Foo">
  *      <xs:sequence>
@@ -186,7 +189,7 @@ import java.lang.annotation.Target;
 @Retention(RUNTIME) @Target({FIELD,METHOD})
 public @interface XmlElements {
     /**
-     * Collection of {@code @}{@link XmlElement} annotations
+     * Collection of @{@link XmlElement} annotations
      */
     XmlElement[] value();
 }

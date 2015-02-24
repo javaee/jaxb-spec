@@ -51,10 +51,10 @@ import java.lang.annotation.Target;
  *
  * <p> Multiple annotations of the same type are not allowed on a program
  * element. This annotation therefore serves as a container annotation
- * for multiple {@code @XmlJavaTypeAdapter} as follows:
+ * for multiple &#64;XmlJavaTypeAdapter as follows:
  *
  * <pre>
- * {@code @XmlJavaTypeAdapters ({ @XmlJavaTypeAdapter(...),@XmlJavaTypeAdapter(...) })}
+ * &#64;XmlJavaTypeAdapters ({ @XmlJavaTypeAdapter(...),@XmlJavaTypeAdapter(...) })
  * </pre>
  *
  * <p>The <tt>@XmlJavaTypeAdapters</tt> annotation is useful for

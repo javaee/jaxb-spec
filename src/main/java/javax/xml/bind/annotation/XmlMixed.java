@@ -57,21 +57,22 @@ import javax.xml.bind.JAXBElement;
  * <p>
  * The usage is subject to the following constraints:
  * <ul>
- *   <li> can be used with {@code @XmlElementRef}, {@code @XmlElementRefs} or {@code @XmlAnyElement}</li>
+ *   <li> can be used with &#64;XmlElementRef, &#64;XmlElementRefs or &#64;XmlAnyElement</li>
  * </ul>
  * <p>
- * The following can be inserted into {@code @XmlMixed} annotated multi-valued property
+ * The following can be inserted into &#64;XmlMixed annotated multi-valued property
  * <ul>
  * <li>XML text information items are added as values of java.lang.String.</li>
  * <li>Children element information items are added as instances of
  * {@link JAXBElement} or instances with a class that is annotated with
- * {@code @XmlRootElement}.</li>
+ * &#64;XmlRootElement.</li>
  * <li>Unknown content that is not be bound to a JAXB mapped class is inserted
- * as {@link Element}. (Assumes property annotated with {@code @XmlAnyElement})</li>
+ * as {@link Element}. (Assumes property annotated with &#64;XmlAnyElement)</li>
  * </ul>
  *
  * Below is an example of binding and creation of mixed content.
  * <pre>{@code
+ * 
  *  <!-- schema fragment having  mixed content -->
  *  <xs:complexType name="letterBody" mixed="true">
  *    <xs:sequence>
@@ -102,11 +103,11 @@ import javax.xml.bind.JAXBElement;
  * 	// Mixed content can contain instances of Element classes
  * 	// Name, Quantity and ProductName. Text data is represented as
  *	// java.util.String for text.
- *	{@code @XmlMixed} 
- * 	{@code @XmlElementRefs}({
- *		{@code @XmlElementRef}(name="productName", type=JAXBElement.class),
- *		{@code @XmlElementRef}(name="quantity", type=JAXBElement.class),
- *		{@code @XmlElementRef}(name="name", type=JAXBElement.class)})
+ *	&#64;XmlMixed 
+ * 	&#64;XmlElementRefs({
+ *		&#64;XmlElementRef(name="productName", type=JAXBElement.class),
+ *		&#64;XmlElementRef(name="quantity", type=JAXBElement.class),
+ *		&#64;XmlElementRef(name="name", type=JAXBElement.class)})
  *	List getContent(){...}
  * }
  * </pre>

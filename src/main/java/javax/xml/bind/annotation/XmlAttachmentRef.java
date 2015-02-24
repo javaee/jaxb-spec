@@ -54,14 +54,14 @@ import java.lang.annotation.Target;
  *
  * <h2>Usage</h2>
  * <pre>
- * {@code @}{@link XmlRootElement}
+ * &#64;{@link XmlRootElement}
  * class Foo {
- *   {@code @}{@link XmlAttachmentRef}
- *   {@code @}{@link XmlAttribute}
+ *   &#64;{@link XmlAttachmentRef}
+ *   &#64;{@link XmlAttribute}
  *   {@link DataHandler} data;
  *
- *   {@code @}{@link XmlAttachmentRef}
- *   {@code @}{@link XmlElement}
+ *   &#64;{@link XmlAttachmentRef}
+ *   &#64;{@link XmlElement}
  *   {@link DataHandler} body;
  * }
  * </pre>

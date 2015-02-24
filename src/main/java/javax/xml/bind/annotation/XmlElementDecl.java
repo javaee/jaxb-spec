@@ -58,14 +58,14 @@ import static java.lang.annotation.ElementType.METHOD;
  * (and annotated) from a schema into the ObjectFactory class in a
  * Java package that represents the binding of the element
  * declaration's target namespace. Thus, while the annotation syntax 
- * allows {@code @XmlElementDecl} to be used on any method, semantically
+ * allows &#64;XmlElementDecl to be used on any method, semantically
  * its use is restricted to annotation of element factory method. 
  *
  * The usage is subject to the following constraints:
  * 
  * <ul>
  *   <li> The class containing the element factory method annotated
- *        with {@code @XmlElementDecl} must be marked with {@link
+ *        with &#64;XmlElementDecl must be marked with {@link
  *        XmlRegistry}. </li> 
  *   <li> The element factory method must take one parameter
  *        assignable to {@link Object}.</li> 
@@ -74,15 +74,16 @@ import static java.lang.annotation.ElementType.METHOD;
  * <p><b>Example 1: </b>Annotation on a factory method
  * <pre>
  *     // Example: code fragment
- *     {@code @XmlRegistry}
+ *     &#64;XmlRegistry
  *     class ObjectFactory {
- *         {@code @XmlElementDecl(name="foo")}
- *         {@code JAXBElement<String>} createFoo(String s) { ... }
+ *         &#64;XmlElementDecl(name="foo")
+ *         JAXBElement&lt;String&gt; createFoo(String s) { ... }
  *     }
  * </pre>
  * <pre> {@code
+ * 
  *     <!-- XML input -->
- *       <foo>string</foo>
+ *     <foo>string</foo>
  *
  *     // Example: code fragment corresponding to XML input
  *     JAXBElement<String> o =
@@ -120,23 +121,23 @@ import static java.lang.annotation.ElementType.METHOD;
  * <pre>
  *     // Example: expected default binding
  *     class Pea {
- *         {@code @XmlElementRefs}({
- *             {@code @XmlElementRef}(name="foo",type=JAXBElement.class)
- *             {@code @XmlElementRef}(name="bar",type=JAXBElement.class)
+ *         &#64;XmlElementRefs({
+ *             &#64;XmlElementRef(name="foo",type=JAXBElement.class)
+ *             &#64;XmlElementRef(name="bar",type=JAXBElement.class)
  *         })
- *         {@code List<JAXBElement<String>>} fooOrBar;
+ *         List&lt;JAXBElement&lt;String&gt;&gt; fooOrBar;
  *     }
  * 
- *     {@code @XmlRegistry}
+ *     &#64;XmlRegistry
  *     class ObjectFactory {
- *         {@code @XmlElementDecl}(scope=Pea.class,name="foo")
- *         {@code JAXBElement<String>} createPeaFoo(String s);
+ *         &#64;XmlElementDecl(scope=Pea.class,name="foo")
+ *         JAXBElement&lt;String&gt; createPeaFoo(String s);
  * 
- *         {@code @XmlElementDecl}(scope=Pea.class,name="bar")
- *         {@code JAXBElement<String>} createPeaBar(String s);
+ *         &#64;XmlElementDecl(scope=Pea.class,name="bar")
+ *         JAXBElement&lt;String&gt; createPeaBar(String s);
  * 
- *         {@code @XmlElementDecl}(name="foo")
- *         {@code JAXBElement<Integer>} createFoo(Integer i);
+ *         &#64;XmlElementDecl(name="foo")
+ *         JAXBElement&lt;Integer&gt; createFoo(Integer i);
  *     }
  * 
  * </pre>
