@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2004-2014 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2004-2015 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -102,13 +102,14 @@ import static java.lang.annotation.RetentionPolicy.*;
  *         &#64;XmlValue
  *         public java.math.BigDecimal price;
  *     }
- *  
- *     &lt;!-- Example 1: XML Schema fragment --&gt;
- *     &lt;xs:simpleType name="USPrice"&gt;
- *       &lt;xs:restriction base="xs:decimal"/&gt;
- *     &lt;/xs:simpleType&gt;
+ * {@code
+ * 
+ *     <!-- Example 1: XML Schema fragment -->
+ *     <xs:simpleType name="USPrice">
+ *       <xs:restriction base="xs:decimal"/>
+ *     </xs:simpleType>
  *
- *   </pre>
+ * }</pre>
  * 
  * <p><b> Example 2: </b> Map a class to XML Schema complexType with
  *        with simpleContent.</p>
@@ -123,17 +124,18 @@ import static java.lang.annotation.RetentionPolicy.*;
  *       &#64;XmlAttribute
  *       public String currency;
  *   }
- *  
- *   &lt;!-- Example 2: XML Schema fragment --&gt;
- *   &lt;xs:complexType name="InternationalPrice"&gt;
- *     &lt;xs:simpleContent&gt;
- *       &lt;xs:extension base="xs:decimal"&gt;
- *         &lt;xs:attribute name="currency" type="xs:string"/&gt;
- *       &lt;/xs:extension&gt;
- *     &lt;/xs:simpleContent&gt;
- *   &lt;/xs:complexType&gt;
+ * {@code
+ * 
+ *   <!-- Example 2: XML Schema fragment -->
+ *   <xs:complexType name="InternationalPrice">
+ *     <xs:simpleContent>
+ *       <xs:extension base="xs:decimal">
+ *         <xs:attribute name="currency" type="xs:string"/>
+ *       </xs:extension>
+ *     </xs:simpleContent>
+ *   </xs:complexType>
  *
- *   </pre>
+ * }</pre>
  *
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @see XmlType

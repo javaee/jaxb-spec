@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2004-2014 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2004-2015 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -59,7 +59,7 @@ import java.lang.annotation.Target;
  * &#64;XmlElements({ @XmlElement(...),@XmlElement(...) })
  * </pre>
  *
- * <p>The <tt>@XmlElements</tt> annnotation can be used with the
+ * <p>The <tt>@XmlElements</tt> annotation can be used with the
  * following program elements: </p>
  * <ul>
  *   <li> a JavaBean property </li>
@@ -93,28 +93,29 @@ import java.lang.annotation.Target;
  *        &#64;XmlElements(
  *            &#64;XmlElement(name="A", type=Integer.class),
  *            &#64;XmlElement(name="B", type=Float.class)
- *         }
+ *         )
  *         public List items;
  *    }
- *
- *    &lt;!-- XML Representation for a List of {1,2.5} 
- *            XML output is not wrapped using another element --&gt;
+ * {@code
+ * 
+ *    <!-- XML Representation for a List of {1,2.5} 
+ *            XML output is not wrapped using another element -->
  *    ...
- *    &lt;A&gt; 1 &lt;/A&gt;
- *    &lt;B&gt; 2.5 &lt;/B&gt;
+ *    <A> 1 </A>
+ *    <B> 2.5 </B>
  *    ...
  *
- *    &lt;!-- XML Schema fragment --&gt;
- *    &lt;xs:complexType name="Foo"&gt;
- *      &lt;xs:sequence&gt;
- *        &lt;xs:choice minOccurs="0" maxOccurs="unbounded"&gt;
- *          &lt;xs:element name="A" type="xs:int"/&gt;
- *          &lt;xs:element name="B" type="xs:float"/&gt;
- *        &lt;xs:choice&gt;
- *      &lt;/xs:sequence&gt;
- *    &lt;/xs:complexType&gt;
+ *    <!-- XML Schema fragment -->
+ *    <xs:complexType name="Foo">
+ *      <xs:sequence>
+ *        <xs:choice minOccurs="0" maxOccurs="unbounded">
+ *          <xs:element name="A" type="xs:int"/>
+ *          <xs:element name="B" type="xs:float"/>
+ *        <xs:choice>
+ *      </xs:sequence>
+ *    </xs:complexType>
  *
- * </pre>
+ * }</pre>
  *
  * <p><b>Example 2:</b> Map to a list of elements wrapped with another element
  * </p>
@@ -129,21 +130,22 @@ import java.lang.annotation.Target;
  *        }
  *        public List items;
  *    }
- *
- *    &lt;!-- XML Schema fragment --&gt;
- *    &lt;xs:complexType name="Foo"&gt;
- *      &lt;xs:sequence&gt;
- *        &lt;xs:element name="bar"&gt;
- *          &lt;xs:complexType&gt;
- *            &lt;xs:choice minOccurs="0" maxOccurs="unbounded"&gt;
- *              &lt;xs:element name="A" type="xs:int"/&gt;
- *              &lt;xs:element name="B" type="xs:float"/&gt;
- *            &lt;/xs:choice&gt;
- *          &lt;/xs:complexType&gt;
- *        &lt;/xs:element&gt;
- *      &lt;/xs:sequence&gt;
- *    &lt;/xs:complexType&gt;
- * </pre>
+ * {@code
+ * 
+ *    <!-- XML Schema fragment -->
+ *    <xs:complexType name="Foo">
+ *      <xs:sequence>
+ *        <xs:element name="bar">
+ *          <xs:complexType>
+ *            <xs:choice minOccurs="0" maxOccurs="unbounded">
+ *              <xs:element name="A" type="xs:int"/>
+ *              <xs:element name="B" type="xs:float"/>
+ *            </xs:choice>
+ *          </xs:complexType>
+ *        </xs:element>
+ *      </xs:sequence>
+ *    </xs:complexType>
+ * }</pre>
  *
  * <p><b>Example 3:</b> Change element name based on type using an adapter. 
  * </p>
@@ -160,21 +162,22 @@ import java.lang.annotation.Target;
  *    &#64;XmlType abstract class P {...}
  *    &#64;XmlType(name="PX") class PX extends P {...}
  *    &#64;XmlType(name="PY") class PY extends P {...}
- *
- *    &lt;!-- XML Schema fragment --&gt;
- *    &lt;xs:complexType name="Foo"&gt;
- *      &lt;xs:sequence&gt;
- *        &lt;xs:element name="bar"&gt;
- *          &lt;xs:complexType&gt;
- *            &lt;xs:choice minOccurs="0" maxOccurs="unbounded"&gt;
- *              &lt;xs:element name="A" type="PX"/&gt;
- *              &lt;xs:element name="B" type="PY"/&gt;
- *            &lt;/xs:choice&gt;
- *          &lt;/xs:complexType&gt;
- *        &lt;/xs:element&gt;
- *      &lt;/xs:sequence&gt;
- *    &lt;/xs:complexType&gt;
- * </pre>
+ * {@code
+ * 
+ *    <!-- XML Schema fragment -->
+ *    <xs:complexType name="Foo">
+ *      <xs:sequence>
+ *        <xs:element name="bar">
+ *          <xs:complexType>
+ *            <xs:choice minOccurs="0" maxOccurs="unbounded">
+ *              <xs:element name="A" type="PX"/>
+ *              <xs:element name="B" type="PY"/>
+ *            </xs:choice>
+ *          </xs:complexType>
+ *        </xs:element>
+ *      </xs:sequence>
+ *    </xs:complexType>
+ * }</pre>
  * 
  * @author <ul><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Sekhar Vajjhala, Sun Microsystems, Inc.</li></ul>
  * @see XmlElement 

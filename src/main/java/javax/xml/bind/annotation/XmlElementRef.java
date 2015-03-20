@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2004-2014 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2004-2015 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -71,10 +71,10 @@ import static java.lang.annotation.ElementType.METHOD;
  * support for substitution groups using an <i>element property</i>,
  * (section 5.5.5, "Element Property" of JAXB 2.0 specification). An
  * element property method signature is of the form:
- * <pre>
- *     public void setTerm(JAXBElement&lt;? extends Operator&gt;);
- *     public JAXBElement&lt;? extends Operator&gt; getTerm();
- * </pre>
+ * <pre>{@code
+ *     public void setTerm(JAXBElement<? extends Operator>);
+ *     public JAXBElement<? extends Operator> getTerm();
+ * }</pre>
  * <p>
  * An element factory method annotated with  {@link XmlElementDecl} is
  * used to create a <tt>JAXBElement</tt> instance, containing an XML
@@ -136,19 +136,20 @@ import static java.lang.annotation.ElementType.METHOD;
  *     class JavacTask extends Task {
  *         ...
  *     }
+ * {@code
+ * 
+ *     <!-- XML Schema fragment -->
+ *     <xs:element name="target" type="Target">
+ *     <xs:complexType name="Target">
+ *       <xs:sequence>
+ *         <xs:choice maxOccurs="unbounded">
+ *           <xs:element ref="jar">
+ *           <xs:element ref="javac">
+ *         </xs:choice>
+ *       </xs:sequence>
+ *     </xs:complexType>
  *
- *     &lt;!-- XML Schema fragment --&gt;
- *     &lt;xs:element name="target" type="Target"&gt;
- *     &lt;xs:complexType name="Target"&gt;
- *       &lt;xs:sequence&gt;
- *         &lt;xs:choice maxOccurs="unbounded"&gt;
- *           &lt;xs:element ref="jar"&gt;
- *           &lt;xs:element ref="javac"&gt;
- *         &lt;/xs:choice&gt;
- *       &lt;/xs:sequence&gt;
- *     &lt;/xs:complexType&gt;
- *
- * </pre>
+ * }</pre>
  * <p>
  * Thus the following code fragment:
  * <pre>
@@ -158,16 +159,16 @@ import static java.lang.annotation.ElementType.METHOD;
  *     marshal(target);
  * </pre>
  * will produce the following XML output:
- * <pre>
- *     &lt;target&gt;
- *       &lt;jar&gt;
+ * <pre>{@code
+ *     <target>
+ *       <jar>
  *         ....
- *       &lt;/jar&gt;
- *       &lt;javac&gt;
+ *       </jar>
+ *       <javac>
  *         ....
- *       &lt;/javac&gt;
- *     &lt;/target&gt;
- * </pre>
+ *       </javac>
+ *     </target>
+ * }</pre>
  * <p>
  * It is not an error to have a class that extends <tt>Task</tt>
  * that doesn't have {@link XmlRootElement}. But they can't show up in an
@@ -222,11 +223,11 @@ import static java.lang.annotation.ElementType.METHOD;
  *     marshal(m);
  * </pre>
  * will produce the following XML output:
- * <pre>
- *     &lt;math&gt;
- *       &lt;add&gt;...&lt;/add&gt;
- *     &lt;/math&gt;
- * </pre>
+ * <pre>{@code
+ *     <math>
+ *       <add>...</add>
+ *     </math>
+ * }</pre>
  *
  * 
  * @author <ul><li>Kohsuke Kawaguchi, Sun Microsystems,Inc. </li><li>Sekhar Vajjhala, Sun Microsystems, Inc.</li></ul>

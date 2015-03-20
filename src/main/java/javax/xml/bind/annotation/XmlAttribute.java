@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2004-2014 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2004-2015 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -104,14 +104,15 @@ import static java.lang.annotation.RetentionPolicy.*;
  *         public java.math.BigDecimal getPrice() {...} ;
  *         public void setPrice(java.math.BigDecimal ) {...};
  *     }
- *
- *     &lt;!-- Example: XML Schema fragment --&gt;
- *     &lt;xs:complexType name="USPrice"&gt;
- *       &lt;xs:sequence&gt;
- *       &lt;/xs:sequence&gt;
- *       &lt;xs:attribute name="price" type="xs:decimal"/&gt;
- *     &lt;/xs:complexType&gt;
- * </pre>
+ * {@code
+ * 
+ *     <!-- Example: XML Schema fragment -->
+ *     <xs:complexType name="USPrice">
+ *       <xs:sequence>
+ *       </xs:sequence>
+ *       <xs:attribute name="price" type="xs:decimal"/>
+ *     </xs:complexType>
+ * }</pre>
  *
  * <p> <b>Example 2: </b>Map a JavaBean property to an XML attribute with anonymous type.</p>
  * See Example 7 in @{@link XmlType}.
@@ -123,17 +124,18 @@ import static java.lang.annotation.RetentionPolicy.*;
  *         ...
  *         &#64;XmlAttribute List&lt;Integer&gt; items;
  *     } 
- *
- *     &lt;!-- Example: XML Schema fragment --&gt;
- *     &lt;xs:complexType name="foo"&gt;
+ * {@code
+ * 
+ *     <!-- Example: XML Schema fragment -->
+ *     <xs:complexType name="foo">
  *     	 ...
- *       &lt;xs:attribute name="items"&gt;
- *         &lt;xs:simpleType&gt;
- *           &lt;xs:list itemType="xs:int"/&gt;
- *         &lt;/xs:simpleType&gt;
- *     &lt;/xs:complexType&gt;
+ *       <xs:attribute name="items">
+ *         <xs:simpleType>
+ *           <xs:list itemType="xs:int"/>
+ *         </xs:simpleType>
+ *     </xs:complexType>
  *
- * </pre>
+ * }</pre>
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @see XmlType
  * @since 1.6, JAXB 2.0

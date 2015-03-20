@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2004-2013 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2004-2015 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -57,7 +57,7 @@ import java.lang.annotation.Target;
  * &#64;XmlJavaTypeAdapters ({ @XmlJavaTypeAdapter(...),@XmlJavaTypeAdapter(...) })
  * </pre>
  *
- * <p>The <tt>@XmlJavaTypeAdapters</tt> annnotation is useful for
+ * <p>The <tt>@XmlJavaTypeAdapters</tt> annotation is useful for
  * defining {@link XmlJavaTypeAdapter} annotations for different types
  * at the package level.
  *

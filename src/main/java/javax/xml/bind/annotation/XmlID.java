@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2004-2014 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2004-2015 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -88,17 +88,18 @@ import static java.lang.annotation.RetentionPolicy.*;
  *        public void setCustomerID(String id);
  *        .... other properties not shown 
  *    }
- *
- *    &lt;!-- Example: XML Schema fragment --&gt;
- *    &lt;xs:complexType name="Customer"&gt;
- *      &lt;xs:complexContent&gt;
- *        &lt;xs:sequence&gt;
+ * {@code
+ * 
+ *    <!-- Example: XML Schema fragment -->
+ *    <xs:complexType name="Customer">
+ *      <xs:complexContent>
+ *        <xs:sequence>
  *          ....
- *        &lt;/xs:sequence&gt;
- *        &lt;xs:attribute name="customerID" type="xs:ID"/&gt;
- *      &lt;/xs:complexContent&gt;
- *    &lt;/xs:complexType&gt;
- * </pre>
+ *        </xs:sequence>
+ *        <xs:attribute name="customerID" type="xs:ID"/>
+ *      </xs:complexContent>
+ *    </xs:complexType>
+ * }</pre>
  *
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @see XmlIDREF
