@@ -11,15 +11,15 @@ import java.util.Map;
 /**
  * Created by miran on 10/11/14.
  */
-public class NewValid extends JAXBContextFactory {
+public class NewValid implements JAXBContextFactory {
 
     @Override
-    public JAXBContext createContext(Class[] classes, Map<String, Object> properties) throws JAXBException {
+    public JAXBContext createContext(Class<?>[] classesToBeBound, Map<String, ?> properties) throws JAXBException {
         return new JAXBContext1();
     }
 
     @Override
-    public JAXBContext createContext(String contextPath, ClassLoader classLoader, Map<String, Object> properties) throws JAXBException {
+    public JAXBContext createContext(String contextPath, ClassLoader classLoader, Map<String, ?> properties) throws JAXBException {
         return new JAXBContext1();
     }
 

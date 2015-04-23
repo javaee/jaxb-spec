@@ -307,11 +307,6 @@ class ContextFinder {
         String factoryName = classNameFromSystemProperties();
         if (factoryName != null) return newInstance(contextPath, factoryName, classLoader, properties);
 
-        Class ctxFactory = (Class) ServiceLoaderUtil.lookupUsingOSGiServiceLoader("javax.xml.bind.JAXBContext", logger);
-        if (ctxFactory != null) {
-            return newInstance(contextPath, ctxFactory, classLoader, properties);
-        }
-
         // TODO: SPEC change required! java.util.ServiceLoader
         JAXBContextFactory obj = ServiceLoaderUtil.firstByServiceLoader(JAXBContextFactory.class, logger, EXCEPTION_HANDLER);
         if (obj != null) return obj.createContext(contextPath, classLoader, properties);
@@ -320,12 +315,17 @@ class ContextFinder {
         factoryName = firstByServiceLoaderDeprecated(JAXBContext.class, classLoader);
         if (factoryName != null) return newInstance(contextPath, factoryName, classLoader, properties);
 
+        Class ctxFactory = (Class) ServiceLoaderUtil.lookupUsingOSGiServiceLoader("javax.xml.bind.JAXBContext", logger);
+        if (ctxFactory != null) {
+            return newInstance(contextPath, ctxFactory, classLoader, properties);
+        }
+
         // else no provider found
         logger.fine("Trying to create the platform default provider");
         return newInstance(contextPath, PLATFORM_DEFAULT_FACTORY_CLASS, classLoader, properties);
     }
 
-    static JAXBContext find(Class[] classes, Map properties) throws JAXBException {
+    static JAXBContext find(Class<?>[] classes, Map<String, ?> properties) throws JAXBException {
 
         // search for jaxb.properties in the class loader of each class first
         logger.fine("Searching jaxb.properties");
@@ -345,11 +345,6 @@ class ContextFinder {
         String factoryClassName = classNameFromSystemProperties();
         if (factoryClassName != null) return newInstance(classes, properties, factoryClassName);
 
-        Class ctxFactoryClass = (Class) ServiceLoaderUtil.lookupUsingOSGiServiceLoader("javax.xml.bind.JAXBContext", logger);
-        if (ctxFactoryClass != null) {
-            return newInstance(classes, properties, ctxFactoryClass);
-        }
-
         // TODO: SPEC change required! java.util.ServiceLoader
         JAXBContextFactory factory = ServiceLoaderUtil.firstByServiceLoader(JAXBContextFactory.class, logger, EXCEPTION_HANDLER);
         if (factory != null) return factory.createContext(classes, properties);
@@ -357,6 +352,12 @@ class ContextFinder {
         // to ensure backwards compatibility
         String className = firstByServiceLoaderDeprecated(JAXBContext.class, getContextClassLoader());
         if (className != null) return newInstance(classes, properties, className);
+
+        logger.fine("Trying to create the platform default provider");
+        Class ctxFactoryClass = (Class) ServiceLoaderUtil.lookupUsingOSGiServiceLoader("javax.xml.bind.JAXBContext", logger);
+        if (ctxFactoryClass != null) {
+            return newInstance(classes, properties, ctxFactoryClass);
+        }
 
         // else no provider found
         logger.fine("Trying to create the platform default provider");

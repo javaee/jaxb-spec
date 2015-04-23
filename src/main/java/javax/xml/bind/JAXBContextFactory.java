@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2014 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2015 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -43,21 +43,17 @@ package javax.xml.bind;
 import java.util.Map;
 
 /**
- * Defines an abstract implementation of a factory for creating JAXBContext instance.
+ * <p>Factory that creates new <code>JAXBContext</code> instances.
  *
- * @since 1.9, JAX-WS 2.3
+ * JAXBContextFactory can be located using {@link java.util.ServiceLoader#load(Class)}
+ *
+ * @since 1.9, JAXB 2.3
  */
-public abstract class JAXBContextFactory {
-
-    /**
-     * No args constructor required to be used with {@link java.util.ServiceLoader}
-     */
-    public JAXBContextFactory() {
-    }
+public interface JAXBContextFactory {
 
     /**
      * <p>
-     * Obtain a new instance of a <tt>JAXBContext</tt> class.
+     * Create a new instance of a <tt>JAXBContext</tt> class.
      *
      * <p>
      * For semantics see {@link javax.xml.bind.JAXBContext#newInstance(Class[], java.util.Map)}
@@ -71,7 +67,7 @@ public abstract class JAXBContextFactory {
      *      in an empty map.
      *
      * @return
-     *      A new instance of a <tt>JAXBContext</tt>. Always non-null valid object.
+     *      A new instance of a <tt>JAXBContext</tt>.
      *
      * @throws JAXBException
      *      if an error was encountered while creating the
@@ -89,12 +85,11 @@ public abstract class JAXBContextFactory {
      *
      * @since 1.9, JAXB 2.3
      */
-    public abstract JAXBContext createContext(
-            Class[] classesToBeBound, Map<String, Object> properties ) throws JAXBException;
+    JAXBContext createContext(Class<?>[] classesToBeBound, Map<String, ?> properties ) throws JAXBException;
 
     /**
      * <p>
-     * Obtain a new instance of a <tt>JAXBContext</tt> class.
+     * Create a new instance of a <tt>JAXBContext</tt> class.
      *
      * <p>
      * For semantics see {@link javax.xml.bind.JAXBContext#newInstance(String, ClassLoader, java.util.Map)}
@@ -121,7 +116,7 @@ public abstract class JAXBContextFactory {
      * </ol>
      * @since 1.9, JAXB 2.3
      */
-    public abstract JAXBContext createContext(
-            String contextPath, ClassLoader classLoader, Map<String, Object> properties ) throws JAXBException;
+    JAXBContext createContext(
+            String contextPath, ClassLoader classLoader, Map<String, ?> properties ) throws JAXBException;
 
 }

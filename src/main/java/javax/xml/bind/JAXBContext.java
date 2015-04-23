@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2003-2014 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2003-2015 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -73,15 +73,6 @@ import java.io.InputStream;
  * these class(es). See {@link #newInstance(Class...)} for details.
  * </li>
  * </ul>
- *
- * <p>
- * <i><B>SPEC REQUIREMENT:</B> the provider must supply an implementation
- * class containing the following method signatures:</i>
- *
- * <pre>
- * public static JAXBContext createContext( String contextPath, ClassLoader classLoader, Map&lt;String,Object&gt; properties ) throws JAXBException
- * public static JAXBContext createContext( Class[] classes, Map&lt;String,Object&gt; properties ) throws JAXBException
- * </pre>
  *
  * <p><i>
  * The following JAXB 1.0 requirement is only required for schema to
@@ -161,7 +152,7 @@ import java.io.InputStream;
  * Section 4.2 <i>Java Package</i> of the specification.
  *
  * <p>
- * <i><B>SPEC REQUIREMENT:</B> the provider must generate a class in each
+ * <i>The provider must generate a class in each
  * package that contains all of the necessary object factory methods for that
  * package named ObjectFactory as well as the static
  * <tt>newInstance( javaContentInterface )</tt> method</i>
@@ -229,11 +220,13 @@ import java.io.InputStream;
  * by the following steps.
  *
  * <ol>
+ *
  * <li>
  * For each package/class explicitly passed in to the {@link #newInstance} method, in the order they are specified,
  * <tt>jaxb.properties</tt> file is looked up in its package, by using the associated classloader &mdash;
  * this is {@link Class#getClassLoader() the owner class loader} for a {@link Class} argument, and for a package
  * the specified {@link ClassLoader}.
+ * </li>
  *
  * <p>
  * If such a file is discovered, it is {@link Properties#load(InputStream) loaded} as a property file, and
@@ -247,6 +240,7 @@ import java.io.InputStream;
  * <li>
  * If the system property {@link #JAXB_CONTEXT_FACTORY} exists, then its value is assumed to be the provider
  * factory class. This phase of the look up enables per-JVM override of the JAXB implementation.
+ * </li>
  *
  * <li>
  * Provider of {@link javax.xml.bind.JAXBContextFactory} is loaded using the service-provider loading
@@ -260,23 +254,49 @@ import java.io.InputStream;
  * In case of {@link java.util.ServiceConfigurationError service
  * configuration error} a {@link javax.xml.bind.JAXBException} will be thrown.
  * </li>
- * <p/>
+ *
+ * <li>
+ * Look for resource <tt>/META-INF/services/javax.xml.bind.JAXBContext</tt> using provided class loader.
+ * Methods without class loader parameter use {@code Thread.currentThread().getContextClassLoader()}.
+ * If such a resource exists, its content is assumed to be the provider factory class and must supply
+ * an implementation class containing the following method signatures:
+ *
+ * <pre>
+ *
+ * public static JAXBContext createContext(
+ *                                      String contextPath,
+ *                                      ClassLoader classLoader,
+ *                                      Map&lt;String,Object&gt; properties throws JAXBException
+ *
+ * public static JAXBContext createContext(
+ *                                      Class[] classes,
+ *                                      Map&lt;String,Object&gt; properties ) throws JAXBException
+ * </pre>
+ * </li>
  *
  * <li>
  * Finally, if all the steps above fail, then the rest of the look up is unspecified. That said,
  * the recommended behavior is to simply look for some hard-coded platform default JAXB implementation.
  * This phase of the look up is so that JavaSE can have its own JAXB implementation as the last resort.
+ * </li>
+
  * </ol>
  *
  * <p>
  * Once the provider factory class {@link javax.xml.bind.JAXBContextFactory} is discovered, one of its methods
  * {@link javax.xml.bind.JAXBContextFactory#createContext(String, ClassLoader, java.util.Map)} or
- * {@link javax.xml.bind.JAXBContextFactory#createContext(Class[], java.util.Map)} are invoked
+ * {@link javax.xml.bind.JAXBContextFactory#createContext(Class[], java.util.Map)} is invoked
  * to create a {@link JAXBContext}.
  *
- * <p>Service discovery algorithms from previous specification versions are still supported to allow backwards
- * compatibility, but it is strongly recommended to migrate to new properties and extend
- * {@link javax.xml.bind.JAXBContextFactory} to implement provider.</p>
+ * <p/>
+ *
+ * @apiNote
+ * <p>Service discovery method using file /META-INF/services/javax.xml.bind.JAXBContext (described in step 4)
+ * and leveraging provider's static methods is supported only to allow backwards compatibility, but it is strongly
+ * recommended to migrate to standard ServiceLoader mechanism (described in step 3).
+ *
+ * @implNote
+ * Within the last step, if Glassfish AS environment detected, its specific service loader is used to find factory class.
  *
  * @author <ul><li>Ryan Shoemaker, Sun Microsystems, Inc.</li><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Joe Fialli, Sun Microsystems, Inc.</li></ul>
  * @see Marshaller
@@ -299,7 +319,7 @@ public abstract class JAXBContext {
     
     /**
      * <p>
-     * Obtain a new instance of a <tt>JAXBContext</tt> class.
+     * Create a new instance of a <tt>JAXBContext</tt> class.
      *
      * <p>
      * This is a convenience method to invoke the
@@ -324,7 +344,7 @@ public abstract class JAXBContext {
     
     /**
      * <p>
-     * Obtain a new instance of a <tt>JAXBContext</tt> class.
+     * Create a new instance of a <tt>JAXBContext</tt> class.
      *
      * <p>
      * The client application must supply a context path which is a list of 
@@ -376,7 +396,7 @@ public abstract class JAXBContext {
      * <p>
      * To maintain compatibility with JAXB 1.0 schema to java 
      * interface/implementation binding, enabled by schema customization
-     * <tt>&lt;jaxb:globalBindings valueClass="false"&gt;</tt>,
+     * <tt>{@code <jaxb:globalBindings valueClass="false">}</tt>,
      * the JAXB provider will ensure that each package on the context path
      * has a <tt>jaxb.properties</tt> file which contains a value for the 
      * <tt>javax.xml.bind.context.factory</tt> property and that all values
@@ -420,7 +440,7 @@ public abstract class JAXBContext {
 
     /**
      * <p>
-     * Obtain a new instance of a <tt>JAXBContext</tt> class.
+     * Create a new instance of a <tt>JAXBContext</tt> class.
      *
      * <p>
      * This is mostly the same as {@link JAXBContext#newInstance(String, ClassLoader)},
@@ -467,7 +487,7 @@ public abstract class JAXBContext {
 // TODO: resurrect this once we introduce external annotations
 //    /**
 //     * <p>
-//     * Obtain a new instance of a <tt>JAXBContext</tt> class.
+//     * Create a new instance of a <tt>JAXBContext</tt> class.
 //     *
 //     * <p>
 //     * The client application must supply a list of classes that the new
@@ -503,7 +523,7 @@ public abstract class JAXBContext {
 //     *      spec-defined classes will be returned.
 //     *
 //     * @return
-//     *      A new instance of a <tt>JAXBContext</tt>. Always non-null valid object.
+//     *      A new instance of a <tt>JAXBContext</tt>.
 //     *
 //     * @throws JAXBException
 //     *      if an error was encountered while creating the
@@ -541,7 +561,7 @@ public abstract class JAXBContext {
 
     /**
      * <p>
-     * Obtain a new instance of a <tt>JAXBContext</tt> class.
+     * Create a new instance of a <tt>JAXBContext</tt> class.
      *
      * <p>
      * The client application must supply a list of classes that the new
@@ -583,7 +603,7 @@ public abstract class JAXBContext {
      *      spec-defined classes will be returned.
      *
      * @return
-     *      A new instance of a <tt>JAXBContext</tt>. Always non-null valid object.
+     *      A new instance of a <tt>JAXBContext</tt>.
      *
      * @throws JAXBException
      *      if an error was encountered while creating the
@@ -602,7 +622,7 @@ public abstract class JAXBContext {
      *
      * @since 1.6, JAXB 2.0
      */
-    public static JAXBContext newInstance( Class... classesToBeBound )
+    public static JAXBContext newInstance( Class<?> ... classesToBeBound )
         throws JAXBException {
 
         return newInstance(classesToBeBound,Collections.<String,Object>emptyMap());
@@ -610,7 +630,7 @@ public abstract class JAXBContext {
 
     /**
      * <p>
-     * Obtain a new instance of a <tt>JAXBContext</tt> class.
+     * Create a new instance of a <tt>JAXBContext</tt> class.
      *
      * <p>
      * An overloading of {@link JAXBContext#newInstance(Class...)}
@@ -629,7 +649,7 @@ public abstract class JAXBContext {
      *      in an empty map.
      *
      * @return
-     *      A new instance of a <tt>JAXBContext</tt>. Always non-null valid object.
+     *      A new instance of a <tt>JAXBContext</tt>.
      *
      * @throws JAXBException
      *      if an error was encountered while creating the
@@ -648,7 +668,7 @@ public abstract class JAXBContext {
      *
      * @since 1.6, JAXB 2.0
      */
-    public static JAXBContext newInstance( Class[] classesToBeBound, Map<String,?> properties )
+    public static JAXBContext newInstance( Class<?>[] classesToBeBound, Map<String,?> properties )
         throws JAXBException {
 
         if (classesToBeBound == null) {
@@ -780,9 +800,9 @@ public abstract class JAXBContext {
         if (System.getSecurityManager() == null) {
             return Thread.currentThread().getContextClassLoader();
         } else {
-            return (ClassLoader) java.security.AccessController.doPrivileged(
-                    new java.security.PrivilegedAction() {
-                        public java.lang.Object run() {
+            return java.security.AccessController.doPrivileged(
+                    new java.security.PrivilegedAction<ClassLoader>() {
+                        public ClassLoader run() {
                             return Thread.currentThread().getContextClassLoader();
                         }
                     });
