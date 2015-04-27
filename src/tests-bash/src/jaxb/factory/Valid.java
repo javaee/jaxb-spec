@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014-2015, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -39,15 +39,15 @@ import java.util.Map;
 public class Valid {
 
     public static JAXBContext createContext(java.lang.String path, java.lang.ClassLoader cl) {
-        return new PropValidJAXBContext();
+        return new JAXBContext1();
     }
 
     public static JAXBContext createContext(Class[] classes, Map<String, Object> properties) throws JAXBException {
-        return new PropValidJAXBContext();
+        return new JAXBContext1();
     }
 
 
-    public static class PropValidJAXBContext extends JAXBContext {
+    public static class JAXBContext1 extends JAXBContext {
 
         @Override
         public Unmarshaller createUnmarshaller() throws JAXBException {

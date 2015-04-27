@@ -63,11 +63,11 @@ public class JAXBTest {
             String expectedExceptionClass = args[1];
             String throwableClass = throwable.getClass().getName();
             boolean correctException = throwableClass.equals(expectedExceptionClass);
-            assertTrue(correctException, "Got unexpected exception: [" +
-                    throwableClass + "], expected: [" + expectedExceptionClass + "]");
             if (!correctException) {
                 throwable.printStackTrace();
             }
+            assertTrue(correctException, "Got unexpected exception: [" +
+                    throwableClass + "], expected: [" + expectedExceptionClass + "]");
         }
     }
 
@@ -77,15 +77,16 @@ public class JAXBTest {
     private void setContextClassLoader() {
         try {
             String path = new File(".").getAbsoluteFile().getParentFile().getParent() + "/src/";
-            System.out.println("    Creating URLClassLoader to load classes from: " + path);
+//            System.out.println("    Creating URLClassLoader to load classes from: " + path);
             ClassLoader cl = new URLClassLoader(
                     new URL[]{
                             new URL("file://" + path + "/")
                     }, null
             );
             Thread.currentThread().setContextClassLoader(cl);
-            System.out.println("    ...contextClassLoader set.");
+//            System.out.println("    ...contextClassLoader set.");
         } catch (Throwable t) {
+            System.out.println("    FAILED: Problem while creating URLClassLoader: ");
             t.printStackTrace();
         }
     }

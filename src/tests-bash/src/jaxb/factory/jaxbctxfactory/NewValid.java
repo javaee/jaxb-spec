@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2015, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2015, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -23,9 +23,10 @@
  * questions.
  */
 
-package jaxb.factory;
+package jaxb.factory.jaxbctxfactory;
 
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBContextFactory;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
@@ -33,23 +34,21 @@ import javax.xml.bind.Validator;
 import java.util.Map;
 
 /**
- * (Another) Valid JAXBContext factory class for tests
- * - contains required static methods and creates dummy JAXBContext
- * - several implementations necessary to test different configuration approaches
+ * Created by miran on 10/11/14.
  */
-public class Valid3 {
+public class NewValid implements JAXBContextFactory {
 
-    public static JAXBContext createContext(String path, ClassLoader cl) {
+    @Override
+    public JAXBContext createContext(Class<?>[] classesToBeBound, Map<String, ?> properties) throws JAXBException {
         return new JAXBContext1();
     }
 
-    public static JAXBContext createContext(Class[] classes, Map<String, Object> properties) throws JAXBException {
+    @Override
+    public JAXBContext createContext(String contextPath, ClassLoader classLoader, Map<String, ?> properties) throws JAXBException {
         return new JAXBContext1();
     }
-
 
     public static class JAXBContext1 extends JAXBContext {
-
         @Override
         public Unmarshaller createUnmarshaller() throws JAXBException {
             return null;
@@ -65,4 +64,5 @@ public class Valid3 {
             return null;
         }
     }
+
 }

@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2014 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2015 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -64,12 +64,16 @@ class ServiceLoaderUtil {
     private static final String OSGI_SERVICE_LOADER_CLASS_NAME = "org.glassfish.hk2.osgiresourcelocator.ServiceLoader";
     private static final String OSGI_SERVICE_LOADER_METHOD_NAME = "lookupProviderClasses";
 
-    static <P> P firstByServiceLoader(Class<P> spiClass, Logger logger) {
+    static <P, T extends Exception> P firstByServiceLoader(Class<P> spiClass, Logger logger, ExceptionHandler<T> handler) throws T {
         // service discovery
-        ServiceLoader<P> serviceLoader = ServiceLoader.load(spiClass);
-        for (P impl : serviceLoader) {
-            logger.fine("ServiceProvider loading Facility used; returning object [" + impl.getClass().getName() + "]");
-            return impl;
+        try {
+            ServiceLoader<P> serviceLoader = ServiceLoader.load(spiClass);
+            for (P impl : serviceLoader) {
+                logger.fine("ServiceProvider loading Facility used; returning object [" + impl.getClass().getName() + "]");
+                return impl;
+            }
+        } catch (Throwable t) {
+            throw handler.createException(t, "Error while searching for service [" + spiClass.getName() + "]");
         }
         return null;
     }

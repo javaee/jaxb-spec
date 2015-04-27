@@ -93,7 +93,6 @@ if [ "$1" = "debug" ]; then
     export D=$DEBUG
 fi;
 
-
 scenario() {
     echo ""
     echo "================================================"
@@ -102,7 +101,7 @@ scenario() {
 }
 
 compile() {
-    javac -XDignore.symbol.file  $1
+    javac -cp . -Djava.endorsed.dirs=../endorsed -XDignore.symbol.file  $1
 }
 
 #
@@ -151,17 +150,18 @@ prepare() {
     echo ""
     echo "- prepare/clean -"
     clean
+
     if [ "$SVC" != "-" ]; then
         mkdir -p META-INF/services
-        echo "$SVC" > META-INF/services/javax.xml.bind.JAXBContext
+        echo "$SVC" > META-INF/services/$SVC_FACTORY_ID
     else
         rm -rf META-INF
     fi
 
     echo META-INF: $SVC
-    if [ -f META-INF/services/javax.xml.bind.JAXBContext ]; then
-      echo "   "`ls -al META-INF/services/javax.xml.bind.JAXBContext`
-      echo "   "`cat META-INF/services/javax.xml.bind.JAXBContext`
+    if [ -f META-INF/services/$SVC_FACTORY_ID ]; then
+      echo "   "`ls -al META-INF/services/$SVC_FACTORY_ID`
+      echo "   "`cat META-INF/services/$SVC_FACTORY_ID`
       echo ""
     fi
 
@@ -187,17 +187,29 @@ function listDirectory() {
     echo =================================================
 }
 
-cd src
+function compileAll() {
+    echo "- compilation -"
+    find . -name '*.class' -delete
 
-echo "- compilation -"
-find . -name '*.class' -delete
+    # current version of API
+    compile 'jaxb/factory/*.java'
+    # new version of API
+    compile 'jaxb/factory/jaxbctxfactory/*.java'
+    compile 'jaxb/test/usr/*.java'
+    compile 'jaxb/test/*.java'
+}
 
-compile 'jaxb/factory/*.java'
-compile 'jaxb/test/usr/*.java'
-compile 'jaxb/test/*.java'
+TCCL_DIR=../ctx-classloader-test
+
+function cleanAll() {
+    scenario cleanup
+    prepare - -
+    rm -rf ../classes
+    find . -name '*.class' -delete
+    rm -rf $TCCL_DIR
+}
 
 function prepareCtxClassloader() {
-    TCCL_DIR=../ctx-classloader-test
 
     # preparation for testing TCCL method
     # copying compiled user classes + property files
@@ -216,4 +228,24 @@ function prepareCtxClassloader() {
 
 export DEFAULT=com.sun.xml.internal.bind.v2.runtime.JAXBContextImpl
 
+cd src
+
+## old version of API
+FACTORY_ID=javax.xml.bind.context.factory
+SVC_FACTORY_ID=javax.xml.bind.JAXBContext
+FACTORY_IMPL_PREFIX=jaxb.factory.
+
+compileAll
 source ../scenarios.sh
+cleanAll
+
+# new version of API
+FACTORY_IMPL_PREFIX=jaxb.factory.jaxbctxfactory.New
+FACTORY_ID=javax.xml.bind.JAXBContextFactory
+SVC_FACTORY_ID=javax.xml.bind.JAXBContextFactory
+
+compileAll
+source ../scenarios.sh
+cleanAll
+
+rm -rf endorsed
