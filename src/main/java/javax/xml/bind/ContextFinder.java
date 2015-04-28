@@ -83,7 +83,7 @@ class ContextFinder {
      */
     private static final String PLATFORM_DEFAULT_FACTORY_CLASS = "com.sun.xml.internal.bind.v2.ContextFactory";
 
-    // previous value of JAXBContext.JAXB_CONTEXT_FACTORY, using also this to ensure bacwards compatibility
+    // previous value of JAXBContext.JAXB_CONTEXT_FACTORY, using also this to ensure backwards compatibility
     private static final String JAXB_CONTEXT_FACTORY_DEPRECATED = "javax.xml.bind.context.factory";
 
     private static final Logger logger;
