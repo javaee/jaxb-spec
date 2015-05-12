@@ -43,6 +43,7 @@ package javax.xml.bind;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
@@ -102,7 +103,7 @@ class ServiceLoaderUtil {
             } else {
                 return null;
             }
-        } catch (Exception ignored) {
+        } catch (IllegalAccessException | InvocationTargetException | ClassNotFoundException | NoSuchMethodException ignored) {
             logger.log(Level.FINE, "Unable to find from OSGi: [" + factoryId + "]", ignored);
             return null;
         }

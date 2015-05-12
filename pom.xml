@@ -153,7 +153,7 @@
                 <configuration>
                     <rules>
                         <requireJavaVersion>
-                            <version>[1.6,)</version>
+                            <version>[1.8,)</version>
                         </requireJavaVersion>
                         <requireMavenVersion>
                             <version>[3.0.3,)</version>
@@ -199,8 +199,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.5.1</version>
                 <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                     <compilerArgument>-Xlint:all</compilerArgument>
                 </configuration>
             </plugin>
@@ -303,16 +303,16 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>findbugs-maven-plugin</artifactId>
-                <version>2.5.2</version>
+                <version>3.0.0</version>
                 <configuration>
                     <skip>${findbugs.skip}</skip>
                     <threshold>${findbugs.threshold}</threshold>
                     <findbugsXmlWithMessages>true</findbugsXmlWithMessages>
                     <excludeFilterFile>
-                        exclude-common.xml,${findbugs.exclude}
+                        ${findbugs.exclude}
                     </excludeFilterFile>
                     <fork>true</fork>
-                    <jvmArgs>-Xms64m -Xmx256m</jvmArgs>    
+                    <jvmArgs>-Xms64m -Xmx256m</jvmArgs>
                 </configuration>
                 <dependencies>
                     <dependency>

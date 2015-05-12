@@ -2,7 +2,7 @@
 
     DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 
-    Copyright (c) 2013 Oracle and/or its affiliates. All rights reserved.
+    Copyright (c) 2013-2015 Oracle and/or its affiliates. All rights reserved.
 
     The contents of this file are subject to the terms of either the GNU
     General Public License Version 2 only ("GPL") or the Common Development
@@ -51,11 +51,21 @@
     </Match>
 
     <!--
+    TODO: reevaluate for MR
     As designed, impossible to change, maybe with MR.
     -->
     <Match>
         <Class name="javax.xml.bind.DatatypeConverterImpl"/>
         <Bug pattern="NP_BOOLEAN_RETURN_NULL"/>
+    </Match>
+
+    <!--
+    TODO: reevaluate for MR
+    As designed, impossible to change, maybe with MR?
+    -->
+    <Match>
+        <Class name="javax.xml.bind.annotation.adapters.HexBinaryAdapter"/>
+        <Bug pattern="PZLA_PREFER_ZERO_LENGTH_ARRAYS"/>
     </Match>
 
 </FindBugsFilter>
