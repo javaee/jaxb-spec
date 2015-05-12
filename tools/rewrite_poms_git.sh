@@ -1,14 +1,48 @@
 #!/bin/bash
 
+# if option -n ... do not commit
+COMMIT=Y
+while getopts ":n" opt; do
+  case $opt in
+    n)
+      COMMIT=N
+      shift
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+  esac
+done
+echo "Script will commit changes: [$COMMIT] (pass option -n not to commit)"
+
+#if [ "$#" -eq 1 ]; then
+#    CURRENT_VERSION=$1
+#fi
+#
+#if [ "$#" -eq 0 ]; then
+#    echo "No version specified, reading release version from pom file"
+#    CURRENT_VERSION=`cat pom.xml | grep '<version' -m 1 | cut -d ">" -f 2 | cut -d "<" -f 1 | cut -d "-" -f 1`
+#fi
+CURRENT_VERSION=2.3.0
+
+echo "Major release version found: $CURRENT_VERSION"  
+
+SCRIPT_DIR=$(cd $(dirname $0); pwd -P)
+
+cd $SCRIPT_DIR/.. || {
+	echo >&2 "Cannot change to top of GIT working directory"
+	exit 1
+}
+
 command -v git > /dev/null 2>&1 || {
 	echo >&2 "Cannot locate git executable"
 	exit 1
 }
 
 GIT=$(command -v git 2>&1)
+#GIT=$(command -v echo 2>&1)
 LAST_GIT_COMMIT=$(${GIT} rev-parse --short HEAD) || exit 1
-
-CURRENT_VERSION=2.2.12
 
 DATESTAMP=`date +%y%m%d.%H%M`
 BUILD_NUMBER=b${DATESTAMP}
@@ -26,13 +60,16 @@ cleanup()
 edit_poms()
 {
 	TMPFILE=`mktemp $TMPDIR/${RELEASE_VERSION}.XXXXXXXX` || cleanup
-	find . -name pom.xml >> $TMPFILE
+	find \
+		$SCRIPT_DIR/../ \
+		-name pom.xml \
+		>> $TMPFILE
 
 	echo "Updating pom files to have release versions ..."
 	while read line
 	do
 		echo -n "Editing $line..."
-		perl -i -pe "s|${DEVELOPER_VERSION}|${RELEASE_VERSION}|g" $line
+		perl -i -pe "s|<version>${DEVELOPER_VERSION}|<version>${RELEASE_VERSION}|g" $line
 		if [ $? -ne 0 ]; then
 			echo "FAILED."
 			echo "Replace versions failed for $line: $!"
@@ -49,7 +86,9 @@ edit_poms()
 		fi
 		echo "DONE."
 	done < "$TMPFILE"
+}
 
+function commit_changes() {
 	echo -n "Committing rewritten POMs to git..."
 	${GIT} commit --verbose -m "Preparing for release ${RELEASE_VERSION}"
 	if [ $? -ne 0 ]; then
@@ -139,7 +178,11 @@ echo "RELEASE_VERSION = ${RELEASE_VERSION}"
 ${GIT} clean -d -f -x
 
 edit_poms
-push_changes
-checkout_tag
+
+if [ "$COMMIT" = "Y" ]; then
+    commit_changes
+    push_changes
+    checkout_tag
+fi
 
 exit 0
