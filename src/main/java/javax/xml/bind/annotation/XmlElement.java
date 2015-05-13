@@ -51,22 +51,20 @@ import static java.lang.annotation.RetentionPolicy.*;
 /**
  * Maps a JavaBean property to a XML element derived from property name.
  *
- * <p> <b>Usage</b> </p>
+ * <p> <b>Usage</b>
  * <p>
  * <tt>@XmlElement</tt> annotation can be used with the following program
- * elements: 
- * <ul> 
+ * elements:
+ * <ul>
  *   <li> a JavaBean property </li>
  *   <li> non static, non transient field </li>
  *   <li> within {@link XmlElements}
- * <p>
- *
  * </ul>
- * 
+ *
  * The usage is subject to the following constraints:
- * <ul> 
+ * <ul>
  *   <li> This annotation can be used with following annotations:
- *            {@link XmlID}, 
+ *            {@link XmlID},
  *            {@link XmlIDREF},
  *            {@link XmlList},
  *            {@link XmlSchemaType},
@@ -94,11 +92,11 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <pre>
  *     //Example: Code fragment
  *     public class USPrice {
- *         &#64;XmlElement(name="itemprice")
+ *        {@literal @}XmlElement(name="itemprice")
  *         public java.math.BigDecimal price;
  *     }
  * {@code
- * 
+ *
  *     <!-- Example: Local XML Schema element -->
  *     <xs:complexType name="USPrice"/>
  *       <xs:sequence>
@@ -110,14 +108,13 @@ import static java.lang.annotation.RetentionPolicy.*;
  *
  * <b> Example 2: </b> Map a field to a nillable element.
  *   <pre>
- *
  *     //Example: Code fragment
  *     public class USPrice {
- *         &#64;XmlElement(nillable=true)
+ *        {@literal @}XmlElement(nillable=true)
  *         public java.math.BigDecimal price;
  *     }
  * {@code
- * 
+ *
  *     <!-- Example: Local XML Schema element -->
  *     <xs:complexType name="USPrice">
  *       <xs:sequence>
@@ -128,14 +125,13 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <p>
  * <b> Example 3: </b> Map a field to a nillable, required element.
  *   <pre>
- *
  *     //Example: Code fragment
  *     public class USPrice {
- *         &#64;XmlElement(nillable=true, required=true)
+ *        {@literal @}XmlElement(nillable=true, required=true)
  *         public java.math.BigDecimal price;
  *     }
  * {@code
- * 
+ *
  *     <!-- Example: Local XML Schema element -->
  *     <xs:complexType name="USPrice">
  *       <xs:sequence>
@@ -149,7 +145,6 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <p>
  * See Example 6 in @{@link XmlType}.
  *
- * <p>
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since 1.6, JAXB 2.0
  */
@@ -159,21 +154,21 @@ public @interface XmlElement {
     /**
      * Name of the XML Schema element.
      * <p> If the value is "##default", then element name is derived from the
-     * JavaBean property name. 
+     * JavaBean property name.
      */
     String name() default "##default";
- 
+
     /**
-     * Customize the element declaration to be nillable. 
+     * Customize the element declaration to be nillable.
      * <p>If nillable() is true, then the JavaBean property is
-     * mapped to a XML Schema nillable element declaration. 
+     * mapped to a XML Schema nillable element declaration.
      */
     boolean nillable() default false;
 
     /**
      * Customize the element declaration to be required.
      * <p>If required() is true, then Javabean property is mapped to
-     * an XML schema element declaration with minOccurs="1". 
+     * an XML schema element declaration with minOccurs="1".
      * maxOccurs is "1" for a single valued property and "unbounded"
      * for a multivalued property.
      * <p>If required() is false, then the Javabean property is mapped
@@ -209,7 +204,7 @@ public @interface XmlElement {
      * <p>
      * The <pre>'\u0000'</pre> value specified as a default of this annotation element
      * is used as a poor-man's substitute for null to allow implementations
-     * to recognize the 'no default value' state.  
+     * to recognize the 'no default value' state.
      */
     String defaultValue() default "\u0000";
 
@@ -225,5 +220,3 @@ public @interface XmlElement {
      */
     static final class DEFAULT {}
 }
-
-

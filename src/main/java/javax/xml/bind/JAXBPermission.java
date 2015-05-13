@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2007-2013 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2007-2015 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -55,7 +55,6 @@ import java.security.BasicPermission;
  * The following table lists all the possible {@code JAXBPermission} target names,
  * and for each provides a description of what the permission allows
  * and a discussion of the risks of granting code the permission.
- * <P>
  *
  * <table border=1 cellpadding=5 summary="Permission target name, what the permission allows, and associated risks">
  * <tr>
@@ -76,7 +75,7 @@ import java.security.BasicPermission;
  *     VM-wide singleton semantics,  before a genuine JAXB implementation sets one.
  *     This allows malicious code to gain access to objects that it may otherwise
  *     not have access to, such as {@link java.awt.Frame#getFrames()} that belongs to
- *     another application running in the same JVM. 
+ *     another application running in the same JVM.
  *   </td>
  * </tr>
  * </table>
