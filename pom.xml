@@ -90,11 +90,6 @@
         </license>
     </licenses>
 
-    <scm>
-        <connection>scm:svn:http://svn.java.net/svn/jsr222~svn/branches/jaxb-2_2</connection>
-        <developerConnection>scm:svn:https://svn.java.net/svn/jsr222~svn/branches/jaxb-2_2</developerConnection>
-        <url>http://java.net/projects/jsr222/sources/svn/show/branches/jaxb-2_2</url>
-    </scm>
     <issueManagement>
         <system>jira</system>
         <url>http://java.net/jira/browse/JAXB</url>
