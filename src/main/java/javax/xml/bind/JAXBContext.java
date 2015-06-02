@@ -302,8 +302,6 @@ import java.io.InputStream;
  * {@link javax.xml.bind.JAXBContextFactory#createContext(Class[], java.util.Map)} is invoked
  * to create a {@link JAXBContext}.
  *
- * <p/>
- *
  * @apiNote
  * <p>Service discovery method using file /META-INF/services/javax.xml.bind.JAXBContext (described in step 4)
  * and leveraging provider's static methods is supported only to allow backwards compatibility, but it is strongly
