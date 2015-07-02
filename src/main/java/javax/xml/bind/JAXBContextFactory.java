@@ -85,7 +85,8 @@ public interface JAXBContextFactory {
      *
      * @since 1.9, JAXB 2.3
      */
-    JAXBContext createContext(Class<?>[] classesToBeBound, Map<String, ?> properties ) throws JAXBException;
+    JAXBContext createContext(Class<?>[] classesToBeBound,
+                              Map<String, ?> properties ) throws JAXBException;
 
     /**
      * <p>
@@ -116,7 +117,8 @@ public interface JAXBContextFactory {
      * </ol>
      * @since 1.9, JAXB 2.3
      */
-    JAXBContext createContext(
-            String contextPath, ClassLoader classLoader, Map<String, ?> properties ) throws JAXBException;
+    JAXBContext createContext(String contextPath,
+                              ClassLoader classLoader,
+                              Map<String, ?> properties ) throws JAXBException;
 
 }

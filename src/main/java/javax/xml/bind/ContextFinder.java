@@ -110,12 +110,13 @@ class ContextFinder {
         }
     }
 
-    private static ServiceLoaderUtil.ExceptionHandler<JAXBException> EXCEPTION_HANDLER = new ServiceLoaderUtil.ExceptionHandler<JAXBException>() {
-        @Override
-        public JAXBException createException(Throwable throwable, String message) {
-            return new JAXBException(message, throwable);
-        }
-    };
+    private static ServiceLoaderUtil.ExceptionHandler<JAXBException> EXCEPTION_HANDLER =
+            new ServiceLoaderUtil.ExceptionHandler<JAXBException>() {
+                @Override
+                public JAXBException createException(Throwable throwable, String message) {
+                    return new JAXBException(message, throwable);
+                }
+            };
 
     /**
      * If the {@link InvocationTargetException} wraps an exception that shouldn't be wrapped,
@@ -184,7 +185,10 @@ class ContextFinder {
         }
     }
 
-    static JAXBContext newInstance(String contextPath, Class spFactory, ClassLoader classLoader, Map properties) throws JAXBException {
+    static JAXBContext newInstance(String contextPath,
+                                   Class spFactory,
+                                   ClassLoader classLoader,
+                                   Map properties) throws JAXBException {
 
         try {
             /*
@@ -264,6 +268,7 @@ class ContextFinder {
                                    Map properties,
                                    Class spFactory) throws JAXBException {
         try {
+
             Method m = spFactory.getMethod("createContext", Class[].class, Map.class);
             Object context = m.invoke(null, classes, properties);
             if (!(context instanceof JAXBContext)) {
@@ -271,10 +276,10 @@ class ContextFinder {
                 throw handleClassCastException(context.getClass(), JAXBContext.class);
             }
             return (JAXBContext) context;
-        } catch (NoSuchMethodException e) {
+
+        } catch (NoSuchMethodException | IllegalAccessException e) {
             throw new JAXBException(e);
-        } catch (IllegalAccessException e) {
-            throw new JAXBException(e);
+
         } catch (InvocationTargetException e) {
             handleInvocationTargetException(e);
 
@@ -286,9 +291,10 @@ class ContextFinder {
         }
     }
 
-    static JAXBContext find(String factoryId, String contextPath, ClassLoader classLoader, Map properties) throws JAXBException {
-
-        // TODO: do we want/need another layer of searching in $java.home/lib/jaxb.properties like JAXP?
+    static JAXBContext find(String factoryId,
+                            String contextPath,
+                            ClassLoader classLoader,
+                            Map properties) throws JAXBException {
 
         StringTokenizer packages = new StringTokenizer(contextPath, ":");
         if (!packages.hasMoreTokens()) {
@@ -300,22 +306,33 @@ class ContextFinder {
         logger.fine("Searching jaxb.properties");
         while (packages.hasMoreTokens()) {
             // com.acme.foo - > com/acme/foo/jaxb.properties
-            String factoryClassName = classNameFromPackageProperties(classLoader, packages.nextToken(":").replace('.', '/'), factoryId, JAXB_CONTEXT_FACTORY_DEPRECATED);
-            if (factoryClassName != null) return newInstance(contextPath, factoryClassName, classLoader, properties);
+            String factoryClassName =
+                    classNameFromPackageProperties(
+                        classLoader,
+                        packages.nextToken(":").replace('.', '/'),
+                        factoryId,
+                        JAXB_CONTEXT_FACTORY_DEPRECATED);
+
+            if (factoryClassName != null) {
+                return newInstance(contextPath, factoryClassName, classLoader, properties);
+            }
         }
 
         String factoryName = classNameFromSystemProperties();
         if (factoryName != null) return newInstance(contextPath, factoryName, classLoader, properties);
 
-        // TODO: SPEC change required! java.util.ServiceLoader
-        JAXBContextFactory obj = ServiceLoaderUtil.firstByServiceLoader(JAXBContextFactory.class, logger, EXCEPTION_HANDLER);
+        JAXBContextFactory obj = ServiceLoaderUtil.firstByServiceLoader(
+                JAXBContextFactory.class, logger, EXCEPTION_HANDLER);
+
         if (obj != null) return obj.createContext(contextPath, classLoader, properties);
 
         // to ensure backwards compatibility
         factoryName = firstByServiceLoaderDeprecated(JAXBContext.class, classLoader);
         if (factoryName != null) return newInstance(contextPath, factoryName, classLoader, properties);
 
-        Class ctxFactory = (Class) ServiceLoaderUtil.lookupUsingOSGiServiceLoader("javax.xml.bind.JAXBContext", logger);
+        Class ctxFactory = (Class) ServiceLoaderUtil.lookupUsingOSGiServiceLoader(
+                "javax.xml.bind.JAXBContext", logger);
+
         if (ctxFactory != null) {
             return newInstance(contextPath, ctxFactory, classLoader, properties);
         }
@@ -331,22 +348,30 @@ class ContextFinder {
         logger.fine("Searching jaxb.properties");
         for (final Class c : classes) {
             // this classloader is used only to load jaxb.properties, so doing this should be safe.
-            if (c.getPackage() == null) continue;       // this is possible for primitives, arrays, and classes that are loaded by poorly implemented ClassLoaders
+            // this is possible for primitives, arrays, and classes that are
+            // loaded by poorly implemented ClassLoaders
+            if (c.getPackage() == null) continue;
 
             // TODO: do we want to optimize away searching the same package?  org.Foo, org.Bar, com.Baz
             // classes from the same package might come from different class loades, so it might be a bad idea
             // TODO: it's easier to look things up from the class
             // c.getResourceAsStream("jaxb.properties");
 
-            String factoryClassName = classNameFromPackageProperties(getClassClassLoader(c), c.getPackage().getName().replace('.', '/'), JAXBContext.JAXB_CONTEXT_FACTORY, JAXB_CONTEXT_FACTORY_DEPRECATED);
+            String factoryClassName =
+                    classNameFromPackageProperties(
+                            getClassClassLoader(c),
+                            c.getPackage().getName().replace('.', '/'),
+                            JAXBContext.JAXB_CONTEXT_FACTORY, JAXB_CONTEXT_FACTORY_DEPRECATED);
+
             if (factoryClassName != null) return newInstance(classes, properties, factoryClassName);
         }
 
         String factoryClassName = classNameFromSystemProperties();
         if (factoryClassName != null) return newInstance(classes, properties, factoryClassName);
 
-        // TODO: SPEC change required! java.util.ServiceLoader
-        JAXBContextFactory factory = ServiceLoaderUtil.firstByServiceLoader(JAXBContextFactory.class, logger, EXCEPTION_HANDLER);
+        JAXBContextFactory factory =
+                ServiceLoaderUtil.firstByServiceLoader(JAXBContextFactory.class, logger, EXCEPTION_HANDLER);
+
         if (factory != null) return factory.createContext(classes, properties);
 
         // to ensure backwards compatibility
@@ -354,7 +379,9 @@ class ContextFinder {
         if (className != null) return newInstance(classes, properties, className);
 
         logger.fine("Trying to create the platform default provider");
-        Class ctxFactoryClass = (Class) ServiceLoaderUtil.lookupUsingOSGiServiceLoader("javax.xml.bind.JAXBContext", logger);
+        Class ctxFactoryClass =
+                (Class) ServiceLoaderUtil.lookupUsingOSGiServiceLoader("javax.xml.bind.JAXBContext", logger);
+
         if (ctxFactoryClass != null) {
             return newInstance(classes, properties, ctxFactoryClass);
         }
@@ -366,9 +393,13 @@ class ContextFinder {
 
 
     /**
-     * first factoryId should be the preffered one, more of those can be provided to support backwards compatibility
+     * first factoryId should be the preffered one,
+     * more of those can be provided to support backwards compatibility
      */
-    private static String classNameFromPackageProperties(ClassLoader classLoader, String packageName, String ... factoryIds) throws JAXBException {
+    private static String classNameFromPackageProperties(ClassLoader classLoader,
+                                                         String packageName,
+                                                         String ... factoryIds) throws JAXBException {
+
         String resourceName = packageName + "/jaxb.properties";
         logger.log(Level.FINE, "Trying to locate {0}", resourceName);
         Properties props = loadJAXBProperties(classLoader, resourceName);
@@ -384,6 +415,7 @@ class ContextFinder {
     }
 
     private static String classNameFromSystemProperties() throws JAXBException {
+
         String factoryClassName = getSystemProperty(JAXBContext.JAXB_CONTEXT_FACTORY);
         if (factoryClassName != null) {
             return factoryClassName;
@@ -421,7 +453,8 @@ class ContextFinder {
         return value;
     }
 
-    private static Properties loadJAXBProperties(ClassLoader classLoader, String propFileName) throws JAXBException {
+    private static Properties loadJAXBProperties(ClassLoader classLoader,
+                                                 String propFileName) throws JAXBException {
 
         Properties props = null;
         try {
@@ -527,17 +560,18 @@ class ContextFinder {
         }
     }
 
-    // TODO: to be removed - SPEC change required
-    //    ServiceLoaderUtil.firstByServiceLoaderDeprecated should be used instead.
+    // ServiceLoaderUtil.firstByServiceLoaderDeprecated should be used instead.
     @Deprecated
-    static String firstByServiceLoaderDeprecated(Class spiClass, ClassLoader classLoader) throws JAXBException {
+    static String firstByServiceLoaderDeprecated(Class spiClass,
+                                                 ClassLoader classLoader) throws JAXBException {
+
         final String jaxbContextFQCN = spiClass.getName();
 
         logger.fine("Searching META-INF/services");
 
         // search META-INF services next
         BufferedReader r = null;
-        final String resource = new StringBuilder().append("META-INF/services/").append(jaxbContextFQCN).toString();
+        final String resource = "META-INF/services/" + jaxbContextFQCN;
         try {
             final InputStream resourceStream =
                     (classLoader == null) ?
@@ -557,9 +591,6 @@ class ContextFinder {
                 logger.log(Level.FINE, "Unable to load:{0}", resource);
                 return null;
             }
-        } catch (UnsupportedEncodingException e) {
-            // should never happen
-            throw new JAXBException(e);
         } catch (IOException e) {
             throw new JAXBException(e);
         } finally {

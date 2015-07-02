@@ -193,23 +193,23 @@ public abstract class AttachmentMarshaller {
      */
     public boolean isXOPPackage() { return false; }
 
-    /**
-     * <p>Add MIME {@code data} as an attachment and return attachment's content-id, cid.
-     *
-     * <p>
-     * This method is called by JAXB marshal process for each element/attribute typed as
-     * {http://ws-i.org/profiles/basic/1.1/xsd}swaRef. The MIME-based package processor
-     * implementing this method is responsible for attaching the specified data to a
-     * MIME attachment, and generating a content-id, cid, that uniquely identifies the attachment
-     * within the MIME-based package.
-     *
-     * <p>Caller inserts the returned content-id, cid, into the XML content being marshalled.
-     *
-     * @param data
-     *       represents the data to be attached. Must be non-null.
-     * @return
-     *       must be a valid URI used as cid. Must satisfy Conformance Requirement R2928 from
-     *       <a href="http://www.ws-i.org/Profiles/AttachmentsProfile-1.0-2004-08-24.html#Referencing_Attachments_from_the_SOAP_Envelope">WS-I Attachments Profile Version 1.0.</a>
-     */
+   /**
+    * <p>Add MIME {@code data} as an attachment and return attachment's content-id, cid.
+    *
+    * <p>
+    * This method is called by JAXB marshal process for each element/attribute typed as
+    * {http://ws-i.org/profiles/basic/1.1/xsd}swaRef. The MIME-based package processor
+    * implementing this method is responsible for attaching the specified data to a
+    * MIME attachment, and generating a content-id, cid, that uniquely identifies the attachment
+    * within the MIME-based package.
+    *
+    * <p>Caller inserts the returned content-id, cid, into the XML content being marshalled.
+    *
+    * @param data
+    *       represents the data to be attached. Must be non-null.
+    * @return
+    *       must be a valid URI used as cid. Must satisfy Conformance Requirement R2928 from
+    *       <a href="http://www.ws-i.org/Profiles/AttachmentsProfile-1.0-2004-08-24.html#Referencing_Attachments_from_the_SOAP_Envelope">WS-I Attachments Profile Version 1.0.</a>
+    */
     public abstract String addSwaRefAttachment(DataHandler data);
 }

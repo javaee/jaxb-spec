@@ -115,11 +115,11 @@ import java.io.InputStream;
  * any of the schemas listed in the <tt>contextPath</tt>.  For example:
  *
  * <pre>
- *        JAXBContext jc = JAXBContext.newInstance( "com.acme.foo:com.acme.bar" );
- *        Unmarshaller u = jc.createUnmarshaller();
- *        FooObject fooObj = (FooObject)u.unmarshal( new File( "foo.xml" ) ); // ok
- *        BarObject barObj = (BarObject)u.unmarshal( new File( "bar.xml" ) ); // ok
- *        BazObject bazObj = (BazObject)u.unmarshal( new File( "baz.xml" ) ); // error, "com.acme.baz" not in contextPath
+ *      JAXBContext jc = JAXBContext.newInstance( "com.acme.foo:com.acme.bar" );
+ *      Unmarshaller u = jc.createUnmarshaller();
+ *      FooObject fooObj = (FooObject)u.unmarshal( new File( "foo.xml" ) ); // ok
+ *      BarObject barObj = (BarObject)u.unmarshal( new File( "bar.xml" ) ); // ok
+ *      BazObject bazObj = (BazObject)u.unmarshal( new File( "baz.xml" ) ); // error, "com.acme.baz" not in contextPath
  * </pre>
  *
  * <p>
@@ -201,7 +201,7 @@ import java.io.InputStream;
  * {@link Unmarshaller#setSchema(javax.xml.validation.Schema)} API for more
  * information.
  *
- * 
+ *
  * <h3>JAXB Runtime Binding Framework Compatibility</h3>
  * <p>
  * The following JAXB 1.0 restriction only applies to binding schema to
@@ -254,7 +254,7 @@ import java.io.InputStream;
  * </li>
  *
  * <li>
- * Look for resource <tt>/META-INF/services/javax.xml.bind.JAXBContext</tt> using provided class loader.
+ * Look for resource {@code /META-INF/services/javax.xml.bind.JAXBContext} using provided class loader.
  * Methods without class loader parameter use {@code Thread.currentThread().getContextClassLoader()}.
  * If such a resource exists, its content is assumed to be the provider factory class and must supply
  * an implementation class containing the following method signatures:
@@ -270,25 +270,7 @@ import java.io.InputStream;
  *                                      Class[] classes,
  *                                      Map&lt;String,Object&gt; properties ) throws JAXBException
  * </pre>
- *
- * <li>
- * Look for resource <tt>/META-INF/services/javax.xml.bind.JAXBContext</tt> using provided class loader.
- * Methods without class loader parameter use {@code Thread.currentThread().getContextClassLoader()}.
- * If such a resource exists, its content is assumed to be the provider factory class and must supply
- * an implementation class containing the following method signatures:
- *
- * <pre>
- *
- * public static JAXBContext createContext(
- *                                      String contextPath,
- *                                      ClassLoader classLoader,
- *                                      Map&lt;String,Object&gt; properties throws JAXBException
- *
- * public static JAXBContext createContext(
- *                                      Class[] classes,
- *                                      Map&lt;String,Object&gt; properties ) throws JAXBException
- * </pre>
- * </li>
+ * This configuration method is deprecated.
  *
  * <li>
  * Finally, if all the steps above fail, then the rest of the look up is unspecified. That said,
@@ -302,6 +284,8 @@ import java.io.InputStream;
  * {@link javax.xml.bind.JAXBContextFactory#createContext(Class[], java.util.Map)} is invoked
  * to create a {@link JAXBContext}.
  *
+ * <p/>
+ *
  * @apiNote
  * <p>Service discovery method using file /META-INF/services/javax.xml.bind.JAXBContext (described in step 4)
  * and leveraging provider's static methods is supported only to allow backwards compatibility, but it is strongly
@@ -310,14 +294,19 @@ import java.io.InputStream;
  * @implNote
  * Within the last step, if Glassfish AS environment detected, its specific service loader is used to find factory class.
  *
- * @author <ul><li>Ryan Shoemaker, Sun Microsystems, Inc.</li><li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li><li>Joe Fialli, Sun Microsystems, Inc.</li></ul>
+ * @author <ul><li>Ryan Shoemaker, Sun Microsystems, Inc.</li>
+ *             <li>Kohsuke Kawaguchi, Sun Microsystems, Inc.</li>
+ *             <li>Joe Fialli, Sun Microsystems, Inc.</li></ul>
+ *
  * @see Marshaller
  * @see Unmarshaller
- * @see <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-7.html#jls-7.4.1">S 7.4.1 "Named Packages" in Java Language Specification</a>
+ * @see <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-7.html#jls-7.4.1">S 7.4.1 "Named Packages"
+ *      in Java Language Specification</a>
+ *
  * @since 1.6, JAXB 1.0
  */
 public abstract class JAXBContext {
-    
+
     /**
      * The name of the property that contains the name of the class capable
      * of creating new <tt>JAXBContext</tt> objects.
@@ -327,7 +316,7 @@ public abstract class JAXBContext {
     protected JAXBContext() {
     }
 
-    
+
     /**
      * <p>
      * Create a new instance of a <tt>JAXBContext</tt> class.
@@ -346,33 +335,33 @@ public abstract class JAXBContext {
      *   <li>mixing schema derived packages from different providers on the same contextPath</li>
      * </ol>
      */
-    public static JAXBContext newInstance( String contextPath ) 
+    public static JAXBContext newInstance( String contextPath )
         throws JAXBException {
-            
+
         //return newInstance( contextPath, JAXBContext.class.getClassLoader() );
         return newInstance( contextPath, getContextClassLoader());
     }
-    
+
     /**
      * <p>
      * Create a new instance of a <tt>JAXBContext</tt> class.
      *
      * <p>
-     * The client application must supply a context path which is a list of 
+     * The client application must supply a context path which is a list of
      * colon (':', \u005Cu003A) separated java package names that contain
-     * schema-derived classes and/or fully qualified JAXB-annotated classes. 
-     * Schema-derived 
-     * code is registered with the JAXBContext by the 
-     * ObjectFactory.class generated per package. 
-     * Alternatively than being listed in the context path, programmer 
-     * annotated JAXB mapped classes can be listed in a 
-     * <tt>jaxb.index</tt> resource file, format described below. 
-     * Note that a java package can contain both schema-derived classes and 
-     * user annotated JAXB classes. Additionally, the java package may 
-     * contain JAXB package annotations  that must be processed. (see JLS, 
+     * schema-derived classes and/or fully qualified JAXB-annotated classes.
+     * Schema-derived
+     * code is registered with the JAXBContext by the
+     * ObjectFactory.class generated per package.
+     * Alternatively than being listed in the context path, programmer
+     * annotated JAXB mapped classes can be listed in a
+     * <tt>jaxb.index</tt> resource file, format described below.
+     * Note that a java package can contain both schema-derived classes and
+     * user annotated JAXB classes. Additionally, the java package may
+     * contain JAXB package annotations  that must be processed. (see JLS,
      * Section 7.4.1 "Named Packages").
      * </p>
-     * 
+     *
      * <p>
      * Every package listed on the contextPath must meet <b>one or both</b> of the
      * following conditions otherwise a <tt>JAXBException</tt> will be thrown:
@@ -385,19 +374,19 @@ public abstract class JAXBContext {
      * <p>
      * <b>Format for jaxb.index</b>
      * <p>
-     * The file contains a newline-separated list of class names. 
-     * Space and tab characters, as well as blank 
-     * lines, are ignored. The comment character 
-     * is '#' (0x23); on each line all characters following the first comment 
-     * character are ignored. The file must be encoded in UTF-8. Classes that 
+     * The file contains a newline-separated list of class names.
+     * Space and tab characters, as well as blank
+     * lines, are ignored. The comment character
+     * is '#' (0x23); on each line all characters following the first comment
+     * character are ignored. The file must be encoded in UTF-8. Classes that
      * are reachable, as defined in {@link #newInstance(Class...)}, from the
-     * listed classes are also registered with JAXBContext. 
+     * listed classes are also registered with JAXBContext.
      * <p>
      * Constraints on class name occuring in a <tt>jaxb.index</tt> file are:
      * <ul>
      *   <li>Must not end with ".class".</li>
-     *   <li>Class names are resolved relative to package containing 
-     *       <tt>jaxb.index</tt> file. Only classes occuring directly in package 
+     *   <li>Class names are resolved relative to package containing
+     *       <tt>jaxb.index</tt> file. Only classes occuring directly in package
      *       containing <tt>jaxb.index</tt> file are allowed.</li>
      *   <li>Fully qualified class names are not allowed.
      *       A qualified class name,relative to current package,
@@ -405,18 +394,18 @@ public abstract class JAXBContext {
      * </ul>
      *
      * <p>
-     * To maintain compatibility with JAXB 1.0 schema to java 
+     * To maintain compatibility with JAXB 1.0 schema to java
      * interface/implementation binding, enabled by schema customization
      * <tt>{@literal <jaxb:globalBindings valueClass="false">}</tt>,
      * the JAXB provider will ensure that each package on the context path
-     * has a <tt>jaxb.properties</tt> file which contains a value for the 
+     * has a <tt>jaxb.properties</tt> file which contains a value for the
      * <tt>javax.xml.bind.context.factory</tt> property and that all values
      * resolve to the same provider.  This requirement does not apply to
      * JAXB annotated classes.
      *
      * <p>
-     * If there are any global XML element name collisions across the various 
-     * packages listed on the <tt>contextPath</tt>, a <tt>JAXBException</tt> 
+     * If there are any global XML element name collisions across the various
+     * packages listed on the <tt>contextPath</tt>, a <tt>JAXBException</tt>
      * will be thrown.
      *
      * <p>
@@ -427,7 +416,7 @@ public abstract class JAXBContext {
      * <p>
      * The steps involved in discovering the JAXB implementation is discussed in the class javadoc.
      *
-     * @param contextPath list of java package names that contain schema 
+     * @param contextPath list of java package names that contain schema
      *                    derived class and/or java to schema (JAXB-annotated)
      *                    mapped classes
      * @param classLoader
@@ -480,8 +469,9 @@ public abstract class JAXBContext {
      * </ol>
      * @since 1.6, JAXB 2.0
      */
-    public static JAXBContext newInstance( String contextPath, ClassLoader classLoader, Map<String,?>  properties  )
-        throws JAXBException {
+    public static JAXBContext newInstance( String contextPath,
+                                           ClassLoader classLoader,
+                                           Map<String,?>  properties  ) throws JAXBException {
 
         return ContextFinder.find(
                         /* The default property name according to the JAXB spec */
@@ -580,8 +570,8 @@ public abstract class JAXBContext {
      *
      * Not only the new context will recognize all the classes specified,
      * but it will also recognize any classes that are directly/indirectly
-     * referenced statically from the specified classes. Subclasses of 
-     * referenced classes nor <tt>@XmlTransient</tt> referenced classes 
+     * referenced statically from the specified classes. Subclasses of
+     * referenced classes nor <tt>@XmlTransient</tt> referenced classes
      * are not registered with JAXBContext.
      *
      * For example, in the following Java code, if you do
@@ -602,7 +592,7 @@ public abstract class JAXBContext {
      *
      * <p>
      * Note that for each java package registered with JAXBContext,
-     * when the optional package annotations exist, they must be processed. 
+     * when the optional package annotations exist, they must be processed.
      * (see JLS, Section 7.4.1 "Named Packages").
      *
      * <p>
@@ -704,22 +694,22 @@ public abstract class JAXBContext {
      *
      * @throws JAXBException if an error was encountered while creating the
      *                       <tt>Unmarshaller</tt> object
-     */    
+     */
     public abstract Unmarshaller createUnmarshaller() throws JAXBException;
-    
-    
-    /** 
-     * Create a <tt>Marshaller</tt> object that can be used to convert a 
+
+
+    /**
+     * Create a <tt>Marshaller</tt> object that can be used to convert a
      * java content tree into XML data.
      *
      * @return a <tt>Marshaller</tt> object
      *
      * @throws JAXBException if an error was encountered while creating the
      *                       <tt>Marshaller</tt> object
-     */    
+     */
     public abstract Marshaller createMarshaller() throws JAXBException;
-    
-    
+
+
     /**
      * {@link Validator} has been made optional and deprecated in JAXB 2.0.  Please
      * refer to the javadoc for {@link Validator} for more detail.
@@ -732,7 +722,7 @@ public abstract class JAXBContext {
      * @throws JAXBException if an error was encountered while creating the
      *                       <tt>Validator</tt> object
      * @deprecated since JAXB2.0
-     */    
+     */
     public abstract Validator createValidator() throws JAXBException;
 
     /**
@@ -744,7 +734,7 @@ public abstract class JAXBContext {
      * @return always a new valid <tt>Binder</tt> object.
      *
      * @throws UnsupportedOperationException
-     *      if DOM API corresponding to <tt>domType</tt> is not supported by 
+     *      if DOM API corresponding to <tt>domType</tt> is not supported by
      *      the implementation.
      *
      * @since 1.6, JAXB 2.0
@@ -776,7 +766,7 @@ public abstract class JAXBContext {
      * @throws UnsupportedOperationException
      *      Calling this method on JAXB 1.0 implementations will throw
      *      an UnsupportedOperationException.
-     *  
+     *
      * @since 1.6, JAXB 2.0
      */
     public JAXBIntrospector createJAXBIntrospector() {
@@ -806,7 +796,7 @@ public abstract class JAXBContext {
         // abstract
         throw new UnsupportedOperationException();
     }
-    
+
     private static ClassLoader getContextClassLoader() {
         if (System.getSecurityManager() == null) {
             return Thread.currentThread().getContextClassLoader();
@@ -819,5 +809,5 @@ public abstract class JAXBContext {
                     });
         }
     }
-    
+
 }

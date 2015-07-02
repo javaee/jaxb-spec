@@ -191,13 +191,13 @@ final class DatatypeConverterImpl implements DatatypeConverterInterface {
     public static float _parseFloat(CharSequence _val) {
         String s = WhiteSpaceProcessor.trim(_val).toString();
         /* Incompatibilities of XML Schema's float "xfloat" and Java's float "jfloat"
-        
+
          * jfloat.valueOf ignores leading and trailing whitespaces,
         whereas this is not allowed in xfloat.
          * jfloat.valueOf allows "float type suffix" (f, F) to be
         appended after float literal (e.g., 1.52e-2f), whereare
         this is not the case of xfloat.
-        
+
         gray zone
         ---------
          * jfloat allows ".523". And there is no clear statement that mentions
