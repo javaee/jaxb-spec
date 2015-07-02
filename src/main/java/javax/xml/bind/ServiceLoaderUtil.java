@@ -40,15 +40,9 @@
 
 package javax.xml.bind;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.security.AccessController;
-import java.security.PrivilegedAction;
 import java.util.Iterator;
-import java.util.Properties;
 import java.util.ServiceLoader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -65,12 +59,17 @@ class ServiceLoaderUtil {
     private static final String OSGI_SERVICE_LOADER_CLASS_NAME = "org.glassfish.hk2.osgiresourcelocator.ServiceLoader";
     private static final String OSGI_SERVICE_LOADER_METHOD_NAME = "lookupProviderClasses";
 
-    static <P, T extends Exception> P firstByServiceLoader(Class<P> spiClass, Logger logger, ExceptionHandler<T> handler) throws T {
+    static <P, T extends Exception> P firstByServiceLoader(Class<P> spiClass,
+                                                           Logger logger,
+                                                           ExceptionHandler<T> handler) throws T {
         // service discovery
         try {
             ServiceLoader<P> serviceLoader = ServiceLoader.load(spiClass);
+
             for (P impl : serviceLoader) {
-                logger.fine("ServiceProvider loading Facility used; returning object [" + impl.getClass().getName() + "]");
+                logger.fine("ServiceProvider loading Facility used; returning object [" +
+                        impl.getClass().getName() + "]");
+
                 return impl;
             }
         } catch (Throwable t) {
@@ -79,17 +78,8 @@ class ServiceLoaderUtil {
         return null;
     }
 
-    static boolean isOsgi(Logger logger) {
-        try {
-            Class.forName(OSGI_SERVICE_LOADER_CLASS_NAME);
-            return true;
-        } catch (ClassNotFoundException ignored) {
-            logger.log(Level.FINE, "OSGi classes not found, OSGi not available.", ignored);
-        }
-        return false;
-    }
-
     static Object lookupUsingOSGiServiceLoader(String factoryId, Logger logger) {
+
         try {
             // Use reflection to avoid having any dependendcy on ServiceLoader class
             Class serviceClass = Class.forName(factoryId);
@@ -98,37 +88,20 @@ class ServiceLoaderUtil {
             Iterator iter = ((Iterable) m.invoke(null, serviceClass)).iterator();
             if (iter.hasNext()) {
                 Object next = iter.next();
-                logger.fine("Found implementation using OSGi facility; returning object [" + next.getClass().getName() + "].");
+                logger.fine("Found implementation using OSGi facility; returning object [" +
+                        next.getClass().getName() + "].");
                 return next;
             } else {
                 return null;
             }
-        } catch (IllegalAccessException | InvocationTargetException | ClassNotFoundException | NoSuchMethodException ignored) {
+        } catch (IllegalAccessException |
+                InvocationTargetException |
+                ClassNotFoundException |
+                NoSuchMethodException ignored) {
+
             logger.log(Level.FINE, "Unable to find from OSGi: [" + factoryId + "]", ignored);
             return null;
         }
-    }
-
-    static String propertyFileLookup(final String configFullPath, final String factoryId) throws IOException {
-        File f = new File(configFullPath);
-        String factoryClassName = null;
-        if (f.exists()) {
-            Properties props = new Properties();
-            FileInputStream stream = null;
-            try {
-                stream = new FileInputStream(f);
-                props.load(stream);
-                factoryClassName = props.getProperty(factoryId);
-            } finally {
-                if (stream != null) {
-                    try {
-                        stream.close();
-                    } catch (IOException ignored) {
-                    }
-                }
-            }
-        }
-        return factoryClassName;
     }
 
     static void checkPackageAccess(String className) {
@@ -150,18 +123,12 @@ class ServiceLoaderUtil {
         }
     }
 
-    /**
-     * Returns instance of required class. It checks package access (security) unless it is defaultClassname. It means if you
-     * are trying to instantiate default implementation (fallback), pass the class name to both first and second parameter.
-     *
-     * @param className          class to be instantiated
-     * @param isDefaultClassname says whether default implementation class
-     * @param handler            exception handler - necessary for wrapping exceptions and logging
-     * @param <T>                Type of exception being thrown (necessary to distinguish between Runtime and checked exceptions)
-     * @return instantiated object or throws Runtime/checked exception, depending on ExceptionHandler's type
-     * @throws T
-     */
-    static <T extends Exception> Object newInstance(String className, String defaultImplClassName, final ExceptionHandler<T> handler) throws T {
+    // Returns instance of required class. It checks package access (security)
+    // unless it is defaultClassname. It means if you are trying to instantiate
+    // default implementation (fallback), pass the class name to both first and second parameter.
+    static <T extends Exception> Object newInstance(String className,
+                                                    String defaultImplClassName,
+                                                    final ExceptionHandler<T> handler) throws T {
         try {
             return safeLoadClass(className, defaultImplClassName, contextClassLoader(handler)).newInstance();
         } catch (ClassNotFoundException x) {
@@ -171,7 +138,10 @@ class ServiceLoaderUtil {
         }
     }
 
-    static Class safeLoadClass(String className, String defaultImplClassName, ClassLoader classLoader) throws ClassNotFoundException {
+    static Class safeLoadClass(String className,
+                               String defaultImplClassName,
+                               ClassLoader classLoader) throws ClassNotFoundException {
+
         try {
             checkPackageAccess(className);
         } catch (SecurityException se) {
@@ -183,16 +153,6 @@ class ServiceLoaderUtil {
             throw se;
         }
         return nullSafeLoadClass(className, classLoader);
-    }
-
-    static String getJavaHomeLibConfigPath(String filename) {
-        String javah = AccessController.doPrivileged(new PrivilegedAction<String>() {
-            @Override
-            public String run() {
-                return System.getProperty("java.home");
-            }
-        });
-        return javah + File.separator + "lib" + File.separator + filename;
     }
 
     static ClassLoader contextClassLoader(ExceptionHandler exceptionHandler) throws Exception {
