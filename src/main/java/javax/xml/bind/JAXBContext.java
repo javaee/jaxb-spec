@@ -332,7 +332,7 @@ public abstract class JAXBContext {
      * </ol>
      */
     public static JAXBContext newInstance( String contextPath )
-            throws JAXBException {
+        throws JAXBException {
 
         //return newInstance( contextPath, JAXBContext.class.getClassLoader() );
         return newInstance( contextPath, getContextClassLoader());
@@ -469,14 +469,14 @@ public abstract class JAXBContext {
 
         return ContextFinder.find(
                         /* The default property name according to the JAXB spec */
-                JAXB_CONTEXT_FACTORY,
+                        JAXB_CONTEXT_FACTORY,
 
                         /* the context path supplied by the client app */
-                contextPath,
+                        contextPath,
 
                         /* class loader to be used */
-                classLoader,
-                properties );
+                        classLoader,
+                        properties );
     }
 
 // TODO: resurrect this once we introduce external annotations
@@ -616,7 +616,7 @@ public abstract class JAXBContext {
      * @since 1.6, JAXB 2.0
      */
     public static JAXBContext newInstance( Class<?> ... classesToBeBound )
-            throws JAXBException {
+        throws JAXBException {
 
         return newInstance(classesToBeBound,Collections.<String,Object>emptyMap());
     }
@@ -661,10 +661,10 @@ public abstract class JAXBContext {
      * @since 1.6, JAXB 2.0
      */
     public static JAXBContext newInstance( Class<?>[] classesToBeBound, Map<String,?> properties )
-            throws JAXBException {
+        throws JAXBException {
 
         if (classesToBeBound == null) {
-            throw new IllegalArgumentException();
+                throw new IllegalArgumentException();
         }
 
         // but it is an error to have nulls in it.
