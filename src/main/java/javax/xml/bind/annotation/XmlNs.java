@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2004-2013 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2004-2015 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -49,13 +49,13 @@ import java.lang.annotation.Target;
  * Associates a namespace prefix with a XML namespace URI.
  *
  * <p><b>Usage</b></p>
- * <p><tt>@XmlNs</tt> annotation is intended for use from other 
+ * <p>{@code @XmlNs} annotation is intended for use from other
  * program annotations.
  *
  * <p>See "Package Specification" in javax.xml.bind.package javadoc for
  * additional common information.</p>
  *
- * <p><b>Example:</b>See <tt>XmlSchema</tt> annotation type for an example.
+ * <p><b>Example:</b>See {@code XmlSchema} annotation type for an example.
  * @author Sekhar Vajjhala, Sun Microsystems, Inc.
  * @since 1.6, JAXB 2.0
  */

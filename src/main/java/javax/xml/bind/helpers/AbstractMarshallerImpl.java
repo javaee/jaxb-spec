@@ -63,7 +63,7 @@ import java.io.IOException;
 // import java.nio.charset.UnsupportedCharsetException;
 
 /**
- * Partial default <tt>Marshaller</tt> implementation.
+ * Partial default {@code Marshaller} implementation.
  * 
  * <p>
  * This class provides a partial default implementation for the

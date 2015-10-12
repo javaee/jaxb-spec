@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2004-2013 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2004-2015 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -54,7 +54,7 @@ import java.lang.annotation.Target;
  *
  * <p> <b>Usage</b> </p>
  * <p>
- * The <tt>@XmlEnum</tt> annotation can be used with the
+ * The {@code @XmlEnum} annotation can be used with the
  * following program elements: 
  * <ul> 
  *   <li>enum type</li>
@@ -71,9 +71,9 @@ import java.lang.annotation.Target;
  *
  * <p>An enum type is mapped to a schema simple type with enumeration
  * facets. The schema type is derived from the Java type to which 
- * <tt>@XmlEnum.value()</tt>. Each enum constant <tt>@XmlEnumValue</tt>
+ * {@code @XmlEnum.value()}. Each enum constant {@code @XmlEnumValue}
  * must have a valid lexical representation for the type 
- * <tt>@XmlEnum.value()</tt> .
+ * {@code @XmlEnum.value()}.
  *
  * <p><b>Examples:</b> See examples in {@link XmlEnumValue}
  *

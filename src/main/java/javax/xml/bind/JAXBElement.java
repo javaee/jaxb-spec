@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2004-2013 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2004-2015 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -50,25 +50,25 @@ import java.io.Serializable;
  * declaration within a schema and the element instance value within an xml document
  * with the following properties
  * <ul>
- *   <li>element's xml tag <b><tt>name</tt></b></li>
- *   <li><b><tt>value</tt></b> represents the element instance's atttribute(s) and content model</li>
- *   <li>element declaration's <b><tt>declaredType</tt></b> (<tt>xs:element @type</tt> attribute)</li>
- *   <li><b><tt>scope</tt></b> of element declaration</li>
- *   <li>boolean <b><tt>nil</tt></b> property. (element instance's <tt><b>xsi:nil</b></tt> attribute)</li>
+ *   <li>element's xml tag <b>{@code name}</b></li>
+ *   <li><b>{@code value}</b> represents the element instance's atttribute(s) and content model</li>
+ *   <li>element declaration's <b>{@code declaredType}</b> ({@code xs:element @type} attribute)</li>
+ *   <li><b>{@code scope}</b> of element declaration</li>
+ *   <li>boolean <b>{@code nil}</b> property. (element instance's <b>{@code xsi:nil}</b> attribute)</li>
  * </ul>
  * 
- * <p>The <tt>declaredType</tt> and <tt>scope</tt> property are the
+ * <p>The {@code declaredType} and {@code scope} property are the
  * JAXB class binding for the xml type definition.
  * </p>
  * 
- * <p><b><tt>Scope</tt></b> is either {@link GlobalScope} or the Java class representing the 
+ * <p><b>{@code Scope}</b> is either {@link GlobalScope} or the Java class representing the
  * complex type definition containing the schema element declaration.
  * </p>
  * 
- * <p>There is a property constraint that if <b><tt>value</tt></b> is <tt>null</tt>, 
- * then <tt>nil</tt> must be <tt>true</tt>. The converse is not true to enable 
- * representing a nil element with attribute(s). If <tt>nil</tt> is true, it is possible 
- * that <tt>value</tt> is non-null so it can hold the value of the attributes 
+ * <p>There is a property constraint that if <b>{@code value}</b> is {@code null},
+ * then {@code nil} must be {@code true}. The converse is not true to enable
+ * representing a nil element with attribute(s). If {@code nil} is true, it is possible
+ * that {@code value} is non-null so it can hold the value of the attributes
  * associated with a nil element.
  * </p>
  * 
@@ -112,7 +112,7 @@ public class JAXBElement<T> implements Serializable {
      * @param declaredType  Java binding of xml element declaration's type
      * @param scope
      *      Java binding of scope of xml element declaration.
-     *      Passing null is the same as passing <tt>GlobalScope.class</tt>
+     *      Passing null is the same as passing {@code GlobalScope.class}
      * @param value
      *      Java instance representing xml element's value.
      * @see #getScope()
@@ -134,7 +134,7 @@ public class JAXBElement<T> implements Serializable {
     /**
      * Construct an xml element instance.
      *
-     * This is just a convenience method for <tt>new JAXBElement(name,declaredType,GlobalScope.class,value)</tt>
+     * This is just a convenience method for {@code new JAXBElement(name,declaredType,GlobalScope.class,value)}
      */
     public JAXBElement(QName name, Class<T> declaredType, T value ) {
         this(name,declaredType,GlobalScope.class,value);
@@ -157,7 +157,7 @@ public class JAXBElement<T> implements Serializable {
     /**
      * <p>Set the content model and attributes of this xml element.</p>
      *
-     * <p>When this property is set to <tt>null</tt>, <tt>isNil()</tt> must by <tt>true</tt>.
+     * <p>When this property is set to {@code null}, {@code isNil()} must by {@code true}.
      *    Details of constraint are described at {@link #isNil()}.</p>
      *
      * @see #isTypeSubstituted()
@@ -170,7 +170,7 @@ public class JAXBElement<T> implements Serializable {
      * <p>Return the content model and attribute values for this element.</p>
      * 
      * <p>See {@link #isNil()} for a description of a property constraint when
-     * this value is <tt>null</tt></p>
+     * this value is {@code null}</p>
      */
     public T getValue() {
         return value;
@@ -180,18 +180,18 @@ public class JAXBElement<T> implements Serializable {
      * Returns scope of xml element declaration.
      *
      * @see #isGlobalScope()
-     * @return <tt>GlobalScope.class</tt> if this element is of global scope.
+     * @return {@code GlobalScope.class} if this element is of global scope.
      */
     public Class getScope() {
         return scope;
     }
     
     /**
-     * <p>Returns <tt>true</tt> iff this element instance content model 
+     * <p>Returns {@code true} iff this element instance content model
      * is nil.</p>
      *
-     * <p>This property always returns <tt>true</tt> when {@link #getValue()} is null.
-     * Note that the converse is not true, when this property is <tt>true</tt>, 
+     * <p>This property always returns {@code true} when {@link #getValue()} is null.
+     * Note that the converse is not true, when this property is {@code true},
      * {@link #getValue()} can contain a non-null value for attribute(s). It is
      * valid for a nil xml element to have attribute(s).</p>
      */

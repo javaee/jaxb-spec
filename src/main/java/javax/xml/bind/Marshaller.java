@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2003-2014 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2003-2015 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -48,7 +48,7 @@ import java.io.File;
 
 /**
  * <p>
- * The <tt>Marshaller</tt> class is responsible for governing the process
+ * The {@code Marshaller} class is responsible for governing the process
  * of serializing Java content trees back into XML data.  It provides the basic
  * marshalling methods:
  *
@@ -167,16 +167,16 @@ import java.io.File;
  * <a name="elementMarshalling"></a>
  * <b>Marshalling content tree rooted by a JAXB element</b><br>
  * <blockquote>
- * The first parameter of the overloaded 
- * <tt>Marshaller.marshal(java.lang.Object, ...)</tt> methods must be a 
+ * The first parameter of the overloaded
+ * {@code Marshaller.marshal(java.lang.Object, ...)} methods must be a
  * JAXB element as computed by 
- * {@link JAXBIntrospector#isElement(java.lang.Object)}; 
- * otherwise, a <tt>Marshaller.marshal</tt> method must throw a 
+ * {@link JAXBIntrospector#isElement(java.lang.Object)};
+ * otherwise, a {@code Marshaller.marshal} method must throw a
  * {@link MarshalException}. There exist two mechanisms 
  * to enable marshalling an instance that is not a JAXB element.
  * One method is to wrap the instance as a value of a {@link JAXBElement}, 
- * and pass the wrapper element as the first parameter to 
- * a <tt>Marshaller.marshal</tt> method. For java to schema binding, it 
+ * and pass the wrapper element as the first parameter to
+ * a {@code Marshaller.marshal} method. For java to schema binding, it
  * is also possible to simply annotate the instance's class with 
  * &#64;{@link XmlRootElement}.
  * </blockquote>
@@ -185,7 +185,7 @@ import java.io.File;
  * <b>Encoding</b><br>
  * <blockquote>
  * By default, the Marshaller will use UTF-8 encoding when generating XML data
- * to a <tt>java.io.OutputStream</tt>, or a <tt>java.io.Writer</tt>.  Use the 
+ * to a {@code java.io.OutputStream}, or a {@code java.io.Writer}.  Use the
  * {@link #setProperty(String,Object) setProperty} API to change the output 
  * encoding used during these marshal operations.  Client applications are
  * expected to supply a valid character encoding name as defined in the
@@ -203,7 +203,7 @@ import java.io.File;
  * order to marshal it back into XML data.  Different JAXB Providers will 
  * support marshalling invalid Java content trees at varying levels, however
  * all JAXB Providers must be able to marshal a valid content tree back to 
- * XML data.  A JAXB Provider must throw a <tt>MarshalException</tt> when it
+ * XML data.  A JAXB Provider must throw a {@code MarshalException} when it
  * is unable to complete the marshal operation due to invalid content.  Some
  * JAXB Providers will fully allow marshalling invalid content, others will fail
  * on the first validation error.
@@ -228,18 +228,18 @@ import java.io.File;
  * All JAXB Providers are required to support the following set of properties.
  * Some providers may support additional properties.
  * <dl>
- *   <dt><tt>jaxb.encoding</tt> - value must be a java.lang.String</dt>
+ *   <dt>{@code jaxb.encoding} - value must be a java.lang.String</dt>
  *   <dd>The output encoding to use when marshalling the XML data.  The
  * 		 Marshaller will use "UTF-8" by default if this property is not
  *  	 specified.</dd>
- *   <dt><tt>jaxb.formatted.output</tt> - value must be a java.lang.Boolean</dt>
+ *   <dt>{@code jaxb.formatted.output} - value must be a java.lang.Boolean</dt>
  *   <dd>This property controls whether or not the Marshaller will format
  * 	 the resulting XML data with line breaks and indentation.  A
  *       true value for this property indicates human readable indented 
  *       xml data, while a false value indicates unformatted xml data.
  *       The Marshaller will default to false (unformatted) if this 
  *       property is not specified.</dd>
- *   <dt><tt>jaxb.schemaLocation</tt> - value must be a java.lang.String</dt>
+ *   <dt>{@code jaxb.schemaLocation} - value must be a java.lang.String</dt>
  *   <dd>This property allows the client application to specify an
  *       xsi:schemaLocation attribute in the generated XML data.  The format of 
  *       the schemaLocation attribute value is discussed in an easy to 
@@ -248,7 +248,7 @@ import java.io.File;
  *       of the W3C XML Schema Part 0: Primer</a> and specified in 
  *       <a href="http://www.w3.org/TR/xmlschema-1/#Instance_Document_Constructions">
  *       Section 2.6 of the W3C XML Schema Part 1: Structures</a>.</dd>
- *   <dt><tt>jaxb.noNamespaceSchemaLocation</tt> - value must be a java.lang.String</dt>
+ *   <dt>{@code jaxb.noNamespaceSchemaLocation} - value must be a java.lang.String</dt>
  *   <dd>This property allows the client application to specify an
  *       xsi:noNamespaceSchemaLocation attribute in the generated XML 
  *       data.  The format of the schemaLocation attribute value is discussed in 
@@ -257,10 +257,10 @@ import java.io.File;
  *       of the W3C XML Schema Part 0: Primer</a> and specified in 
  *       <a href="http://www.w3.org/TR/xmlschema-1/#Instance_Document_Constructions">
  *       Section 2.6 of the W3C XML Schema Part 1: Structures</a>.</dd>
- *   <dt><tt>jaxb.fragment</tt> - value must be a java.lang.Boolean</dt>
+ *   <dt>{@code jaxb.fragment} - value must be a java.lang.Boolean</dt>
  *   <dd>This property determines whether or not document level events will be
  *       generated by the Marshaller.  If the property is not specified, the 
- *       default is <tt>false</tt>. This property has different implications depending
+ *       default is {@code false}. This property has different implications depending
  *       on which marshal api you are using - when this property is set to true:<br>
  *       <ul>
  *         <li>{@link #marshal(Object,org.xml.sax.ContentHandler) marshal(Object,ContentHandler)} - the Marshaller won't
@@ -367,15 +367,15 @@ public interface Marshaller {
         "jaxb.fragment";
 
     /**
-     * Marshal the content tree rooted at <tt>jaxbElement</tt> into the specified 
-     * <tt>javax.xml.transform.Result</tt>.
+     * Marshal the content tree rooted at {@code jaxbElement} into the specified
+     * {@code javax.xml.transform.Result}.
      * 
      * <p>
      * All JAXB Providers must at least support
      * {@link javax.xml.transform.dom.DOMResult},
      * {@link javax.xml.transform.sax.SAXResult}, and
      * {@link javax.xml.transform.stream.StreamResult}. It can 
-     * support other derived classes of <tt>Result</tt> as well.
+     * support other derived classes of {@code Result} as well.
      * 
      * @param jaxbElement
      *      The root of content tree to be marshalled. 
@@ -386,9 +386,9 @@ public interface Marshaller {
      *      If any unexpected problem occurs during the marshalling.
      * @throws MarshalException
      *      If the {@link ValidationEventHandler ValidationEventHandler}
-     *      returns false from its <tt>handleEvent</tt> method or the 
-     *      <tt>Marshaller</tt> is unable to marshal <tt>obj</tt> (or any 
-     *      object reachable from <tt>obj</tt>).  See <a href="#elementMarshalling">
+     *      returns false from its {@code handleEvent} method or the
+     *      {@code Marshaller} is unable to marshal {@code jaxbElement} (or any
+     *      object reachable from {@code jaxbElement}).  See <a href="#elementMarshalling">
      *      Marshalling a JAXB element</a>.
      * @throws IllegalArgumentException
      *      If any of the method parameters are null
@@ -397,7 +397,7 @@ public interface Marshaller {
         throws JAXBException;
 
     /**
-     * Marshal the content tree rooted at <tt>jaxbElement</tt> into an output stream.
+     * Marshal the content tree rooted at {@code jaxbElement} into an output stream.
      * 
      * @param jaxbElement
      *      The root of content tree to be marshalled. 
@@ -408,9 +408,9 @@ public interface Marshaller {
      *      If any unexpected problem occurs during the marshalling.
      * @throws MarshalException
      *      If the {@link ValidationEventHandler ValidationEventHandler}
-     *      returns false from its <tt>handleEvent</tt> method or the 
-     *      <tt>Marshaller</tt> is unable to marshal <tt>obj</tt> (or any 
-     *      object reachable from <tt>obj</tt>).  See <a href="#elementMarshalling">
+     *      returns false from its {@code handleEvent} method or the
+     *      {@code Marshaller} is unable to marshal {@code jaxbElement} (or any
+     *      object reachable from {@code jaxbElement}).  See <a href="#elementMarshalling">
      *      Marshalling a JAXB element</a>.
      * @throws IllegalArgumentException
      *      If any of the method parameters are null
@@ -419,7 +419,7 @@ public interface Marshaller {
         throws JAXBException;
 
     /**
-     * Marshal the content tree rooted at <tt>jaxbElement</tt> into a file.
+     * Marshal the content tree rooted at {@code jaxbElement} into a file.
      *
      * @param jaxbElement
      *      The root of content tree to be marshalled.
@@ -430,9 +430,9 @@ public interface Marshaller {
      *      If any unexpected problem occurs during the marshalling.
      * @throws MarshalException
      *      If the {@link ValidationEventHandler ValidationEventHandler}
-     *      returns false from its <tt>handleEvent</tt> method or the
-     *      <tt>Marshaller</tt> is unable to marshal <tt>obj</tt> (or any
-     *      object reachable from <tt>obj</tt>).  See <a href="#elementMarshalling">
+     *      returns false from its {@code handleEvent} method or the
+     *      {@code Marshaller} is unable to marshal {@code jaxbElement} (or any
+     *      object reachable from {@code jaxbElement}).  See <a href="#elementMarshalling">
      *      Marshalling a JAXB element</a>.
      * @throws IllegalArgumentException
      *      If any of the method parameters are null
@@ -442,7 +442,7 @@ public interface Marshaller {
         throws JAXBException;
 
     /**
-     * Marshal the content tree rooted at <tt>jaxbElement</tt> into a Writer.
+     * Marshal the content tree rooted at {@code jaxbElement} into a Writer.
      * 
      * @param jaxbElement
      *      The root of content tree to be marshalled. 
@@ -453,9 +453,9 @@ public interface Marshaller {
      *      If any unexpected problem occurs during the marshalling.
      * @throws MarshalException
      *      If the {@link ValidationEventHandler ValidationEventHandler}
-     *      returns false from its <tt>handleEvent</tt> method or the 
-     *      <tt>Marshaller</tt> is unable to marshal <tt>obj</tt> (or any 
-     *      object reachable from <tt>obj</tt>).  See <a href="#elementMarshalling">
+     *      returns false from its {@code handleEvent} method or the
+     *      {@code Marshaller} is unable to marshal {@code jaxbElement} (or any
+     *      object reachable from {@code jaxbElement}).  See <a href="#elementMarshalling">
      *      Marshalling a JAXB element</a>.
      * @throws IllegalArgumentException
      *      If any of the method parameters are null
@@ -464,7 +464,7 @@ public interface Marshaller {
         throws JAXBException;
 
     /**
-     * Marshal the content tree rooted at <tt>jaxbElement</tt> into SAX2 events.
+     * Marshal the content tree rooted at {@code jaxbElement} into SAX2 events.
      * 
      * @param jaxbElement
      *      The root of content tree to be marshalled. 
@@ -475,9 +475,9 @@ public interface Marshaller {
      *      If any unexpected problem occurs during the marshalling.
      * @throws MarshalException
      *      If the {@link ValidationEventHandler ValidationEventHandler}
-     *      returns false from its <tt>handleEvent</tt> method or the 
-     *      <tt>Marshaller</tt> is unable to marshal <tt>obj</tt> (or any 
-     *      object reachable from <tt>obj</tt>).  See <a href="#elementMarshalling">
+     *      returns false from its {@code handleEvent} method or the
+     *      {@code Marshaller} is unable to marshal {@code jaxbElement} (or any
+     *      object reachable from {@code jaxbElement}).  See <a href="#elementMarshalling">
      *      Marshalling a JAXB element</a>.
      * @throws IllegalArgumentException
      *      If any of the method parameters are null
@@ -486,7 +486,7 @@ public interface Marshaller {
         throws JAXBException;
 
     /**
-     * Marshal the content tree rooted at <tt>jaxbElement</tt> into a DOM tree.
+     * Marshal the content tree rooted at {@code jaxbElement} into a DOM tree.
      * 
      * @param jaxbElement
      *      The content tree to be marshalled. 
@@ -501,9 +501,9 @@ public interface Marshaller {
      *      If any unexpected problem occurs during the marshalling.
      * @throws MarshalException
      *      If the {@link ValidationEventHandler ValidationEventHandler}
-     *      returns false from its <tt>handleEvent</tt> method or the 
-     *      <tt>Marshaller</tt> is unable to marshal <tt>jaxbElement</tt> (or any 
-     *      object reachable from <tt>jaxbElement</tt>).  See <a href="#elementMarshalling">
+     *      returns false from its {@code handleEvent} method or the
+     *      {@code Marshaller} is unable to marshal {@code jaxbElement} (or any
+     *      object reachable from {@code jaxbElement}).  See <a href="#elementMarshalling">
      *      Marshalling a JAXB element</a>.
      * @throws IllegalArgumentException
      *      If any of the method parameters are null
@@ -512,7 +512,7 @@ public interface Marshaller {
         throws JAXBException;
 
     /**
-     * Marshal the content tree rooted at <tt>jaxbElement</tt> into a
+     * Marshal the content tree rooted at {@code jaxbElement} into a
      * {@link javax.xml.stream.XMLStreamWriter}.
      * 
      * @param jaxbElement
@@ -524,9 +524,9 @@ public interface Marshaller {
      *      If any unexpected problem occurs during the marshalling.
      * @throws MarshalException
      *      If the {@link ValidationEventHandler ValidationEventHandler}
-     *      returns false from its <tt>handleEvent</tt> method or the 
-     *      <tt>Marshaller</tt> is unable to marshal <tt>obj</tt> (or any 
-     *      object reachable from <tt>obj</tt>).  See <a href="#elementMarshalling">
+     *      returns false from its {@code handleEvent} method or the
+     *      {@code Marshaller} is unable to marshal {@code jaxbElement} (or any
+     *      object reachable from {@code jaxbElement}).  See <a href="#elementMarshalling">
      *      Marshalling a JAXB element</a>.
      * @throws IllegalArgumentException
      *      If any of the method parameters are null
@@ -536,7 +536,7 @@ public interface Marshaller {
         throws JAXBException;
 
     /**
-     * Marshal the content tree rooted at <tt>jaxbElement</tt> into a
+     * Marshal the content tree rooted at {@code jaxbElement} into a
      * {@link javax.xml.stream.XMLEventWriter}.
      * 
      * @param jaxbElement
@@ -548,9 +548,9 @@ public interface Marshaller {
      *      If any unexpected problem occurs during the marshalling.
      * @throws MarshalException
      *      If the {@link ValidationEventHandler ValidationEventHandler}
-     *      returns false from its <tt>handleEvent</tt> method or the 
-     *      <tt>Marshaller</tt> is unable to marshal <tt>obj</tt> (or any 
-     *      object reachable from <tt>obj</tt>).  See <a href="#elementMarshalling">
+     *      returns false from its {@code handleEvent} method or the
+     *      {@code Marshaller} is unable to marshal {@code jaxbElement} (or any
+     *      object reachable from {@code jaxbElement}).  See <a href="#elementMarshalling">
      *      Marshalling a JAXB element</a>.
      * @throws IllegalArgumentException
      *      If any of the method parameters are null
@@ -587,7 +587,7 @@ public interface Marshaller {
 
     /**
      * Set the particular property in the underlying implementation of 
-     * <tt>Marshaller</tt>.  This method can only be used to set one of
+     * {@code Marshaller}.  This method can only be used to set one of
      * the standard JAXB defined properties above or a provider specific
      * property.  Attempting to set an undefined property will result in
      * a PropertyException being thrown.  See <a href="#supportedProps">
@@ -608,7 +608,7 @@ public interface Marshaller {
 
     /**
      * Get the particular property in the underlying implementation of 
-     * <tt>Marshaller</tt>.  This method can only be used to get one of
+     * {@code Marshaller}.  This method can only be used to get one of
      * the standard JAXB defined properties above or a provider specific
      * property.  Attempting to get an undefined property will result in
      * a PropertyException being thrown.  See <a href="#supportedProps">
@@ -663,7 +663,7 @@ public interface Marshaller {
      * Associates a configured instance of {@link XmlAdapter} with this marshaller.
      *
      * <p>
-     * This is a convenience method that invokes <code>setAdapter(adapter.getClass(),adapter);</code>.
+     * This is a convenience method that invokes {@code setAdapter(adapter.getClass(),adapter);}.
      *
      * @see #setAdapter(Class,XmlAdapter)
      * @throws IllegalArgumentException
@@ -739,7 +739,7 @@ public interface Marshaller {
      * This method allows the caller to validate the marshalled XML as it's marshalled.
      *
      * <p>
-     * Initially this property is set to <tt>null</tt>.
+     * Initially this property is set to {@code null}.
      *
      * @param schema Schema object to validate marshal operations against or null to disable validation
      * @throws UnsupportedOperationException could be thrown if this method is
@@ -786,11 +786,11 @@ public interface Marshaller {
     public static abstract class Listener {
         /**
          * <p>
-         * Callback method invoked before marshalling from <tt>source</tt> to XML.
+         * Callback method invoked before marshalling from {@code source} to XML.
          * </p>
          * <p>
-         * This method is invoked just before marshalling process starts to marshal <tt>source</tt>.
-         * Note that if the class of <tt>source</tt> defines its own <tt>beforeMarshal</tt> method,
+         * This method is invoked just before marshalling process starts to marshal {@code source}.
+         * Note that if the class of {@code source} defines its own {@code beforeMarshal} method,
          * the class specific callback method is invoked just before this method is invoked.
          *
          * @param source instance of JAXB mapped class prior to marshalling from it.
@@ -800,11 +800,11 @@ public interface Marshaller {
 
         /**
          * <p>
-         * Callback method invoked after marshalling <tt>source</tt> to XML.
+         * Callback method invoked after marshalling {@code source} to XML.
          * </p>
          * <p>
-         * This method is invoked after <tt>source</tt> and all its descendants have been marshalled.
-         * Note that if the class of <tt>source</tt> defines its own <tt>afterMarshal</tt> method,
+         * This method is invoked after {@code source} and all its descendants have been marshalled.
+         * Note that if the class of {@code source} defines its own {@code afterMarshal} method,
          * the class specific callback method is invoked just before this method is invoked.
          *
          * @param source instance of JAXB mapped class after marshalling it.
@@ -819,7 +819,7 @@ public interface Marshaller {
      * 
      * <p>
      * There is only one Listener per Marshaller. Setting a Listener replaces the previous set Listener.
-     * One can unregister current Listener by setting listener to <tt>null</tt>.
+     * One can unregister current Listener by setting listener to {@code null}.
      *
      * @param listener an instance of a class that implements {@link Listener}
      * @since 1.6, JAXB 2.0
@@ -829,7 +829,8 @@ public interface Marshaller {
     /**
      * <p>Return {@link Listener} registered with this {@link Marshaller}.
      * 
-     * @return registered {@link Listener} or <code>null</code> if no Listener is registered with this Marshaller.
+     * @return registered {@link Listener} or {@code null}
+     *         if no Listener is registered with this Marshaller.
      * @since 1.6, JAXB 2.0
      */
     public Listener getListener();

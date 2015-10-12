@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2003-2013 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2003-2015 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -75,8 +75,8 @@ public interface ValidationEvent {
      * Retrieve the severity code for this warning/error. 
      *
      * <p>
-     * Must be one of <tt>ValidationError.WARNING</tt>, 
-     * <tt>ValidationError.ERROR</tt>, or <tt>ValidationError.FATAL_ERROR</tt>.
+     * Must be one of {@code ValidationError.WARNING},
+     * {@code ValidationError.ERROR}, or {@code ValidationError.FATAL_ERROR}.
      *
      * @return the severity code for this warning/error
      */
