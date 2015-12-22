@@ -109,7 +109,7 @@ import java.io.InputStream;
  * allows the merging of global elements and type definitions across a set of schemas (listed
  * in the {@code contextPath}). Since each schema in the schema set can belong
  * to distinct namespaces, the unification of schemas to an unmarshalling
- * context should be namespace independent.  This means that a client
+ * context must be namespace independent.  This means that a client
  * application is able to unmarshal XML documents that are instances of
  * any of the schemas listed in the {@code contextPath}.  For example:
  *
@@ -215,20 +215,27 @@ import java.io.InputStream;
  *
  * <h3>Discovery of JAXB implementation</h3>
  * <p>
- * When one of the {@code newInstance} methods is called, a JAXB implementation is discovered
- * by the following steps.
+ * To create an instance of {@link JAXBContext}, one of {@code JAXBContext#newInstance} methods is invoked.
+ * After JAX-B implementation is discovered, call is delegated to appropriate provider's method
+ * {@code createContext(...)} passing parameters from the original {@code JAXBContext#newInstance} call.
+ * <p>
+ * JAX-B implementation discovery happens each time {@code JAXBContext.newInstance} is invoked. If there is no user
+ * specific configuration provided, default JAX-B provider must be returned.
+ * <p>
+ * Implementation discovery consists of following steps:
  *
  * <ol>
  *
  * <li>
- * For each package/class explicitly passed in to the {@link #newInstance} method, in the order they are specified,
- * {@code jaxb.properties} file is looked up in its package, by using the associated classloader &mdash;
+ * Packages/classes explicitly passed in to the {@link #newInstance} method are processed in the order they are
+ * specified, until {@code jaxb.properties} file is looked up in its package, by using the associated classloader &mdash;
  * this is {@link Class#getClassLoader() the owner class loader} for a {@link Class} argument, and for a package
  * the specified {@link ClassLoader}.
  *
  * <p>
- * If such a file is discovered, it is {@link Properties#load(InputStream) loaded} as a property file, and
+ * If such a resource is discovered, it is {@link Properties#load(InputStream) loaded} as a property file, and
  * the value of the {@link #JAXB_CONTEXT_FACTORY} key will be assumed to be the provider factory class.
+ * If no value found, key "javax.xml.bind.context.factory" is used for backwards compatibility reasons.
  * This class is then loaded by the associated class loader discussed above.
  *
  * <p>
@@ -237,7 +244,8 @@ import java.io.InputStream;
  *
  * <li>
  * If the system property {@link #JAXB_CONTEXT_FACTORY} exists, then its value is assumed to be the provider
- * factory class. This phase of the look up enables per-JVM override of the JAXB implementation.
+ * factory class. If no such property exists, property "javax.xml.bind.context.factory" is checked too, for
+ * backwards compatibility reasons. This phase of the look up enables per-JVM override of the JAXB implementation.
  *
  * <li>
  * Provider of {@link javax.xml.bind.JAXBContextFactory} is loaded using the service-provider loading
@@ -255,20 +263,8 @@ import java.io.InputStream;
  * <li>
  * Look for resource {@code /META-INF/services/javax.xml.bind.JAXBContext} using provided class loader.
  * Methods without class loader parameter use {@code Thread.currentThread().getContextClassLoader()}.
- * If such a resource exists, its content is assumed to be the provider factory class and must supply
- * an implementation class containing the following method signatures:
+ * If such a resource exists, its content is assumed to be the provider factory class.
  *
- * <pre>
- *
- * public static JAXBContext createContext(
- *                                      String contextPath,
- *                                      ClassLoader classLoader,
- *                                      Map&lt;String,Object&gt; properties throws JAXBException
- *
- * public static JAXBContext createContext(
- *                                      Class[] classes,
- *                                      Map&lt;String,Object&gt; properties ) throws JAXBException
- * </pre>
  * This configuration method is deprecated.
  *
  * <li>
@@ -278,15 +274,43 @@ import java.io.InputStream;
  * </ol>
  *
  * <p>
- * Once the provider factory class {@link javax.xml.bind.JAXBContextFactory} is discovered, one of its methods
- * {@link javax.xml.bind.JAXBContextFactory#createContext(String, ClassLoader, java.util.Map)} or
- * {@link javax.xml.bind.JAXBContextFactory#createContext(Class[], java.util.Map)} is invoked
- * to create a {@link JAXBContext}.
+ * Once the provider factory class is discovered, context creation is delegated to one of it's
+ * {@code createContext(...)} methods.
+ *
+ * For backward compatibility reasons, there are two ways how to implement provider factory class:
+ * <ol>
+ *     <li>the class is implementation of {@link javax.xml.bind.JAXBContextFactory}. It must also implement no-arg
+ *     constructor. If discovered in other step then 3, new instance using no-arg constructor is created first.
+ *     After that, appropriate instance method is invoked on this instance.
+ *     <li>the class is not implementing interface above and then it is mandated to implement the following
+ *     static method signatures:
+ * <pre>
+ *
+ * public static JAXBContext createContext(
+ *                                      String contextPath,
+ *                                      ClassLoader classLoader,
+ *                                      Map&lt;String,Object&gt; properties ) throws JAXBException
+ *
+ * public static JAXBContext createContext(
+ *                                      Class[] classes,
+ *                                      Map&lt;String,Object&gt; properties ) throws JAXBException
+ * </pre>
+ *      In this scenario, appropriate static method is used instead of instance method. This approach is incompatible
+ *      with {@link java.util.ServiceLoader} so it can't be used with step 3.
+ *
+ * </ol>
+ * <p>
+ * There must be no difference in behavior of given method {@code createContext(...)} regardless of whether it uses
+ * approach 1 ({@link javax.xml.bind.JAXBContextFactory}) or 2 (no interface, static methods).
  *
  * @apiNote
- * <p>Service discovery method using file /META-INF/services/javax.xml.bind.JAXBContext (described in step 4)
- * and leveraging provider's static methods is supported only to allow backwards compatibility, but it is strongly
- * recommended to migrate to standard ServiceLoader mechanism (described in step 3).
+ * <p>Service discovery method using resource /META-INF/services/javax.xml.bind.JAXBContext (described in step 4)
+ * is supported only to allow backwards compatibility, it is strongly recommended to migrate to standard
+ * ServiceLoader mechanism (described in step 3). The difference here is the resource name, which doesn't match
+ * service's type name.
+ * <p>Also using providers implementing interface {@link javax.xml.bind.JAXBContextFactory} is preferred over using ones
+ * defining static methods, same as {@link #JAXB_CONTEXT_FACTORY} property is preferred over property
+ * {@code "javax.xml.bind.context.factory"}
  *
  * @implNote
  * Within the last step, if Glassfish AS environment detected, its specific service loader is used to find factory class.
@@ -323,13 +347,7 @@ public abstract class JAXBContext {
      * the context class loader of the current thread.
      *
      * @throws JAXBException if an error was encountered while creating the
-     *                       {@code JAXBContext} such as
-     * <ol>
-     *   <li>failure to locate either ObjectFactory.class or jaxb.index in the packages</li>
-     *   <li>an ambiguity among global elements contained in the contextPath</li>
-     *   <li>failure to locate a value for the context factory provider property</li>
-     *   <li>mixing schema derived packages from different providers on the same contextPath</li>
-     * </ol>
+     *                       {@code JAXBContext}. See {@link #newInstance(String, ClassLoader)} for details.
      */
     public static JAXBContext newInstance( String contextPath )
         throws JAXBException {
@@ -442,7 +460,7 @@ public abstract class JAXBContext {
      * the instantiation of {@link JAXBContext}.
      *
      * <p>
-     * The interpretation of properties is up to implementations. Implementations should
+     * The interpretation of properties is up to implementations. Implementations must
      * throw {@code JAXBException} if it finds properties that it doesn't understand.
      *
      * @param contextPath list of java package names that contain schema derived classes
@@ -454,13 +472,7 @@ public abstract class JAXBContext {
      *
      * @return a new instance of a {@code JAXBContext}
      * @throws JAXBException if an error was encountered while creating the
-     *                       {@code JAXBContext} such as
-     * <ol>
-     *   <li>failure to locate either ObjectFactory.class or jaxb.index in the packages</li>
-     *   <li>an ambiguity among global elements contained in the contextPath</li>
-     *   <li>failure to locate a value for the context factory provider property</li>
-     *   <li>mixing schema derived packages from different providers on the same contextPath</li>
-     * </ol>
+     *                       {@code JAXBContext}. See {@link #newInstance(String, ClassLoader)} for details.
      * @since 1.6, JAXB 2.0
      */
     public static JAXBContext newInstance( String contextPath,
@@ -629,7 +641,7 @@ public abstract class JAXBContext {
      * to configure 'properties' for this instantiation of {@link JAXBContext}.
      *
      * <p>
-     * The interpretation of properties is up to implementations. Implementations should
+     * The interpretation of properties is up to implementations. Implementations must
      * throw {@code JAXBException} if it finds properties that it doesn't understand.
      *
      * @param classesToBeBound
