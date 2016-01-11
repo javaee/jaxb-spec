@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2015 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2015-2016 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -71,14 +71,7 @@ public interface JAXBContextFactory {
      *
      * @throws JAXBException
      *      if an error was encountered while creating the
-     *      {@code JAXBContext}, such as (but not limited to):
-     * <ol>
-     *  <li>Classes use JAXB annotations incorrectly
-     *  <li>Classes have colliding annotations (i.e., two classes with the same type name)
-     *  <li>The JAXB implementation was unable to locate
-     *      provider-specific out-of-band information (such as additional
-     *      files generated at the development time.)
-     * </ol>
+     *      {@code JAXBContext}. See {@link JAXBContext#newInstance(Class[], Map)} for details.
      *
      * @throws IllegalArgumentException
      *      if the parameter contains {@code null} (i.e., {@code newInstance(null,someMap);})
@@ -108,8 +101,8 @@ public interface JAXBContextFactory {
      *
      * @return a new instance of a {@code JAXBContext}
      * @throws JAXBException if an error was encountered while creating the
-     *                       {@code JAXBContext}. See {@link JAXBContext#newInstance(String, ClassLoader)}
-     *                       for details.
+     *      {@code JAXBContext}. See {@link JAXBContext#newInstance(String, ClassLoader, Map)} for details.
+     *
      * @since 1.9, JAXB 2.3
      */
     JAXBContext createContext(String contextPath,
