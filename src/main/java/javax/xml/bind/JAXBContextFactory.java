@@ -96,7 +96,7 @@ public interface JAXBContextFactory {
      * For semantics see {@link javax.xml.bind.JAXBContext#newInstance(String, ClassLoader, java.util.Map)}
      *
      * <p>
-     * The interpretation of properties is up to implementations. Implementations should
+     * The interpretation of properties is up to implementations. Implementations must
      * throw {@code JAXBException} if it finds properties that it doesn't understand.
      *
      * @param contextPath list of java package names that contain schema derived classes
@@ -108,13 +108,8 @@ public interface JAXBContextFactory {
      *
      * @return a new instance of a {@code JAXBContext}
      * @throws JAXBException if an error was encountered while creating the
-     *                       {@code JAXBContext} such as
-     * <ol>
-     *   <li>failure to locate either ObjectFactory.class or jaxb.index in the packages</li>
-     *   <li>an ambiguity among global elements contained in the contextPath</li>
-     *   <li>failure to locate a value for the context factory provider property</li>
-     *   <li>mixing schema derived packages from different providers on the same contextPath</li>
-     * </ol>
+     *                       {@code JAXBContext}. See {@link JAXBContext#newInstance(String, ClassLoader)}
+     *                       for details.
      * @since 1.9, JAXB 2.3
      */
     JAXBContext createContext(String contextPath,
