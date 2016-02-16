@@ -270,7 +270,7 @@ import java.io.InputStream;
  * <li>
  * Finally, if all the steps above fail, then the rest of the look up is unspecified. That said,
  * the recommended behavior is to simply look for some hard-coded platform default JAXB implementation.
- * This phase of the look up is so that JavaSE can have its own JAXB implementation as the last resort.
+ * This phase of the look up is so that Java SE can have its own JAXB implementation as the last resort.
  * </ol>
  *
  * <p>
