@@ -75,8 +75,8 @@ public interface ValidationEvent {
      * Retrieve the severity code for this warning/error. 
      *
      * <p>
-     * Must be one of {@code ValidationError.WARNING},
-     * {@code ValidationError.ERROR}, or {@code ValidationError.FATAL_ERROR}.
+     * Must be one of {@code ValidationEvent.WARNING},
+     * {@code ValidationEvent.ERROR}, or {@code ValidationEvent.FATAL_ERROR}.
      *
      * @return the severity code for this warning/error
      */
