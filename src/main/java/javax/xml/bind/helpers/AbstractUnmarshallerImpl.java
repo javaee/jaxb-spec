@@ -62,9 +62,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
-import java.io.File;
-import java.io.Reader;
-import java.net.MalformedURLException;
+import java.io.*;
 import java.net.URL;
 
 /**
@@ -193,16 +191,9 @@ public abstract class AbstractUnmarshallerImpl implements Unmarshaller
         }
 
         try {
-            // copied from JAXP
-	    String path = f.getAbsolutePath();
-	    if (File.separatorChar != '/')
-	    	path = path.replace(File.separatorChar, '/');
-	    if (!path.startsWith("/"))
-	    	path = "/" + path;
-	    if (!path.endsWith("/") && f.isDirectory())
-	    	path = path + "/";
-	    return unmarshal(new URL("file", "", path));
-        } catch( MalformedURLException e ) {
+            System.out.println("==========================================================TADYYYYY==========================================================");
+            return unmarshal(new BufferedInputStream(new FileInputStream(f)));
+        } catch( FileNotFoundException e ) {
             throw new IllegalArgumentException(e.getMessage());
         }
     }
