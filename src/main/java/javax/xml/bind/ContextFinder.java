@@ -243,7 +243,7 @@ class ContextFinder {
         }
     }
 
-    private static Object instantiateProviderIfNecessary(Class<?> implClass) throws JAXBException {
+    private static Object instantiateProviderIfNecessary(final Class<?> implClass) throws JAXBException {
         try {
             if (JAXBContextFactory.class.isAssignableFrom(implClass)) {
                 return AccessController.doPrivileged(new PrivilegedExceptionAction<Object>() {
@@ -540,6 +540,7 @@ class ContextFinder {
         } else {
             return (ClassLoader) java.security.AccessController.doPrivileged(
                     new java.security.PrivilegedAction() {
+                        @Override
                         public java.lang.Object run() {
                             return Thread.currentThread().getContextClassLoader();
                         }
@@ -554,6 +555,7 @@ class ContextFinder {
         } else {
             return (ClassLoader) java.security.AccessController.doPrivileged(
                     new java.security.PrivilegedAction() {
+                        @Override
                         public java.lang.Object run() {
                             return c.getClassLoader();
                         }
@@ -567,6 +569,7 @@ class ContextFinder {
         } else {
             return (ClassLoader) java.security.AccessController.doPrivileged(
                     new java.security.PrivilegedAction() {
+                        @Override
                         public java.lang.Object run() {
                             return ClassLoader.getSystemClassLoader();
                         }
