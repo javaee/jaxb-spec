@@ -3,7 +3,7 @@
 
     DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 
-    Copyright (c) 1997-2015 Oracle and/or its affiliates. All rights reserved.
+    Copyright (c) 1997-2017 Oracle and/or its affiliates. All rights reserved.
 
     The contents of this file are subject to the terms of either the GNU
     General Public License Version 2 only ("GPL") or the Common Development
@@ -112,16 +112,6 @@
     </dependencies>
 
     <build>
-
-        <resources>
-            <resource>
-                <directory>src/main/java</directory>
-                <excludes>
-                    <exclude>**/*.java</exclude>
-                </excludes>
-            </resource>
-        </resources>
-
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -201,20 +191,62 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.5.1</version>
+                <version>3.6.0</version>
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
-                    <compilerArgument>-Xlint:all</compilerArgument>
+                    <compilerArgs>
+                        <arg>-Xlint:all</arg>
+                    </compilerArgs>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>default-compile</id>
+                        <configuration>
+                            <excludes>
+                                <exclude>module-info.java</exclude>
+                            </excludes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>jdk-9</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <release>9</release>
+                            <source>9</source>
+                            <target>9</target>
+                            <includes>
+                                <include>module-info.java</include>
+                            </includes>
+                            <compilerArgs>
+                                <arg>-J-Xmodule:java.xml.bind</arg>
+                            </compilerArgs>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.3</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>properties</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.18.1</version>
+                <version>2.19.1</version>
                 <configuration>
                     <argLine>
-                        -Xbootclasspath/p:${basedir}/target/classes
+                        --add-modules java.xml.bind
+                        --upgrade-module-path target/classes
                     </argLine>
                 </configuration>
             </plugin>
@@ -235,7 +267,7 @@
                     </archive>
                 </configuration>
             </plugin>
-            
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>buildnumber-maven-plugin</artifactId>
@@ -264,16 +296,17 @@
                         <version>1.7.4-v1</version>
                     </dependency>
                 </dependencies>
-            </plugin>                
+            </plugin>
             <plugin>
+
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
                 <extensions>true</extensions>
-                <version>2.3.7</version>
+                <version>3.2.0</version>
                 <configuration>
-                    <archive>  
+                    <archive>
                         <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
-                    </archive>                     
+                    </archive>
                     <instructions>
                         <Export-Package>{local-packages};version="${project.version}"</Export-Package>
                         <Import-Package>
@@ -296,20 +329,21 @@
                             org.w3c.dom,
                             org.xml.sax,
                             org.xml.sax.ext,
-                            org.xml.sax.helpers    
+                            org.xml.sax.helpers
                         </Import-Package>
                         <Bundle-SymbolicName>jaxb-api</Bundle-SymbolicName>
                         <Bundle-Name>jaxb-api</Bundle-Name>
                         <DynamicImport-Package>org.glassfish.hk2.osgiresourcelocator</DynamicImport-Package>
+                        <_failok>true</_failok> <!-- FIXME: FELIX-5430 -->
                     </instructions>
                 </configuration>
                 <executions>
                     <execution>
                         <id>bundle-manifest</id>
                         <phase>process-classes</phase>
-                        <goals>    
+                        <goals>
                             <goal>manifest</goal>
-                        </goals>   
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
@@ -338,7 +372,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.9</version>
+                <version>2.10.4</version>
                 <configuration>
                     <nodeprecated>false</nodeprecated>
                     <use>false</use>
@@ -388,6 +422,9 @@ href='http://jaxb.java.net'><i>http://jaxb.java.net</i></a>
                             <head>Implementation Note:</head>
                         </tag>
                     </tags>
+                    <sourceFileExcludes>
+                        <sourceFileExclude>module-info.java</sourceFileExclude>
+                    </sourceFileExcludes>
                 </configuration>
             </plugin>
             <plugin>
@@ -411,6 +448,6 @@ href='http://jaxb.java.net'><i>http://jaxb.java.net</i></a>
             </plugin>
         </plugins>
 
-    </build>    
+    </build>
 
 </project>

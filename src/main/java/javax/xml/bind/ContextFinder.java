@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2003-2016 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2003-2017 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -173,7 +173,7 @@ class ContextFinder {
             Class spFactory = ServiceLoaderUtil.safeLoadClass(className, PLATFORM_DEFAULT_FACTORY_CLASS, classLoader);
             return newInstance(contextPath, spFactory, classLoader, properties);
         } catch (ClassNotFoundException x) {
-            throw new JAXBException(Messages.format(Messages.PROVIDER_NOT_FOUND, className), x);
+            throw new JAXBException(Messages.format(Messages.DEFAULT_PROVIDER_NOT_FOUND), x);
 
         } catch (RuntimeException | JAXBException x) {
             // avoid wrapping RuntimeException to JAXBException,
@@ -269,7 +269,7 @@ class ContextFinder {
         try {
             spi = ServiceLoaderUtil.safeLoadClass(className, PLATFORM_DEFAULT_FACTORY_CLASS, getContextClassLoader());
         } catch (ClassNotFoundException e) {
-            throw new JAXBException(e);
+            throw new JAXBException(Messages.format(Messages.DEFAULT_PROVIDER_NOT_FOUND), e);
         }
 
         if (logger.isLoggable(Level.FINE)) {

@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2015 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2015-2017 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -38,11 +38,12 @@
  * holder.
  */
 
-package javax.xml.bind;
+package javax.xml.bind.test;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.xml.bind.*;
 import java.util.Map;
 
 import static junit.framework.Assert.assertEquals;
@@ -112,7 +113,7 @@ public class JAXBContextServiceProviderNPETest {
 
     @Before
     public void setup() {
-        System.setProperty("javax.xml.bind.JAXBContextFactory", "javax.xml.bind.JAXBContextServiceProviderNPETest$Factory");
+        System.setProperty("javax.xml.bind.JAXBContextFactory", "javax.xml.bind.test.JAXBContextServiceProviderNPETest$Factory");
     }
 
     public static void main(String[] args) throws JAXBException {
