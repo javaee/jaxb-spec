@@ -199,33 +199,6 @@
                         <arg>-Xlint:all</arg>
                     </compilerArgs>
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>default-compile</id>
-                        <configuration>
-                            <excludes>
-                                <exclude>module-info.java</exclude>
-                            </excludes>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>jdk-9</id>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                        <configuration>
-                            <release>9</release>
-                            <source>9</source>
-                            <target>9</target>
-                            <includes>
-                                <include>module-info.java</include>
-                            </includes>
-                            <compilerArgs>
-                                <arg>-J-Xmodule:java.xml.bind</arg>
-                            </compilerArgs>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
              <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -245,8 +218,7 @@
                 <version>2.19.1</version>
                 <configuration>
                     <argLine>
-                        --add-modules java.xml.bind
-                        --upgrade-module-path target/classes
+                        -Xbootclasspath/p:${basedir}/target/classes
                     </argLine>
                 </configuration>
             </plugin>
@@ -334,7 +306,6 @@
                         <Bundle-SymbolicName>jaxb-api</Bundle-SymbolicName>
                         <Bundle-Name>jaxb-api</Bundle-Name>
                         <DynamicImport-Package>org.glassfish.hk2.osgiresourcelocator</DynamicImport-Package>
-                        <_failok>true</_failok> <!-- FIXME: FELIX-5430 -->
                     </instructions>
                 </configuration>
                 <executions>
@@ -422,9 +393,6 @@ href='http://jaxb.java.net'><i>http://jaxb.java.net</i></a>
                             <head>Implementation Note:</head>
                         </tag>
                     </tags>
-                    <sourceFileExcludes>
-                        <sourceFileExclude>module-info.java</sourceFileExclude>
-                    </sourceFileExcludes>
                 </configuration>
             </plugin>
             <plugin>
@@ -449,5 +417,92 @@ href='http://jaxb.java.net'><i>http://jaxb.java.net</i></a>
         </plugins>
 
     </build>
+
+    <profiles>
+        <profile>
+            <id>jdk9</id>
+            <activation>
+                <jdk>9</jdk>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-compiler-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <id>default-compile</id>
+                                    <configuration>
+                                        <release>9</release>
+                                        <source>9</source>
+                                        <target>9</target>
+                                    </configuration>
+                                </execution>
+                                <execution>
+                                    <id>base-compile</id>
+                                    <goals>
+                                        <goal>compile</goal>
+                                    </goals>
+                                    <configuration>
+                                        <excludes>
+                                            <exclude>module-info.java</exclude>
+                                        </excludes>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.felix</groupId>
+                            <artifactId>maven-bundle-plugin</artifactId>
+                            <configuration>
+                                <instructions>
+                                    <_failok>true</_failok>
+                                </instructions>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>build-helper-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>add-jdk9-source</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>add-source</goal>
+                                </goals>
+                                <configuration>
+                                    <sources>
+                                        <source>src/main/jdk9</source>
+                                    </sources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>2.19.1</version>
+                        <configuration>
+                            <argLine>
+                                --add-modules java.xml.bind
+                                --upgrade-module-path target/classes
+                            </argLine>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <configuration>
+                            <includeDependencySources>false</includeDependencySources>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>
