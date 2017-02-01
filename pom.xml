@@ -326,12 +326,12 @@ href='http://jaxb.java.net'>http://jaxb.java.net</a></i><br>
 <br>Comments to: <a href='mailto:${release.spec.feedback}'><i>${release.spec.feedback}</i></a>
 <br>More information at: <a target='_top'
 href='http://jaxb.java.net'><i>http://jaxb.java.net</i></a>
-<p>Copyright &copy; 2004-2011 Oracle </font>]]>
+<p>Copyright &copy; 2004-2017 Oracle </font>]]>
                         </bottom>
                         <detectJavaApiLink>false</detectJavaApiLink>
                         <offlineLinks>
                             <offlineLink>
-                                <url>http://download.oracle.com/javase/6/docs/api/</url>
+                                <url>http://download.oracle.com/javase/8/docs/api/</url>
                                 <location>${basedir}/offline-javadoc</location>
                             </offlineLink>
                         </offlineLinks>
@@ -371,10 +371,6 @@ href='http://jaxb.java.net'><i>http://jaxb.java.net</i></a>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-gpg-plugin</artifactId>
                     <version>1.1</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.glassfish.build</groupId>
-                    <artifactId>gfnexus-maven-plugin</artifactId>
                 </plugin>
             </plugins>
         </pluginManagement>
