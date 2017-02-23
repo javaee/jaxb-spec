@@ -42,11 +42,11 @@ package javax.xml.bind;
 
 import org.w3c.dom.Node;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Properties;
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * The {@code JAXBContext} class provides the client's entry point to the
@@ -429,9 +429,12 @@ public abstract class JAXBContext {
      * <p>
      * The steps involved in discovering the JAXB implementation is discussed in the class javadoc.
      *
-     * @param contextPath list of java package names that contain schema
-     *                    derived class and/or java to schema (JAXB-annotated)
-     *                    mapped classes
+     * @param contextPath
+     *      List of java package names that contain schema
+     *      derived class and/or java to schema (JAXB-annotated)
+     *      mapped classes.
+     *      Packages in {@code contextPath} that are in named modules must be
+     *      {@linkplain java.lang.reflect.Module#isOpen open} to the {@code java.xml.bind} module.
      * @param classLoader
      *      This class loader will be used to locate the implementation
      *      classes.
@@ -457,7 +460,12 @@ public abstract class JAXBContext {
      * The interpretation of properties is up to implementations. Implementations must
      * throw {@code JAXBException} if it finds properties that it doesn't understand.
      *
-     * @param contextPath list of java package names that contain schema derived classes
+     * @param contextPath
+     *      List of java package names that contain schema
+     *      derived class and/or java to schema (JAXB-annotated)
+     *      mapped classes.
+     *      Packages in {@code contextPath} that are in named modules must be
+     *      {@linkplain java.lang.reflect.Module#isOpen open} to the {@code java.xml.bind} module.
      * @param classLoader
      *      This class loader will be used to locate the implementation classes.
      * @param properties
@@ -472,6 +480,7 @@ public abstract class JAXBContext {
      *   <li>an ambiguity among global elements contained in the contextPath</li>
      *   <li>failure to locate a value for the context factory provider property</li>
      *   <li>mixing schema derived packages from different providers on the same contextPath</li>
+     *   <li>packages are not open to {@code java.xml.bind} module
      * </ol>
      * @since 1.6, JAXB 2.0
      */
@@ -603,7 +612,9 @@ public abstract class JAXBContext {
      * The steps involved in discovering the JAXB implementation is discussed in the class javadoc.
      *
      * @param classesToBeBound
-     *      list of java classes to be recognized by the new {@link JAXBContext}.
+     *      List of java classes to be recognized by the new {@link JAXBContext}.
+     *      Classes in {@code classesToBeBound} that are in named modules must be in a package
+     *      that is {@linkplain java.lang.reflect.Module#isOpen open} to the {@code java.xml.bind} module.
      *      Can be empty, in which case a {@link JAXBContext} that only knows about
      *      spec-defined classes will be returned.
      *
@@ -636,7 +647,9 @@ public abstract class JAXBContext {
      * throw {@code JAXBException} if it finds properties that it doesn't understand.
      *
      * @param classesToBeBound
-     *      list of java classes to be recognized by the new {@link JAXBContext}.
+     *      List of java classes to be recognized by the new {@link JAXBContext}.
+     *      Classes in {@code classesToBeBound} that are in named modules must be in a package
+     *      that is {@linkplain java.lang.reflect.Module#isOpen open} to the {@code java.xml.bind} module.
      *      Can be empty, in which case a {@link JAXBContext} that only knows about
      *      spec-defined classes will be returned.
      * @param properties
@@ -656,6 +669,7 @@ public abstract class JAXBContext {
      *  <li>The JAXB implementation was unable to locate
      *      provider-specific out-of-band information (such as additional
      *      files generated at the development time.)
+     *  <li>{@code classesToBeBound} are not open to {@code java.xml.bind} module
      * </ol>
      *
      * @throws IllegalArgumentException
