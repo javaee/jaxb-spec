@@ -100,6 +100,8 @@
         <release.spec.date>Dec 2009</release.spec.date>
         <findbugs.exclude>${project.basedir}/exclude.xml</findbugs.exclude>
         <findbugs.threshold>Low</findbugs.threshold>
+        <mrjar.sourceDirectory>${project.basedir}/src/main/mr-jar</mrjar.sourceDirectory>
+        <mrjar.build.outputDirectory>${project.build.directory}/classes-mrjar</mrjar.build.outputDirectory>
     </properties>
 
     <dependencies>
@@ -213,6 +215,7 @@
                             <manifestEntries>
                                 <Extension-Name>javax.xml.bind</Extension-Name>
                                 <Implementation-Build-Id>${scmBranch}-${buildNumber}, ${timestamp}</Implementation-Build-Id>
+                                <Multi-Release>true</Multi-Release>
                             </manifestEntries>
                             <manifest>
                                 <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
@@ -453,6 +456,9 @@ href='http://jaxb.java.net'><i>http://jaxb.java.net</i></a>
                                         <release>9</release>
                                         <source>9</source>
                                         <target>9</target>
+                                        <includes>
+                                            <include>module-info.java</include>
+                                        </includes>
                                     </configuration>
                                 </execution>
                                 <execution>
@@ -514,6 +520,29 @@ href='http://jaxb.java.net'><i>http://jaxb.java.net</i></a>
                                 </configuration>
                             </execution>
                         </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>compile-java9</id>
+                                <phase>compile</phase>
+                                <configuration>
+                                    <tasks>
+                                        <mkdir dir="${project.build.outputDirectory}/META-INF/versions/9" />
+                                        <javac srcdir="${mrjar.sourceDirectory}" destdir="${project.build.outputDirectory}/META-INF/versions/9"
+                                               classpath="${project.build.outputDirectory}" includeantruntime="false" />
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>

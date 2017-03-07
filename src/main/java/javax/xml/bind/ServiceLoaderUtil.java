@@ -42,6 +42,7 @@ package javax.xml.bind;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Module;
 import java.util.Iterator;
 import java.util.ServiceLoader;
 import java.util.logging.Level;

@@ -227,6 +227,9 @@ class ContextFinder {
                 // the cast would fail, so generate an exception with a nice message
                 throw handleClassCastException(context.getClass(), JAXBContext.class);
             }
+
+            MrJarUtil.delegateAddOpensToImplModule(MrJarUtil.getClassesFromContextPath(contextPath, classLoader), spFactory);
+
             return (JAXBContext) context;
         } catch (InvocationTargetException x) {
             // throw if it is exception not to be wrapped
