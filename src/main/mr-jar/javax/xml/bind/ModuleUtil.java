@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 /**
- * Utility class for propagation of packages of JAXB annotated classes openness.
+ * Propagates openness of JAXB annottated classess packages to JAXB impl module.
  *
  * @author Roman Grigoriadi
  */
-public class MrJarUtil {
+class ModuleUtil {
 
     /**
      * Resolves classes from context path.
@@ -93,6 +93,8 @@ public class MrJarUtil {
      *
      * @param classes used to resolve module for {@linkplain Module#addOpens(String, Module)}
      * @param factorySPI used to resolve {@link Module} of the implementation.
+     *
+     * @throws JAXBException if ony of a classes package is not open to {@code java.xml.bind} module.
      */
     static void delegateAddOpensToImplModule(Class[] classes, Class<?> factorySPI) throws JAXBException {
         final Module implModule = factorySPI.getModule();

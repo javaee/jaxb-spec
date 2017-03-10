@@ -228,7 +228,7 @@ class ContextFinder {
                 throw handleClassCastException(context.getClass(), JAXBContext.class);
             }
 
-            MrJarUtil.delegateAddOpensToImplModule(MrJarUtil.getClassesFromContextPath(contextPath, classLoader), spFactory);
+            ModuleUtil.delegateAddOpensToImplModule(ModuleUtil.getClassesFromContextPath(contextPath, classLoader), spFactory);
 
             return (JAXBContext) context;
         } catch (InvocationTargetException x) {

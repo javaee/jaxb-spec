@@ -8,7 +8,7 @@ import java.io.IOException;
  *
  * @author Roman Grigoriadi
  */
-public class MrJarUtil {
+class ModuleUtil {
 
     /**
      * Resolves classes from context path.
