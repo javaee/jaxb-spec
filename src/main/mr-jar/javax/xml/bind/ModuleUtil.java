@@ -20,7 +20,7 @@ class ModuleUtil {
      * Resolves classes from context path.
      * Only one class per package is needed to access its {@link java.lang.reflect.Module}
      */
-    private static Class[] getClassesFromContextPath(String contextPath, ClassLoader classLoader) throws JAXBException {
+    static Class[] getClassesFromContextPath(String contextPath, ClassLoader classLoader) throws JAXBException {
         List<Class> classes = new ArrayList<>();
         StringTokenizer tokens = new StringTokenizer(contextPath,":");
 
@@ -55,7 +55,7 @@ class ModuleUtil {
     /**
      * Find first class in package by {@code jaxb.index} file.
      */
-    private static Class findFirstByJaxbIndex(String pkg, ClassLoader classLoader) throws IOException, JAXBException {
+    static Class findFirstByJaxbIndex(String pkg, ClassLoader classLoader) throws IOException, JAXBException {
         final String resource = pkg.replace('.', '/') + "/jaxb.index";
         final InputStream resourceAsStream = classLoader.getResourceAsStream(resource);
 
