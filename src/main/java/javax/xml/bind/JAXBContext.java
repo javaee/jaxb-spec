@@ -347,7 +347,14 @@ public abstract class JAXBContext {
      * the context class loader of the current thread.
      *
      * @throws JAXBException if an error was encountered while creating the
-     *               {@code JAXBContext}. See {@link JAXBContext#newInstance(String, ClassLoader, Map)} for details.
+     *                       {@code JAXBContext} such as
+     * <ol>
+     *   <li>failure to locate either ObjectFactory.class or jaxb.index in the packages</li>
+     *   <li>an ambiguity among global elements contained in the contextPath</li>
+     *   <li>failure to locate a value for the context factory provider property</li>
+     *   <li>mixing schema derived packages from different providers on the same contextPath</li>
+     *   <li>packages are not open to {@code java.xml.bind} module</li>
+     * </ol>
      */
     public static JAXBContext newInstance( String contextPath )
             throws JAXBException {
@@ -441,7 +448,14 @@ public abstract class JAXBContext {
      *
      * @return a new instance of a {@code JAXBContext}
      * @throws JAXBException if an error was encountered while creating the
-     *               {@code JAXBContext}. See {@link JAXBContext#newInstance(String, ClassLoader, Map)} for details.
+     *                       {@code JAXBContext} such as
+     * <ol>
+     *   <li>failure to locate either ObjectFactory.class or jaxb.index in the packages</li>
+     *   <li>an ambiguity among global elements contained in the contextPath</li>
+     *   <li>failure to locate a value for the context factory provider property</li>
+     *   <li>mixing schema derived packages from different providers on the same contextPath</li>
+     *   <li>packages are not open to {@code java.xml.bind} module</li>
+     * </ol>
      */
     public static JAXBContext newInstance( String contextPath, ClassLoader classLoader ) throws JAXBException {
 
@@ -480,7 +494,7 @@ public abstract class JAXBContext {
      *   <li>an ambiguity among global elements contained in the contextPath</li>
      *   <li>failure to locate a value for the context factory provider property</li>
      *   <li>mixing schema derived packages from different providers on the same contextPath</li>
-     *   <li>packages are not open to {@code java.xml.bind} module
+     *   <li>packages are not open to {@code java.xml.bind} module</li>
      * </ol>
      * @since 1.6, JAXB 2.0
      */
@@ -621,8 +635,18 @@ public abstract class JAXBContext {
      * @return
      *      A new instance of a {@code JAXBContext}.
      *
-     * @throws JAXBException if an error was encountered while creating the
-     *               {@code JAXBContext}. See {@link JAXBContext#newInstance(Class[], Map)} for details.
+     * @throws JAXBException
+     *      if an error was encountered while creating the
+     *      {@code JAXBContext}, such as (but not limited to):
+     * <ol>
+     *  <li>No JAXB implementation was discovered
+     *  <li>Classes use JAXB annotations incorrectly
+     *  <li>Classes have colliding annotations (i.e., two classes with the same type name)
+     *  <li>The JAXB implementation was unable to locate
+     *      provider-specific out-of-band information (such as additional
+     *      files generated at the development time.)
+     *  <li>{@code classesToBeBound} are not open to {@code java.xml.bind} module
+     * </ol>
      *
      * @throws IllegalArgumentException
      *      if the parameter contains {@code null} (i.e., {@code newInstance(null);})
