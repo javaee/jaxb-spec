@@ -380,6 +380,26 @@ href='http://jaxb.java.net'><i>http://jaxb.java.net</i></a>
 
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/mr-jar/META-INF/versions/9</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${basedir}/src/main/mr-jar</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <artifactId>maven-enforcer-plugin</artifactId>
                 <executions>
                     <execution>
@@ -533,6 +553,20 @@ href='http://jaxb.java.net'><i>http://jaxb.java.net</i></a>
                                         <mkdir dir="${project.build.outputDirectory}/META-INF/versions/9" />
                                         <javac srcdir="${mrjar.sourceDirectory}" destdir="${project.build.outputDirectory}/META-INF/versions/9"
                                                classpath="${project.build.outputDirectory}" includeantruntime="false" />
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>update-source-jar</id>
+                                <phase>verify</phase>
+                                <configuration>
+                                    <tasks>
+                                        <jar destfile="${project.build.directory}/jaxb-api-${project.version}-sources.jar" update="true">
+                                            <fileset dir="${project.build.directory}/mr-jar/" />
+                                        </jar>
                                     </tasks>
                                 </configuration>
                                 <goals>
