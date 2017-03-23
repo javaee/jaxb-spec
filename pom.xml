@@ -102,6 +102,9 @@
         <findbugs.threshold>Low</findbugs.threshold>
         <mrjar.sourceDirectory>${project.basedir}/src/main/mr-jar</mrjar.sourceDirectory>
         <mrjar.build.outputDirectory>${project.build.directory}/classes-mrjar</mrjar.build.outputDirectory>
+        <extension.name>javax.xml.bind</extension.name>
+        <spec.version>2.3</spec.version>
+        <impl.version>0</impl.version>
     </properties>
 
     <dependencies>
@@ -116,6 +119,11 @@
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>3.0.2</version>
+                </plugin>
                 <plugin>
                     <groupId>org.glassfish.build</groupId>
                     <artifactId>gfnexus-maven-plugin</artifactId>
@@ -230,39 +238,33 @@
                     <configuration>
                         <getRevisionOnlyOnce>true</getRevisionOnlyOnce>
                         <timestampFormat>{0,date,yyyy-MM-dd'T'HH:mm:ssZ}</timestampFormat>
-                        <providerImplementations>
-                            <svn>javasvn</svn>
-                        </providerImplementations>
                         <getRevisionOnlyOnce>true</getRevisionOnlyOnce>
                         <revisionOnScmFailure>false</revisionOnScmFailure>
                     </configuration>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.tmatesoft.svnkit</groupId>
-                            <artifactId>svnkit</artifactId>
-                            <version>1.7.4-v1</version>
-                        </dependency>
-                    </dependencies>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.felix</groupId>
                     <artifactId>maven-bundle-plugin</artifactId>
                     <extensions>true</extensions>
-                    <version>3.2.0</version>
+                    <version>3.3.0</version>
                     <configuration>
                         <archive>
                             <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
                         </archive>
                         <instructions>
-                            <Export-Package>{local-packages};version="${project.version}"</Export-Package>
+                            <Bundle-Version>${project.version}</Bundle-Version>  <!-- 2.2.99.bnull -->
+                            <Extension-Name>${extension.name}</Extension-Name>
+                            <Implementation-Version>${spec.version}.${impl.version}</Implementation-Version>
+                            <Specification-Version>${project.version}</Specification-Version>
+                            <Export-Package>${extension.name}.*; version=${spec.version}</Export-Package>
                             <Import-Package>
                                 javax.activation,
-                                javax.xml.bind;version="${project.version}",
-                                javax.xml.bind.annotation;version="${project.version}",
-                                javax.xml.bind.annotation.adapters;version="${project.version}",
-                                javax.xml.bind.attachment;version="${project.version}",
-                                javax.xml.bind.helpers;version="${project.version}",
-                                javax.xml.bind.util;version="${project.version}",
+                                javax.xml.bind;version="[${spec.version},3)",
+                                javax.xml.bind.annotation;version="[${spec.version},3)",
+                                javax.xml.bind.annotation.adapters;version="[${spec.version},3)",
+                                javax.xml.bind.attachment;version="[${spec.version},3)",
+                                javax.xml.bind.helpers;version="[${spec.version},3)",
+                                javax.xml.bind.util;version="[${spec.version},3)",
                                 javax.xml.datatype,
                                 javax.xml.namespace,
                                 javax.xml.parsers,
@@ -278,8 +280,10 @@
                                 org.xml.sax.helpers
                             </Import-Package>
                             <Bundle-SymbolicName>jaxb-api</Bundle-SymbolicName>
-                            <Bundle-Name>jaxb-api</Bundle-Name>
                             <DynamicImport-Package>org.glassfish.hk2.osgiresourcelocator</DynamicImport-Package>
+                            <Specification-Vendor>Oracle Corporation</Specification-Vendor>
+                            <Implementation-Vendor>${project.organization.name}</Implementation-Vendor>
+                            <Implementation-Vendor-Id>org.glassfish</Implementation-Vendor-Id>
                         </instructions>
                     </configuration>
                 </plugin>
