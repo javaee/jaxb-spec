@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2003-2016 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2003-2017 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -441,7 +441,7 @@ public abstract class JAXBContext {
      *      derived class and/or java to schema (JAXB-annotated)
      *      mapped classes.
      *      Packages in {@code contextPath} that are in named modules must be
-     *      {@linkplain java.lang.reflect.Module#isOpen open} to the {@code java.xml.bind} module.
+     *      {@linkplain java.lang.reflect.Module#isOpen open} to at least the {@code java.xml.bind} module.
      * @param classLoader
      *      This class loader will be used to locate the implementation
      *      classes.
@@ -479,7 +479,7 @@ public abstract class JAXBContext {
      *      derived class and/or java to schema (JAXB-annotated)
      *      mapped classes.
      *      Packages in {@code contextPath} that are in named modules must be
-     *      {@linkplain java.lang.reflect.Module#isOpen open} to the {@code java.xml.bind} module.
+     *      {@linkplain java.lang.reflect.Module#isOpen open} to at least the {@code java.xml.bind} module.
      * @param classLoader
      *      This class loader will be used to locate the implementation classes.
      * @param properties
@@ -628,7 +628,7 @@ public abstract class JAXBContext {
      * @param classesToBeBound
      *      List of java classes to be recognized by the new {@link JAXBContext}.
      *      Classes in {@code classesToBeBound} that are in named modules must be in a package
-     *      that is {@linkplain java.lang.reflect.Module#isOpen open} to the {@code java.xml.bind} module.
+     *      that is {@linkplain java.lang.reflect.Module#isOpen open} to at least the {@code java.xml.bind} module.
      *      Can be empty, in which case a {@link JAXBContext} that only knows about
      *      spec-defined classes will be returned.
      *
@@ -673,7 +673,7 @@ public abstract class JAXBContext {
      * @param classesToBeBound
      *      List of java classes to be recognized by the new {@link JAXBContext}.
      *      Classes in {@code classesToBeBound} that are in named modules must be in a package
-     *      that is {@linkplain java.lang.reflect.Module#isOpen open} to the {@code java.xml.bind} module.
+     *      that is {@linkplain java.lang.reflect.Module#isOpen open} to at least the {@code java.xml.bind} module.
      *      Can be empty, in which case a {@link JAXBContext} that only knows about
      *      spec-defined classes will be returned.
      * @param properties
