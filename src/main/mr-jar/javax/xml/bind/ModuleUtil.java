@@ -26,28 +26,26 @@ class ModuleUtil {
         }
         
         String [] tokens = contextPath.split(":"); 
-        if (tokens != null){
-           for (String pkg : tokens){
+        for (String pkg : tokens){
              
-              // look for ObjectFactory and load it
-              final Class<?> o;
-              try { 
-                  o = classLoader.loadClass(pkg+".ObjectFactory");
-                  classes.add(o);
-                  continue;
-              } catch (ClassNotFoundException e) {
-                  // not necessarily an error
-              }
+           // look for ObjectFactory and load it
+           final Class<?> o;
+           try { 
+               o = classLoader.loadClass(pkg+".ObjectFactory");
+               classes.add(o);
+               continue;
+           } catch (ClassNotFoundException e) {
+               // not necessarily an error
+           }
               
-              // look for jaxb.index and load the list of classes
-              try {
-                  final Class firstByJaxbIndex = findFirstByJaxbIndex(pkg, classLoader);
-                  if (firstByJaxbIndex != null) {
-                      classes.add(firstByJaxbIndex);
-                  }
-              } catch (IOException e) {
-                  throw new JAXBException(e);
-              }
+           // look for jaxb.index and load the list of classes
+           try {
+               final Class firstByJaxbIndex = findFirstByJaxbIndex(pkg, classLoader);
+               if (firstByJaxbIndex != null) {
+                   classes.add(firstByJaxbIndex);
+               }
+           } catch (IOException e) {
+               throw new JAXBException(e);
            }
         }
 
