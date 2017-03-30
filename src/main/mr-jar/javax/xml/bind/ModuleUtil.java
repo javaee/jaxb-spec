@@ -28,7 +28,6 @@ class ModuleUtil {
         String [] tokens = contextPath.split(":"); 
         if (tokens != null){
            for (String pkg : tokens){
-             String pkg = tokens.nextToken();
              
               // look for ObjectFactory and load it
               final Class<?> o;
