@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Module;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 /**
  * Propagates openness of JAXB annottated classess packages to JAXB impl module.
@@ -22,31 +21,35 @@ class ModuleUtil {
      */
     static Class[] getClassesFromContextPath(String contextPath, ClassLoader classLoader) throws JAXBException {
         List<Class> classes = new ArrayList<>();
-        StringTokenizer tokens = new StringTokenizer(contextPath,":");
-
-
-        while(tokens.hasMoreTokens()) {
-            String pkg = tokens.nextToken();
-
-            // look for ObjectFactory and load it
-            final Class<?> o;
-            try {
-                o = classLoader.loadClass(pkg+".ObjectFactory");
-                classes.add(o);
-                continue;
-            } catch (ClassNotFoundException e) {
-                // not necessarily an error
-            }
-
-            // look for jaxb.index and load the list of classes
-            try {
-                final Class firstByJaxbIndex = findFirstByJaxbIndex(pkg, classLoader);
-                if (firstByJaxbIndex != null) {
-                    classes.add(firstByJaxbIndex);
-                }
-            } catch (IOException e) {
-                throw new JAXBException(e);
-            }
+        if (contextPath == null || contextPath.isEmpty()){
+          return classes.toArray(new Class[]{});
+        }
+        
+        String [] tokens = contextPath.split(":"); 
+        if (tokens != null){
+           for (String pkg : tokens){
+             String pkg = tokens.nextToken();
+             
+              // look for ObjectFactory and load it
+              final Class<?> o;
+              try { 
+                  o = classLoader.loadClass(pkg+".ObjectFactory");
+                  classes.add(o);
+                  continue;
+              } catch (ClassNotFoundException e) {
+                  // not necessarily an error
+              }
+              
+              // look for jaxb.index and load the list of classes
+              try {
+                  final Class firstByJaxbIndex = findFirstByJaxbIndex(pkg, classLoader);
+                  if (firstByJaxbIndex != null) {
+                      classes.add(firstByJaxbIndex);
+                  }
+              } catch (IOException e) {
+                  throw new JAXBException(e);
+              }
+           }
         }
 
         return classes.toArray(new Class[]{});
