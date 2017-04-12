@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Module;
+import java.lang.Module;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +17,7 @@ class ModuleUtil {
 
     /**
      * Resolves classes from context path.
-     * Only one class per package is needed to access its {@link java.lang.reflect.Module}
+     * Only one class per package is needed to access its {@link java.lang.Module}
      */
     static Class[] getClassesFromContextPath(String contextPath, ClassLoader classLoader) throws JAXBException {
         List<Class> classes = new ArrayList<>();
