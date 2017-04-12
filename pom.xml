@@ -362,6 +362,8 @@ href='http://jaxb.java.net'><i>http://jaxb.java.net</i></a>
                                 <head>Implementation Note:</head>
                             </tag>
                         </tags>
+                        <!-- TODO to be removed before 2.3 release-->
+                        <additionalparam>-Xdoclint:none</additionalparam>
                     </configuration>
                 </plugin>
                 <plugin>
