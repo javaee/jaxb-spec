@@ -991,7 +991,6 @@ public interface Unmarshaller {
      * {@link #isValidating()} API as well as access to the Schema object.
      * To determine if the Unmarshaller has validation enabled, simply
      * test the return type for null:
-     * <p>
      * <pre>{@code
      *   boolean isValidating = u.getSchema()!=null;
      * }</pre>
