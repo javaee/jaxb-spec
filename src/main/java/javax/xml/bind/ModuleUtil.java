@@ -12,7 +12,7 @@ class ModuleUtil {
 
     /**
      * Resolves classes from context path.
-     * Only one class per package is needed to access its {@link java.lang.reflect.Module}
+     * Only one class per package is needed to access its {@link java.lang.Module}
      */
     static Class[] getClassesFromContextPath(String contextPath, ClassLoader classLoader) throws JAXBException {
         return null;
@@ -27,10 +27,10 @@ class ModuleUtil {
 
     /**
      * Implementation may be defined in other module than {@code java.xml.bind}. In that case openness
-     * {@linkplain java.lang.reflect.Module#isOpen open} of classes should be delegated to implementation module.
+     * {@linkplain java.lang.Module#isOpen open} of classes should be delegated to implementation module.
      *
-     * @param classes used to resolve module for {@linkplain java.lang.reflect.Module#addOpens(String, java.lang.reflect.Module)}
-     * @param factorySPI used to resolve {@link java.lang.reflect.Module} of the implementation.
+     * @param classes used to resolve module for {@linkplain java.lang.Module#addOpens(String, java.lang.Module)}
+     * @param factorySPI used to resolve {@link java.lang.Module} of the implementation.
      */
     static void delegateAddOpensToImplModule(Class[] classes, Class<?> factorySPI) {
         //stub
