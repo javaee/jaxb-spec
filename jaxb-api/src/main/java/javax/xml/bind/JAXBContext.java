@@ -242,6 +242,9 @@ import java.util.Properties;
  * This phase of the look up allows some packages to force the use of a certain JAXB implementation.
  * (For example, perhaps the schema compiler has generated some vendor extension in the code.)
  *
+ * <p>
+ * This configuration method is deprecated.
+ *
  * <li>
  * If the system property {@link #JAXB_CONTEXT_FACTORY} exists, then its value is assumed to be the provider
  * factory class. If no such property exists, properties {@code "javax.xml.bind.context.factory"} and
