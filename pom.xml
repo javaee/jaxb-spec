@@ -10,12 +10,12 @@
     and Distribution License("CDDL") (collectively, the "License").  You
     may not use this file except in compliance with the License.  You can
     obtain a copy of the License at
-    http://glassfish.java.net/public/CDDL+GPL_1_1.html
-    or packager/legal/LICENSE.txt.  See the License for the specific
+    https://oss.oracle.com/licenses/CDDL+GPL-1.1
+    or LICENSE.txt.  See the License for the specific
     language governing permissions and limitations under the License.
 
     When distributing the software, include this License Header Notice in each
-    file and include the License file at packager/legal/LICENSE.txt.
+    file and include the License file at LICENSE.txt.
 
     GPL Classpath Exception:
     Oracle designates this particular file as subject to the "Classpath"
@@ -61,7 +61,7 @@
 
     <name>Java Architecture for XML Binding</name>
     <description>JAXB (JSR 222) API</description>
-    <url>http://jaxb.java.net/</url>
+    <url>https://github.com/javaee/jaxb-spec</url>
 
     <organization>
         <name>Oracle Corporation</name>
@@ -69,6 +69,11 @@
     </organization>
 
     <developers>
+        <developer>
+            <name>Roman Grigoriadi</name>
+            <email>roman.grigoriadi@oracle.com</email>
+            <organization>Oracle Corporation</organization>
+        </developer>
         <developer>
             <name>Martin Grebac</name>
             <email>martin.grebac@oracle.com</email>
@@ -84,20 +89,32 @@
     <licenses>
         <license>
             <name>CDDL 1.1</name>
-            <url>https://glassfish.java.net/public/CDDL+GPL_1_1.html</url>
+            <url>https://oss.oracle.com/licenses/CDDL+GPL-1.1</url>
             <distribution>repo</distribution>
         </license>
         <license>
             <name>GPL2 w/ CPE</name>
-            <url>https://glassfish.java.net/public/CDDL+GPL_1_1.html</url>
+            <url>https://oss.oracle.com/licenses/CDDL+GPL-1.1</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
 
     <issueManagement>
         <system>jira</system>
-        <url>http://java.net/jira/browse/JAXB</url>
+        <url>https://github.com/javaee/jaxb-spec/issues</url>
     </issueManagement>
+
+    <properties>
+        <release.spec.feedback>javaee-spec@javaee.groups.io</release.spec.feedback>
+        <release.spec.date>Jul 2017</release.spec.date>
+        <findbugs.exclude>${project.basedir}/exclude.xml</findbugs.exclude>
+        <findbugs.threshold>Low</findbugs.threshold>
+        <mrjar.sourceDirectory>${project.basedir}/src/main/mr-jar</mrjar.sourceDirectory>
+        <mrjar.build.outputDirectory>${project.build.directory}/classes-mrjar</mrjar.build.outputDirectory>
+        <extension.name>javax.xml.bind</extension.name>
+        <spec.version>2.3</spec.version>
+        <impl.version>0</impl.version>
+    </properties>
 
 
     <build>
