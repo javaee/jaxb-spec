@@ -54,7 +54,7 @@
  * <tr valign="top">
  * <td><b>Package</b></td>
  * <td>
- * <table summary="jaxb.test">
+ * <table summary="test">
  * <tr valign="top">
  * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlAccessorOrder.html">XmlAccessorOrder</a></b></td>
  * </tr>

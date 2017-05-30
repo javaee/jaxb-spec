@@ -2,7 +2,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2003-2015 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2003-2017 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -990,7 +990,7 @@ public interface Unmarshaller {
      * This method provides replacement functionality for the deprecated
      * {@link #isValidating()} API as well as access to the Schema object.
      * To determine if the Unmarshaller has validation enabled, simply
-     * jaxb.test the return type for null:
+     * test the return type for null:
      * <pre>{@code
      *   boolean isValidating = u.getSchema()!=null;
      * }</pre>

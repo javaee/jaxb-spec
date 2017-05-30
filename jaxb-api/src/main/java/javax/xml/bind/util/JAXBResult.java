@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2003-2014 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2003-2017 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -65,7 +65,7 @@ import javax.xml.transform.sax.SAXResult;
  *       
  *       // set up XSLT transformation
  *       TransformerFactory tf = TransformerFactory.newInstance();
- *       Transformer t = tf.newTransformer(new StreamSource("jaxb.test.xsl"));
+ *       Transformer t = tf.newTransformer(new StreamSource("test.xsl"));
  *       
  *       // run transformation
  *       t.transform(new StreamSource("document.xml"),result);
