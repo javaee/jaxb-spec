@@ -159,7 +159,8 @@ class ModuleUtil {
             }
             //report error if they are not open to java.xml.bind
             if (!classModule.isOpen(packageName, jaxbModule)) {
-                throw new JAXBException(Messages.format(Messages.JAXB_CLASSES_NOT_OPEN, packageName));
+                throw new JAXBException(Messages.format(Messages.JAXB_CLASSES_NOT_OPEN,
+                                                        packageName, cls.getName(), classModule.getName()));
             }
             //propagate openness to impl module
             classModule.addOpens(packageName, implModule);
