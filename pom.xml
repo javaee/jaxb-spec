@@ -68,6 +68,13 @@
         <url>http://www.oracle.com/</url>
     </organization>
 
+    <scm>
+        <connection>scm:git:git://github.com/javaee/jaxb-spec.git</connection>
+        <developerConnection>scm:git:git@github.com:javaee/jaxb-spec.git</developerConnection>
+        <url>https://github.com/javaee/jaxb-spec.git</url>
+        <tag>HEAD</tag>
+    </scm>
+
     <developers>
         <developer>
             <name>Roman Grigoriadi</name>
