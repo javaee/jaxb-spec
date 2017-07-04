@@ -758,6 +758,7 @@ public abstract class JAXBContext {
      *                       {@code Validator} object
      * @deprecated since JAXB2.0
      */
+    @Deprecated
     public abstract Validator createValidator() throws JAXBException;
 
     /**
