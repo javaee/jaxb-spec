@@ -158,7 +158,7 @@ class ModuleUtil {
                 continue;
             }
             //report error if they are not open to java.xml.bind
-            if (!classModule.isOpen(packageName, jaxbModule)) {
+            if (!classModule.isOpen(packageName, jaxbModule) && !"java.base".equals(classModule.getName())) {
                 throw new JAXBException(Messages.format(Messages.JAXB_CLASSES_NOT_OPEN,
                                                         packageName, cls.getName(), classModule.getName()));
             }
