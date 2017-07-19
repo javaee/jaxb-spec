@@ -153,14 +153,14 @@ class ModuleUtil {
         for (Class cls : classes) {
             final Module classModule = cls.getModule();
             final String packageName = cls.getPackageName();
-            //no need for unnamed
-            if (!classModule.isNamed()) {
-                continue;
-            }
             //report error if they are not open to java.xml.bind
             if (!classModule.isOpen(packageName, jaxbModule) && !"java.base".equals(classModule.getName())) {
                 throw new JAXBException(Messages.format(Messages.JAXB_CLASSES_NOT_OPEN,
                                                         packageName, cls.getName(), classModule.getName()));
+            }
+            //no need for unnamed
+            if (!classModule.isNamed()) {
+                continue;
             }
             //propagate openness to impl module
             classModule.addOpens(packageName, implModule);
