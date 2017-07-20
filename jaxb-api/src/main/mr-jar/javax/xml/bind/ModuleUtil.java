@@ -163,7 +163,9 @@ class ModuleUtil {
                 continue;
             }
             //propagate openness to impl module
-            classModule.addOpens(packageName, implModule);
+            if (!"java.base".equals(classModule.getName())){
+              classModule.addOpens(packageName, implModule);
+            }
             if (logger.isLoggable(Level.FINE)) {
                 logger.log(Level.FINE, "Propagating openness of package {0} in {1} to {2}.",
                            new String[]{ packageName, classModule.getName(), implModule.getName() });
