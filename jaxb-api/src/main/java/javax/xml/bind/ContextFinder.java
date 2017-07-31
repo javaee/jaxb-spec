@@ -197,6 +197,9 @@ class ContextFinder {
                                    Map properties) throws JAXBException {
 
         try {
+
+            ModuleUtil.delegateAddOpensToImplModule(contextPathClasses, spFactory);
+
             /*
              * javax.xml.bind.context.factory points to a class which has a
              * static method called 'createContext' that
@@ -229,8 +232,6 @@ class ContextFinder {
                 // the cast would fail, so generate an exception with a nice message
                 throw handleClassCastException(context.getClass(), JAXBContext.class);
             }
-
-            ModuleUtil.delegateAddOpensToImplModule(contextPathClasses, spFactory);
 
             return (JAXBContext) context;
         } catch (InvocationTargetException x) {
@@ -289,6 +290,7 @@ class ContextFinder {
                                    Map properties,
                                    Class spFactory) throws JAXBException {
         try {
+            ModuleUtil.delegateAddOpensToImplModule(classes,  spFactory);
 
             Method m = spFactory.getMethod("createContext", Class[].class, Map.class);
             Object obj = instantiateProviderIfNecessary(spFactory);
@@ -297,7 +299,6 @@ class ContextFinder {
                 // the cast would fail, so generate an exception with a nice message
                 throw handleClassCastException(context.getClass(), JAXBContext.class);
             }
-            ModuleUtil.delegateAddOpensToImplModule(classes,  spFactory);
             return (JAXBContext) context;
 
         } catch (NoSuchMethodException | IllegalAccessException e) {
@@ -343,9 +344,8 @@ class ContextFinder {
                 JAXBContextFactory.class, logger, EXCEPTION_HANDLER);
 
         if (obj != null) {
-            JAXBContext context = obj.createContext(contextPath, classLoader, properties);
             ModuleUtil.delegateAddOpensToImplModule(contextPathClasses, obj.getClass());
-            return context;
+            return obj.createContext(contextPath, classLoader, properties);
         }
 
         // to ensure backwards compatibility
@@ -400,9 +400,8 @@ class ContextFinder {
                 ServiceLoaderUtil.firstByServiceLoader(JAXBContextFactory.class, logger, EXCEPTION_HANDLER);
 
         if (factory != null) {
-            JAXBContext context = factory.createContext(classes, properties);
             ModuleUtil.delegateAddOpensToImplModule(classes, factory.getClass());
-            return context;
+            return factory.createContext(classes, properties);
         }
 
         // to ensure backwards compatibility

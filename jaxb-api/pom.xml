@@ -36,7 +36,7 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-enforcer-plugin</artifactId>
-                    <version>1.0.1</version>
+                    <version>3.0.0-M1</version>
                     <configuration>
                         <rules>
                             <requireJavaVersion>
@@ -195,7 +195,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>2.10.4</version>
+                    <version>3.0.0-M1</version>
                     <configuration>
                         <nodeprecated>false</nodeprecated>
                         <use>false</use>
@@ -395,6 +395,7 @@ href='http://jaxb.java.net'><i>http://jaxb.java.net</i></a>
                         <plugin>
                             <groupId>org.apache.maven.plugins</groupId>
                             <artifactId>maven-javadoc-plugin</artifactId>
+                            <version>3.0.0-M1</version>
                             <configuration>
                                 <includeDependencySources>false</includeDependencySources>
                             </configuration>
@@ -467,7 +468,7 @@ href='http://jaxb.java.net'><i>http://jaxb.java.net</i></a>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>2.10.4</version>
+                        <version>3.0.0-M1</version>
                     </plugin>
                 </plugins>
             </build>
