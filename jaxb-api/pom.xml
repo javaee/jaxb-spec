@@ -345,7 +345,7 @@ href='http://jaxb.java.net'><i>http://jaxb.java.net</i></a>
         <profile>
             <id>jdk9</id>
             <activation>
-                <jdk>9</jdk>
+                <jdk>[9,)</jdk>
             </activation>
             <build>
                 <pluginManagement>
