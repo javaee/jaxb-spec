@@ -87,32 +87,29 @@ public abstract class AttachmentUnmarshaller {
     * 
     * <p>The returned {@code DataHandler} instance must be configured
     * to meet the following required mapping constaint. 
-    * <table summary="" border="2" rules="all" cellpadding="4">
+    * <table class="striped">
+    *   <caption>Required Mappings between MIME and Java Types</caption>
     *   <thead>
     *     <tr>
-    *       <th align="center" colspan="2">
-    *       Required Mappings between MIME and Java Types
+    *       <th scope="col">MIME Type</th>
+    *       <th scope="col">Java Type</th>
     *       </tr>
     *     <tr>
-    *       <th>MIME Type</th>
-    *       <th>Java Type</th>
-    *     </tr>
-    *     <tr>
-    *       <th>{@code DataHandler.getContentType()}</th>
-    *       <th>{@code instanceof DataHandler.getContent()}</th>
+    *       <th scope="col">{@code DataHandler.getContentType()}</th>
+    *       <th scope="col">{@code instanceof DataHandler.getContent()}</th>
     *     </tr>
     *   </thead>
-    *   <tbody>
+    *   <tbody style="text-align:left">
     *     <tr>
-    *       <td>image/gif</td>
+    *       <th scope="row">image/gif</th>
     *       <td>java.awt.Image</td>
     *     </tr>
     *     <tr>
-    *       <td>image/jpeg</td>
+    *       <th scope="row">image/jpeg</th>
     *       <td>java.awt.Image</td>
     *     </tr>
     *     <tr>
-    *       <td>text/xml  or application/xml</td>
+    *       <th scope="row">text/xml  or application/xml</th>
     *       <td>javax.xml.transform.Source</td>
     *     </tr>
     *   </tbody>
