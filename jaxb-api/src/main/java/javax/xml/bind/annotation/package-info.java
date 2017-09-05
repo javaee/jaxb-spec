@@ -45,170 +45,90 @@
  * <p>The following table shows the JAXB mapping annotations
  * that can be associated with each program element. </p>
  * <p>
- * <table border="1" cellpadding="4" cellspacing="3" summary="test0">
- * <tbody>
- * <tr>
- * <td><b>Program Element</b></td>
- * <td><b>JAXB annotation</b></td>
- * </tr>
- * <tr valign="top">
- * <td><b>Package</b></td>
- * <td>
- * <table summary="test">
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlAccessorOrder.html">XmlAccessorOrder</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlAccessorType.html">XmlAccessorType</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlSchema.html">XmlSchema</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlSchemaType.html">XmlSchemaType</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlSchemaTypes.html">XmlSchemaTypes</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/adapters/XmlJavaTypeAdapter.html">XmlJavaTypeAdapter</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/adapters/XmlJavaTypeAdapters.html">XmlJavaTypeAdapters</a></b></td>
- * </tr>
- * </table>
- * </td>
- * </tr>
- * <tr valign="top">
- * <td><b>Class</b></td>
- * <td>
- * <table summary="test2">
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlAccessorOrder.html">XmlAccessorOrder</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlAccessorType.html">XmlAccessorType</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlInlineBinaryData.html">XmlInlineBinaryData</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlRootElement.html">XmlRootElement</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlType.html">XmlType</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/adapters/XmlJavaTypeAdapter.html">XmlJavaTypeAdapter</a></b></td>
- * </tr>
- * </table>
- * </td>
- * </tr>
- * <tr valign="top">
- * <td><b>Enum type</b></td>
- * <td>
- * <table summary="test3">
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlEnum.html">XmlEnum</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlEnumValue.html">XmlEnumValue (enum constant only)</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlRootElement.html">XmlRootElement</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlType.html">XmlType</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/adapters/XmlJavaTypeAdapter.html">XmlJavaTypeAdapter</a></b></td>
- * </tr>
- * </table>
- * </td>
- * </tr>
- * <tr valign="top">
- * <td><b>JavaBean Property/field</b></td>
- * <td>
- * <table summary="test4">
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlElement.html">XmlElement</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlElements.html">XmlElements</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlElementRef.html">XmlElementRef</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlElementRefs.html">XmlElementRefs</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlElementWrapper.html">XmlElementWrapper</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlAnyElement.html">XmlAnyElement</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlAttribute.html">XmlAttribute</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlAnyAttribute.html">XmlAnyAttribute</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlTransient.html">XmlTransient</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlValue.html">XmlValue</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlID.html">XmlID</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlIDREF.html">XmlIDREF</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlList.html">XmlList</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlMixed.html">XmlMixed</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlMimeType.html">XmlMimeType</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlAttachmentRef.html">XmlAttachmentRef</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlInlineBinaryData.html">XmlInlineBinaryData</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlElementDecl.html">XmlElementDecl (only on method)</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/adapters/XmlJavaTypeAdapter.html">XmlJavaTypeAdapter</a></b></td>
- * </tr>
- * </table>
- * </td>
- * </tr>
- * <tr valign="top">
- * <td><b>Parameter</b></td>
- * <td>
- * <table summary="test5">
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlList.html">XmlList</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlAttachmentRef.html">XmlAttachmentRef</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/XmlMimeType.html">XmlMimeType</a></b></td>
- * </tr>
- * <tr valign="top">
- * <td><b><a HREF="../../../../javax/xml/bind/annotation/adapters/XmlJavaTypeAdapter.html">XmlJavaTypeAdapter</a></b></td>
- * </tr>
- * </table>
- * </td>
- * </tr>
+ * <table class="striped">
+ *   <thead>
+ *     <tr>
+ *       <th scope="col">Program Element</th>
+ *       <th scope="col">JAXB annotation</th>
+ *     </tr>
+ *   </thead>
+ *   <tbody style="text-align:left">
+ *     <tr>
+ *       <th scope="row" style="vertical-align:top">Package</th>
+ *       <td>
+ *         <ul style="list-style-type:none">
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/XmlAccessorOrder.html">XmlAccessorOrder</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/XmlAccessorType.html">XmlAccessorType</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/XmlSchema.html">XmlSchema</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/XmlSchemaType.html">XmlSchemaType</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/XmlSchemaTypes.html">XmlSchemaTypes</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/adapters/XmlJavaTypeAdapter.html">XmlJavaTypeAdapter</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/adapters/XmlJavaTypeAdapters.html">XmlJavaTypeAdapters</a></li>
+ *         </ul>
+ *       </td>
+ *     </tr>
+ *     <tr>
+ *       <th scope="row" style="vertical-align:top">Class</th>
+ *       <td>
+ *         <ul style="list-style-type:none">
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/XmlAccessorOrder.html">XmlAccessorOrder</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/XmlAccessorType.html">XmlAccessorType</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/XmlInlineBinaryData.html">XmlInlineBinaryData</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/XmlRootElement.html">XmlRootElement</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/XmlType.html">XmlType</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/adapters/XmlJavaTypeAdapter.html">XmlJavaTypeAdapter</a></li>
+ *         </ul>
+ *       </td>
+ *     </tr>
+ *     <tr>
+ *       <th scope="row" style="vertical-align:top">Enum type</th>
+ *       <td>
+ *         <ul style="list-style-type:none">
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/XmlEnum.html">XmlEnum</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/XmlEnumValue.html">XmlEnumValue (enum constant only)</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/XmlRootElement.html">XmlRootElement</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/XmlType.html">XmlType</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/adapters/XmlJavaTypeAdapter.html">XmlJavaTypeAdapter</a></li>
+ *         </ul>
+ *       </td>
+ *     </tr>
+ *     <tr>
+ *       <th scope="row" style="vertical-align:top">JavaBean Property/field</th>
+ *       <td>
+ *         <ul style="list-style-type:none">
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/XmlElement.html">XmlElement</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/XmlElements.html">XmlElements</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/XmlElementRef.html">XmlElementRef</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/XmlElementRefs.html">XmlElementRefs</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/XmlElementWrapper.html">XmlElementWrapper</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/XmlAnyElement.html">XmlAnyElement</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/XmlAttribute.html">XmlAttribute</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/XmlAnyAttribute.html">XmlAnyAttribute</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/XmlTransient.html">XmlTransient</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/XmlValue.html">XmlValue</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/XmlID.html">XmlID</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/XmlIDREF.html">XmlIDREF</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/XmlList.html">XmlList</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/XmlMixed.html">XmlMixed</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/XmlMimeType.html">XmlMimeType</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/XmlAttachmentRef.html">XmlAttachmentRef</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/XmlInlineBinaryData.html">XmlInlineBinaryData</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/XmlElementDecl.html">XmlElementDecl (only on method)</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/adapters/XmlJavaTypeAdapter.html">XmlJavaTypeAdapter</a></li>
+ *         </ul>
+ *       </td>
+ *     </tr>
+ *     <tr>
+ *       <th scope="row" style="vertical-align:top">Parameter</th>
+ *       <td>
+ *         <ul style="list-style-type:none">
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/XmlList.html">XmlList</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/XmlAttachmentRef.html">XmlAttachmentRef</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/XmlMimeType.html">XmlMimeType</a></li>
+ *             <li><a HREF="../../../../javax/xml/bind/annotation/adapters/XmlJavaTypeAdapter.html">XmlJavaTypeAdapter</a></li>
+ *         </ul>
+ *       </td>
+ *     </tr>
  * </tbody>
  * </table>
  * <h3>Terminology</h3>
@@ -251,29 +171,31 @@
  * <p>The following namespace prefixes are used in the XML Schema
  * fragments in this package.
  * <p>
- * <table border="1" cellpadding="4" cellspacing="3"  summary="test6">
- * <tbody>
- * <tr>
- * <td><b>Prefix</b></td>
- * <td><b>Namespace</b></td>
- * <td><b>Notes</b></td>
- * </tr>
- * <tr valign="top">
- * <td>xs</td>
- * <td>http://www.w3.org/2001/XMLSchema</td>
- * <td>Namespace of XML Schema namespace</td>
- * </tr>
- * <tr valign="top">
- * <td>ref</td>
- * <td>http://ws-i.org/profiles/basic/1.1/xsd</td>
- * <td>Namespace for swaref schema component</td>
- * </tr>
- * <tr valign="top">
- * <td>xsi</td>
- * <td>http://www.w3.org/2001/XMLSchema-instance</td>
- * <td>XML Schema namespace for instances</td>
- * </tr>
- * </tbody>
+ * <table class="striped">
+ *   <thead>
+ *     <tr>
+ *       <th scope="col">Prefix</th>
+ *       <th scope="col">Namespace</th>
+ *       <th scope="col">Notes</th>
+ *     </tr>
+ *   </thead>
+ *   <tbody>
+ *     <tr>
+ *       <th scope="row">xs</th>
+ *       <td>http://www.w3.org/2001/XMLSchema</td>
+ *       <td>Namespace of XML Schema namespace</td>
+ *     </tr>
+ *     <tr>
+ *       <th scope="row">ref</th>
+ *       <td>http://ws-i.org/profiles/basic/1.1/xsd</td>
+ *       <td>Namespace for swaref schema component</td>
+ *     </tr>
+ *     <tr>
+ *       <th scope="row">xsi</th>
+ *       <td>http://www.w3.org/2001/XMLSchema-instance</td>
+ *       <td>XML Schema namespace for instances</td>
+ *     </tr>
+ *   </tbody>
  * </table>
  *
  * @since 1.6, JAXB 2.0
