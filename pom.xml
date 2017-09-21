@@ -52,7 +52,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>javax.xml.bind</groupId>
     <artifactId>jaxb-api-parent</artifactId>
-    <version>2.3.1-b170921.0414</version>
+    <version>2.3.1-SNAPSHOT</version>
     <modules>
         <module>jaxb-api</module>
         <module>jaxb-api-test</module>
