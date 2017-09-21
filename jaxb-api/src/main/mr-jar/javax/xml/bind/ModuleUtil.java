@@ -151,7 +151,7 @@ class ModuleUtil {
             final Module classModule = cls.getModule();
             final String packageName = cls.getPackageName();
             //no need for unnamed
-            if (!classModule.isNamed()) {
+            if (!classModule.isNamed() || "java.base".equals(classModule.getName())) {
                 continue;
             }
             //report error if they are not open to java.xml.bind
