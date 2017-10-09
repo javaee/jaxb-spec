@@ -388,7 +388,7 @@ public interface Marshaller {
      *      If the {@link ValidationEventHandler ValidationEventHandler}
      *      returns false from its {@code handleEvent} method or the
      *      {@code Marshaller} is unable to marshal {@code jaxbElement} (or any
-     *      object reachable from {@code jaxbElement}).  See <a href="{@docRoot}/java/xml/bind/Marshaller.html#elementMarshalling">
+     *      object reachable from {@code jaxbElement}).  See <a href="{@docRoot}/javax/xml/bind/Marshaller.html#elementMarshalling">
      *      Marshalling a JAXB element</a>.
      * @throws IllegalArgumentException
      *      If any of the method parameters are null
@@ -410,7 +410,7 @@ public interface Marshaller {
      *      If the {@link ValidationEventHandler ValidationEventHandler}
      *      returns false from its {@code handleEvent} method or the
      *      {@code Marshaller} is unable to marshal {@code jaxbElement} (or any
-     *      object reachable from {@code jaxbElement}).  See <a href="{@docRoot}/java/xml/bind/Marshaller.html#elementMarshalling">
+     *      object reachable from {@code jaxbElement}).  See <a href="{@docRoot}/javax/xml/bind/Marshaller.html#elementMarshalling">
      *      Marshalling a JAXB element</a>.
      * @throws IllegalArgumentException
      *      If any of the method parameters are null
@@ -432,7 +432,7 @@ public interface Marshaller {
      *      If the {@link ValidationEventHandler ValidationEventHandler}
      *      returns false from its {@code handleEvent} method or the
      *      {@code Marshaller} is unable to marshal {@code jaxbElement} (or any
-     *      object reachable from {@code jaxbElement}).  See <a href="{@docRoot}/java/xml/bind/Marshaller.html#elementMarshalling">
+     *      object reachable from {@code jaxbElement}).  See <a href="{@docRoot}/javax/xml/bind/Marshaller.html#elementMarshalling">
      *      Marshalling a JAXB element</a>.
      * @throws IllegalArgumentException
      *      If any of the method parameters are null
@@ -455,7 +455,7 @@ public interface Marshaller {
      *      If the {@link ValidationEventHandler ValidationEventHandler}
      *      returns false from its {@code handleEvent} method or the
      *      {@code Marshaller} is unable to marshal {@code jaxbElement} (or any
-     *      object reachable from {@code jaxbElement}).  See <a href="{@docRoot}/java/xml/bind/Marshaller.html#elementMarshalling">
+     *      object reachable from {@code jaxbElement}).  See <a href="{@docRoot}/javax/xml/bind/Marshaller.html#elementMarshalling">
      *      Marshalling a JAXB element</a>.
      * @throws IllegalArgumentException
      *      If any of the method parameters are null
@@ -477,7 +477,7 @@ public interface Marshaller {
      *      If the {@link ValidationEventHandler ValidationEventHandler}
      *      returns false from its {@code handleEvent} method or the
      *      {@code Marshaller} is unable to marshal {@code jaxbElement} (or any
-     *      object reachable from {@code jaxbElement}).  See <a href="{@docRoot}/java/xml/bind/Marshaller.html#elementMarshalling">
+     *      object reachable from {@code jaxbElement}).  See <a href="{@docRoot}/javax/xml/bind/Marshaller.html#elementMarshalling">
      *      Marshalling a JAXB element</a>.
      * @throws IllegalArgumentException
      *      If any of the method parameters are null
@@ -503,7 +503,7 @@ public interface Marshaller {
      *      If the {@link ValidationEventHandler ValidationEventHandler}
      *      returns false from its {@code handleEvent} method or the
      *      {@code Marshaller} is unable to marshal {@code jaxbElement} (or any
-     *      object reachable from {@code jaxbElement}).  See <a href="{@docRoot}/java/xml/bind/Marshaller.html#elementMarshalling">
+     *      object reachable from {@code jaxbElement}).  See <a href="{@docRoot}/javax/xml/bind/Marshaller.html#elementMarshalling">
      *      Marshalling a JAXB element</a>.
      * @throws IllegalArgumentException
      *      If any of the method parameters are null
@@ -526,7 +526,7 @@ public interface Marshaller {
      *      If the {@link ValidationEventHandler ValidationEventHandler}
      *      returns false from its {@code handleEvent} method or the
      *      {@code Marshaller} is unable to marshal {@code jaxbElement} (or any
-     *      object reachable from {@code jaxbElement}).  See <a href="{@docRoot}/java/xml/bind/Marshaller.html#elementMarshalling">
+     *      object reachable from {@code jaxbElement}).  See <a href="{@docRoot}/javax/xml/bind/Marshaller.html#elementMarshalling">
      *      Marshalling a JAXB element</a>.
      * @throws IllegalArgumentException
      *      If any of the method parameters are null
@@ -550,7 +550,7 @@ public interface Marshaller {
      *      If the {@link ValidationEventHandler ValidationEventHandler}
      *      returns false from its {@code handleEvent} method or the
      *      {@code Marshaller} is unable to marshal {@code jaxbElement} (or any
-     *      object reachable from {@code jaxbElement}).  See <a href="{@docRoot}/java/xml/bind/Marshaller.html#elementMarshalling">
+     *      object reachable from {@code jaxbElement}).  See <a href="{@docRoot}/javax/xml/bind/Marshaller.html#elementMarshalling">
      *      Marshalling a JAXB element</a>.
      * @throws IllegalArgumentException
      *      If any of the method parameters are null
@@ -590,7 +590,7 @@ public interface Marshaller {
      * {@code Marshaller}.  This method can only be used to set one of
      * the standard JAXB defined properties above or a provider specific
      * property.  Attempting to set an undefined property will result in
-     * a PropertyException being thrown.  See <a href="{@docRoot}/java/xml/bind/Marshaller.html#supportedProps">
+     * a PropertyException being thrown.  See <a href="{@docRoot}/javax/xml/bind/Marshaller.html#supportedProps">
      * Supported Properties</a>.
      *
      * @param name the name of the property to be set. This value can either
@@ -611,7 +611,7 @@ public interface Marshaller {
      * {@code Marshaller}.  This method can only be used to get one of
      * the standard JAXB defined properties above or a provider specific
      * property.  Attempting to get an undefined property will result in
-     * a PropertyException being thrown.  See <a href="{@docRoot}/java/xml/bind/Marshaller.html#supportedProps">
+     * a PropertyException being thrown.  See <a href="{@docRoot}/javax/xml/bind/Marshaller.html#supportedProps">
      * Supported Properties</a>.
      *
      * @param name the name of the property to retrieve
