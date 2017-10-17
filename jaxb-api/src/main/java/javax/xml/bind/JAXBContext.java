@@ -349,6 +349,14 @@ public abstract class JAXBContext {
      * {@link #newInstance(String,ClassLoader)} method with
      * the context class loader of the current thread.
      *
+     * @param contextPath
+     *      List of java package names that contain schema
+     *      derived class and/or java to schema (JAXB-annotated)
+     *      mapped classes.
+     *      Packages in {@code contextPath} that are in named modules must be
+     *      {@linkplain java.lang.Module#isOpen open} to at least the {@code java.xml.bind} module.
+     *
+     * @return a new instance of a {@code JAXBContext}
      * @throws JAXBException if an error was encountered while creating the
      *                       {@code JAXBContext} such as
      * <ol>
