@@ -60,11 +60,12 @@ class ServiceLoaderUtil {
     private static final String OSGI_SERVICE_LOADER_METHOD_NAME = "lookupProviderClasses";
 
     static <P, T extends Exception> P firstByServiceLoader(Class<P> spiClass,
+                                                           ClassLoader loader,
                                                            Logger logger,
                                                            ExceptionHandler<T> handler) throws T {
         // service discovery
         try {
-            ServiceLoader<P> serviceLoader = ServiceLoader.load(spiClass);
+            ServiceLoader<P> serviceLoader = loader != null ? ServiceLoader.load(spiClass, loader) : ServiceLoader.load(spiClass);
 
             for (P impl : serviceLoader) {
                 if (logger.isLoggable(Level.FINE))
