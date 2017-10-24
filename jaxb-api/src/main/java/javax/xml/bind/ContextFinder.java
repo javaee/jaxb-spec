@@ -429,7 +429,9 @@ class ContextFinder {
     private static String classNameFromPackageProperties(URL packagePropertiesUrl,
                                                          String ... factoryIds) throws JAXBException {
 
-        logger.log(Level.FINE, "Trying to locate {0}", packagePropertiesUrl.toString());
+        if (logger.isLoggable(Level.FINE)) {
+            logger.log(Level.FINE, "Trying to locate {0}", packagePropertiesUrl.toString());
+        }
         Properties props = loadJAXBProperties(packagePropertiesUrl);
         for(String factoryId : factoryIds) {
             if (props.containsKey(factoryId)) {
@@ -492,7 +494,9 @@ class ContextFinder {
             is.close();
             return props;
         } catch (IOException ioe) {
-            logger.log(Level.FINE, "Unable to load " + url.toString(), ioe);
+            if (logger.isLoggable(Level.FINE)) {
+                logger.log(Level.FINE, "Unable to load " + url.toString(), ioe);
+            }
             throw new JAXBException(ioe.toString(), ioe);
         }
     }

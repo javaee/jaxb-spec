@@ -67,8 +67,11 @@ class ServiceLoaderUtil {
             ServiceLoader<P> serviceLoader = ServiceLoader.load(spiClass);
 
             for (P impl : serviceLoader) {
-                logger.fine("ServiceProvider loading Facility used; returning object [" +
-                        impl.getClass().getName() + "]");
+                if (logger.isLoggable(Level.FINE))
+                {
+                    logger.fine(
+                          "ServiceProvider loading Facility used; returning object [" + impl.getClass().getName() + "]");
+                }
 
                 return impl;
             }
@@ -88,8 +91,10 @@ class ServiceLoaderUtil {
             Iterator iter = ((Iterable) m.invoke(null, serviceClass)).iterator();
             if (iter.hasNext()) {
                 Object next = iter.next();
-                logger.fine("Found implementation using OSGi facility; returning object [" +
-                        next.getClass().getName() + "].");
+                if (logger.isLoggable(Level.FINE)) {
+                    logger.fine("Found implementation using OSGi facility; returning object [" +
+                            next.getClass().getName() + "].");
+                }
                 return next;
             } else {
                 return null;
@@ -99,7 +104,9 @@ class ServiceLoaderUtil {
                 ClassNotFoundException |
                 NoSuchMethodException ignored) {
 
-            logger.log(Level.FINE, "Unable to find from OSGi: [" + factoryId + "]", ignored);
+            if (logger.isLoggable(Level.FINE)) { 
+                logger.log(Level.FINE, "Unable to find from OSGi: [" + factoryId + "]", ignored);
+            }
             return null;
         }
     }
