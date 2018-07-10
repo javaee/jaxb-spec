@@ -1,12 +1,56 @@
 #!/bin/bash
+#
+# DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+#
+# Copyright (c) 2017-2018 Oracle and/or its affiliates. All rights reserved.
+#
+# The contents of this file are subject to the terms of either the GNU
+# General Public License Version 2 only ("GPL") or the Common Development
+# and Distribution License("CDDL") (collectively, the "License").  You
+# may not use this file except in compliance with the License.  You can
+# obtain a copy of the License at
+# https://oss.oracle.com/licenses/CDDL+GPL-1.1
+# or LICENSE.txt.  See the License for the specific
+# language governing permissions and limitations under the License.
+#
+# When distributing the software, include this License Header Notice in each
+# file and include the License file at LICENSE.txt.
+#
+# GPL Classpath Exception:
+# Oracle designates this particular file as subject to the "Classpath"
+# exception as provided by Oracle in the GPL Version 2 section of the License
+# file that accompanied this code.
+#
+# Modifications:
+# If applicable, add the following below the License Header, with the fields
+# enclosed by brackets [] replaced by your own identifying information:
+# "Portions Copyright [year] [name of copyright owner]"
+#
+# Contributor(s):
+# If you wish your version of this file to be governed by only the CDDL or
+# only the GPL Version 2, indicate your decision by adding "[Contributor]
+# elects to include this software in this distribution under the [CDDL or GPL
+# Version 2] license."  If you don't indicate a single choice of license, a
+# recipient has the option to distribute your version of this file under
+# either the CDDL, the GPL Version 2 or to extend the choice of license to
+# its licensees as provided above.  However, if you add GPL Version 2 code
+# and therefore, elected the GPL Version 2 license, then the option applies
+# only if the new code is made subject to such option by the copyright
+# holder.
+#
+
 
 # if option -n ... do not commit
 COMMIT=Y
-while getopts ":n" opt; do
+
+while getopts ":nv:" opt; do
   case $opt in
     n)
       COMMIT=N
-      shift
+      ;;
+    v)
+      CUSTOM_VERSION=${OPTARG}
+      echo "Using custom version: ${CUSTOM_VERSION}"
       ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
@@ -16,17 +60,7 @@ while getopts ":n" opt; do
 done
 echo "Script will commit changes: [$COMMIT] (pass option -n not to commit)"
 
-#if [ "$#" -eq 1 ]; then
-#    CURRENT_VERSION=$1
-#fi
-#
-#if [ "$#" -eq 0 ]; then
-#    echo "No version specified, reading release version from pom file"
-#    CURRENT_VERSION=`cat pom.xml | grep '<version' -m 1 | cut -d ">" -f 2 | cut -d "<" -f 1 | cut -d "-" -f 1`
-#fi
-CURRENT_VERSION=2.3.1
-
-echo "Major release version found: $CURRENT_VERSION"  
+CURRENT_VERSION=`cat pom.xml | grep '<version' -m 1 | cut -d ">" -f 2 | cut -d "<" -f 1 | cut -d "-" -f 1`
 
 SCRIPT_DIR=$(cd $(dirname $0); pwd -P)
 
@@ -48,7 +82,16 @@ DATESTAMP=`date +%y%m%d.%H%M`
 BUILD_NUMBER=b${DATESTAMP}
 DEVELOPER_VERSION=${CURRENT_VERSION}-SNAPSHOT
 RELEASE_QUALIFIER=${BUILD_NUMBER}
-RELEASE_VERSION=${CURRENT_VERSION}-${RELEASE_QUALIFIER}
+
+if [ -z CUSTOM_VERSION ]; then
+  echo "No version specified, reading release version from pom file"
+  RELEASE_VERSION=${CURRENT_VERSION}-${RELEASE_QUALIFIER}
+else
+  RELEASE_VERSION=${CUSTOM_VERSION}
+fi;
+
+echo "Release version: ${RELEASE_VERSION}"
+
 RELEASE_TAG=${RELEASE_VERSION}
 
 cleanup()
