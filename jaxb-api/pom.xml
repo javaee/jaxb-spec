@@ -279,6 +279,7 @@ href='http://jaxb.java.net'><i>http://jaxb.java.net</i></a>
                                 <head>Implementation Note:</head>
                             </tag>
                         </tags>
+                        <additionalOptions>-Xdoclint:none</additionalOptions>
                     </configuration>
                 </plugin>
                 <plugin>
