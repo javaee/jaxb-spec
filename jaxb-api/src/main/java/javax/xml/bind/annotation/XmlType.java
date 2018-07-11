@@ -134,7 +134,7 @@ import java.lang.annotation.Target;
  *   <li> X     : don't care
  * </ul>
  * <blockquote>
- *   <table class="striped">
+ *   <table class="striped" summary="Mapping class to XML Schema simple type">
  *     <thead>
  *       <tr>
  *         <th scope="col">Target</th>
