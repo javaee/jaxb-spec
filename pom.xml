@@ -52,7 +52,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>javax.xml.bind</groupId>
     <artifactId>jaxb-api-parent</artifactId>
-    <version>2.3.1-SNAPSHOT</version>
+    <version>2.3.1</version>
     <modules>
         <module>jaxb-api</module>
         <module>jaxb-api-test</module>
@@ -72,7 +72,7 @@
         <connection>scm:git:git://github.com/javaee/jaxb-spec.git</connection>
         <developerConnection>scm:git:git@github.com:javaee/jaxb-spec.git</developerConnection>
         <url>https://github.com/javaee/jaxb-spec.git</url>
-        <tag>HEAD</tag>
+        <tag>2.3.1</tag>
     </scm>
 
     <developers>
