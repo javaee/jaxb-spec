@@ -380,6 +380,7 @@ href='http://jaxb.java.net'><i>http://jaxb.java.net</i></a>
 
             <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
                 <executions>
                     <execution>
                         <id>compile-java9</id>
@@ -387,7 +388,7 @@ href='http://jaxb.java.net'><i>http://jaxb.java.net</i></a>
                         <configuration>
                             <tasks>
                                 <mkdir dir="${project.build.outputDirectory}/META-INF/versions/9" />
-                                <javac srcdir="${mrjar.sourceDirectory}" destdir="${project.build.outputDirectory}/META-INF/versions/9" classpath="${project.build.outputDirectory}" includeantruntime="false" />
+                                <javac srcdir="${mrjar.sourceDirectory}" destdir="${project.build.outputDirectory}/META-INF/versions/9" classpath="${project.build.outputDirectory}" includeantruntime="false" source="9" target="9" />
                             </tasks>
                         </configuration>
                         <goals>

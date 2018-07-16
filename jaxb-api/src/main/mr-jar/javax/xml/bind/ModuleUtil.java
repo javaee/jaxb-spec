@@ -142,22 +142,25 @@ class ModuleUtil {
      *
      * @throws JAXBException if ony of a classes package is not open to {@code java.xml.bind} module.
      */
-    static void delegateAddOpensToImplModule(Class[] classes, Class<?> factorySPI) throws JAXBException {
+    public static void delegateAddOpensToImplModule(Class[] classes, Class<?> factorySPI) throws JAXBException {
         final Module implModule = factorySPI.getModule();
 
         Module jaxbModule = JAXBContext.class.getModule();
 
         for (Class cls : classes) {
-            final Module classModule = cls.getModule();
-            final String packageName = cls.getPackageName();
-            //no need for unnamed
-            if (!classModule.isNamed()) {
+            Class jaxbClass = cls.isArray() ?
+                cls.getComponentType() : cls;
+
+            final Module classModule = jaxbClass.getModule();
+            final String packageName = jaxbClass.getPackageName();
+            //no need for unnamed and java.base types
+            if (!classModule.isNamed() || classModule.getName().equals("java.base")) {
                 continue;
             }
             //report error if they are not open to java.xml.bind
             if (!classModule.isOpen(packageName, jaxbModule)) {
                 throw new JAXBException(Messages.format(Messages.JAXB_CLASSES_NOT_OPEN,
-                                                        packageName, cls.getName(), classModule.getName()));
+                                                        packageName, jaxbClass.getName(), classModule.getName()));
             }
             //propagate openness to impl module
             classModule.addOpens(packageName, implModule);
