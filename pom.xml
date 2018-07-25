@@ -46,7 +46,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>javax.xml.bind</groupId>
     <artifactId>jaxb-api-parent</artifactId>
-    <version>2.3.2-SNAPSHOT</version>
+    <version>2.4.0-b180725.0427</version>
 
     <parent>
         <groupId>net.java</groupId>
