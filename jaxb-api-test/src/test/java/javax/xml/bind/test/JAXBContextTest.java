@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2015-2017 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2015-2018 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -82,7 +82,7 @@ public class JAXBContextTest {
     private static final String FACTORY_ID = "javax.xml.bind.JAXBContextFactory";
     private static final String PACKAGE_LEGACY = "jaxb.factory.legacy."; // TODO: ???
     private static final String PACKAGE_SPI = "jaxb.factory.spi."; // TODO: ???
-    private static final Object DEFAULT = "com.sun.xml.internal.bind.v2.runtime.JAXBContextImpl";
+    private static final Object DEFAULT = "com.sun.xml.bind.v2.runtime.JAXBContextImpl";
 
 
     static {
