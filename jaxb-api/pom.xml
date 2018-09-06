@@ -88,7 +88,7 @@
                     <configuration>
                         <rules>
                             <requireJavaVersion>
-                                <version>[1.7,)</version>
+                                <version>[1.8,)</version>
                             </requireJavaVersion>
                             <requireMavenVersion>
                                 <version>[3.0.3,)</version>
@@ -290,18 +290,23 @@ href='http://jaxb.java.net'><i>http://jaxb.java.net</i></a>
                         <execution>
                             <id>default-compile</id>
                             <configuration>
-                                <release>9</release>
+                                <release>8</release>
+                                <excludes>
+                                    <exclude>module-info.java</exclude>
+                                </excludes>
                             </configuration>
                         </execution>
                         <execution>
-                            <id>base-compile</id>
+                            <id>module-info-compile</id>
+                            <phase>test-compile</phase><!--Avoid JavaSE9 capability added by bundle-plugin-->
                             <goals>
                                 <goal>compile</goal>
                             </goals>
                             <configuration>
-                                <excludes>
-                                    <exclude>module-info.java</exclude>
-                                </excludes>
+                                <release>9</release>
+                                <includes>
+                                    <include>module-info.java</include>
+                                </includes>
                             </configuration>
                         </execution>
                     </executions>
