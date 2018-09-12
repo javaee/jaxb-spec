@@ -82,7 +82,7 @@ public class JAXBContextTest {
     private static final String FACTORY_ID = "javax.xml.bind.JAXBContextFactory";
     private static final String PACKAGE_LEGACY = "jaxb.factory.legacy."; // TODO: ???
     private static final String PACKAGE_SPI = "jaxb.factory.spi."; // TODO: ???
-    private static final Object DEFAULT = "com.sun.xml.bind.v2.runtime.JAXBContextImpl";
+    private static final Object DEFAULT = "com.sun.xml.internal.bind.v2.runtime.JAXBContextImpl";
 
 
     static {
