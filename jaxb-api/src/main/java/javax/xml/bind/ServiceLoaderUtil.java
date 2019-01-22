@@ -60,15 +60,19 @@ class ServiceLoaderUtil {
     private static final String OSGI_SERVICE_LOADER_METHOD_NAME = "lookupProviderClasses";
 
     static <P, T extends Exception> P firstByServiceLoader(Class<P> spiClass,
+                                                           ClassLoader loader,
                                                            Logger logger,
                                                            ExceptionHandler<T> handler) throws T {
         // service discovery
         try {
-            ServiceLoader<P> serviceLoader = ServiceLoader.load(spiClass);
+            ServiceLoader<P> serviceLoader = loader != null ? ServiceLoader.load(spiClass, loader) : ServiceLoader.load(spiClass);
 
             for (P impl : serviceLoader) {
-                logger.fine("ServiceProvider loading Facility used; returning object [" +
-                        impl.getClass().getName() + "]");
+                if (logger.isLoggable(Level.FINE))
+                {
+                    logger.fine(
+                          "ServiceProvider loading Facility used; returning object [" + impl.getClass().getName() + "]");
+                }
 
                 return impl;
             }
@@ -88,8 +92,10 @@ class ServiceLoaderUtil {
             Iterator iter = ((Iterable) m.invoke(null, serviceClass)).iterator();
             if (iter.hasNext()) {
                 Object next = iter.next();
-                logger.fine("Found implementation using OSGi facility; returning object [" +
-                        next.getClass().getName() + "].");
+                if (logger.isLoggable(Level.FINE)) {
+                    logger.fine("Found implementation using OSGi facility; returning object [" +
+                            next.getClass().getName() + "].");
+                }
                 return next;
             } else {
                 return null;
@@ -99,7 +105,9 @@ class ServiceLoaderUtil {
                 ClassNotFoundException |
                 NoSuchMethodException ignored) {
 
-            logger.log(Level.FINE, "Unable to find from OSGi: [" + factoryId + "]", ignored);
+            if (logger.isLoggable(Level.FINE)) { 
+                logger.log(Level.FINE, "Unable to find from OSGi: [" + factoryId + "]", ignored);
+            }
             return null;
         }
     }
